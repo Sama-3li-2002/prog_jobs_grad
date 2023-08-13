@@ -23,6 +23,20 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xfffafafa),
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: SizeConfig.scaleWidth(14),
+            ),
+            color: Color(0xff4C5175),
+          ),
+        ),
         backgroundColor: Color(0xfffafafa),
         resizeToAvoidBottomInset: false,
         body: Padding(
@@ -31,7 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.only(top: SizeConfig.scaleHeight(88)),
                 child: Center(
                     child: Image(
                         width: SizeConfig.scaleWidth(390),

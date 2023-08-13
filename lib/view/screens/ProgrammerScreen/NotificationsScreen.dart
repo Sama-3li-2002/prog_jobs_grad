@@ -70,7 +70,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
           children: [
             TextStyleWidget("Notifications", Color(0xffCBB523),
                 SizeConfig.scaleTextFont(20), FontWeight.w600),
-            // SizedBox(height: SizeConfig.scaleHeight(5)),
             ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -145,14 +144,28 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 color: Color(0xff4C5175),
                               ),
                               SizedBox(
-                                width: SizeConfig.scaleWidth(10),
+                                width: SizeConfig.scaleWidth(5),
                               ),
-                              Expanded(
-                                  child: TextStyleWidget(
-                                      "Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Eopksio Laborum....",
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextStyleWidget(
+                                      "Magic Company",
                                       Color(0xff4C5175),
-                                      SizeConfig.scaleTextFont(11),
-                                      FontWeight.normal)),
+                                      SizeConfig.scaleTextFont(16),
+                                      FontWeight.w600),
+                                  SizedBox(
+                                    height: SizeConfig.scaleHeight(5),
+                                  ),
+                                  TextStyleWidget(
+                                      "Your application has been\n"
+                                      "accepted at ...",
+                                      Color(0xff000000),
+                                      SizeConfig.scaleTextFont(15),
+                                      FontWeight.normal),
+                                ],
+                              ),
                             ],
                           ),
                         ),

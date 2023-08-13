@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
+import '../ProgrammerScreen/ProfileInfoScreen.dart';
+import '../shared_screens/user_type.dart';
+import 'CompanyInfoScreen.dart';
 
 class EditJobScreen extends StatefulWidget {
   static const String id = "edit_job_screen";
@@ -23,24 +26,34 @@ class _EditJobScreenState extends State<EditJobScreen> {
               alignment: Alignment.bottomCenter,
               children: [
                 Container(
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Image.asset("assets/images/laptops.png",
-                        fit: BoxFit.cover),
+                  height: SizeConfig.scaleHeight(300),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40)),
+                  ),
+                  child: Image.asset(
+                    "assets/images/laptops.jpg",
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                    color: Colors.black.withOpacity(0.5),
+                    colorBlendMode: BlendMode.darken,
                   ),
                 ),
-                Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    Image.asset("assets/images/technologyCompany.png",
-                        height: SizeConfig.scaleHeight(90),
-                        width: SizeConfig.scaleWidth(120)),
-                    Image.asset(
-                      "assets/images/addJobIcon.png",
-                      height: SizeConfig.scaleHeight(17),
-                      width: SizeConfig.scaleWidth(27),
-                    ),
-                  ],
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return CompanyInfo();
+                    }));
+                  },
+                  child: FractionalTranslation(
+                    translation: Offset(0.0, 0.5),
+                    child: Image.asset("assets/images/technologyCompany.png",
+                        height: SizeConfig.scaleHeight(150),
+                        width: SizeConfig.scaleWidth(150)),
+                  ),
                 ),
                 Positioned(
                   width: SizeConfig.screenWidth,
@@ -60,11 +73,13 @@ class _EditJobScreenState extends State<EditJobScreen> {
                           color: Color(0xffD2D0D0FF),
                         ),
                       ),
-                      Spacer(),
                     ],
                   ),
-                ),
+                )
               ],
+            ),
+            SizedBox(
+              height: SizeConfig.scaleHeight(60),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

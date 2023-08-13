@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -35,21 +36,41 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              Card(
-                clipBehavior: Clip.antiAlias,
-                shape: CircleBorder(),
-                color: Color(0xffcbb523),
-                child: SizedBox(
-                  width: SizeConfig.scaleWidth(150),
-                  height: SizeConfig.scaleHeight(150),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/prof1.png',
-                      fit: BoxFit.cover,
-                      // fit: BoxFit.cover,
+              Stack(
+                children: [
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: CircleBorder(),
+                    color: Color(0xffcbb523),
+                    child: SizedBox(
+                      width: SizeConfig.scaleWidth(150),
+                      height: SizeConfig.scaleHeight(150),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/prof1.png',
+                          fit: BoxFit.cover,
+                          // fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Positioned(
+                    bottom: SizeConfig.scaleHeight(0),
+                    right: SizeConfig.scaleWidth(10),
+                    child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: FloatingActionButton(
+                          backgroundColor: Color(0xff4C5175),
+                          onPressed: () {},
+                          child: Icon(
+                            Icons.camera_alt_outlined,
+                            color: Colors.white,
+                            size: SizeConfig.scaleWidth(22),
+                          )),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: SizeConfig.scaleHeight(10),
@@ -70,93 +91,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                     color: Color(0xffBBBDD0),
                     fontSize: SizeConfig.scaleTextFont(14),
                     fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(10),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.scaleWidth(20),
-                  right: SizeConfig.scaleWidth(20),
-                  top: SizeConfig.scaleWidth(20),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          "My Business",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(16),
-                              color: Color(0xffCBB523),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.scaleHeight(10),
-                        ),
-                        Text(
-                          "15",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(21),
-                              color: Color(0xff4C5175),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(30),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Completed Tasks",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(16),
-                              color: Color(0xffCBB523),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.scaleHeight(10),
-                        ),
-                        Text(
-                          "10",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(21),
-                              color: Color(0xff4C5175),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(30),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Requests",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(16),
-                              color: Color(0xffCBB523),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.scaleHeight(10),
-                        ),
-                        Text(
-                          "25",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(21),
-                              color: Color(0xff4C5175),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(10),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -281,122 +215,7 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: SizeConfig.scaleHeight(15),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: Text(
-                                            "Old password",
-                                            style: TextStyle(
-                                                fontSize:
-                                                    SizeConfig.scaleTextFont(
-                                                        12),
-                                                color: Color(0xff4C5175),
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      SizedBox(
-                                        width: SizeConfig.scaleWidth(122),
-                                      ),
-                                      Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: Text(
-                                            " New password",
-                                            style: TextStyle(
-                                                fontSize:
-                                                    SizeConfig.scaleTextFont(
-                                                        12),
-                                                color: Color(0xff4C5175),
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ],
-                                  ),
-                                  SizedBox(
                                     height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        height: SizeConfig.scaleHeight(50),
-                                        width: SizeConfig.scaleWidth(160),
-                                        child: TextField(
-                                          obscureText: true,
-                                          keyboardType: TextInputType.text,
-                                          decoration: InputDecoration(
-                                            suffixIcon: Icon(
-                                              Icons.visibility_off_outlined,
-                                              size: SizeConfig.scaleWidth(17),
-                                              color: Color(0xffCBB523),
-                                            ),
-                                            filled: true,
-                                            fillColor: Color(0xffFAFAFA),
-                                            hintStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontSize:
-                                                  SizeConfig.scaleTextFont(12),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              borderSide: BorderSide(
-                                                width: 0,
-                                                color: Colors.grey.shade600,
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              borderSide: BorderSide(
-                                                width: 1.5,
-                                                color: Colors.blue,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: SizeConfig.scaleWidth(20),
-                                      ),
-                                      SizedBox(
-                                        height: SizeConfig.scaleHeight(50),
-                                        width: SizeConfig.scaleWidth(160),
-                                        child: TextField(
-                                          obscureText: true,
-                                          keyboardType: TextInputType.text,
-                                          decoration: InputDecoration(
-                                            suffixIcon: Icon(
-                                              Icons.visibility_off_outlined,
-                                              size: SizeConfig.scaleWidth(17),
-                                              color: Color(0xffCBB523),
-                                            ),
-                                            filled: true,
-                                            fillColor: Color(0xffFAFAFA),
-                                            hintStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontSize:
-                                                  SizeConfig.scaleTextFont(12),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              borderSide: BorderSide(
-                                                width: 0,
-                                                color: Colors.grey.shade600,
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              borderSide: BorderSide(
-                                                width: 1.5,
-                                                color: Colors.blue,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                   SizedBox(
                                     height: SizeConfig.scaleHeight(15),
@@ -597,31 +416,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  Container(
-                                    height: SizeConfig.scaleHeight(60),
-                                    width: SizeConfig.scaleWidth(320),
-                                    // margin: EdgeInsetsDirectional.only(start:SizeConfig.scaleWidth(250)),
-                                    child: TextButton(
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Color(0xff4C5175),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        onPressed: () {},
-                                        child: TextStyleWidget(
-                                            "Save ",
-                                            Colors.white,
-                                            SizeConfig.scaleTextFont(20),
-                                            FontWeight.w500)),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
                                 ],
                               ),
                             ),
@@ -638,7 +432,12 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                           backgroundColor: Color(0xff4C5175),
                           radius: 50,
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) {
+                                return ProfileInfo();
+                              }));
+                            },
                             icon: Icon(
                               Icons.check_rounded,
                               size: SizeConfig.scaleWidth(30),

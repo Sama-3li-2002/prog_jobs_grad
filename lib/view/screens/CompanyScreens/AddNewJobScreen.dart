@@ -40,7 +40,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                   SizeConfig.scaleTextFont(18), FontWeight.w500),
               Center(
                 child: Stack(
-                  alignment: Alignment.bottomRight,
                   children: [
                     Container(
                       // padding: EdgeInsets.all(20),
@@ -61,11 +60,21 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                         ),
                       ),
                     ),
-                    Image.asset(
-                      "assets/images/addJobIcon.png",
-                      width: SizeConfig.scaleWidth(20),
-                      height: SizeConfig.scaleHeight(30),
-                      fit: BoxFit.cover,
+                    Positioned(
+                      bottom: SizeConfig.scaleHeight(0),
+                      right: SizeConfig.scaleWidth(0),
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: FloatingActionButton(
+                            backgroundColor: Color(0xff4C5175),
+                            onPressed: () {},
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Colors.white,
+                              size: SizeConfig.scaleWidth(22),
+                            )),
+                      ),
                     ),
                   ],
                 ),

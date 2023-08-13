@@ -206,10 +206,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 size: SizeConfig.scaleWidth(14),
                                               ),
                                               SizedBox(
-                                                  width:
-                                                      SizeConfig.scaleWidth(2)),
+                                                  width: SizeConfig.scaleWidth(
+                                                      10)),
                                               TextStyleWidget(
-                                                  'submit request',
+                                                  'Submition',
                                                   Colors.white,
                                                   SizeConfig.scaleTextFont(10),
                                                   FontWeight.w500),
@@ -372,9 +372,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             SizedBox(
                                                 width:
-                                                    SizeConfig.scaleWidth(2)),
+                                                    SizeConfig.scaleWidth(10)),
                                             TextStyleWidget(
-                                                'submit request',
+                                                'Submition',
                                                 Colors.white,
                                                 SizeConfig.scaleTextFont(10),
                                                 FontWeight.w500),

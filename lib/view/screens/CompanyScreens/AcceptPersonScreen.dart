@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/MessagesProg.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 
 import '../../customWidget/textStyleWidget.dart';
 
@@ -27,6 +30,20 @@ class _AcceptPersonState extends State<AcceptPerson> {
           ),
           color: Color(0xff4C5175),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return ConversationScreen();
+              }));
+            },
+            icon: Icon(
+              Icons.message,
+              size: SizeConfig.scaleWidth(22),
+            ),
+            color: Color(0xff4C5175),
+          ),
+        ],
         elevation: 0,
       ),
       body: Center(
@@ -34,125 +51,26 @@ class _AcceptPersonState extends State<AcceptPerson> {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 50,
-                child: Image.asset(
-                  "assets/images/profilePhoto.png",
+              Card(
+                clipBehavior: Clip.antiAlias,
+                shape: CircleBorder(),
+                color: Color(0xffcbb523),
+                child: SizedBox(
+                  width: SizeConfig.scaleWidth(150),
+                  height: SizeConfig.scaleHeight(150),
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/images/prof1.png',
+                      fit: BoxFit.cover,
+                      // fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: SizeConfig.scaleHeight(10)),
-              Text(
-                "Sohib naser khalaf",
-                style: TextStyle(
-                    color: Color(0xff4C5175),
-                    fontSize: SizeConfig.scaleTextFont(16),
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(3),
-              ),
-              Text(
-                "Web programmer",
-                style: TextStyle(
-                    color: Color(0xffBBBDD0),
-                    fontSize: SizeConfig.scaleTextFont(14),
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(10),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: SizeConfig.scaleWidth(20),
-                    right: SizeConfig.scaleWidth(20),
-                    top: SizeConfig.scaleHeight(20)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          "My Business",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(16),
-                              color: Color(0xffCBB523),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.scaleHeight(10),
-                        ),
-                        Text(
-                          "15",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(21),
-                              color: Color(0xff4C5175),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(30),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Completed Tasks",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(16),
-                              color: Color(0xffCBB523),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.scaleHeight(10),
-                        ),
-                        Text(
-                          "10",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(21),
-                              color: Color(0xff4C5175),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(30),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Requests",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(16),
-                              color: Color(0xffCBB523),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.scaleHeight(10),
-                        ),
-                        Text(
-                          "25",
-                          style: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(21),
-                              color: Color(0xff4C5175),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(10),
-              ),
               Column(
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: SizeConfig.scaleHeight(30),
-                  ),
                   Container(
-                    height: SizeConfig.scaleHeight(900),
                     child: Card(
                       elevation: 10,
                       shape: RoundedRectangleBorder(
@@ -162,7 +80,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.only(
-                            top: SizeConfig.scaleHeight(50),
+                            top: SizeConfig.scaleHeight(30),
                             left: SizeConfig.scaleWidth(20),
                             right: SizeConfig.scaleWidth(20)),
                         child: Container(
@@ -280,7 +198,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                               ),
                               Container(
                                   width: double.infinity,
-                                  height: SizeConfig.scaleHeight(350),
+                                  // height: SizeConfig.scaleHeight(300),
                                   decoration: BoxDecoration(
                                     color: Colors.grey.withOpacity(.1),
                                     borderRadius:
@@ -344,12 +262,12 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                     ],
                                   )),
                               SizedBox(
-                                height: SizeConfig.scaleHeight(40),
+                                height: SizeConfig.scaleHeight(20),
                               ),
                               Row(
                                 children: [
                                   Container(
-                                    height: SizeConfig.scaleHeight(50),
+                                    // height: SizeConfig.scaleHeight(50),
                                     width: SizeConfig.scaleWidth(150),
                                     // margin: EdgeInsetsDirectional.only(start:SizeConfig.scaleWidth(250)),
                                     child: TextButton(
@@ -371,7 +289,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                     width: SizeConfig.scaleWidth(35),
                                   ),
                                   Container(
-                                    height: SizeConfig.scaleHeight(50),
+                                    // height: SizeConfig.scaleHeight(50),
                                     width: SizeConfig.scaleWidth(150),
                                     // margin: EdgeInsetsDirectional.only(start:SizeConfig.scaleWidth(250)),
                                     child: TextButton(

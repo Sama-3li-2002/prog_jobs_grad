@@ -55,17 +55,21 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
                       width: 200,
                       height: 100,
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(
-                          top: SizeConfig.scaleHeight(70),
-                          start: SizeConfig.scaleWidth(115)),
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.camera_alt_outlined,
-                            color: Colors.blue,
-                            size: SizeConfig.scaleWidth(22),
-                          )),
+                    Positioned(
+                      bottom: SizeConfig.scaleHeight(0),
+                      right: SizeConfig.scaleWidth(30),
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: FloatingActionButton(
+                            backgroundColor: Color(0xff4C5175),
+                            onPressed: () {},
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Colors.white,
+                              size: SizeConfig.scaleWidth(22),
+                            )),
+                      ),
                     ),
                   ],
                 ),
@@ -75,11 +79,8 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
               ),
               Align(
                 alignment: Alignment.topLeft,
-                child: TextStyleWidget(
-                    "Company Name or email :",
-                    Color(0xff4C5175),
-                    SizeConfig.scaleTextFont(12),
-                    FontWeight.w500),
+                child: TextStyleWidget("Company Name:", Color(0xff4C5175),
+                    SizeConfig.scaleTextFont(12), FontWeight.w500),
               ),
               SizedBox(
                 height: SizeConfig.scaleHeight(5),
@@ -272,52 +273,7 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
               SizedBox(
                 height: SizeConfig.scaleHeight(10),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: TextStyleWidget(
-                    "Company Manager image:",
-                    Color(0xff4C5175),
-                    SizeConfig.scaleTextFont(12),
-                    FontWeight.w500),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(5),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(50),
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.camera_alt_outlined,
-                      size: SizeConfig.scaleWidth(20),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey.shade200,
-                    hintText: "ahmed.png",
-                    hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: SizeConfig.scaleTextFont(12)),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        width: 0,
-                        color: Colors.grey.shade100,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        width: 1.5,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(10),
-              ),
+
               TextStyleWidget("About Company:", Color(0xff4C5175),
                   SizeConfig.scaleTextFont(15), FontWeight.w500),
               SizedBox(
@@ -361,94 +317,7 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
               SizedBox(
                 height: SizeConfig.scaleHeight(10),
               ),
-              Container(
-                height: SizeConfig.scaleHeight(40),
-                width: SizeConfig.scaleWidth(120),
-                margin: EdgeInsetsDirectional.only(
-                    start: SizeConfig.scaleWidth(250)),
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xff4C5175),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: SizeConfig.scaleWidth(5),
-                        ),
-                        Icon(
-                          Icons.camera_alt_outlined,
-                          size: SizeConfig.scaleWidth(15),
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: SizeConfig.scaleWidth(5),
-                        ),
-                        TextStyleWidget("Add image ", Colors.white,
-                            SizeConfig.scaleTextFont(10), FontWeight.w500),
-                      ],
-                    )),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(200),
-                width: double.infinity,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const PageScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    Container(
-                      clipBehavior: Clip.antiAlias,
-                      child: Image.asset("assets/images/advertisement 1.jpeg"),
-                      margin: EdgeInsetsDirectional.only(
-                        top: SizeConfig.scaleHeight(10),
-                        bottom: SizeConfig.scaleHeight(10),
-                        start: SizeConfig.scaleWidth(10),
-                        end: SizeConfig.scaleWidth(5),
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    Container(
-                      clipBehavior: Clip.antiAlias,
-                      child: Image.asset(
-                        "assets/images/advertisement 2.jpg",
-                      ),
-                      margin: EdgeInsetsDirectional.only(
-                        top: SizeConfig.scaleHeight(10),
-                        bottom: SizeConfig.scaleHeight(10),
-                        start: SizeConfig.scaleWidth(5),
-                        end: SizeConfig.scaleWidth(5),
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    Container(
-                      clipBehavior: Clip.antiAlias,
-                      child: Image.asset(
-                        "assets/images/advertisement 3.jpg",
-                      ),
-                      margin: EdgeInsetsDirectional.only(
-                        top: SizeConfig.scaleHeight(10),
-                        bottom: SizeConfig.scaleHeight(10),
-                        start: SizeConfig.scaleWidth(5),
-                        end: SizeConfig.scaleWidth(5),
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(20),
-              ),
+
               Center(
                 child: Container(
                   height: SizeConfig.scaleHeight(60),

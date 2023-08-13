@@ -192,68 +192,13 @@ class _SettingScreenState extends State<SettingScreen> {
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.scaleHeight(5),
-            ),
-            TextStyleWidget("Notes", Color(0xffCBB523),
-                SizeConfig.scaleTextFont(15), FontWeight.w500),
-            Card(
-              elevation: 7,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        width: SizeConfig.scaleWidth(60),
-                        height: SizeConfig.scaleHeight(100),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(8),
-                                bottomRight: Radius.circular(8)),
-                            color: Color(0xff4C5175)),
-                      ),
-                      Positioned(
-                        top: SizeConfig.scaleHeight(0),
-                        bottom: SizeConfig.scaleHeight(0),
-                        right: SizeConfig.scaleWidth(0),
-                        left: SizeConfig.scaleWidth(0),
-                        child: Image.asset(
-                          "assets/images/Note.png",
-                          width: SizeConfig.scaleWidth(50),
-                          height: SizeConfig.scaleHeight(50),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: SizeConfig.scaleWidth(2),
-                  ),
-                  Container(
-                    width: SizeConfig.scaleWidth(0.2),
-                    height: SizeConfig.scaleHeight(90),
-                    color: Color(0xff4C5175),
-                  ),
-                  SizedBox(
-                    width: SizeConfig.scaleWidth(10),
-                  ),
-                  SizedBox(
-                    width: SizeConfig.scaleWidth(250),
-                    height: SizeConfig.scaleHeight(90),
-                    child: TextField(
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Notes...',
-                          hintStyle: TextStyle(
-                              fontSize: SizeConfig.scaleTextFont(10),
-                              fontWeight: FontWeight.w500)),
-                    ),
+                  Divider(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.scaleWidth(20),
+                        vertical: SizeConfig.scaleHeight(10)),
+                    child: TextStyleWidget("Change Password", Color(0xff091A20),
+                        SizeConfig.scaleTextFont(12), FontWeight.w500),
                   ),
                 ],
               ),

@@ -5,6 +5,7 @@ import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoEditScreen
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
 import '../../customWidget/textStyleWidget.dart';
+import 'ConversationScreen.dart';
 
 class CompanyInfo extends StatefulWidget {
   static const String id = "company_info_screen";
@@ -25,7 +26,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                 children: [
                   Image.asset(
                     "assets/images/company_info_image.jpg",
-                    height: SizeConfig.scaleHeight(220),
+                    height: SizeConfig.scaleHeight(250),
                     width: double.infinity,
                     fit: BoxFit.cover,
                     color: Colors.black.withOpacity(0.8),
@@ -62,7 +63,23 @@ class _CompanyInfoState extends State<CompanyInfo> {
                               child: Icon(Icons.edit_sharp,
                                   color: Colors.white,
                                   size: SizeConfig.scaleWidth(20)),
-                            )),
+                            ))
+                      else if (UserTypeScreen.type == "programmer")
+                        Padding(
+                            padding: EdgeInsetsDirectional.only(
+                                start: SizeConfig.scaleWidth(300),
+                                top: SizeConfig.scaleHeight(50)),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (context) {
+                                  return ConversationScreen();
+                                }));
+                              },
+                              child: Icon(Icons.message,
+                                  color: Colors.white,
+                                  size: SizeConfig.scaleWidth(20)),
+                            ))
                     ],
                   ),
                   Container(
@@ -206,9 +223,33 @@ class _CompanyInfoState extends State<CompanyInfo> {
                 indent: 20,
                 endIndent: 20,
               ),
+              Padding(
+                padding: EdgeInsetsDirectional.only(
+                    start: SizeConfig.scaleWidth(30),
+                    top: SizeConfig.scaleHeight(5)),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.manage_accounts,
+                      color: Color(0xffCBB523),
+                      size: SizeConfig.scaleWidth(20),
+                    ),
+                    SizedBox(
+                      width: SizeConfig.scaleWidth(10),
+                    ),
+                    Text(
+                      "Company Manager",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: SizeConfig.scaleTextFont(12),
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Container(
-                height: SizeConfig.scaleHeight(1000),
-                width: double.infinity,
                 margin: EdgeInsetsDirectional.only(
                   top: SizeConfig.scaleHeight(20),
                 ),
@@ -216,12 +257,9 @@ class _CompanyInfoState extends State<CompanyInfo> {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.6),
-                      // لون التأثير وشفافيته
-                      spreadRadius: 5,
-                      // انتشار التأثير (المسافة بين التأثير والعنصر)
-                      blurRadius: 7,
-                      // تحديد قوة التأثير (التموج)
-                      offset: Offset(0, 3), // مكان بدء التأثير (X, Y)
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
                     ),
                   ],
                 ),
@@ -229,82 +267,14 @@ class _CompanyInfoState extends State<CompanyInfo> {
                   elevation: 50,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(40),
-                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(10),
                   )),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Container(
-                      //   height: SizeConfig.scaleHeight(6),
-                      //   margin: EdgeInsetsDirectional.only(
-                      //     top: SizeConfig.scaleHeight(20),
-                      //     start: SizeConfig.scaleWidth(142),
-                      //     end: SizeConfig.scaleWidth(142),
-                      //   ), // هامش أفقي
-                      //   decoration: BoxDecoration(
-                      //     color: Color(0xff4C5175), // لون الخط
-                      //     borderRadius: BorderRadius.circular(
-                      //         5), // نصف قطر الزاوية المستديرة
-                      //   ),
-                      // ),
                       SizedBox(
-                        height: SizeConfig.scaleHeight(300),
-                        width: double.infinity,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          physics: const PageScrollPhysics(),
-                          shrinkWrap: true,
-                          children: [
-                            Container(
-                              clipBehavior: Clip.antiAlias,
-                              child: Image.asset(
-                                  "assets/images/advertisement 1.jpeg"),
-                              margin: EdgeInsetsDirectional.only(
-                                top: SizeConfig.scaleHeight(30),
-                                bottom: SizeConfig.scaleHeight(10),
-                                start: SizeConfig.scaleWidth(10),
-                                end: SizeConfig.scaleWidth(5),
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            Container(
-                              clipBehavior: Clip.antiAlias,
-                              child: Image.asset(
-                                "assets/images/advertisement 2.jpg",
-                              ),
-                              margin: EdgeInsetsDirectional.only(
-                                top: SizeConfig.scaleHeight(30),
-                                bottom: SizeConfig.scaleHeight(10),
-                                start: SizeConfig.scaleWidth(5),
-                                end: SizeConfig.scaleWidth(5),
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            Container(
-                              clipBehavior: Clip.antiAlias,
-                              child: Image.asset(
-                                "assets/images/advertisement 3.jpg",
-                              ),
-                              margin: EdgeInsetsDirectional.only(
-                                top: SizeConfig.scaleHeight(30),
-                                bottom: SizeConfig.scaleHeight(10),
-                                start: SizeConfig.scaleWidth(5),
-                                end: SizeConfig.scaleWidth(5),
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.scaleHeight(10),
+                        height: SizeConfig.scaleHeight(40),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.only(
@@ -316,7 +286,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                             FontWeight.w500),
                       ),
                       Container(
-                        height: SizeConfig.scaleHeight(500),
+                        // height: SizeConfig.scaleHeight(500),
                         width: double.infinity,
                         margin: EdgeInsetsDirectional.only(
                           top: SizeConfig.scaleHeight(10),
@@ -330,48 +300,13 @@ class _CompanyInfoState extends State<CompanyInfo> {
                               borderRadius: BorderRadius.circular(10)),
                           child: Padding(
                             padding: EdgeInsetsDirectional.only(
-                              top: SizeConfig.scaleHeight(15),
+                              top: SizeConfig.scaleHeight(10),
                               bottom: SizeConfig.scaleHeight(10),
                               start: SizeConfig.scaleWidth(10),
                               end: SizeConfig.scaleWidth(10),
                             ),
                             child: Column(
                               children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 30,
-                                      backgroundImage: AssetImage(
-                                          'assets/images/company_manger.png'),
-                                    ),
-                                    SizedBox(
-                                      width: SizeConfig.scaleWidth(15),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        TextStyleWidget(
-                                            "Eng:Ahmed Khaled Saed",
-                                            Colors.black,
-                                            SizeConfig.scaleTextFont(18),
-                                            FontWeight.w500),
-                                        SizedBox(
-                                          height: SizeConfig.scaleHeight(2),
-                                        ),
-                                        TextStyleWidget(
-                                            "Company Manager:",
-                                            Colors.grey,
-                                            SizeConfig.scaleTextFont(14),
-                                            FontWeight.w500)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: SizeConfig.scaleHeight(15),
-                                ),
                                 Text(
                                   "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eopksio laborum. Sed ut perspiciatis unde omnis istpoe natus error sit voluptatem accusantium doloremque eopsloi laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunot explicabo. Nemo ernim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sedopk quia consequuntur magni dolores eos qui rationesopl voluptatem sequi nesciunt. Neque porro quisquameo est, qui dolorem ipsum quia dolor sit amet, eopsmiep consectetur, adipisci velit, seisud quia non numquam eius modi tempora incidunt ut labore et dolore wopeir magnam aliquam quaerat voluptatem eoplmuriquisqu",
                                   maxLines: 13,

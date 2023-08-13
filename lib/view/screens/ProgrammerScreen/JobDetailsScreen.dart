@@ -28,10 +28,19 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               alignment: Alignment.bottomCenter,
               children: [
                 Container(
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Image.asset("assets/images/laptops.png",
-                        fit: BoxFit.cover),
+                  height: SizeConfig.scaleHeight(300),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40)),
+                  ),
+                  child: Image.asset(
+                    "assets/images/laptops.jpg",
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                    color: Colors.black.withOpacity(0.5),
+                    colorBlendMode: BlendMode.darken,
                   ),
                 ),
                 InkWell(
@@ -41,9 +50,12 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       return CompanyInfo();
                     }));
                   },
-                  child: Image.asset("assets/images/technologyCompany.png",
-                      height: SizeConfig.scaleHeight(90),
-                      width: SizeConfig.scaleWidth(120)),
+                  child: FractionalTranslation(
+                    translation: Offset(0.0, 0.5),
+                    child: Image.asset("assets/images/technologyCompany.png",
+                        height: SizeConfig.scaleHeight(150),
+                        width: SizeConfig.scaleWidth(150)),
+                  ),
                 ),
                 Positioned(
                   width: SizeConfig.screenWidth,
@@ -106,6 +118,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   ),
                 )
               ],
+            ),
+            SizedBox(
+              height: SizeConfig.scaleHeight(60),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -270,10 +285,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       size: SizeConfig.scaleWidth(20),
                                     ),
                                     SizedBox(
-                                      width: SizeConfig.scaleWidth(5),
+                                      width: SizeConfig.scaleWidth(10),
                                     ),
                                     TextStyleWidget(
-                                        "submit request",
+                                        "Submition",
                                         Color(0xffFAFAFA),
                                         SizeConfig.scaleTextFont(13),
                                         FontWeight.w500)

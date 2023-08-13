@@ -140,48 +140,25 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                                     SizedBox(
                                       height: SizeConfig.scaleHeight(10),
                                     ),
-                                    SizedBox(
+                                    Container(
                                       width: SizeConfig.scaleWidth(99),
                                       height: SizeConfig.scaleHeight(26),
-                                      child: ElevatedButton(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Color(0xff4C5175),
+                                      ),
+                                      child: Center(
                                         child: TextStyleWidget(
                                             'waiting reply',
                                             Colors.white,
                                             SizeConfig.scaleTextFont(10),
                                             FontWeight.w500),
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Color(0xff4C5175),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(2),
-                                          ),
-                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsets.only(right: SizeConfig.scaleWidth(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Icon(
-                                Icons.access_time,
-                                size: SizeConfig.scaleWidth(14),
-                                color: Color(0xffcbb523),
-                              ),
-                              TextStyleWidget(
-                                  ' a minute ago',
-                                  Colors.black,
-                                  SizeConfig.scaleTextFont(10),
-                                  FontWeight.w500),
-                            ],
                           ),
                         ),
                       ],

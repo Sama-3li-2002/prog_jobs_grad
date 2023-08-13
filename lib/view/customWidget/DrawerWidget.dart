@@ -51,7 +51,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 Widget BuildHeader(BuildContext context) {
   return SizedBox(
     height: SizeConfig.scaleHeight(220),
-    width: SizeConfig.scaleWidth(400),
+    width: SizeConfig.scaleWidth(300),
     child: DrawerHeader(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(70)),
@@ -59,20 +59,12 @@ Widget BuildHeader(BuildContext context) {
               image: AssetImage(
             "assets/images/drawer_photo.jpeg",
           ))),
-      child: Padding(
-        padding: EdgeInsets.only(top: SizeConfig.scaleHeight(500)),
-        child: Text(
-          "shorooq@gmail.com",
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
+      child: SizedBox(),
     ),
   );
 }
 
 Widget BuildMenuItems(BuildContext context) {
-  List<Widget> menuItems = [];
-
   return SingleChildScrollView(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
