@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/model/UsersModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -19,12 +20,32 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  // Programmer Info
+  TextEditingController? _usernameProg;
+  TextEditingController? _emailProg;
+  TextEditingController? _passwordProg;
+  TextEditingController? _phoneProg;
+  TextEditingController? _ageProg;
+  TextEditingController? _specializationProg;
+  TextEditingController? _aboutProg;
+
+  // Company Info
   TextEditingController? _emailCom;
   TextEditingController? _passwordCom;
 
   @override
   void initState() {
     super.initState();
+    // Programmer Info
+    _usernameProg = TextEditingController();
+    _emailProg = TextEditingController();
+    _passwordProg = TextEditingController();
+    _phoneProg = TextEditingController();
+    _ageProg = TextEditingController();
+    _specializationProg = TextEditingController();
+    _aboutProg = TextEditingController();
+
+    // Company Info
     _emailCom = TextEditingController();
     _passwordCom = TextEditingController();
   }
@@ -32,6 +53,16 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void dispose() {
     super.dispose();
+    // Programmer Info
+    _usernameProg?.dispose();
+    _emailProg?.dispose();
+    _passwordProg?.dispose();
+    _phoneProg?.dispose();
+    _ageProg?.dispose();
+    _specializationProg?.dispose();
+    _aboutProg?.dispose();
+
+    // Company Info
     _emailCom?.dispose();
     _passwordCom?.dispose();
   }
@@ -85,7 +116,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _usernameProg,
                           inputType: TextInputType.text,
                         )),
                     SizedBox(
@@ -96,8 +128,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
                           inputType: TextInputType.emailAddress,
+                          controller: _emailProg,
                         )),
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
@@ -108,6 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       width: SizeConfig.scaleWidth(321),
                       height: SizeConfig.scaleHeight(48),
                       child: TextField(
+                        controller: _passwordProg,
                         obscureText: true,
                         decoration: InputDecoration(
                             fillColor: Colors.white,
@@ -129,7 +163,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _ageProg,
                           inputType: TextInputType.number,
                         )),
                     SizedBox(
@@ -140,7 +175,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _phoneProg,
                           inputType: TextInputType.phone,
                         )),
                     SizedBox(
@@ -151,7 +187,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _specializationProg,
                           inputType: TextInputType.text,
                         )),
                     SizedBox(
@@ -162,7 +199,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _aboutProg,
                           inputType: TextInputType.multiline,
                         )),
                     SizedBox(
@@ -174,7 +212,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: ElevatedButton(
                         child: TextStyleWidget('OK', Colors.white,
                             SizeConfig.scaleTextFont(22), FontWeight.bold),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await createProgAccount();
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff3b3f5b),
                           shape: RoundedRectangleBorder(
@@ -286,7 +326,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: TextStyleWidget('OK', Colors.white,
                             SizeConfig.scaleTextFont(22), FontWeight.bold),
                         onPressed: () async {
-                          await performLogin();
+                          // await performLogin();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff3b3f5b),
@@ -308,11 +348,42 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Future performLogin() async {
-    if (checkData()) {
-      await signUp();
+  Future createProgAccount() async {
+    if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
+      UserCredential? userCredential = await FirebaseAuthController
+          .fireStoreHelper
+          .createAccount(Users.signup(
+              _usernameProg!.text,
+              _emailProg!.text,
+              _passwordProg!.text,
+              _phoneProg!.text,
+              int.tryParse(_ageProg!.text),
+              _specializationProg!.text,
+              _aboutProg!.text));
+      if (userCredential != null) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return LoginScreen(
+            userType: widget.userType,
+          );
+        }));
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "Email or Password can't be empty",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
+
+  // Future performLogin() async {
+  //   if (checkData()) {
+  //     await signUp();
+  //   }
+  // }
 
   bool checkData() {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
@@ -329,16 +400,16 @@ class _SignupScreenState extends State<SignupScreen> {
     return false;
   }
 
-  Future signUp() async {
-    UserCredential? userCredential = await FirebaseAuthController
-        .fireStoreHelper
-        .createAccount(_emailCom!.text, _passwordCom!.text);
-    if (userCredential != null) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return LoginScreen(
-          userType: widget.userType,
-        );
-      }));
-    }
-  }
+// Future signUp() async {
+//   UserCredential? userCredential = await FirebaseAuthController
+//       .fireStoreHelper
+//       .createAccount(_emailCom!.text, _passwordCom!.text);
+//   if (userCredential != null) {
+//     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+//       return LoginScreen(
+//         userType: widget.userType,
+//       );
+//     }));
+//   }
+// }
 }

@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
+import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
 import '../../customWidget/TextFieldWidget.dart';
@@ -23,12 +24,22 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // Programmer Info
+  TextEditingController? _emailProg;
+  TextEditingController? _passwordProg;
+
+  // Company Info
   TextEditingController? _emailCom;
   TextEditingController? _passwordCom;
 
   @override
   void initState() {
     super.initState();
+    // Programmer Info
+    _emailProg = TextEditingController();
+    _passwordProg = TextEditingController();
+
+    // Company Info
     _emailCom = TextEditingController();
     _passwordCom = TextEditingController();
   }
@@ -36,6 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     super.dispose();
+    // Programmer Info
+    _emailProg?.dispose();
+    _passwordProg?.dispose();
+
+    // Company Info
     _emailCom?.dispose();
     _passwordCom?.dispose();
   }
@@ -88,67 +104,106 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: SizeConfig.scaleHeight(20),
               ),
               if (widget.userType == 'programmer')
-                RichTextWidget(
-                  'username ',
-                  Color(0xff4C5175),
-                  SizeConfig.scaleTextFont(12),
-                  FontWeight.w500,
-                  'or',
-                  Color(0xFFB8852F),
-                  SizeConfig.scaleTextFont(12),
-                  FontWeight.w500,
-                  ' email',
-                  Color(0xff4C5175),
-                  SizeConfig.scaleTextFont(12),
-                  FontWeight.w500,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichTextWidget(
+                      'username ',
+                      Color(0xff4C5175),
+                      SizeConfig.scaleTextFont(12),
+                      FontWeight.w500,
+                      'or',
+                      Color(0xFFB8852F),
+                      SizeConfig.scaleTextFont(12),
+                      FontWeight.w500,
+                      ' email',
+                      Color(0xff4C5175),
+                      SizeConfig.scaleTextFont(12),
+                      FontWeight.w500,
+                    ),
+                    SizedBox(
+                        width: SizeConfig.scaleWidth(321),
+                        height: SizeConfig.scaleHeight(48),
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _emailProg,
+                          inputType: TextInputType.text,
+                        )),
+                    SizedBox(
+                      height: SizeConfig.scaleHeight(20),
+                    ),
+                    TextStyleWidget('password', Color(0xff4C5175),
+                        SizeConfig.scaleTextFont(12), FontWeight.w500),
+                    SizedBox(
+                      width: SizeConfig.scaleWidth(321),
+                      height: SizeConfig.scaleHeight(48),
+                      child: TextField(
+                        controller: _passwordProg,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 1)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            )),
+                      ),
+                    ),
+                  ],
                 )
               else if (widget.userType == 'company')
-                RichTextWidget(
-                  'Company Name ',
-                  Color(0xff4C5175),
-                  SizeConfig.scaleTextFont(12),
-                  FontWeight.w500,
-                  'or',
-                  Color(
-                    0xFFB8852F,
-                  ),
-                  SizeConfig.scaleTextFont(12),
-                  FontWeight.w500,
-                  ' email',
-                  Color(0xff4C5175),
-                  SizeConfig.scaleTextFont(12),
-                  FontWeight.w500,
+                Column(
+                  children: [
+                    RichTextWidget(
+                      'Company Name ',
+                      Color(0xff4C5175),
+                      SizeConfig.scaleTextFont(12),
+                      FontWeight.w500,
+                      'or',
+                      Color(
+                        0xFFB8852F,
+                      ),
+                      SizeConfig.scaleTextFont(12),
+                      FontWeight.w500,
+                      ' email',
+                      Color(0xff4C5175),
+                      SizeConfig.scaleTextFont(12),
+                      FontWeight.w500,
+                    ),
+                    SizedBox(
+                        width: SizeConfig.scaleWidth(321),
+                        height: SizeConfig.scaleHeight(48),
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _emailCom,
+                          inputType: TextInputType.text,
+                        )),
+                    SizedBox(
+                      height: SizeConfig.scaleHeight(20),
+                    ),
+                    TextStyleWidget('password', Color(0xff4C5175),
+                        SizeConfig.scaleTextFont(12), FontWeight.w500),
+                    SizedBox(
+                      width: SizeConfig.scaleWidth(321),
+                      height: SizeConfig.scaleHeight(48),
+                      child: TextField(
+                        controller: _passwordCom,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 1)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            )),
+                      ),
+                    ),
+                  ],
                 ),
-              SizedBox(
-                  width: SizeConfig.scaleWidth(321),
-                  height: SizeConfig.scaleHeight(48),
-                  child: TextFieldWidget.textfieldCon(
-                    controller: _emailCom,
-                    inputType: TextInputType.text,
-                  )),
-              SizedBox(
-                height: SizeConfig.scaleHeight(20),
-              ),
-              TextStyleWidget('password', Color(0xff4C5175),
-                  SizeConfig.scaleTextFont(12), FontWeight.w500),
-              SizedBox(
-                width: SizeConfig.scaleWidth(321),
-                height: SizeConfig.scaleHeight(48),
-                child: TextField(
-                  controller: _passwordCom,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 1)),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      )),
-                ),
-              ),
               Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
@@ -172,15 +227,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizeConfig.scaleTextFont(22), FontWeight.bold),
                   onPressed: () async {
                     if (widget.userType == 'programmer') {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return HomeScreen();
-                          },
-                        ),
-                      );
+                      performLoginProg();
                     } else if (widget.userType == 'company') {
-                      await performLogin();
+                      await performLoginCom();
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -223,7 +272,33 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future performLogin() async {
+  // Programmer Info
+  Future performLoginProg() async {
+    if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
+      UserCredential? userCredential =
+          await FirebaseAuthController.fireStoreHelper.signIn(
+        _emailProg!.text,
+        _passwordProg!.text,
+      );
+      if (userCredential != null) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }));
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "Email or Password can't be empty",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  // Company Info
+  Future performLoginCom() async {
     if (checkData()) {
       await logIn();
     }

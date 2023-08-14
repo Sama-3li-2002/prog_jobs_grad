@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:prog_jobs_grad/model/UsersModel.dart';
+
+import 'FirebaseFireStoreHelper.dart';
 
 class FirebaseAuthController {
   FirebaseAuthController._();
@@ -8,10 +11,13 @@ class FirebaseAuthController {
   static FirebaseAuthController fireStoreHelper = FirebaseAuthController._();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<UserCredential?> createAccount(String email, String password) async {
+  Future<UserCredential?> createAccount(Users users) async {
     try {
-      UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+              email: users.email!, password: users.password!);
+      String id = userCredential.user!.uid;
+      FirebaseFireStoreHelper.fireStoreHelper.SaveUserData(users, id);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       print("creatAccount:  code" + e.message!);
