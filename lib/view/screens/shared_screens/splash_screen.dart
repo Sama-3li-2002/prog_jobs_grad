@@ -14,7 +14,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // Firebase.initializeApp();
     Future.delayed(
       Duration(
         seconds: 3,
@@ -36,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Image(
           width: SizeConfig.scaleWidth(205),
           height: SizeConfig.scaleHeight(163),
-          image: AssetImage('assets/images/logo.jpg'),
+          image: AssetImage('assets/images/LOGO.png'),
         ),
       ),
     );

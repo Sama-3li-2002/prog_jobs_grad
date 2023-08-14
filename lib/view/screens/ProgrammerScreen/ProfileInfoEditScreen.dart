@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 
 import '../../../utils/size_config.dart';
-import '../../customWidget/textStyleWidget.dart';
 
 class ProfileInfoEdit extends StatefulWidget {
   static const String id = "profile_info_edit_screen";

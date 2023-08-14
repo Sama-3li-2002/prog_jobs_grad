@@ -133,6 +133,10 @@ class FirebaseAuthController {
     await _auth.signOut();
   }
 
+  Future ForgetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
   bool isLoggedIn() {
     return _auth.currentUser != null;
   }

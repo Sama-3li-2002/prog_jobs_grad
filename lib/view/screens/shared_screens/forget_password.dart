@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../../controller/FirebaseAuthController.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
-import 'login.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   static const String id = "forget_password_screen";
@@ -16,6 +16,8 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  TextEditingController? _inputController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +77,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             SizedBox(
                 width: SizeConfig.scaleWidth(321),
                 height: SizeConfig.scaleHeight(48),
-                child: TextFieldWidget(
+                child: TextFieldWidget.textfieldCon(
+                  controller: _inputController,
                   inputType: TextInputType.text,
                 )),
             SizedBox(
@@ -88,12 +91,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 child: TextStyleWidget('SEND', Colors.white,
                     SizeConfig.scaleTextFont(22), FontWeight.bold),
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return LoginScreen(
-                      userType: widget.userType,
-                    );
-                  }));
+                  _sendPasswordResetEmail(_inputController!.text);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff3b3f5b),
@@ -107,5 +105,45 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _sendPasswordResetEmail(String email) async {
+    try {
+      await FirebaseAuthController.fireStoreHelper.ForgetPassword(email);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Password Reset Email Sent'),
+            content: Text('A password reset email has been sent to $email.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Please Enter Correct Email'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          });
+    }
   }
 }
