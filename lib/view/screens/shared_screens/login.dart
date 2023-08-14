@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
@@ -19,6 +22,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  TextEditingController? _emailCom;
+  TextEditingController? _passwordCom;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _emailCom = TextEditingController();
+    _passwordCom = TextEditingController();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _emailCom?.dispose();
+    _passwordCom?.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -101,7 +123,8 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                   width: SizeConfig.scaleWidth(321),
                   height: SizeConfig.scaleHeight(48),
-                  child: TextFieldWidget(
+                  child: TextFieldWidget.textfieldCon(
+                    controller: _emailCom,
                     inputType: TextInputType.text,
                   )),
               SizedBox(
@@ -113,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: SizeConfig.scaleWidth(321),
                 height: SizeConfig.scaleHeight(48),
                 child: TextField(
+                  controller: _passwordCom,
                   obscureText: true,
                   decoration: InputDecoration(
                       fillColor: Colors.white,
@@ -147,15 +171,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   child: TextStyleWidget('LOGIN', Colors.white,
                       SizeConfig.scaleTextFont(22), FontWeight.bold),
-                  onPressed: () {
+                  onPressed: () async {
                     if (widget.userType == 'programmer') {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return HomeScreen();
-                          },
-                        ),
-                      );
+                    await  performLogin();
+
                     } else if (widget.userType == 'company') {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -204,5 +223,38 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+  Future performLogin()async{
+    if(checkData()){
+      await logIn();
+    }
+  }
+
+  bool checkData(){
+    if(_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty){
+      return true;
+    }
+    Fluttertoast.showToast(
+      msg: "Email or Password can't be empty",
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+    return false;
+  }
+
+  Future logIn() async{
+    UserCredential? userCredential = await FirebaseAuthController.fireStoreHelper.signIn(_emailCom!.text, _passwordCom!.text);
+    if(userCredential != null){
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return HomeScreen();
+          },
+        ),
+      );
+    }
   }
 }
