@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import '../../utils/size_config.dart';
 
 class TextFieldWidget extends StatelessWidget {
-   TextEditingController? controller;
+  TextEditingController? controller;
   final TextInputType inputType;
 
+  TextFieldWidget({this.inputType = TextInputType.text});
 
-   TextFieldWidget({this.inputType= TextInputType.text});
-
-
-   TextFieldWidget.textfieldCon({this.controller,this.inputType= TextInputType.text});
+  TextFieldWidget.textfieldCon(
+      {this.controller, this.inputType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {

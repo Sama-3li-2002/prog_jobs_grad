@@ -66,7 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '803404929042',
     projectId: 'prog-jobs-grad',
     storageBucket: 'prog-jobs-grad.appspot.com',
-    iosClientId: '803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com',
+    iosClientId:
+        '803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com',
     iosBundleId: 'com.example.progJobsGrad',
   );
 
@@ -76,7 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '803404929042',
     projectId: 'prog-jobs-grad',
     storageBucket: 'prog-jobs-grad.appspot.com',
-    iosClientId: '803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com',
+    iosClientId:
+        '803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com',
     iosBundleId: 'com.example.progJobsGrad',
   );
 }

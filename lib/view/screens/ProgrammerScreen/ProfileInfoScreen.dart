@@ -85,7 +85,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
                     fontSize: SizeConfig.scaleTextFont(14),
                     fontWeight: FontWeight.bold),
               ),
-
               Padding(
                 padding: EdgeInsets.only(
                   top: SizeConfig.scaleHeight(10),

@@ -22,20 +22,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   TextEditingController? _emailCom;
   TextEditingController? _passwordCom;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _emailCom = TextEditingController();
     _passwordCom = TextEditingController();
   }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _emailCom?.dispose();
     _passwordCom?.dispose();
@@ -173,8 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizeConfig.scaleTextFont(22), FontWeight.bold),
                   onPressed: () async {
                     if (widget.userType == 'programmer') {
-                    await  performLogin();
-
+                      await performLogin();
                     } else if (widget.userType == 'company') {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -224,14 +221,15 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  Future performLogin()async{
-    if(checkData()){
+
+  Future performLogin() async {
+    if (checkData()) {
       await logIn();
     }
   }
 
-  bool checkData(){
-    if(_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty){
+  bool checkData() {
+    if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       return true;
     }
     Fluttertoast.showToast(
@@ -245,9 +243,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return false;
   }
 
-  Future logIn() async{
-    UserCredential? userCredential = await FirebaseAuthController.fireStoreHelper.signIn(_emailCom!.text, _passwordCom!.text);
-    if(userCredential != null){
+  Future logIn() async {
+    UserCredential? userCredential = await FirebaseAuthController
+        .fireStoreHelper
+        .signIn(_emailCom!.text, _passwordCom!.text);
+    if (userCredential != null) {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {

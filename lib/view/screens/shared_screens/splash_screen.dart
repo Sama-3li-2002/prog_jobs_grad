@@ -1,7 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 
-import '../shared_screens/user_type.dart';
+import 'user_type.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String id = "splash_screen";
@@ -13,6 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    Firebase.initializeApp();
     Future.delayed(
       Duration(
         seconds: 3,

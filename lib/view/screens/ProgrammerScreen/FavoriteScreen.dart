@@ -172,8 +172,8 @@ class _FavoriteState extends State<Favorite> {
                                                 size: SizeConfig.scaleWidth(14),
                                               ),
                                               SizedBox(
-                                                  width:
-                                                      SizeConfig.scaleWidth(10)),
+                                                  width: SizeConfig.scaleWidth(
+                                                      10)),
                                               TextStyleWidget(
                                                   'Submition',
                                                   Colors.white,

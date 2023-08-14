@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -20,24 +19,23 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-
   TextEditingController? _emailCom;
   TextEditingController? _passwordCom;
 
-   @override
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _emailCom = TextEditingController();
     _passwordCom = TextEditingController();
   }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _emailCom?.dispose();
     _passwordCom?.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,9 +174,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: ElevatedButton(
                         child: TextStyleWidget('OK', Colors.white,
                             SizeConfig.scaleTextFont(22), FontWeight.bold),
-                        onPressed: () {
-
-                        },
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff3b3f5b),
                           shape: RoundedRectangleBorder(
@@ -289,7 +285,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: ElevatedButton(
                         child: TextStyleWidget('OK', Colors.white,
                             SizeConfig.scaleTextFont(22), FontWeight.bold),
-                        onPressed: () async{
+                        onPressed: () async {
                           await performLogin();
                         },
                         style: ElevatedButton.styleFrom(
@@ -302,7 +298,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ],
                 ),
-
               SizedBox(
                 height: SizeConfig.scaleHeight(20),
               ),
@@ -312,14 +307,15 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
-  Future performLogin()async{
-    if(checkData()){
+
+  Future performLogin() async {
+    if (checkData()) {
       await signUp();
     }
   }
 
-  bool checkData(){
-    if(_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty){
+  bool checkData() {
+    if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       return true;
     }
     Fluttertoast.showToast(
@@ -333,16 +329,16 @@ class _SignupScreenState extends State<SignupScreen> {
     return false;
   }
 
-  Future signUp() async{
-     UserCredential? userCredential = await FirebaseAuthController.fireStoreHelper.createAccount(_emailCom!.text, _passwordCom!.text);
-       if(userCredential != null){
-         Navigator.of(context)
-             .push(MaterialPageRoute(builder: (context) {
-           return LoginScreen(
-             userType: widget.userType,
-           );
-         }));
-     }
+  Future signUp() async {
+    UserCredential? userCredential = await FirebaseAuthController
+        .fireStoreHelper
+        .createAccount(_emailCom!.text, _passwordCom!.text);
+    if (userCredential != null) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return LoginScreen(
+          userType: widget.userType,
+        );
+      }));
+    }
   }
-
 }

@@ -23,7 +23,7 @@ import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dar
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/request_status.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/splash_screen.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/splash_screen.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/forget_password.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';

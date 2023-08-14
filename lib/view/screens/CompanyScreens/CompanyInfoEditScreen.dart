@@ -273,7 +273,6 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
               SizedBox(
                 height: SizeConfig.scaleHeight(10),
               ),
-
               TextStyleWidget("About Company:", Color(0xff4C5175),
                   SizeConfig.scaleTextFont(15), FontWeight.w500),
               SizedBox(
@@ -317,7 +316,6 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
               SizedBox(
                 height: SizeConfig.scaleHeight(10),
               ),
-
               Center(
                 child: Container(
                   height: SizeConfig.scaleHeight(60),

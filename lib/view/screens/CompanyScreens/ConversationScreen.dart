@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/customWidget/textStyleWidget.dart';
 
-
 import '../../../utils/size_config.dart';
 
 class ConversationScreen extends StatefulWidget {
