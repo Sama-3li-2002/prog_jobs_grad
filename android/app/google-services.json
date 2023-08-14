@@ -29,6 +29,13 @@
             {
               "client_id": "803404929042-t7204vceduccssffcqilq96s2hp6utos.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.progJobsGrad"
+              }
             }
           ]
         }

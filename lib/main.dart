@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
@@ -29,7 +30,9 @@ import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

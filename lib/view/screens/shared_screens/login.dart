@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
@@ -171,15 +172,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizeConfig.scaleTextFont(22), FontWeight.bold),
                   onPressed: () async {
                     if (widget.userType == 'programmer') {
-                      await performLogin();
-                    } else if (widget.userType == 'company') {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
-                            return ComLogoScreen();
+                            return HomeScreen();
                           },
                         ),
                       );
+                    } else if (widget.userType == 'company') {
+                      await performLogin();
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -251,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return HomeScreen();
+            return ComHomeScreen();
           },
         ),
       );
