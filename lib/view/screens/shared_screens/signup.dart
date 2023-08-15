@@ -441,7 +441,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       UserCredential? userCredential = await FirebaseAuthController
           .fireStoreHelper
-          .createComAccount(Company.signUp(_companyNameCom!.text, _phoneCom!.text, _addressCom!.text, _facebookAccountCom!.text, _twitterAccountCom!.text, _InstagramAccountCom!.text, _aboutCom!.text));
+          .createComAccount(Company.signUP(_companyNameCom!.text, _emailCom!.text, _passwordCom!.text, _phoneCom!.text, _addressCom!.text, _facebookAccountCom!.text, _twitterAccountCom!.text, _InstagramAccountCom!.text, _aboutCom!.text, ""));
       if (userCredential != null) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return LoginScreen(

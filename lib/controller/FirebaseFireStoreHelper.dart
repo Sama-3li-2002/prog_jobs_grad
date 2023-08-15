@@ -35,6 +35,7 @@ class FirebaseFireStoreHelper {
       "twitterAccount": company.twitterAccount,
       "InstagramAccount": company.InstagramAccount,
       "about": company.about,
+      "image": company.image,
 
     });
   }
