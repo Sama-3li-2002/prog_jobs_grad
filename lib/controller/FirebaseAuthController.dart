@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
 
+import '../model/CompanyModel.dart';
 import 'FirebaseFireStoreHelper.dart';
 
 class FirebaseAuthController {
@@ -18,6 +19,67 @@ class FirebaseAuthController {
               email: users.email!, password: users.password!);
       String id = userCredential.user!.uid;
       FirebaseFireStoreHelper.fireStoreHelper.SaveUserData(users, id);
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      print("creatAccount:  code" + e.message!);
+      if (e.code == "email-already-in-use") {
+        print("creatAccount:  code" + e.message!);
+        Fluttertoast.showToast(
+          msg: "email-already-in-use",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+      if (e.code == "invalid-email") {
+        print("creatAccount:  code" + e.message!);
+        Fluttertoast.showToast(
+          msg: "invalid-email",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+      if (e.code == "operation-not-allowed") {
+        print("creatAccount:  code" + e.message!);
+        Fluttertoast.showToast(
+          msg: "operation-not-allowed",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+      if (e.code == "weak-password") {
+        print("creatAccount:  code" + e.message!);
+        Fluttertoast.showToast(
+          msg: "weak-password",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      print("Creat Accrount: Exception: $e");
+    }
+
+    return null;
+  } 
+  
+  Future<UserCredential?> createComAccount(Company company) async {
+    try {
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+              email: company.email!, password: company.password!);
+      String id = userCredential.user!.uid;
+      FirebaseFireStoreHelper.fireStoreHelper.saveCompanyData(company, id);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       print("creatAccount:  code" + e.message!);

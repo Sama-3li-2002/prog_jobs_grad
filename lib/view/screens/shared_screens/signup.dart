@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
+import '../../../model/CompanyModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -32,6 +33,13 @@ class _SignupScreenState extends State<SignupScreen> {
   // Company Info
   TextEditingController? _emailCom;
   TextEditingController? _passwordCom;
+  TextEditingController? _companyNameCom;
+  TextEditingController? _phoneCom;
+  TextEditingController? _addressCom;
+  TextEditingController? _facebookAccountCom;
+  TextEditingController? _twitterAccountCom;
+  TextEditingController? _InstagramAccountCom;
+  TextEditingController? _aboutCom;
 
   @override
   void initState() {
@@ -48,6 +56,13 @@ class _SignupScreenState extends State<SignupScreen> {
     // Company Info
     _emailCom = TextEditingController();
     _passwordCom = TextEditingController();
+    _companyNameCom = TextEditingController();
+    _phoneCom = TextEditingController();
+    _addressCom = TextEditingController();
+    _facebookAccountCom = TextEditingController();
+    _twitterAccountCom = TextEditingController();
+    _InstagramAccountCom = TextEditingController();
+    _aboutCom = TextEditingController();
   }
 
   @override
@@ -65,6 +80,13 @@ class _SignupScreenState extends State<SignupScreen> {
     // Company Info
     _emailCom?.dispose();
     _passwordCom?.dispose();
+    _companyNameCom?.dispose();
+    _phoneCom?.dispose();
+    _addressCom?.dispose();
+    _facebookAccountCom?.dispose();
+    _twitterAccountCom?.dispose();
+    _InstagramAccountCom?.dispose();
+    _aboutCom?.dispose();
   }
 
   @override
@@ -234,7 +256,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _companyNameCom,
                           inputType: TextInputType.text,
                         )),
                     SizedBox(
@@ -280,7 +303,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _phoneCom,
                           inputType: TextInputType.phone,
                         )),
                     SizedBox(
@@ -291,29 +315,63 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _addressCom,
                           inputType: TextInputType.text,
                         )),
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
-                    TextStyleWidget('Social media accounts:', Color(0xff4C5175),
+                    TextStyleWidget('facebook account:', Color(0xff4C5175),
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _facebookAccountCom,
                           inputType: TextInputType.text,
                         )),
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
+
+                    SizedBox(
+                      height: SizeConfig.scaleHeight(20),
+                    ),
+                    TextStyleWidget('twitter account:', Color(0xff4C5175),
+                        SizeConfig.scaleTextFont(12), FontWeight.w500),
+                    SizedBox(
+                        width: SizeConfig.scaleWidth(321),
+                        height: SizeConfig.scaleHeight(48),
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _twitterAccountCom,
+                          inputType: TextInputType.text,
+                        )),
+
+                    SizedBox(
+                      height: SizeConfig.scaleHeight(20),
+                    ),
+                    TextStyleWidget('Instagram account:', Color(0xff4C5175),
+                        SizeConfig.scaleTextFont(12), FontWeight.w500),
+                    SizedBox(
+                        width: SizeConfig.scaleWidth(321),
+                        height: SizeConfig.scaleHeight(48),
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _InstagramAccountCom,
+                          inputType: TextInputType.text,
+                        )),
+                    SizedBox(
+                      height: SizeConfig.scaleHeight(20),
+                    ),
+
+
                     TextStyleWidget('about', Color(0xff4C5175),
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget(
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _aboutCom,
                           inputType: TextInputType.multiline,
                         )),
                     SizedBox(
@@ -326,7 +384,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: TextStyleWidget('OK', Colors.white,
                             SizeConfig.scaleTextFont(22), FontWeight.bold),
                         onPressed: () async {
-                          // await performLogin();
+                          await createComAccount();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff3b3f5b),
@@ -379,26 +437,50 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
+  Future createComAccount() async {
+    if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
+      UserCredential? userCredential = await FirebaseAuthController
+          .fireStoreHelper
+          .createComAccount(Company.signUp(_companyNameCom!.text, _phoneCom!.text, _addressCom!.text, _facebookAccountCom!.text, _twitterAccountCom!.text, _InstagramAccountCom!.text, _aboutCom!.text));
+      if (userCredential != null) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return LoginScreen(
+            userType: widget.userType,
+          );
+        }));
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "Email or Password can't be empty",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
   // Future performLogin() async {
   //   if (checkData()) {
   //     await signUp();
   //   }
   // }
 
-  bool checkData() {
-    if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
-      return true;
-    }
-    Fluttertoast.showToast(
-      msg: "Email or Password can't be empty",
-      toastLength: Toast.LENGTH_SHORT,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-    return false;
-  }
+  // bool checkData() {
+  //   if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
+  //     return true;
+  //   }
+  //   Fluttertoast.showToast(
+  //     msg: "Email or Password can't be empty",
+  //     toastLength: Toast.LENGTH_SHORT,
+  //     timeInSecForIosWeb: 1,
+  //     backgroundColor: Colors.black,
+  //     textColor: Colors.white,
+  //     fontSize: 16.0,
+  //   );
+  //   return false;
+  // }
 
 // Future signUp() async {
 //   UserCredential? userCredential = await FirebaseAuthController
