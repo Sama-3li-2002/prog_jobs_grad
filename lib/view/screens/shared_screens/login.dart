@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
@@ -226,9 +227,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextStyleWidget('LOGIN', Colors.white,
                       SizeConfig.scaleTextFont(22), FontWeight.bold),
                   onPressed: () async {
-                    if (widget.userType == 'programmer') {
-                      performLoginProg();
-                    } else if (widget.userType == 'company') {
+                    if (UserTypeScreen.type == 'programmer') {
+                      await performLoginProg();
+                    } else if (UserTypeScreen.type== 'company') {
                       await performLoginCom();
                     }
                   },

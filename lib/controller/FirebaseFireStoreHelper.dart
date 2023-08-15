@@ -26,14 +26,14 @@ class FirebaseFireStoreHelper {
   Future saveCompanyData(Company company, String id) async {
     await firestore.collection(companyCollection).doc(id).set({
       "id": id,
-      "userName": company.companyName,
+      "companyName": company.companyName,
       "email": company.email,
       "password": company.password,
       "phone": company.phone,
-      "Address": company.address,
+      "address": company.address,
       "facebookAccount": company.facebookAccount,
       "twitterAccount": company.twitterAccount,
-      "InstagramAccount": company.InstagramAccount,
+      "instagramAccount": company.InstagramAccount,
       "about": company.about,
       "image": company.image,
 
