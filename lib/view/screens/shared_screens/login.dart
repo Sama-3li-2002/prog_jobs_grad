@@ -156,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 )
               else if (widget.userType == 'company')
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RichTextWidget(
                       'Company Name ',
@@ -229,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     if (UserTypeScreen.type == 'programmer') {
                       await performLoginProg();
-                    } else if (UserTypeScreen.type== 'company') {
+                    } else if (UserTypeScreen.type == 'company') {
                       await performLoginCom();
                     }
                   },

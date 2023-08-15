@@ -4,6 +4,7 @@ import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
+import 'otp_code.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   static const String id = "forget_password_screen";
@@ -91,7 +92,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 child: TextStyleWidget('SEND', Colors.white,
                     SizeConfig.scaleTextFont(22), FontWeight.bold),
                 onPressed: () {
-                  _sendPasswordResetEmail(_inputController!.text);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return OTPCodeScreen();
+                  }));
+                  // _sendPasswordResetEmail(_inputController!.text);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff3b3f5b),
@@ -107,43 +112,43 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     );
   }
 
-  Future<void> _sendPasswordResetEmail(String email) async {
-    try {
-      await FirebaseAuthController.fireStoreHelper.ForgetPassword(email);
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Password Reset Email Sent'),
-            content: Text('A password reset email has been sent to $email.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } catch (error) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Error'),
-              content: Text('Please Enter Correct Email'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          });
-    }
-  }
+// Future<void> _sendPasswordResetEmail(String email) async {
+//   try {
+//     await FirebaseAuthController.fireStoreHelper.ForgetPassword(email);
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: Text('Password Reset Email Sent'),
+//           content: Text('A password reset email has been sent to $email.'),
+//           actions: [
+//             TextButton(
+//               onPressed: () {
+//                 Navigator.pop(context);
+//               },
+//               child: Text('OK'),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   } catch (error) {
+//     showDialog(
+//         context: context,
+//         builder: (BuildContext context) {
+//           return AlertDialog(
+//             title: Text('Error'),
+//             content: Text('Please Enter Correct Email'),
+//             actions: [
+//               TextButton(
+//                 onPressed: () {
+//                   Navigator.pop(context);
+//                 },
+//                 child: Text('OK'),
+//               ),
+//             ],
+//           );
+//         });
+//   }
+// }
 }
