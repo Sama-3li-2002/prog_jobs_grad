@@ -9,7 +9,7 @@ import 'FirebaseFireStoreHelper.dart';
 class FirebaseAuthController {
   FirebaseAuthController._();
 
-  static FirebaseAuthController fireStoreHelper = FirebaseAuthController._();
+  static FirebaseAuthController fireAuthHelper = FirebaseAuthController._();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<UserCredential?> createAccount(Users users) async {
@@ -71,8 +71,8 @@ class FirebaseAuthController {
     }
 
     return null;
-  } 
-  
+  }
+
   Future<UserCredential?> createComAccount(Company company) async {
     try {
       UserCredential userCredential =

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../controller/FirebaseAuthController.dart';
 import '../../../utils/size_config.dart';
@@ -92,11 +93,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 child: TextStyleWidget('SEND', Colors.white,
                     SizeConfig.scaleTextFont(22), FontWeight.bold),
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return OTPCodeScreen();
-                  }));
-                  // _sendPasswordResetEmail(_inputController!.text);
+                  _sendPasswordReset();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff3b3f5b),
@@ -112,43 +109,148 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     );
   }
 
-// Future<void> _sendPasswordResetEmail(String email) async {
-//   try {
-//     await FirebaseAuthController.fireStoreHelper.ForgetPassword(email);
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: Text('Password Reset Email Sent'),
-//           content: Text('A password reset email has been sent to $email.'),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 Navigator.pop(context);
-//               },
-//               child: Text('OK'),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   } catch (error) {
-//     showDialog(
-//         context: context,
-//         builder: (BuildContext context) {
-//           return AlertDialog(
-//             title: Text('Error'),
-//             content: Text('Please Enter Correct Email'),
-//             actions: [
-//               TextButton(
-//                 onPressed: () {
-//                   Navigator.pop(context);
-//                 },
-//                 child: Text('OK'),
-//               ),
-//             ],
-//           );
-//         });
-//   }
-// }
+  void _sendPasswordReset() async {
+    String input = _inputController!.text.trim();
+
+    if (input.isNotEmpty) {
+      if (input.contains('@')) {
+        await _sendPasswordResetEmail(input);
+      } else {
+        await _sendPasswordResetCode(input);
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Please enter an email '
+                'or phone number.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Future _sendPasswordResetEmail(String email) async {
+    try {
+      await FirebaseAuthController.fireAuthHelper.ForgetPassword(email);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Password Reset Email Sent'),
+            content: Text('A password reset email has been sent to $email.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Please Enter Correct Email'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          });
+    }
+  }
+
+  Future<void> _sendPasswordResetCode(String phone) async {
+    try {
+      if (phone.isNotEmpty) {
+        try {
+          await FirebaseAuth.instance.verifyPhoneNumber(
+            phoneNumber: phone,
+            verificationCompleted: (authCredential) async {
+              print('Success');
+            },
+            verificationFailed: (authException) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Error'),
+                    content: Text('An error occurred. Please try again later.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            codeSent: (verificationId, resendingToken) async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OTPCodeScreen(),
+                ),
+              );
+            },
+            codeAutoRetrievalTimeout: (verificationId) {},
+          );
+        } catch (error) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text('An error occurred. Please try again later.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      }
+    } catch (error) {
+      AlertDialog(
+        title: Text('Error'),
+        content: Text('An error occurred. Please try again later.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('OK'),
+          ),
+        ],
+      );
+    }
+  }
 }

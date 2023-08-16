@@ -1,16 +1,16 @@
-class Company{
-    String? companyName;
-    String? email;
-    String? password;
-    String? phone;
-    String? address;
-    String? facebookAccount;
-    String? twitterAccount;
-    String? InstagramAccount;
-    String? about;
-    String? image;
+class Company {
+  String? companyName;
+  String? email;
+  String? password;
+  String? phone;
+  String? address;
+  String? facebookAccount;
+  String? twitterAccount;
+  String? InstagramAccount;
+  String? about;
+  String? image;
 
-    Company.signUP(
+  Company.signUP(
       this.companyName,
       this.email,
       this.password,

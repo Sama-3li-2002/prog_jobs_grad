@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/FavoriteScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/JobDetailsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
 

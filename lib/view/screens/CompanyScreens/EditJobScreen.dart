@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
-import '../ProgrammerScreen/ProfileInfoScreen.dart';
-import '../shared_screens/user_type.dart';
 import 'CompanyInfoScreen.dart';
 
 class EditJobScreen extends StatefulWidget {

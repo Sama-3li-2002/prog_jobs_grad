@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/MessagesProg.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 
 import '../../customWidget/textStyleWidget.dart';
 

@@ -334,7 +334,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
-
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
@@ -347,7 +346,6 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: _twitterAccountCom,
                           inputType: TextInputType.text,
                         )),
-
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
@@ -363,8 +361,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
-
-
                     TextStyleWidget('about', Color(0xff4C5175),
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
                     SizedBox(
@@ -407,9 +403,15 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future createProgAccount() async {
-    if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
+    if (_usernameProg!.text.isNotEmpty &&
+        _emailProg!.text.isNotEmpty &&
+        _passwordProg!.text.isNotEmpty &&
+        _phoneProg!.text.isNotEmpty &&
+        _ageProg!.text.isNotEmpty &&
+        _specializationProg!.text.isNotEmpty &&
+        _aboutProg!.text.isNotEmpty) {
       UserCredential? userCredential = await FirebaseAuthController
-          .fireStoreHelper
+          .fireAuthHelper
           .createAccount(Users.signup(
               _usernameProg!.text,
               _emailProg!.text,
@@ -440,8 +442,18 @@ class _SignupScreenState extends State<SignupScreen> {
   Future createComAccount() async {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       UserCredential? userCredential = await FirebaseAuthController
-          .fireStoreHelper
-          .createComAccount(Company.signUP(_companyNameCom!.text, _emailCom!.text, _passwordCom!.text, _phoneCom!.text, _addressCom!.text, _facebookAccountCom!.text, _twitterAccountCom!.text, _InstagramAccountCom!.text, _aboutCom!.text, ""));
+          .fireAuthHelper
+          .createComAccount(Company.signUP(
+              _companyNameCom!.text,
+              _emailCom!.text,
+              _passwordCom!.text,
+              _phoneCom!.text,
+              _addressCom!.text,
+              _facebookAccountCom!.text,
+              _twitterAccountCom!.text,
+              _InstagramAccountCom!.text,
+              _aboutCom!.text,
+              ""));
       if (userCredential != null) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return LoginScreen(
@@ -460,38 +472,4 @@ class _SignupScreenState extends State<SignupScreen> {
       );
     }
   }
-
-  // Future performLogin() async {
-  //   if (checkData()) {
-  //     await signUp();
-  //   }
-  // }
-
-  // bool checkData() {
-  //   if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
-  //     return true;
-  //   }
-  //   Fluttertoast.showToast(
-  //     msg: "Email or Password can't be empty",
-  //     toastLength: Toast.LENGTH_SHORT,
-  //     timeInSecForIosWeb: 1,
-  //     backgroundColor: Colors.black,
-  //     textColor: Colors.white,
-  //     fontSize: 16.0,
-  //   );
-  //   return false;
-  // }
-
-// Future signUp() async {
-//   UserCredential? userCredential = await FirebaseAuthController
-//       .fireStoreHelper
-//       .createAccount(_emailCom!.text, _passwordCom!.text);
-//   if (userCredential != null) {
-//     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-//       return LoginScreen(
-//         userType: widget.userType,
-//       );
-//     }));
-//   }
-// }
 }

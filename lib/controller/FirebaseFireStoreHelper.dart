@@ -36,7 +36,6 @@ class FirebaseFireStoreHelper {
       "instagramAccount": company.InstagramAccount,
       "about": company.about,
       "image": company.image,
-
     });
   }
 }

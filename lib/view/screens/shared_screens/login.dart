@@ -108,16 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    RichTextWidget(
-                      'username ',
-                      Color(0xff4C5175),
-                      SizeConfig.scaleTextFont(12),
-                      FontWeight.w500,
-                      'or',
-                      Color(0xFFB8852F),
-                      SizeConfig.scaleTextFont(12),
-                      FontWeight.w500,
-                      ' email',
+                    TextStyleWidget(
+                      'Programmer Email',
                       Color(0xff4C5175),
                       SizeConfig.scaleTextFont(12),
                       FontWeight.w500,
@@ -158,18 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    RichTextWidget(
-                      'Company Name ',
-                      Color(0xff4C5175),
-                      SizeConfig.scaleTextFont(12),
-                      FontWeight.w500,
-                      'or',
-                      Color(
-                        0xFFB8852F,
-                      ),
-                      SizeConfig.scaleTextFont(12),
-                      FontWeight.w500,
-                      ' email',
+                    TextStyleWidget(
+                      'Company Email',
                       Color(0xff4C5175),
                       SizeConfig.scaleTextFont(12),
                       FontWeight.w500,
@@ -278,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future performLoginProg() async {
     if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
       UserCredential? userCredential =
-          await FirebaseAuthController.fireStoreHelper.signIn(
+          await FirebaseAuthController.fireAuthHelper.signIn(
         _emailProg!.text,
         _passwordProg!.text,
       );
@@ -322,8 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future logIn() async {
-    UserCredential? userCredential = await FirebaseAuthController
-        .fireStoreHelper
+    UserCredential? userCredential = await FirebaseAuthController.fireAuthHelper
         .signIn(_emailCom!.text, _passwordCom!.text);
     if (userCredential != null) {
       Navigator.of(context).push(

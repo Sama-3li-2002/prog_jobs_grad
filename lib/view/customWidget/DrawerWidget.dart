@@ -258,7 +258,7 @@ void showLogoutDialog(BuildContext context) {
           TextButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return LoginScreen(userType:UserTypeScreen.type!);
+                return LoginScreen(userType: UserTypeScreen.type!);
               }));
             },
             child: Text("Log Out"),
