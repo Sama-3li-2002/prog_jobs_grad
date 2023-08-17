@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context) => IconButton(
             icon: Icon(
               Icons.list,
-              size: SizeConfig.scaleWidth(22),
+              size: SizeConfig.scaleWidth(30),
             ),
             color: Color(0xff4C5175),
             onPressed: () {
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {},
             icon: Icon(
               Icons.search,
-              size: SizeConfig.scaleWidth(22),
+              size: SizeConfig.scaleWidth(30),
             ),
             color: Color(0xff4C5175),
           ),
@@ -80,8 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 4,
                 color: Color(0xffcbb523),
                 child: SizedBox(
-                    width: SizeConfig.scaleWidth(25),
-                    height: SizeConfig.scaleHeight(25),
+                    width: SizeConfig.scaleWidth(30),
+                    height: SizeConfig.scaleHeight(30),
                     child: CircleAvatar(
                       backgroundImage: users!.imageUrl != null
                           ? NetworkImage(users!.imageUrl!)

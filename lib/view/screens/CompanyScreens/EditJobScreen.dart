@@ -66,7 +66,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
                           },
                           icon: Icon(
                             Icons.arrow_back_ios,
-                            size: SizeConfig.scaleWidth(14),
+                            size: SizeConfig.scaleWidth(20),
                           ),
                           color: Color(0xffD2D0D0FF),
                         ),

@@ -49,7 +49,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
           },
           icon: Icon(
             Icons.arrow_back_ios,
-            size: SizeConfig.scaleWidth(14),
+            size: SizeConfig.scaleWidth(20),
           ),
           color: Color(0xff4C5175),
         ),
@@ -64,7 +64,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
               icon: Icon(
                 Icons.notifications_active,
                 color: Color(0xff4C5175),
-                size: SizeConfig.scaleWidth(22),
+                size: SizeConfig.scaleWidth(30),
               ))
         ],
         backgroundColor: Color(0xfffafafa),

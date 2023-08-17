@@ -45,7 +45,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                             child: Icon(
                               Icons.arrow_back_ios,
                               color: Colors.white,
-                              size: SizeConfig.scaleWidth(14),
+                              size: SizeConfig.scaleWidth(20),
                             ),
                           )),
                       if (UserTypeScreen.type == "company")
@@ -62,7 +62,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                               },
                               child: Icon(Icons.edit_sharp,
                                   color: Colors.white,
-                                  size: SizeConfig.scaleWidth(20)),
+                                  size: SizeConfig.scaleWidth(25)),
                             ))
                       else if (UserTypeScreen.type == "programmer")
                         Padding(
@@ -78,7 +78,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                               },
                               child: Icon(Icons.message,
                                   color: Colors.white,
-                                  size: SizeConfig.scaleWidth(20)),
+                                  size: SizeConfig.scaleWidth(25)),
                             ))
                     ],
                   ),

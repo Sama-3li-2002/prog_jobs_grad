@@ -36,7 +36,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
           builder: (context) => IconButton(
             icon: Icon(
               Icons.list,
-              size: SizeConfig.scaleWidth(22),
+              size: SizeConfig.scaleWidth(30),
             ),
             color: Color(0xff4C5175),
             onPressed: () {
@@ -49,7 +49,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
             onPressed: () {},
             icon: Icon(
               Icons.search,
-              size: SizeConfig.scaleWidth(22),
+              size: SizeConfig.scaleWidth(30),
             ),
             color: Color(0xff4C5175),
           ),
@@ -61,7 +61,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
             },
             icon: Icon(
               Icons.add_card,
-              size: SizeConfig.scaleWidth(22),
+              size: SizeConfig.scaleWidth(30),
             ),
             color: Color(0xff4C5175),
           ),

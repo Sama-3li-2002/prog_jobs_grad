@@ -23,7 +23,7 @@ class _MessageComState extends State<MessageCom> {
           },
           icon: Icon(
             Icons.arrow_back_ios,
-            size: SizeConfig.scaleWidth(14),
+            size: SizeConfig.scaleWidth(20),
           ),
           color: Color(0xff4C5175),
         ),
@@ -32,7 +32,7 @@ class _MessageComState extends State<MessageCom> {
             onPressed: () {},
             icon: Icon(
               Icons.search,
-              size: SizeConfig.scaleWidth(22),
+              size: SizeConfig.scaleWidth(30),
             ),
             color: Color(0xff4C5175),
           ),

@@ -46,7 +46,7 @@ class _FavoriteState extends State<Favorite> {
             },
             icon: Icon(
               Icons.arrow_back_ios,
-              size: SizeConfig.scaleWidth(14),
+              size: SizeConfig.scaleWidth(20),
             ),
             color: Color(0xff4C5175),
           ),
@@ -55,7 +55,7 @@ class _FavoriteState extends State<Favorite> {
               onPressed: () {},
               icon: Icon(
                 Icons.search,
-                size: SizeConfig.scaleWidth(22),
+                size: SizeConfig.scaleWidth(30),
               ),
               color: Color(0xff4C5175),
             ),
@@ -74,8 +74,8 @@ class _FavoriteState extends State<Favorite> {
                   elevation: 4,
                   color: Color(0xffcbb523),
                   child: SizedBox(
-                      width: SizeConfig.scaleWidth(25),
-                      height: SizeConfig.scaleHeight(25),
+                      width: SizeConfig.scaleWidth(30),
+                      height: SizeConfig.scaleHeight(30),
                       child: CircleAvatar(
                         backgroundImage: users!.imageUrl != null
                             ? NetworkImage(users!.imageUrl!)

@@ -23,7 +23,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
           },
           icon: Icon(
             Icons.arrow_back_ios,
-            size: SizeConfig.scaleWidth(14),
+            size: SizeConfig.scaleWidth(20),
           ),
           color: Color(0xff4C5175),
         ),

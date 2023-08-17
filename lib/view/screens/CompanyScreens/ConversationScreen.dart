@@ -28,7 +28,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 },
                 child: Icon(
                   Icons.arrow_back_ios,
-                  size: SizeConfig.scaleWidth(14),
+                  size: SizeConfig.scaleWidth(20),
                   color: Color(0xff4C5175),
                 ),
               ),
@@ -42,8 +42,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 elevation: 4,
                 color: Color(0xffcbb523),
                 child: SizedBox(
-                  width: SizeConfig.scaleWidth(35),
-                  height: SizeConfig.scaleHeight(35),
+                  width: SizeConfig.scaleWidth(30),
+                  height: SizeConfig.scaleHeight(30),
                   child: ClipOval(
                     child: Image.asset(
                       'assets/images/prof1.png',
@@ -62,7 +62,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
             onPressed: () {},
             icon: Icon(
               Icons.search,
-              size: SizeConfig.scaleWidth(22),
+              size: SizeConfig.scaleWidth(25),
             ),
             color: Color(0xff4C5175),
           ),
