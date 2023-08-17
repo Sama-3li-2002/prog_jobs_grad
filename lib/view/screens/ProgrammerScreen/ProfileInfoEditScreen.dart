@@ -46,6 +46,9 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
     _ageController = TextEditingController();
     _specializationController = TextEditingController();
     _aboutController = TextEditingController();
+
+    users = Users();
+    getUser();
   }
 
   @override
@@ -64,11 +67,34 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
     setState(() {
       users = userResult;
     });
+    if (users!.username!.isNotEmpty)
+      _usernameController!.text = users!.username!;
+    else
+      _usernameController!.text = "";
+    if (users!.email!.isNotEmpty)
+      _emailController!.text = users!.email!;
+    else
+      _emailController!.text = "";
+    if (users!.phone!.isNotEmpty)
+      _phoneController!.text = users!.phone!;
+    else
+      _phoneController!.text = "";
+    if (users!.age!.toString().isNotEmpty)
+      _ageController!.text = users!.age!.toString();
+    else
+      _ageController!.text = "";
+    if (users!.specialization!.isNotEmpty)
+      _specializationController!.text = users!.specialization!;
+    else
+      _specializationController!.text = "";
+    if (users!.about!.isNotEmpty)
+      _aboutController!.text = users!.about!;
+    else
+      _aboutController!.text = "";
   }
 
   @override
   Widget build(BuildContext context) {
-    getUser();
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
@@ -181,12 +207,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: users!.username.toString(),
-                                        hintStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              SizeConfig.scaleTextFont(12),
-                                        ),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -230,12 +250,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: users!.email.toString(),
-                                        hintStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              SizeConfig.scaleTextFont(12),
-                                        ),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -282,12 +296,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: users!.age.toString(),
-                                        hintStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              SizeConfig.scaleTextFont(12),
-                                        ),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -331,12 +339,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: users!.phone.toString(),
-                                        hintStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              SizeConfig.scaleTextFont(12),
-                                        ),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -380,13 +382,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText:
-                                            users!.specialization.toString(),
-                                        hintStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              SizeConfig.scaleTextFont(12),
-                                        ),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -431,12 +426,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: users!.about.toString(),
-                                        hintStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              SizeConfig.scaleTextFont(13),
-                                        ),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -476,13 +465,11 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                           radius: 50,
                           child: IconButton(
                             onPressed: () {
-                              uploadImage();
                               updateUserProfile();
-
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) {
-                                return ProfileInfo();
-                              }));
+                              // Navigator.of(context).pushReplacement(
+                              //     MaterialPageRoute(builder: (context) {
+                              //   return ProfileInfo();
+                              // }));
                             },
                             icon: Icon(
                               Icons.check_rounded,
@@ -505,13 +492,13 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
   Future updateUserProfile() async {
     try {
       users!.id = id;
+
       users!.username = _usernameController!.text;
       users!.email = _emailController!.text;
       users!.age = int.tryParse(_ageController!.text);
       users!.phone = _phoneController!.text;
       users!.specialization = _specializationController!.text;
       users!.about = _aboutController!.text;
-      users!.imageUrl = downloadUrl;
 
       await fireStoreHelper.SaveUserData(users!, id);
       Navigator.of(context)
@@ -537,30 +524,14 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
           taskSnapshot.ref.getDownloadURL().then((downloadUrl) {
             setState(() {
               users!.imageUrl = downloadUrl;
-              fireStoreHelper.SaveUserData(users!, id);
             });
           });
+        }).catchError((error) {
+          print("Error uploading image: $error");
         });
       } else {
         print('No Image Selected');
       }
     });
-  }
-
-  Future uploadImage() async {
-    if (_storageReference != null && _pickedImage != null) {
-      final uploadTask = _storageReference!.putFile(File(_pickedImage!.path));
-      await uploadTask.whenComplete(() {
-        print('Image upload complete');
-      }).then((TaskSnapshot snapshot) async {
-        downloadUrl = await snapshot.ref.getDownloadURL();
-        print('Download URL: $downloadUrl');
-
-        await updateUserProfile();
-        Navigator.of(context).pop();
-      }).catchError((error) {
-        print("Error uploading image: $error");
-      });
-    }
   }
 }
