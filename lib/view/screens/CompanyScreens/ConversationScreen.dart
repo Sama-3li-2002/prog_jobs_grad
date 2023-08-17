@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/customWidget/textStyleWidget.dart';
-import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
-import '../../../controller/FirebaseAuthController.dart';
-import '../../../controller/FirebaseFireStoreHelper.dart';
-import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -15,23 +11,8 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-  String id = FirebaseAuthController.fireAuthHelper.userId();
-
-  FirebaseFireStoreHelper fireStoreHelper =
-      FirebaseFireStoreHelper.fireStoreHelper;
-
-  Users? users;
-
-  Future getUser() async {
-    final userResult = await fireStoreHelper.getUserData(id);
-    setState(() {
-      users = userResult;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    getUser();
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
@@ -61,17 +42,15 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 elevation: 4,
                 color: Color(0xffcbb523),
                 child: SizedBox(
-                    width: SizeConfig.scaleWidth(35),
-                    height: SizeConfig.scaleHeight(35),
-                    child: UserTypeScreen.type == 'programmer'
-                        ? CircleAvatar(
-                            backgroundImage: users!.imageUrl != null
-                                ? NetworkImage(users!.imageUrl!)
-                                : null,
-                          )
-                        : CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/logo.jpg'))),
+                  width: SizeConfig.scaleWidth(35),
+                  height: SizeConfig.scaleHeight(35),
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/images/prof1.png',
+                      // fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
