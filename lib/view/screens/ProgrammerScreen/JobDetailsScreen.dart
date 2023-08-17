@@ -4,6 +4,9 @@ import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dar
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
+import '../../../controller/FirebaseAuthController.dart';
+import '../../../controller/FirebaseFireStoreHelper.dart';
+import '../../../model/UsersModel.dart';
 import '../../customWidget/textStyleWidget.dart';
 import '../CompanyScreens/EditJobScreen.dart';
 import 'SubmitJopScreen.dart';
@@ -16,8 +19,23 @@ class JobDetailsScreen extends StatefulWidget {
 }
 
 class _JobDetailsScreenState extends State<JobDetailsScreen> {
+  String id = FirebaseAuthController.fireAuthHelper.userId();
+
+  FirebaseFireStoreHelper fireStoreHelper =
+      FirebaseFireStoreHelper.fireStoreHelper;
+
+  Users? users;
+
+  Future getUser() async {
+    final userResult = await fireStoreHelper.getUserData(id);
+    setState(() {
+      users = userResult;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUser();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffF5F5F5),
@@ -92,11 +110,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             child: SizedBox(
                               width: SizeConfig.scaleWidth(25),
                               height: SizeConfig.scaleHeight(25),
-                              child: ClipOval(
-                                child: Image.asset(
-                                  'assets/images/prof1.png',
-                                  // fit: BoxFit.cover,
-                                ),
+                              child: CircleAvatar(
+                                backgroundImage: users!.imageUrl != null
+                                    ? NetworkImage(users!.imageUrl!)
+                                    : null,
                               ),
                             ),
                           ),

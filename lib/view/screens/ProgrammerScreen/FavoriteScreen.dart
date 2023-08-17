@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
 
+import '../../../controller/FirebaseAuthController.dart';
+import '../../../controller/FirebaseFireStoreHelper.dart';
+import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'ProfileInfoScreen.dart';
@@ -13,8 +16,23 @@ class Favorite extends StatefulWidget {
 }
 
 class _FavoriteState extends State<Favorite> {
+  String id = FirebaseAuthController.fireAuthHelper.userId();
+
+  FirebaseFireStoreHelper fireStoreHelper =
+      FirebaseFireStoreHelper.fireStoreHelper;
+
+  Users? users;
+
+  Future getUser() async {
+    final userResult = await fireStoreHelper.getUserData(id);
+    setState(() {
+      users = userResult;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUser();
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -56,15 +74,13 @@ class _FavoriteState extends State<Favorite> {
                   elevation: 4,
                   color: Color(0xffcbb523),
                   child: SizedBox(
-                    width: SizeConfig.scaleWidth(25),
-                    height: SizeConfig.scaleHeight(25),
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/images/prof1.png',
-                        // fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                      width: SizeConfig.scaleWidth(25),
+                      height: SizeConfig.scaleHeight(25),
+                      child: CircleAvatar(
+                        backgroundImage: users!.imageUrl != null
+                            ? NetworkImage(users!.imageUrl!)
+                            : null,
+                      )),
                 ),
               ),
             ),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/JobDetailsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
 
+import '../../../controller/FirebaseAuthController.dart';
+import '../../../controller/FirebaseFireStoreHelper.dart';
+import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'ProfileInfoScreen.dart';
@@ -14,8 +17,23 @@ class AllJobScreen extends StatefulWidget {
 }
 
 class _AllJobScreenState extends State<AllJobScreen> {
+  String id = FirebaseAuthController.fireAuthHelper.userId();
+
+  FirebaseFireStoreHelper fireStoreHelper =
+      FirebaseFireStoreHelper.fireStoreHelper;
+
+  Users? users;
+
+  Future getUser() async {
+    final userResult = await fireStoreHelper.getUserData(id);
+    setState(() {
+      users = userResult;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUser();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfffafafa),
@@ -53,11 +71,10 @@ class _AllJobScreenState extends State<AllJobScreen> {
               child: SizedBox(
                 width: SizeConfig.scaleWidth(25),
                 height: SizeConfig.scaleHeight(25),
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/images/prof1.png',
-                    // fit: BoxFit.cover,
-                  ),
+                child: CircleAvatar(
+                  backgroundImage: users!.imageUrl != null
+                      ? NetworkImage(users!.imageUrl!)
+                      : null,
                 ),
               ),
             ),

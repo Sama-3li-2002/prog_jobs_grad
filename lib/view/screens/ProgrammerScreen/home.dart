@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: SizeConfig.scaleHeight(25),
                     child: CircleAvatar(
                       backgroundImage: users!.imageUrl != null
-                          ? NetworkImage(users!.imageUrl!) // Use NetworkImage
+                          ? NetworkImage(users!.imageUrl!)
                           : null,
                     )),
               ),

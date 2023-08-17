@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
+import '../../../controller/FirebaseAuthController.dart';
+import '../../../controller/FirebaseFireStoreHelper.dart';
+import '../../../model/UsersModel.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
 
@@ -13,8 +16,23 @@ class SubmitJopScreen extends StatefulWidget {
 }
 
 class _SubmitJopScreenState extends State<SubmitJopScreen> {
+  String id = FirebaseAuthController.fireAuthHelper.userId();
+
+  FirebaseFireStoreHelper fireStoreHelper =
+      FirebaseFireStoreHelper.fireStoreHelper;
+
+  Users? users;
+
+  Future getUser() async {
+    final userResult = await fireStoreHelper.getUserData(id);
+    setState(() {
+      users = userResult;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUser();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffF5F5F5),
@@ -86,15 +104,13 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
                           elevation: 4,
                           color: Color(0xffcbb523),
                           child: SizedBox(
-                            width: SizeConfig.scaleWidth(25),
-                            height: SizeConfig.scaleHeight(25),
-                            child: ClipOval(
-                              child: Image.asset(
-                                'assets/images/prof1.png',
-                                // fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                              width: SizeConfig.scaleWidth(25),
+                              height: SizeConfig.scaleHeight(25),
+                              child: CircleAvatar(
+                                backgroundImage: users!.imageUrl != null
+                                    ? NetworkImage(users!.imageUrl!)
+                                    : null,
+                              )),
                         ),
                       ),
                     ],
