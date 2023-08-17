@@ -20,7 +20,18 @@ class FirebaseFireStoreHelper {
       "age": users.age,
       "specialization": users.specialization,
       "about": users.about,
+      "imageUrl": users.imageUrl,
     });
+  }
+
+  Future getUserData(String id) async {
+    try {
+      final data = await firestore.collection(userCollection).doc(id).get();
+      final user = await Users.fromJson(data.data()!);
+      return user;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future saveCompanyData(Company company, String id) async {

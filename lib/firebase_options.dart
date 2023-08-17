@@ -29,12 +29,12 @@ class DefaultFirebaseOptions {
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     projectId: 'prog-jobs-grad',
     storageBucket: 'prog-jobs-grad.appspot.com',
     iosClientId:
-    '803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com',
+        '803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com',
     iosBundleId: 'com.example.progJobsGrad',
   );
 
@@ -78,7 +78,7 @@ class DefaultFirebaseOptions {
     projectId: 'prog-jobs-grad',
     storageBucket: 'prog-jobs-grad.appspot.com',
     iosClientId:
-    '803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com',
+        '803404929042-vn3i4lkv6qob842t4mts981rfnqkgbun.apps.googleusercontent.com',
     iosBundleId: 'com.example.progJobsGrad',
   );
 }

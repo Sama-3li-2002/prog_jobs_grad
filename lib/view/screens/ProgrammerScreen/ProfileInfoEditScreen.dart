@@ -1,8 +1,14 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 
+import '../../../controller/FirebaseAuthController.dart';
+import '../../../controller/FirebaseFireStoreHelper.dart';
+import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileInfoEdit extends StatefulWidget {
   static const String id = "profile_info_edit_screen";
@@ -12,8 +18,57 @@ class ProfileInfoEdit extends StatefulWidget {
 }
 
 class _ProfileInfoEditState extends State<ProfileInfoEdit> {
+  TextEditingController? _usernameController;
+  TextEditingController? _emailController;
+  TextEditingController? _phoneController;
+  TextEditingController? _ageController;
+  TextEditingController? _specializationController;
+  TextEditingController? _aboutController;
+
+  PickedFile? _pickedImage;
+  final ImagePicker _picker = ImagePicker();
+
+  Reference? _storageReference;
+  String? downloadUrl;
+  String id = FirebaseAuthController.fireAuthHelper.userId();
+
+  FirebaseFireStoreHelper fireStoreHelper =
+      FirebaseFireStoreHelper.fireStoreHelper;
+
+  Users? users;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _emailController = TextEditingController();
+    _phoneController = TextEditingController();
+    _ageController = TextEditingController();
+    _specializationController = TextEditingController();
+    _aboutController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _usernameController!.dispose();
+    _emailController!.dispose();
+    _phoneController!.dispose();
+    _ageController!.dispose();
+    _specializationController!.dispose();
+    _aboutController!.dispose();
+  }
+
+  Future getUser() async {
+    final userResult = await fireStoreHelper.getUserData(id);
+    setState(() {
+      users = userResult;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUser();
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
@@ -45,10 +100,10 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                       width: SizeConfig.scaleWidth(150),
                       height: SizeConfig.scaleHeight(150),
                       child: ClipOval(
-                        child: Image.asset(
-                          'assets/images/prof1.png',
-                          fit: BoxFit.cover,
-                          // fit: BoxFit.cover,
+                        child: CircleAvatar(
+                          backgroundImage: users!.imageUrl != null
+                              ? NetworkImage(users!.imageUrl!)
+                              : null,
                         ),
                       ),
                     ),
@@ -61,7 +116,9 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                       height: 40,
                       child: FloatingActionButton(
                           backgroundColor: Color(0xff4C5175),
-                          onPressed: () {},
+                          onPressed: () {
+                            _pickImage();
+                          },
                           child: Icon(
                             Icons.camera_alt_outlined,
                             color: Colors.white,
@@ -73,23 +130,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
               ),
               SizedBox(
                 height: SizeConfig.scaleHeight(10),
-              ),
-              Text(
-                "Sohib naser khalaf",
-                style: TextStyle(
-                    color: Color(0xff4C5175),
-                    fontSize: SizeConfig.scaleTextFont(19),
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(3),
-              ),
-              Text(
-                "Web programmer",
-                style: TextStyle(
-                    color: Color(0xffBBBDD0),
-                    fontSize: SizeConfig.scaleTextFont(14),
-                    fontWeight: FontWeight.bold),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -136,11 +176,12 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                   SizedBox(
                                     height: 50,
                                     child: TextField(
+                                      controller: _usernameController,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: "Sohib Naser Khalaf",
+                                        hintText: users!.username.toString(),
                                         hintStyle: TextStyle(
                                           color: Colors.black,
                                           fontSize:
@@ -184,11 +225,12 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                   SizedBox(
                                     height: 50,
                                     child: TextField(
+                                      controller: _emailController,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: "sohibnkhalaf@gmail.com",
+                                        hintText: users!.email.toString(),
                                         hintStyle: TextStyle(
                                           color: Colors.black,
                                           fontSize:
@@ -235,11 +277,12 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                   SizedBox(
                                     height: SizeConfig.scaleHeight(50),
                                     child: TextField(
+                                      controller: _ageController,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: "24",
+                                        hintText: users!.age.toString(),
                                         hintStyle: TextStyle(
                                           color: Colors.black,
                                           fontSize:
@@ -283,11 +326,12 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                   SizedBox(
                                     height: SizeConfig.scaleHeight(50),
                                     child: TextField(
+                                      controller: _phoneController,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: "0597768136",
+                                        hintText: users!.phone.toString(),
                                         hintStyle: TextStyle(
                                           color: Colors.black,
                                           fontSize:
@@ -331,11 +375,13 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                   SizedBox(
                                     height: SizeConfig.scaleHeight(50),
                                     child: TextField(
+                                      controller: _specializationController,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText: "Web Programmer",
+                                        hintText:
+                                            users!.specialization.toString(),
                                         hintStyle: TextStyle(
                                           color: Colors.black,
                                           fontSize:
@@ -377,20 +423,15 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                     height: SizeConfig.scaleHeight(10),
                                   ),
                                   SizedBox(
-                                    height: SizeConfig.scaleHeight(260),
                                     child: TextField(
+                                      controller: _aboutController,
                                       keyboardType: TextInputType.text,
+                                      minLines: 2,
                                       maxLines: 8,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Color(0xffFAFAFA),
-                                        hintText:
-                                            "Excepteur sint occaecat cupidatat non proident,"
-                                            " sunt in culpa qui officia deserunt mollit anim id est eopksio laborum. "
-                                            "Sed ut perspiciatis unde omnis istpoe natus error sit"
-                                            " voluptatem accusantium doloremque eopsloi laudantium, totam rem aperiam, "
-                                            "eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae "
-                                            "dicta sunot explicabo. Nemo ernim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sedopk quia consequuntur magni dolores eos qui rationesopl voluptatem sequi nesciunt. Neque porro quisquameo est, qui dolorem ipsum quia dolor sit amet, eopsmiep consectetur, adipisci velit, seisud quia non numquam eius modi tempora incidunt ut labore et dolore wopeir magnam aliquam quaerat voluptatem eoplmuriquisqu",
+                                        hintText: users!.about.toString(),
                                         hintStyle: TextStyle(
                                           color: Colors.black,
                                           fontSize:
@@ -415,6 +456,9 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: SizeConfig.scaleHeight(10),
+                                  ),
                                 ],
                               ),
                             ),
@@ -432,6 +476,9 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                           radius: 50,
                           child: IconButton(
                             onPressed: () {
+                              uploadImage();
+                              updateUserProfile();
+
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(builder: (context) {
                                 return ProfileInfo();
@@ -453,5 +500,67 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
         ),
       ),
     );
+  }
+
+  Future updateUserProfile() async {
+    try {
+      users!.id = id;
+      users!.username = _usernameController!.text;
+      users!.email = _emailController!.text;
+      users!.age = int.tryParse(_ageController!.text);
+      users!.phone = _phoneController!.text;
+      users!.specialization = _specializationController!.text;
+      users!.about = _aboutController!.text;
+      users!.imageUrl = downloadUrl;
+
+      await fireStoreHelper.SaveUserData(users!, id);
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return ProfileInfo();
+      }));
+    } catch (error) {
+      print("Error updating user profile: $error");
+    }
+  }
+
+  Future _pickImage() async {
+    _pickedImage = await _picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (_pickedImage != null) {
+        _storageReference = FirebaseStorage.instance
+            .ref()
+            .child('profile_images')
+            .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
+        _storageReference!
+            .putFile(File(_pickedImage!.path))
+            .then((taskSnapshot) {
+          taskSnapshot.ref.getDownloadURL().then((downloadUrl) {
+            setState(() {
+              users!.imageUrl = downloadUrl;
+              fireStoreHelper.SaveUserData(users!, id);
+            });
+          });
+        });
+      } else {
+        print('No Image Selected');
+      }
+    });
+  }
+
+  Future uploadImage() async {
+    if (_storageReference != null && _pickedImage != null) {
+      final uploadTask = _storageReference!.putFile(File(_pickedImage!.path));
+      await uploadTask.whenComplete(() {
+        print('Image upload complete');
+      }).then((TaskSnapshot snapshot) async {
+        downloadUrl = await snapshot.ref.getDownloadURL();
+        print('Download URL: $downloadUrl');
+
+        await updateUserProfile();
+        Navigator.of(context).pop();
+      }).catchError((error) {
+        print("Error uploading image: $error");
+      });
+    }
   }
 }
