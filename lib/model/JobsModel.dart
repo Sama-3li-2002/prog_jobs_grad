@@ -42,12 +42,13 @@ class Jobs{
     this.required_skills_one = map['required_skills_one '];
     this.required_skills_two = map['required_skills_two '];
     this.required_skills_three = map['required_skills_three '];
-    this.required_skills_four = map['required_skills_four'];
+    this.required_skills_four = map['required_skills_four '];
     this.current_date = map['current_date '];
     this.current_time = map['current_time '];
   }
   Map<String,dynamic>toMap(){
     Map<String,dynamic>map=Map<String,dynamic>();
+    map['id'] = this.id;
     map['job_image'] = this.job_image;
     map['job_name'] = this.job_name;
     map['company_name'] =this.company_name;

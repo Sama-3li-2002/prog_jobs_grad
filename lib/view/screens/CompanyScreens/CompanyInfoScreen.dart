@@ -28,8 +28,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
     return SafeArea(
       child: Scaffold(
         body: Consumer<ComInfoProvider>(
-          builder: (context, comInfoProvider, _) => comInfoProvider
-                  .comInfoList.isEmpty
+          builder: (context, comInfoProvider, _) => comInfoProvider.comInfoList.isEmpty
               ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(
@@ -60,7 +59,6 @@ class _CompanyInfoState extends State<CompanyInfo> {
                                       size: SizeConfig.scaleWidth(14),
                                     ),
                                   )),
-                              if (UserTypeScreen.type == "company")
                                 Padding(
                                     padding: EdgeInsetsDirectional.only(
                                         start: SizeConfig.scaleWidth(300),
@@ -79,16 +77,26 @@ class _CompanyInfoState extends State<CompanyInfo> {
                                     )),
                             ],
                           ),
-                          Container(
-                            alignment: Alignment.center,
-                            margin: EdgeInsetsDirectional.only(
-                                top: SizeConfig.scaleHeight(170)),
-                            child: Image.asset(
-                              comInfoProvider.comInfoList.isNotEmpty
-                                  ? comInfoProvider.comInfoList[0].image ?? ""
-                                  : "No Image",
-                              width: 70,
-                              height: 70,
+                          Center(
+                            child: Container (
+                              margin: EdgeInsets.only(top: SizeConfig.scaleHeight(150)),
+                              child: Card (
+                                clipBehavior: Clip.antiAlias,
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+
+                                child: Image.asset(
+                                  comInfoProvider.comInfoList.isNotEmpty
+                                      ? comInfoProvider.comInfoList[0].image ?? ""
+                                      : "No image",
+                                  width: SizeConfig.scaleWidth(120),
+                                  height: SizeConfig.scaleHeight(120),
+                                  fit: BoxFit.cover,
+                                ),
+
+                              ),
                             ),
                           ),
                         ],

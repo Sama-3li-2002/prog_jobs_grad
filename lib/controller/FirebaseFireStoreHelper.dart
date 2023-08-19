@@ -97,9 +97,9 @@ class FirebaseFireStoreHelper {
   }
 
   // استرجاع بيانات البروفايل الخاص بالشركة بناء على ال ID
-  Future<DocumentSnapshot<Map<String, dynamic>>> getComInfoById() async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> getComInfoById(String id) async {
     final DocumentSnapshot<Map<String, dynamic>> comInfoSnapshot =
-    await firestore.collection(companyCollection).doc(FirebaseAuthController.fireAuthHelper.userId()).get();
+    await firestore.collection(companyCollection).doc(id).get();
     print("com Info $comInfoSnapshot");
     return comInfoSnapshot;
   }

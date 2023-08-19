@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/EditJobScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/JobsCompanyDetailsScreen.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/JobsDetails.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 

@@ -16,7 +16,7 @@ import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_logo.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/no_of_request.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/FavoriteScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/JobDetailsScreen.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/JobsCompanyDetailsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/MessagesProg.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationDetialsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationsScreen.dart';
@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         RequestStatusScreen.id: (context) => RequestStatusScreen(),
         NotificationScreen.id: (context) => NotificationScreen(),
         SettingScreen.id: (context) => SettingScreen(),
-        JobDetailsScreen.id: (context) => JobDetailsScreen(),
+        JobsCompanyDetailsScreen.id: (context) => JobsCompanyDetailsScreen(items: [],),
         SubmitJopScreen.id: (context) => SubmitJopScreen(),
         ComLogoScreen.id: (context) => ComLogoScreen(),
         NumberOfRequestsScreen.id: (context) => NumberOfRequestsScreen(),
