@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.prog_jobs_grad">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
    <application
         android:label="prog_jobs_grad"
         android:name="${applicationName}"

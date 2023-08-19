@@ -1,8 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
+import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
+import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
-
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
+import 'com_home.dart';
 
 class AddNewJobScreen extends StatefulWidget {
   static const String id = "add_new_job_screen";
@@ -12,6 +19,75 @@ class AddNewJobScreen extends StatefulWidget {
 }
 
 class _AddNewJobScreenState extends State<AddNewJobScreen> {
+  // عدد النقرات على زر add skills
+  int _clickCount = 0;
+  //Dynamic Text Fields
+  List<TextField> textFields = [];
+  int index =0;
+  late List<TextEditingController>controllers;
+  // For Image Picker
+  // final ImagePicker _imagePicker = ImagePicker();
+  File? _pickedImage;
+  String? _imageString = "assets/images/addJob.png";
+
+  TextEditingController? _job_nameTextController;
+  TextEditingController? _company_nameTextController;
+  TextEditingController? _salaryTextController;
+  TextEditingController? _job_descriptionTextController;
+  // TextEditingController? _required_skillsTextController;
+
+  //For Controller
+  late TextEditingController _controllerOneSkills;
+  late TextEditingController _controllerTwoSkills;
+  late TextEditingController _cotrollerThreeSkills;
+  late TextEditingController _controllerFourSkills;
+
+  late String formattedDate;
+  late String formattedTime;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _job_nameTextController = TextEditingController();
+    _company_nameTextController = TextEditingController();
+    _salaryTextController = TextEditingController();
+    _job_descriptionTextController = TextEditingController();
+    // _required_skillsTextController = TextEditingController();
+
+    // For controller
+    _controllerOneSkills=TextEditingController();
+    _controllerTwoSkills= TextEditingController();
+    _cotrollerThreeSkills=TextEditingController();
+    _controllerFourSkills=TextEditingController();
+
+   controllers = [ _controllerTwoSkills, _cotrollerThreeSkills, _controllerFourSkills];
+
+    // for current time
+    DateTime currentDate = DateTime.now();
+     formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
+    formattedTime = DateFormat('hh:mm:ss a').format(currentDate);
+
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _job_nameTextController?.dispose();
+    _company_nameTextController?.dispose();
+    _salaryTextController?.dispose();
+    _job_descriptionTextController?.dispose();
+
+    //For controller
+    _controllerOneSkills?.dispose();
+    _controllerTwoSkills?.dispose();
+    _cotrollerThreeSkills?.dispose();
+    _controllerFourSkills?.dispose();
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +128,9 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                         child: Padding(
                           padding: EdgeInsets.all(5),
                           child: Image.asset(
-                            "assets/images/addJob.png",
+                            _imageString!.isEmpty
+                                ? "assets/images/addJob.png"
+                                : _imageString!,
                             width: SizeConfig.scaleWidth(150),
                             height: SizeConfig.scaleHeight(145),
                             fit: BoxFit.cover,
@@ -68,7 +146,9 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                         height: 40,
                         child: FloatingActionButton(
                             backgroundColor: Color(0xff4C5175),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await _pickImage();
+                            },
                             child: Icon(
                               Icons.camera_alt_outlined,
                               color: Colors.white,
@@ -81,25 +161,28 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
               ),
               TextStyleWidget("job name:", Color(0xff4C5175),
                   SizeConfig.scaleTextFont(12), FontWeight.w500),
-              TextFieldWidget(),
+              TextFieldWidget.textfieldCon(
+                controller: _job_nameTextController,
+              ),
               SizedBox(height: SizeConfig.scaleHeight(12)),
               TextStyleWidget("Company Name:", Color(0xff4C5175),
                   SizeConfig.scaleTextFont(12), FontWeight.w500),
-              TextFieldWidget(),
+              TextFieldWidget.textfieldCon(
+                controller: _company_nameTextController,
+              ),
               SizedBox(height: SizeConfig.scaleHeight(12)),
               TextStyleWidget("Salary:", Color(0xff4C5175),
                   SizeConfig.scaleTextFont(12), FontWeight.w500),
-              TextFieldWidget(),
-              SizedBox(height: SizeConfig.scaleHeight(12)),
-              TextStyleWidget("Company Name:", Color(0xff4C5175),
-                  SizeConfig.scaleTextFont(12), FontWeight.w500),
-              TextFieldWidget(),
+              TextFieldWidget.textfieldCon(
+                controller: _salaryTextController,
+              ),
               SizedBox(height: SizeConfig.scaleHeight(12)),
               TextStyleWidget("Job description:", Color(0xff4C5175),
                   SizeConfig.scaleTextFont(12), FontWeight.w500),
               SizedBox(
                 height: SizeConfig.scaleHeight(90),
                 child: TextField(
+                  controller: _job_descriptionTextController,
                   maxLines: 3,
                   decoration: InputDecoration(
                       fillColor: Colors.white,
@@ -120,12 +203,68 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                 ),
               ),
               SizedBox(height: SizeConfig.scaleHeight(12)),
-              TextStyleWidget("required skills:", Color(0xff4C5175),
-                  SizeConfig.scaleTextFont(12), FontWeight.w500),
+              Row(
+                children: [
+                  TextStyleWidget("required skills:", Color(0xff4C5175),
+                      SizeConfig.scaleTextFont(12), FontWeight.w500),
+                  Spacer(),
+                  Container(
+                    width: SizeConfig.scaleWidth(90),
+                    height: SizeConfig.scaleHeight(40),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_clickCount < 4) {
+                          setState(() {
+                            _clickCount++;
+                            textFields.add(
+                              TextField(
+                                controller: controllers[index],
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    hintText: 'write...',
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: SizeConfig.scaleTextFont(13),
+                                    ),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                          color: Colors.white, width: 1),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    )),
+                              ),
+                            );
+                            index++;
+                          });
+                        };
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff4C5175),
+                      ),
+                      child: Row(children: [
+                        // Icon(Icons.add),
+                        Image.asset("assets/images/add.png"),
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(7),
+                        ),
+                        TextStyleWidget("Add Skils", Color(0xffFAFAFA),
+                            SizeConfig.scaleTextFont(9), FontWeight.w500)
+                      ]),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                ],
+              ),
+              SizedBox(height: SizeConfig.scaleHeight(17)),
               SizedBox(
-                height: SizeConfig.scaleHeight(90),
+                height: SizeConfig.scaleHeight(48),
                 child: TextField(
-                  maxLines: 3,
+                  style: TextStyle(color: Colors.black),
+                  controller:_controllerOneSkills ,
                   decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -143,6 +282,19 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                         borderRadius: BorderRadius.circular(5),
                       )),
                 ),
+              ),
+
+              Column(
+                children: [
+                  for (TextField textField in textFields)
+                    Padding(
+                      padding: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
+                      child: SizedBox(
+                        height: SizeConfig.scaleHeight(48),
+                        child: textField,
+                      ),
+                    ),
+                ],
               ),
               SizedBox(height: SizeConfig.scaleHeight(15)),
               Center(
@@ -150,7 +302,16 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                   width: SizeConfig.scaleWidth(350),
                   height: SizeConfig.scaleHeight(48),
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await performStore();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ComHomeScreen();
+                            },
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xff4C5175),
                       ),
@@ -163,5 +324,100 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
         ),
       ),
     );
+  }
+
+  Future performStore() async {
+    if (checkData()) await store();
+  }
+
+  bool checkData() {
+    if (_job_nameTextController!.text.isNotEmpty &&
+        _company_nameTextController!.text.isNotEmpty &&
+        _salaryTextController!.text.isNotEmpty &&
+        _job_descriptionTextController!.text.isNotEmpty &&
+        _controllerOneSkills!.text.isNotEmpty)
+      return true;
+    else
+      Fluttertoast.showToast(
+        msg: "can't be null",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    print("can't be null");
+    return false;
+  }
+
+  Future store() async {
+    await FirebaseFireStoreHelper.instance
+        .create(FirebaseAuthController.fireAuthHelper.userId(), getJobs());
+
+    clear();
+    // if(stored)
+    //   print("Successfull");
+    // else print("Falied");
+  }
+
+  Jobs getJobs() {
+    return Jobs(
+      id: FirebaseAuthController.fireAuthHelper.userId(),
+      job_image: _imageString,
+      current_date: formattedDate,
+      current_time: formattedTime,
+      job_name: _job_nameTextController!.text,
+      company_name: _company_nameTextController!.text,
+      salary: _salaryTextController!.text,
+      job_description: _job_descriptionTextController!.text,
+      required_skills_one: _controllerOneSkills!.text,
+      required_skills_two: controllers.elementAt(0).text,
+      required_skills_three: controllers.elementAt(1).text,
+      required_skills_four: controllers.elementAt(2).text,
+    );
+  }
+
+  void clear() {
+    _job_nameTextController!.text = "";
+    _company_nameTextController!.text = "";
+    _salaryTextController!.text = "";
+    _job_descriptionTextController!.text = "";
+    _controllerOneSkills!.text="";
+    _controllerTwoSkills!.text="";
+    _cotrollerThreeSkills!.text="";
+    _controllerFourSkills!.text="";
+  }
+
+  // Future <void> _pickImage() async {
+  //   try {
+  //     final pickedImage =await  _imagePicker.pickImage(source: ImageSource.gallery);
+  //     if (pickedImage != null) {
+  //       setState(() {
+  //         _pickedImage = File(pickedImage.path);
+  //         _imageString = _pickedImage!.path;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print('Error picking image: $e');
+  //   }
+  // }
+
+  Future<void> _pickImage() async {
+    try {
+      const platform = MethodChannel(
+          'image_picker_channel'); // Change the channel name accordingly
+
+      final String imagePath =
+          await platform.invokeMethod('pickImageFromGallery');
+
+      if (imagePath != null) {
+        setState(() {
+          _pickedImage = File(imagePath);
+          _imageString = _pickedImage!.path;
+        });
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+    }
   }
 }

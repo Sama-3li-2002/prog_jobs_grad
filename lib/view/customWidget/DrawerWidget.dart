@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/MessagesCom.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ArchiveScreen.dart';
@@ -257,7 +258,8 @@ void showLogoutDialog(BuildContext context) {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              FirebaseAuthController.fireAuthHelper.signOut();
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
                 return LoginScreen(userType: UserTypeScreen.type!);
               }));
             },

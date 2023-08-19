@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 
 import '../../../controller/FirebaseAuthController.dart';
@@ -24,9 +23,9 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
   TextEditingController? _ageController;
   TextEditingController? _specializationController;
   TextEditingController? _aboutController;
-
-  PickedFile? _pickedImage;
-  final ImagePicker _picker = ImagePicker();
+  //
+  // PickedFile? _pickedImage;
+  // final ImagePicker _picker = ImagePicker();
 
   Reference? _storageReference;
   String? downloadUrl;
@@ -143,7 +142,7 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                       child: FloatingActionButton(
                           backgroundColor: Color(0xff4C5175),
                           onPressed: () {
-                            _pickImage();
+                            // _pickImage();
                           },
                           child: Icon(
                             Icons.camera_alt_outlined,
@@ -510,28 +509,28 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
     }
   }
 
-  Future _pickImage() async {
-    _pickedImage = await _picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (_pickedImage != null) {
-        _storageReference = FirebaseStorage.instance
-            .ref()
-            .child('profile_images')
-            .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
-        _storageReference!
-            .putFile(File(_pickedImage!.path))
-            .then((taskSnapshot) {
-          taskSnapshot.ref.getDownloadURL().then((downloadUrl) {
-            setState(() {
-              users!.imageUrl = downloadUrl;
-            });
-          });
-        }).catchError((error) {
-          print("Error uploading image: $error");
-        });
-      } else {
-        print('No Image Selected');
-      }
-    });
-  }
+  // Future _pickImage() async {
+  //   _pickedImage = await _picker.getImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     if (_pickedImage != null) {
+  //       _storageReference = FirebaseStorage.instance
+  //           .ref()
+  //           .child('profile_images')
+  //           .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
+  //       _storageReference!
+  //           .putFile(File(_pickedImage!.path))
+  //           .then((taskSnapshot) {
+  //         taskSnapshot.ref.getDownloadURL().then((downloadUrl) {
+  //           setState(() {
+  //             users!.imageUrl = downloadUrl;
+  //           });
+  //         });
+  //       }).catchError((error) {
+  //         print("Error uploading image: $error");
+  //       });
+  //     } else {
+  //       print('No Image Selected');
+  //     }
+  //   });
+  // }
 }

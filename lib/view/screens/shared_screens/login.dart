@@ -291,16 +291,17 @@ class _LoginScreenState extends State<LoginScreen> {
   bool checkData() {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       return true;
+    }else {
+      Fluttertoast.showToast(
+        msg: "Email or Password can't be empty",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return false;
     }
-    Fluttertoast.showToast(
-      msg: "Email or Password can't be empty",
-      toastLength: Toast.LENGTH_SHORT,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-    return false;
   }
 
   Future logIn() async {

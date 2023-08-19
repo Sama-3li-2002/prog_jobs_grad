@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
+import 'package:prog_jobs_grad/providers/CompaniesJobsProvider.dart';
+import 'package:prog_jobs_grad/providers/CompanyJobsProvider.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ArchiveScreen.dart';
@@ -29,11 +32,27 @@ import 'package:prog_jobs_grad/view/screens/shared_screens/forget_password.dart'
 import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CompanyJobsProvider>(create: (context) {
+            return CompanyJobsProvider();
+          }),
+          ChangeNotifierProvider<ComInfoProvider>(create: (context) {
+            return ComInfoProvider();
+          }),
+          ChangeNotifierProvider<CompaniesJobsProvider>(create: (context) {
+            return CompaniesJobsProvider();
+          }),
+        ],
+        child: MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {

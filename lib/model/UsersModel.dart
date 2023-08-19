@@ -12,7 +12,7 @@ class Users {
   Users();
 
   Users.signup(this.username, this.email, this.password, this.phone, this.age,
-      this.specialization, this.about);
+      this.specialization, this.about,this.imageUrl);
 
   Users.fromJson(Map<String, dynamic> data) {
     id = data['id'];
@@ -24,4 +24,5 @@ class Users {
     about = data['about'];
     imageUrl = data['imageUrl'];
   }
+
 }

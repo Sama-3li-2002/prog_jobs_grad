@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import '../../../model/CompanyModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
@@ -30,6 +32,7 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? _specializationProg;
   TextEditingController? _aboutProg;
 
+
   // Company Info
   TextEditingController? _emailCom;
   TextEditingController? _passwordCom;
@@ -40,6 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? _twitterAccountCom;
   TextEditingController? _InstagramAccountCom;
   TextEditingController? _aboutCom;
+  TextEditingController? _managerCom;
 
   @override
   void initState() {
@@ -63,6 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _twitterAccountCom = TextEditingController();
     _InstagramAccountCom = TextEditingController();
     _aboutCom = TextEditingController();
+    _managerCom = TextEditingController();
   }
 
   @override
@@ -101,7 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
           },
           icon: Icon(
             Icons.arrow_back_ios,
-            size: SizeConfig.scaleWidth(20),
+            size: SizeConfig.scaleWidth(14),
           ),
           color: Color(0xff4C5175),
         ),
@@ -322,6 +327,19 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
+                    TextStyleWidget('manager name', Color(0xff4C5175),
+                        SizeConfig.scaleTextFont(12), FontWeight.w500),
+                    SizedBox(
+                        width: SizeConfig.scaleWidth(321),
+                        height: SizeConfig.scaleHeight(48),
+                        child: TextFieldWidget.textfieldCon(
+                          controller: _managerCom,
+                          inputType: TextInputType.text,
+                        )),
+                    SizedBox(
+                      height: SizeConfig.scaleHeight(20),
+                    ),
+
                     TextStyleWidget('facebook account:', Color(0xff4C5175),
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
                     SizedBox(
@@ -334,6 +352,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
+
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
@@ -346,6 +365,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: _twitterAccountCom,
                           inputType: TextInputType.text,
                         )),
+
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
@@ -361,6 +381,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
+
+
                     TextStyleWidget('about', Color(0xff4C5175),
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
                     SizedBox(
@@ -403,13 +425,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future createProgAccount() async {
-    if (_usernameProg!.text.isNotEmpty &&
-        _emailProg!.text.isNotEmpty &&
-        _passwordProg!.text.isNotEmpty &&
-        _phoneProg!.text.isNotEmpty &&
-        _ageProg!.text.isNotEmpty &&
-        _specializationProg!.text.isNotEmpty &&
-        _aboutProg!.text.isNotEmpty) {
+    if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
       UserCredential? userCredential = await FirebaseAuthController
           .fireAuthHelper
           .createAccount(Users.signup(
@@ -419,7 +435,9 @@ class _SignupScreenState extends State<SignupScreen> {
               _phoneProg!.text,
               int.tryParse(_ageProg!.text),
               _specializationProg!.text,
-              _aboutProg!.text));
+              _aboutProg!.text,
+            "assets/images/withoutImagePerson.jpg"
+      ));
       if (userCredential != null) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return LoginScreen(
@@ -444,21 +462,22 @@ class _SignupScreenState extends State<SignupScreen> {
       UserCredential? userCredential = await FirebaseAuthController
           .fireAuthHelper
           .createComAccount(Company.signUP(
-              _companyNameCom!.text,
-              _emailCom!.text,
-              _passwordCom!.text,
-              _phoneCom!.text,
-              _addressCom!.text,
-              _facebookAccountCom!.text,
-              _twitterAccountCom!.text,
-              _InstagramAccountCom!.text,
-              _aboutCom!.text,
-              ""));
+          _companyNameCom!.text,
+          _emailCom!.text,
+          _passwordCom!.text,
+          _phoneCom!.text,
+          _addressCom!.text,
+          _managerCom!.text,
+          _facebookAccountCom!.text,
+          _twitterAccountCom!.text,
+          _InstagramAccountCom!.text,
+          _aboutCom!.text,
+          "assets/images/withoutImageCompany.png" ,
+          "assets/images/withoutImagePerson.jpg" ,
+          ));
       if (userCredential != null) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return LoginScreen(
-            userType: widget.userType,
-          );
+          return LoginScreen(userType: widget.userType);
         }));
       }
     } else {
@@ -472,4 +491,38 @@ class _SignupScreenState extends State<SignupScreen> {
       );
     }
   }
+
+  // Future performLogin() async {
+  //   if (checkData()) {
+  //     await signUp();
+  //   }
+  // }
+
+  // bool checkData() {
+  //   if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
+  //     return true;
+  //   }
+  //   Fluttertoast.showToast(
+  //     msg: "Email or Password can't be empty",
+  //     toastLength: Toast.LENGTH_SHORT,
+  //     timeInSecForIosWeb: 1,
+  //     backgroundColor: Colors.black,
+  //     textColor: Colors.white,
+  //     fontSize: 16.0,
+  //   );
+  //   return false;
+  // }
+
+// Future signUp() async {
+//   UserCredential? userCredential = await FirebaseAuthController
+//       .fireStoreHelper
+//       .createAccount(_emailCom!.text, _passwordCom!.text);
+//   if (userCredential != null) {
+//     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+//       return LoginScreen(
+//         userType: widget.userType,
+//       );
+//     }));
+//   }
+// }
 }

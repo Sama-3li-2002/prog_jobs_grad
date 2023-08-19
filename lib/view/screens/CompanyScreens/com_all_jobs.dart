@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/CompanyJobsProvider.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'no_of_request.dart';
@@ -12,6 +14,13 @@ class ComAllJobScreen extends StatefulWidget {
 }
 
 class _ComAllJobScreenState extends State<ComAllJobScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<CompanyJobsProvider>(context, listen: false)
+        .getAllJobsObjects();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +62,11 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
       ),
       backgroundColor: Color(0xfffafafa),
       body: SingleChildScrollView(
-        child: Column(
+        child:    Consumer<CompanyJobsProvider>(
+    builder: (context, companyJobsProvider, _) =>
+    companyJobsProvider.JobsList.isEmpty
+    ? Center(child: Text("Not available jobs"))
+        : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -68,7 +81,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: 10,
+              itemCount: companyJobsProvider.JobsList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                     decoration: BoxDecoration(
@@ -83,15 +96,22 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            bottomRight: Radius.circular(5),
-                          )),
+                                topLeft: Radius.circular(5),
+                                bottomRight: Radius.circular(5),
+                              )),
                           child: Image.asset(
-                            'assets/images/computer.png',
+                            companyJobsProvider
+                                .JobsList.isNotEmpty
+                                ? companyJobsProvider
+                                .JobsList[index]
+                                .job_image ??
+                                ""
+                                : "No Image",
                             fit: BoxFit.cover,
                             width: SizeConfig.scaleWidth(96),
                             height: SizeConfig.scaleHeight(105),
-                            color: Color(0xff4C5175).withOpacity(0.5),
+                            color: Color(0xff4C5175)
+                                .withOpacity(0.5),
                             colorBlendMode: BlendMode.darken,
                           ),
                         ),
@@ -105,9 +125,16 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                 Row(
                                   children: [
                                     TextStyleWidget(
-                                      'Web Programmer',
+                                      companyJobsProvider
+                                          .JobsList.isNotEmpty
+                                          ? companyJobsProvider
+                                          .JobsList[index]
+                                          .job_name ??
+                                          ""
+                                          : "No Job Name",
                                       Color(0xff4C5175),
-                                      SizeConfig.scaleTextFont(15),
+                                      SizeConfig.scaleTextFont(
+                                          15),
                                       FontWeight.w500,
                                     ),
                                   ],
@@ -118,65 +145,127 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                       children: [
                                         Icon(
                                           Icons.apartment,
-                                          size: SizeConfig.scaleWidth(15),
-                                          color: Color(0xffcbb523),
+                                          size: SizeConfig
+                                              .scaleWidth(15),
+                                          color:
+                                          Color(0xffcbb523),
                                         ),
                                         TextStyleWidget(
-                                          ' Magic Company',
+                                          companyJobsProvider
+                                              .JobsList
+                                              .isNotEmpty
+                                              ? companyJobsProvider
+                                              .JobsList[
+                                          index]
+                                              .company_name ??
+                                              ""
+                                              : "No Company Name",
                                           Colors.black,
-                                          SizeConfig.scaleTextFont(10),
+                                          SizeConfig
+                                              .scaleTextFont(10),
                                           FontWeight.w500,
                                         ),
                                       ],
                                     ),
                                     Spacer(),
-                                    Row(
+                                    Column(
                                       children: [
-                                        Icon(
-                                          Icons.access_time,
-                                          size: SizeConfig.scaleWidth(14),
-                                          color: Color(0xffcbb523),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.access_time,
+                                              size: SizeConfig
+                                                  .scaleWidth(
+                                                  14),
+                                              color: Color(
+                                                  0xffcbb523),
+                                            ),
+                                            SizedBox(
+                                              width: SizeConfig
+                                                  .scaleWidth(
+                                                  3),
+                                            ),
+                                            TextStyleWidget(
+                                              companyJobsProvider
+                                                  .JobsList
+                                                  .isNotEmpty
+                                                  ? companyJobsProvider
+                                                  .JobsList[
+                                              index]
+                                                  .current_date ??
+                                                  ""
+                                                  : "No Current Date",
+                                              Colors.black,
+                                              SizeConfig
+                                                  .scaleTextFont(
+                                                  10),
+                                              FontWeight.w500,
+                                            ),
+                                          ],
                                         ),
                                         TextStyleWidget(
-                                          ' a minute ago',
+                                          companyJobsProvider
+                                              .JobsList
+                                              .isNotEmpty
+                                              ? companyJobsProvider
+                                              .JobsList[
+                                          index]
+                                              .current_time ??
+                                              ""
+                                              : "No Current Time",
                                           Colors.black,
-                                          SizeConfig.scaleTextFont(10),
+                                          SizeConfig
+                                              .scaleTextFont(
+                                              10),
                                           FontWeight.w500,
                                         ),
                                       ],
-                                    ),
+                                    )
                                   ],
                                 ),
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: SizeConfig.scaleWidth(145),
-                                      height: SizeConfig.scaleHeight(30),
+                                      width:
+                                      SizeConfig.scaleWidth(
+                                          145),
+                                      height:
+                                      SizeConfig.scaleHeight(
+                                          30),
                                       child: ElevatedButton(
                                         child: Row(
                                           children: [
                                             Container(
-                                              height:
-                                                  SizeConfig.scaleHeight(18),
-                                              width: SizeConfig.scaleWidth(18),
+                                              height: SizeConfig
+                                                  .scaleHeight(
+                                                  18),
+                                              width: SizeConfig
+                                                  .scaleWidth(18),
                                               child: Text(
                                                 '12',
                                                 style: TextStyle(
-                                                  fontFamily: 'Poppins',
+                                                  fontFamily:
+                                                  'Poppins',
                                                   backgroundColor:
-                                                      Color(0xffcbb523),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize:
-                                                      SizeConfig.scaleTextFont(
-                                                          10),
-                                                  color: Colors.white,
+                                                  Color(
+                                                      0xffcbb523),
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .w500,
+                                                  fontSize: SizeConfig
+                                                      .scaleTextFont(
+                                                      10),
+                                                  color: Colors
+                                                      .white,
                                                 ),
                                               ),
                                             ),
                                             TextStyleWidget(
                                               'number of requests',
                                               Colors.white,
-                                              SizeConfig.scaleTextFont(10),
+                                              SizeConfig
+                                                  .scaleTextFont(
+                                                  10),
                                               FontWeight.w500,
                                             ),
                                           ],
@@ -184,25 +273,33 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                         onPressed: () {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
-                                                  builder: (context) {
-                                            return NumberOfRequestsScreen();
-                                          }));
+                                                  builder:
+                                                      (context) {
+                                                    return NumberOfRequestsScreen();
+                                                  }));
                                         },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Color(0xff4C5175),
-                                          shape: RoundedRectangleBorder(
+                                        style: ElevatedButton
+                                            .styleFrom(
+                                          backgroundColor:
+                                          Color(0xff4C5175),
+                                          shape:
+                                          RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(2),
+                                            BorderRadius
+                                                .circular(2),
                                           ),
                                         ),
                                       ),
                                     ),
                                     Spacer(),
                                     IconButton(
-                                      alignment: Alignment.centerRight,
+                                      alignment:
+                                      Alignment.centerRight,
                                       icon: Icon(
                                         Icons.bookmark_border,
-                                        size: SizeConfig.scaleWidth(20),
+                                        size:
+                                        SizeConfig.scaleWidth(
+                                            20),
                                       ),
                                       color: Color(
                                         0xffcbb523,
@@ -221,7 +318,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
             ),
           ],
         ),
-      ),
+      ),),
     );
   }
 }
