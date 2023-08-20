@@ -1,16 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/EditJobScreen.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/JobsCompanyDetailsScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/JobsDetails.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 
 import 'user_type.dart';
 
@@ -31,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     ).then(
       (value) => Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
-            return UserTypeScreen();
+        return UserTypeScreen();
       })),
     );
   }

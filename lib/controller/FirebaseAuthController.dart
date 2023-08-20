@@ -138,6 +138,7 @@ class FirebaseAuthController {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
       print("signIn: code" + e.code);

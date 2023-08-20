@@ -21,10 +21,12 @@ class AddNewJobScreen extends StatefulWidget {
 class _AddNewJobScreenState extends State<AddNewJobScreen> {
   // عدد النقرات على زر add skills
   int _clickCount = 0;
+
   //Dynamic Text Fields
   List<TextField> textFields = [];
-  int index =0;
-  late List<TextEditingController>controllers;
+  int index = 0;
+  late List<TextEditingController> controllers;
+
   // For Image Picker
   // final ImagePicker _imagePicker = ImagePicker();
   File? _pickedImage;
@@ -34,6 +36,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   TextEditingController? _company_nameTextController;
   TextEditingController? _salaryTextController;
   TextEditingController? _job_descriptionTextController;
+
   // TextEditingController? _required_skillsTextController;
 
   //For Controller
@@ -47,7 +50,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _job_nameTextController = TextEditingController();
     _company_nameTextController = TextEditingController();
@@ -56,23 +58,25 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     // _required_skillsTextController = TextEditingController();
 
     // For controller
-    _controllerOneSkills=TextEditingController();
-    _controllerTwoSkills= TextEditingController();
-    _cotrollerThreeSkills=TextEditingController();
-    _controllerFourSkills=TextEditingController();
+    _controllerOneSkills = TextEditingController();
+    _controllerTwoSkills = TextEditingController();
+    _cotrollerThreeSkills = TextEditingController();
+    _controllerFourSkills = TextEditingController();
 
-   controllers = [ _controllerTwoSkills, _cotrollerThreeSkills, _controllerFourSkills];
+    controllers = [
+      _controllerTwoSkills,
+      _cotrollerThreeSkills,
+      _controllerFourSkills
+    ];
 
     // for current time
     DateTime currentDate = DateTime.now();
-     formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
+    formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
     formattedTime = DateFormat('hh:mm:ss a').format(currentDate);
-
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _job_nameTextController?.dispose();
     _company_nameTextController?.dispose();
@@ -84,9 +88,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     _controllerTwoSkills?.dispose();
     _cotrollerThreeSkills?.dispose();
     _controllerFourSkills?.dispose();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +120,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                 child: Stack(
                   children: [
                     Container(
-                      // padding: EdgeInsets.all(20),
                       child: Card(
                         color: Colors.white,
                         elevation: 7,
@@ -240,7 +241,8 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                             );
                             index++;
                           });
-                        };
+                        }
+                        ;
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xff4C5175),
@@ -256,7 +258,9 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                       ]),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
               SizedBox(height: SizeConfig.scaleHeight(17)),
@@ -264,7 +268,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                 height: SizeConfig.scaleHeight(48),
                 child: TextField(
                   style: TextStyle(color: Colors.black),
-                  controller:_controllerOneSkills ,
+                  controller: _controllerOneSkills,
                   decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -283,7 +287,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                       )),
                 ),
               ),
-
               Column(
                 children: [
                   for (TextField textField in textFields)
@@ -382,10 +385,10 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     _company_nameTextController!.text = "";
     _salaryTextController!.text = "";
     _job_descriptionTextController!.text = "";
-    _controllerOneSkills!.text="";
-    _controllerTwoSkills!.text="";
-    _cotrollerThreeSkills!.text="";
-    _controllerFourSkills!.text="";
+    _controllerOneSkills!.text = "";
+    _controllerTwoSkills!.text = "";
+    _cotrollerThreeSkills!.text = "";
+    _controllerFourSkills!.text = "";
   }
 
   // Future <void> _pickImage() async {

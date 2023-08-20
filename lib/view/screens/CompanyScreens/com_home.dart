@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/view/customWidget/DrawerWidget.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/JobsCompanyDetailsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/no_of_request.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/CompanyJobsProvider.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
-import 'JobsCompanyDetailsScreen.dart';
 import 'AddNewJobScreen.dart';
 import 'com_all_jobs.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -30,7 +30,6 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<CompanyJobsProvider>(context, listen: false)
         .getAllJobsObjects();
@@ -159,12 +158,13 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => JobsCompanyDetailsScreen(items:[ companyJobsProvider.JobsList.elementAt(index),]),
-                                        ),
-                                      );
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return JobsCompanyDetailsScreen(items: [
+                                          companyJobsProvider.JobsList
+                                              .elementAt(index),
+                                        ]);
+                                      }));
                                     },
                                     child: Row(
                                       children: [
@@ -442,11 +442,15 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                     SizeConfig.scaleWidth(15),
                                   ),
                                   child: InkWell(
-                                    onTap: (){
+                                    onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => JobsCompanyDetailsScreen(items:[ companyJobsProvider.JobsList.elementAt(index),]),
+                                          builder: (context) =>
+                                              JobsCompanyDetailsScreen(items: [
+                                            companyJobsProvider.JobsList
+                                                .elementAt(index),
+                                          ]),
                                         ),
                                       );
                                     },
@@ -486,9 +490,11 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                   children: [
                                                     TextStyleWidget(
                                                       companyJobsProvider
-                                                              .JobsList.isNotEmpty
+                                                              .JobsList
+                                                              .isNotEmpty
                                                           ? companyJobsProvider
-                                                                  .JobsList[index]
+                                                                  .JobsList[
+                                                                      index]
                                                                   .job_name ??
                                                               ""
                                                           : "No Job Name",
@@ -522,7 +528,8 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                               : "No Company Name",
                                                           Colors.black,
                                                           SizeConfig
-                                                              .scaleTextFont(10),
+                                                              .scaleTextFont(
+                                                                  10),
                                                           FontWeight.w500,
                                                         ),
                                                       ],
@@ -536,47 +543,47 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                               Icons.access_time,
                                                               size: SizeConfig
                                                                   .scaleWidth(
-                                                                  14),
+                                                                      14),
                                                               color: Color(
                                                                   0xffcbb523),
                                                             ),
                                                             SizedBox(
                                                               width: SizeConfig
                                                                   .scaleWidth(
-                                                                  3),
+                                                                      3),
                                                             ),
                                                             TextStyleWidget(
                                                               companyJobsProvider
-                                                                  .JobsList
-                                                                  .isNotEmpty
+                                                                      .JobsList
+                                                                      .isNotEmpty
                                                                   ? companyJobsProvider
-                                                                  .JobsList[
-                                                              index]
-                                                                  .current_date ??
-                                                                  ""
+                                                                          .JobsList[
+                                                                              index]
+                                                                          .current_date ??
+                                                                      ""
                                                                   : "No Current Date",
                                                               Colors.black,
                                                               SizeConfig
                                                                   .scaleTextFont(
-                                                                  10),
+                                                                      10),
                                                               FontWeight.w500,
                                                             ),
                                                           ],
                                                         ),
                                                         TextStyleWidget(
                                                           companyJobsProvider
-                                                              .JobsList
-                                                              .isNotEmpty
+                                                                  .JobsList
+                                                                  .isNotEmpty
                                                               ? companyJobsProvider
-                                                              .JobsList[
-                                                          index]
-                                                              .current_time ??
-                                                              ""
+                                                                      .JobsList[
+                                                                          index]
+                                                                      .current_time ??
+                                                                  ""
                                                               : "No Current Time",
                                                           Colors.black,
                                                           SizeConfig
                                                               .scaleTextFont(
-                                                              10),
+                                                                  10),
                                                           FontWeight.w500,
                                                         ),
                                                       ],
@@ -589,9 +596,8 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                       width:
                                                           SizeConfig.scaleWidth(
                                                               145),
-                                                      height:
-                                                          SizeConfig.scaleHeight(
-                                                              30),
+                                                      height: SizeConfig
+                                                          .scaleHeight(30),
                                                       child: ElevatedButton(
                                                         child: Row(
                                                           children: [
@@ -600,10 +606,12 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                                   .scaleHeight(
                                                                       18),
                                                               width: SizeConfig
-                                                                  .scaleWidth(18),
+                                                                  .scaleWidth(
+                                                                      18),
                                                               child: Text(
                                                                 '12',
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontFamily:
                                                                       'Poppins',
                                                                   backgroundColor:
@@ -646,7 +654,8 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                               RoundedRectangleBorder(
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(2),
+                                                                    .circular(
+                                                                        2),
                                                           ),
                                                         ),
                                                       ),
@@ -657,9 +666,8 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                           Alignment.centerRight,
                                                       icon: Icon(
                                                         Icons.bookmark_border,
-                                                        size:
-                                                            SizeConfig.scaleWidth(
-                                                                20),
+                                                        size: SizeConfig
+                                                            .scaleWidth(20),
                                                       ),
                                                       color: Color(
                                                         0xffcbb523,

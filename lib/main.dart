@@ -22,7 +22,7 @@ import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationDetials
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoEditScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SettingScreen.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/SettingScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
@@ -37,22 +37,20 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider<CompanyJobsProvider>(create: (context) {
-            return CompanyJobsProvider();
-          }),
-          ChangeNotifierProvider<ComInfoProvider>(create: (context) {
-            return ComInfoProvider();
-          }),
-          ChangeNotifierProvider<CompaniesJobsProvider>(create: (context) {
-            return CompaniesJobsProvider();
-          }),
-        ],
-        child: MyApp(),
-      )
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<CompanyJobsProvider>(create: (context) {
+        return CompanyJobsProvider();
+      }),
+      ChangeNotifierProvider<ComInfoProvider>(create: (context) {
+        return ComInfoProvider();
+      }),
+      ChangeNotifierProvider<CompaniesJobsProvider>(create: (context) {
+        return CompaniesJobsProvider();
+      }),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -76,8 +74,14 @@ class MyApp extends StatelessWidget {
         RequestStatusScreen.id: (context) => RequestStatusScreen(),
         NotificationScreen.id: (context) => NotificationScreen(),
         SettingScreen.id: (context) => SettingScreen(),
-        JobsCompanyDetailsScreen.id: (context) => JobsCompanyDetailsScreen(items: [],),
-        SubmitJopScreen.id: (context) => SubmitJopScreen(),
+        JobsCompanyDetailsScreen.id: (context) => JobsCompanyDetailsScreen(
+              items: [],
+            ),
+        SubmitJopScreen.id: (context) => SubmitJopScreen(
+              itemsComInfo: [],
+              ComId: '',
+              JobId: '',
+            ),
         ComLogoScreen.id: (context) => ComLogoScreen(),
         NumberOfRequestsScreen.id: (context) => NumberOfRequestsScreen(),
         ComAllJobScreen.id: (context) => ComAllJobScreen(),

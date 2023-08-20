@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prog_jobs_grad/view/screens/shared_screens/otp_code.dart';
 
+import '../../../controller/FirebaseAuthController.dart';
+import '../../../model/UserSettings.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 
@@ -12,6 +14,18 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  bool showProfPic = true;
+  bool recNot = true;
+  String userId = FirebaseAuthController.fireAuthHelper.userId();
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _loadSettings();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,63 +149,21 @@ class _SettingScreenState extends State<SettingScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: SizeConfig.scaleWidth(20)),
-                    child: Row(
-                      children: [
-                        TextStyleWidget(
-                            "Show profile picture",
-                            Color(0xff091A20),
-                            SizeConfig.scaleTextFont(12),
-                            FontWeight.w500),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(
-                            Icons.toggle_on_outlined,
-                            color: Color(0xffCBB523),
-                            size: SizeConfig.scaleWidth(30),
-                          ),
-                        )
-                      ],
-                    ),
+                    child: buildPrivacyOptionRow(
+                        'Show Profile Picture',
+                        showProfPic,
+                        (value) =>
+                            _handleSwitchChange(value, '$userId-showProfPic')),
                   ),
                   Divider(),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: SizeConfig.scaleWidth(20)),
-                    child: Row(
-                      children: [
-                        TextStyleWidget(
-                            "Receive notifications",
-                            Color(0xff091A20),
-                            SizeConfig.scaleTextFont(12),
-                            FontWeight.w500),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(Icons.toggle_on_outlined,
-                              color: Color(0xffCBB523),
-                              size: SizeConfig.scaleWidth(30)),
-                        )
-                      ],
-                    ),
-                  ),
-                  Divider(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.scaleWidth(20)),
-                    child: Row(
-                      children: [
-                        TextStyleWidget(
-                            "Show Last seen And Online",
-                            Color(0xff091A20),
-                            SizeConfig.scaleTextFont(12),
-                            FontWeight.w500),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(Icons.toggle_on_outlined,
-                              color: Color(0xffCBB523),
-                              size: SizeConfig.scaleWidth(30)),
-                        )
-                      ],
-                    ),
+                    child: buildPrivacyOptionRow(
+                        "Receive notifications",
+                        recNot,
+                        (value) =>
+                            _handleSwitchChange(value, '$userId-recNot')),
                   ),
                 ],
               ),
@@ -208,7 +180,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: SizeConfig.scaleWidth(20),
-                      vertical: SizeConfig.scaleHeight(10)),
+                      vertical: SizeConfig.scaleHeight(15)),
                   child: Row(
                     children: [
                       Icon(Icons.lock_reset,
@@ -355,7 +327,6 @@ class _SettingScreenState extends State<SettingScreen> {
                   child: Container(
                     height: 50,
                     width: 300,
-                    // margin: EdgeInsetsDirectional.only(start:SizeConfig.scaleWidth(250)),
                     child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor: Color(0xff4C5175),
@@ -374,5 +345,60 @@ class _SettingScreenState extends State<SettingScreen> {
         );
       },
     );
+  }
+
+  Row buildPrivacyOptionRow(
+    String title,
+    bool val,
+    ValueChanged<bool> onChanged,
+  ) {
+    return Row(
+      children: [
+        TextStyleWidget(
+          title,
+          Color(0xff091A20),
+          SizeConfig.scaleTextFont(12),
+          FontWeight.w500,
+        ),
+        Spacer(),
+        Transform.scale(
+          scale: 0.7,
+          child: CupertinoSwitch(
+            value: val,
+            activeColor: Color(0xffCBB523),
+            onChanged: onChanged,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _handleSwitchChange(bool value, String settingKey) {
+    setState(() {
+      if (settingKey == '$userId-showProfPic') {
+        showProfPic = value;
+      } else if (settingKey == '$userId-recNot') {
+        recNot = value;
+      }
+    });
+
+    UserSettings.saveSettings(
+      showProfPic,
+      recNot,
+      userId,
+    );
+  }
+
+  Future _loadSettings() async {
+    showProfPic = await UserSettings.getSetting('$userId-showProfPic');
+
+    recNot = await UserSettings.getSetting('$userId-recNot');
+
+    setState(() {
+      buildPrivacyOptionRow('Show Profile Picture', showProfPic,
+          (value) => _handleSwitchChange(value, '$userId-showProfPic'));
+      buildPrivacyOptionRow("Receive notifications", recNot,
+          (value) => _handleSwitchChange(value, '$userId-recNot'));
+    });
   }
 }

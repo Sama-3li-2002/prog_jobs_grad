@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_logo.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
-import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
-import '../../customWidget/RichTextWidget.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
-import '../CompanyScreens/com_logo.dart';
 import 'forget_password.dart';
 import '../ProgrammerScreen/home.dart';
 
@@ -291,7 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool checkData() {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       return true;
-    }else {
+    } else {
       Fluttertoast.showToast(
         msg: "Email or Password can't be empty",
         toastLength: Toast.LENGTH_SHORT,
@@ -311,7 +309,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return ComHomeScreen();
+            return ComLogoScreen();
           },
         ),
       );

@@ -40,7 +40,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
   @override
   Widget build(BuildContext context) {
-    // getUser();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -84,7 +83,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   height: SizeConfig.scaleHeight(150),
                   child: CircleAvatar(
                     backgroundImage: users!.imageUrl != null
-                        ? NetworkImage(users!.imageUrl!)
+                        ? NetworkImage(users!.imageUrl)
                         : null,
                   ),
                 ),

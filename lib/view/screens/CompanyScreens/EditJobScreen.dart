@@ -20,107 +20,102 @@ class _EditJobScreenState extends State<EditJobScreen> {
         body: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Container(
-                      height: SizeConfig.scaleHeight(300),
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
+                  height: SizeConfig.scaleHeight(300),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20)),
+                  ),
+                  child: Image.asset(
+                    "assets/images/image11.jpg",
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                    color: Colors.black.withOpacity(0.7),
+                    colorBlendMode: BlendMode.darken,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return CompanyInfo();
+                    }));
+                  },
+                  child: FractionalTranslation(
+                    translation: Offset(0.0, 0.5),
+                    child: Card(
                       clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20)),
-                      ),
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
                       child: Image.asset(
-                        "assets/images/image11.jpg",
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                        color: Colors.black.withOpacity(0.7),
-                        colorBlendMode: BlendMode.darken,
+                        "assets/images/withoutImageCompany.png",
+                        height: SizeConfig.scaleHeight(120),
+                        width: SizeConfig.scaleWidth(120),
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return CompanyInfo();
-                        }));
-                      },
-                      child: FractionalTranslation(
-                        translation: Offset(0.0, 0.5),
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+                Positioned(
+                  width: SizeConfig.screenWidth,
+                  top: 10,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.zero,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            size: SizeConfig.scaleWidth(20),
                           ),
-                          child: Image.asset (
-                           "assets/images/withoutImageCompany.png",
-                            height: SizeConfig.scaleHeight(120),
-                            width: SizeConfig.scaleWidth(120),
-                            fit: BoxFit.cover,
-                          ),
+                          color: Color(0xffD2D0D0FF),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      width: SizeConfig.screenWidth,
-                      top: 10,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.zero,
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                size: SizeConfig.scaleWidth(20),
-                              ),
-                              color: Color(0xffD2D0D0FF),
-                            ),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return EditJobScreen();
+                            }));
+                          },
+                          icon: Icon(
+                            Icons.edit_calendar_rounded,
+                            size: SizeConfig.scaleWidth(30),
                           ),
-                          Spacer(),
-                          IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) {
-                                          return EditJobScreen();
-                                        }));
-                              },
-                              icon: Icon(
-                                Icons.edit_calendar_rounded,
-                                size: SizeConfig.scaleWidth(30),
-                              ),
-                              color: Color(0xffD2D0D0FF))
-                        ],
-                      ),
-                    )
-                  ],
+                          color: Color(0xffD2D0D0FF))
+                    ],
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: SizeConfig.scaleHeight(65),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.location_on_sharp,
+                  color: Color(0xffCBB523),
+                  size: SizeConfig.scaleWidth(15),
                 ),
-                SizedBox(
-                  height: SizeConfig.scaleHeight(65),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.location_on_sharp,
-                      color: Color(0xffCBB523),
-                      size: SizeConfig.scaleWidth(15),
-                    ),
-                    TextStyleWidget(
-                       "",
-                        Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(15),
-                        FontWeight.w500),
-                  ],
-                ),
-                SizedBox(
-                  height: SizeConfig.scaleHeight(10),
-                ),
+                TextStyleWidget("", Color(0xff4C5175),
+                    SizeConfig.scaleTextFont(15), FontWeight.w500),
+              ],
+            ),
+            SizedBox(
+              height: SizeConfig.scaleHeight(10),
+            ),
             Padding(
               padding: EdgeInsets.all(10),
               child: Column(
@@ -195,7 +190,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                       children: [
                         TextStyleWidget("required skills:", Color(0xff4C5175),
                             SizeConfig.scaleTextFont(14), FontWeight.w500),
-
                       ],
                     ),
                     SizedBox(
@@ -257,7 +251,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                     SizedBox(
                       height: SizeConfig.scaleHeight(10),
                     ),
-
                     SizedBox(height: SizeConfig.scaleHeight(15)),
                     Center(
                       child: Container(

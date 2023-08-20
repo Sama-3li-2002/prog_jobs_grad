@@ -1,8 +1,6 @@
-
-import 'package:flutter/material.dart';
-
-class Jobs{
-  String? id ;
+class Jobs {
+  String? id;
+  String? job_id;
   String? job_image;
   String? job_name;
   String? company_name;
@@ -15,25 +13,24 @@ class Jobs{
   String? current_date;
   String? current_time;
 
-
-  Jobs( {
-      required this.id ,
-      required this.job_image ,
-      required this.job_name,
-      required this.company_name,
-      required this.salary,
-      required this.job_description,
-      required this.required_skills_one,
-      required this.required_skills_two,
-      required this.required_skills_three,
-      required this.required_skills_four,
-      required this.current_date,
-      required this.current_time,
-
+  Jobs({
+    required this.id,
+    required this.job_image,
+    required this.job_name,
+    required this.company_name,
+    required this.salary,
+    required this.job_description,
+    required this.required_skills_one,
+    required this.required_skills_two,
+    required this.required_skills_three,
+    required this.required_skills_four,
+    required this.current_date,
+    required this.current_time,
   });
 
-  Jobs.fromMap(Map <String , dynamic> map){
+  Jobs.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
+    this.job_id = map['job_id'];
     this.job_image = map['job_image'];
     this.job_name = map['job_name'];
     this.company_name = map['company_name'];
@@ -46,20 +43,22 @@ class Jobs{
     this.current_date = map['current_date '];
     this.current_time = map['current_time '];
   }
-  Map<String,dynamic>toMap(){
-    Map<String,dynamic>map=Map<String,dynamic>();
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = Map<String, dynamic>();
     map['id'] = this.id;
+    map['job_id'] = this.job_id;
     map['job_image'] = this.job_image;
     map['job_name'] = this.job_name;
-    map['company_name'] =this.company_name;
-    map['salary']=this.salary;
-    map['job_description']=this.job_description;
-    map['required_skills_one ']=this.required_skills_one;
-    map['required_skills_two ']=this.required_skills_two;
-    map['required_skills_three ']=this.required_skills_three;
-    map['required_skills_four ']=this.required_skills_four;
-    map['current_date ']=this.current_date;
-    map['current_time ']=this.current_time;
+    map['company_name'] = this.company_name;
+    map['salary'] = this.salary;
+    map['job_description'] = this.job_description;
+    map['required_skills_one '] = this.required_skills_one;
+    map['required_skills_two '] = this.required_skills_two;
+    map['required_skills_three '] = this.required_skills_three;
+    map['required_skills_four '] = this.required_skills_four;
+    map['current_date '] = this.current_date;
+    map['current_time '] = this.current_time;
     return map;
   }
 }

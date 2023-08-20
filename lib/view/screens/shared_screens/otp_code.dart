@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../controller/FirebaseAuthController.dart';
 import '../../../utils/size_config.dart';
-import '../../customWidget/RichTextWidget.dart';
-import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
 
 class OTPCodeScreen extends StatefulWidget {

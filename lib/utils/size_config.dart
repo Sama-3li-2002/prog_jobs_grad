@@ -7,10 +7,8 @@ class SizeConfig {
   static double _blockHeight = 0;
 
   static double? _textMultiplier;
-  static double? _imageSizeMultiplier;
   static double? _widthMultiplier;
   static double? _heightMultiplier;
-  static double? _deviceRatio;
   static bool isPortrait = true;
   static bool isMobilePortrait = false;
 
@@ -25,10 +23,9 @@ class SizeConfig {
     _blockHeight = screenHeight! / 100;
 
     _textMultiplier = _blockHeight;
-    _imageSizeMultiplier = _blockWidth;
+
     _heightMultiplier = _blockHeight;
     _widthMultiplier = _blockWidth;
-    _deviceRatio = screenWidth! / screenHeight!;
   }
 
   static double scaleTextFont(double fontSize) {

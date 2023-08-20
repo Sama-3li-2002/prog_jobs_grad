@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 
-import '../../../controller/FirebaseAuthController.dart';
-import '../../../controller/FirebaseFireStoreHelper.dart';
-import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
+import '../../customWidget/ProfWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
 
 class RequestStatusScreen extends StatefulWidget {
@@ -15,23 +13,8 @@ class RequestStatusScreen extends StatefulWidget {
 }
 
 class _RequestStatusScreenState extends State<RequestStatusScreen> {
-  String id = FirebaseAuthController.fireAuthHelper.userId();
-
-  FirebaseFireStoreHelper fireStoreHelper =
-      FirebaseFireStoreHelper.fireStoreHelper;
-
-  Users? users;
-
-  Future getUser() async {
-    final userResult = await fireStoreHelper.getUserData(id);
-    setState(() {
-      users = userResult;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    getUser();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfffafafa),
@@ -67,13 +50,10 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
               elevation: 4,
               color: Color(0xffcbb523),
               child: SizedBox(
-                  width: SizeConfig.scaleWidth(30),
-                  height: SizeConfig.scaleHeight(30),
-                  child: CircleAvatar(
-                    backgroundImage: users!.imageUrl != null
-                        ? NetworkImage(users!.imageUrl!)
-                        : null,
-                  )),
+                width: SizeConfig.scaleWidth(30),
+                height: SizeConfig.scaleHeight(30),
+                child: ProfWidget(),
+              ),
             ),
           ),
         ],

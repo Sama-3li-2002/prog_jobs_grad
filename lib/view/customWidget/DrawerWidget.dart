@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
@@ -9,7 +8,7 @@ import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/FavoriteScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/MessagesProg.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationsScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SettingScreen.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/SettingScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/request_status.dart';
@@ -259,7 +258,8 @@ void showLogoutDialog(BuildContext context) {
           TextButton(
             onPressed: () {
               FirebaseAuthController.fireAuthHelper.signOut();
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: (context) {
                 return LoginScreen(userType: UserTypeScreen.type!);
               }));
             },

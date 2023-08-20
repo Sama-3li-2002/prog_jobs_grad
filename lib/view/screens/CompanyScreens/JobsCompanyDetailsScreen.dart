@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
-import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 import 'package:provider/provider.dart';
 
-import '../../../controller/FirebaseAuthController.dart';
-import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../model/JobsModel.dart';
-import '../../../model/UsersModel.dart';
 import '../../../providers/ComInfoProvider.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'EditJobScreen.dart';
-import '../ProgrammerScreen/SubmitJopScreen.dart';
 
 class JobsCompanyDetailsScreen extends StatefulWidget {
   static const String id = "job_details_screen";
@@ -21,14 +15,13 @@ class JobsCompanyDetailsScreen extends StatefulWidget {
   JobsCompanyDetailsScreen({required this.items});
 
   @override
-  State<JobsCompanyDetailsScreen> createState() => _JobsCompanyDetailsScreenState();
+  State<JobsCompanyDetailsScreen> createState() =>
+      _JobsCompanyDetailsScreenState();
 }
 
 class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<ComInfoProvider>(context, listen: false).getComInfoObjects();
   }
@@ -78,16 +71,15 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                   clipBehavior: Clip.antiAlias,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)
-                                  ),
-                                  child: Image.asset (
-                                      comInfoProvider
-                                          .comInfoList.isNotEmpty
-                                          ? comInfoProvider
-                                          .comInfoList[0].image ??
-                                          "" : "No Image",
-                                      height: SizeConfig.scaleHeight(120),
-                                      width: SizeConfig.scaleWidth(120),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Image.asset(
+                                    comInfoProvider.comInfoList.isNotEmpty
+                                        ? comInfoProvider
+                                                .comInfoList[0].image ??
+                                            ""
+                                        : "No Image",
+                                    height: SizeConfig.scaleHeight(120),
+                                    width: SizeConfig.scaleWidth(120),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -112,19 +104,19 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                     ),
                                   ),
                                   Spacer(),
-                                    IconButton(
-                                        onPressed: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return EditJobScreen();
-                                          }));
-                                        },
-                                        icon: Icon(
-                                          Icons.edit_calendar_rounded,
-                                          size: SizeConfig.scaleWidth(30),
-                                        ),
-                                        color: Color(0xffD2D0D0FF))
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return EditJobScreen();
+                                        }));
+                                      },
+                                      icon: Icon(
+                                        Icons.edit_calendar_rounded,
+                                        size: SizeConfig.scaleWidth(30),
+                                      ),
+                                      color: Color(0xffD2D0D0FF))
                                 ],
                               ),
                             )
@@ -142,11 +134,10 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                               size: SizeConfig.scaleWidth(15),
                             ),
                             TextStyleWidget(
-                                comInfoProvider
-                                    .comInfoList.isNotEmpty
-                                    ? comInfoProvider
-                                    .comInfoList[0].address ??
-                                    "" : "No Address",
+                                comInfoProvider.comInfoList.isNotEmpty
+                                    ? comInfoProvider.comInfoList[0].address ??
+                                        ""
+                                    : "No Address",
                                 Color(0xff4C5175),
                                 SizeConfig.scaleTextFont(15),
                                 FontWeight.w500),
@@ -270,8 +261,8 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                         child: TextStyleWidget(
                                             widget.items.isNotEmpty
                                                 ? widget.items[0]
-                                                .required_skills_three ??
-                                                ""
+                                                        .required_skills_three ??
+                                                    ""
                                                 : "No required skills",
                                             Color(0xff091A20),
                                             SizeConfig.scaleTextFont(12),
@@ -280,7 +271,6 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                     ],
                                   ),
                                 ),
-
                               ]),
                         ),
                       ]),

@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/ComInfoProvider.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
-import '../shared_screens/user_type.dart';
 import 'CompanyInfoEditScreen.dart';
 
 class CompanyInfo extends StatefulWidget {
@@ -18,7 +16,6 @@ class CompanyInfo extends StatefulWidget {
 class _CompanyInfoState extends State<CompanyInfo> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<ComInfoProvider>(context, listen: false).getComInfoObjects();
   }
@@ -28,7 +25,8 @@ class _CompanyInfoState extends State<CompanyInfo> {
     return SafeArea(
       child: Scaffold(
         body: Consumer<ComInfoProvider>(
-          builder: (context, comInfoProvider, _) => comInfoProvider.comInfoList.isEmpty
+          builder: (context, comInfoProvider, _) => comInfoProvider
+                  .comInfoList.isEmpty
               ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(
@@ -59,43 +57,42 @@ class _CompanyInfoState extends State<CompanyInfo> {
                                       size: SizeConfig.scaleWidth(14),
                                     ),
                                   )),
-                                Padding(
-                                    padding: EdgeInsetsDirectional.only(
-                                        start: SizeConfig.scaleWidth(300),
-                                        top: SizeConfig.scaleHeight(50)),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return CompanyInfoEdit();
-                                        }));
-                                      },
-                                      child: Icon(Icons.edit_sharp,
-                                          color: Colors.white,
-                                          size: SizeConfig.scaleWidth(20)),
-                                    )),
+                              Padding(
+                                  padding: EdgeInsetsDirectional.only(
+                                      start: SizeConfig.scaleWidth(300),
+                                      top: SizeConfig.scaleHeight(50)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return CompanyInfoEdit();
+                                      }));
+                                    },
+                                    child: Icon(Icons.edit_sharp,
+                                        color: Colors.white,
+                                        size: SizeConfig.scaleWidth(20)),
+                                  )),
                             ],
                           ),
                           Center(
-                            child: Container (
-                              margin: EdgeInsets.only(top: SizeConfig.scaleHeight(150)),
-                              child: Card (
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  top: SizeConfig.scaleHeight(150)),
+                              child: Card(
                                 clipBehavior: Clip.antiAlias,
                                 elevation: 5,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-
                                 child: Image.asset(
                                   comInfoProvider.comInfoList.isNotEmpty
-                                      ? comInfoProvider.comInfoList[0].image ?? ""
+                                      ? comInfoProvider.comInfoList[0].image ??
+                                          ""
                                       : "No image",
                                   width: SizeConfig.scaleWidth(120),
                                   height: SizeConfig.scaleHeight(120),
                                   fit: BoxFit.cover,
                                 ),
-
                               ),
                             ),
                           ),
