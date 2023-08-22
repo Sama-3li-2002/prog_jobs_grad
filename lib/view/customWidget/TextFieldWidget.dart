@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/view/customWidget/textStyleWidget.dart';
 
 import '../../utils/size_config.dart';
 
 class TextFieldWidget extends StatelessWidget {
   TextEditingController? controller;
   final TextInputType inputType;
+  String? hint_Text;
 
-  TextFieldWidget({this.inputType = TextInputType.text});
+  TextFieldWidget({this.inputType = TextInputType.text,this.hint_Text=""});
 
   TextFieldWidget.textfieldCon(
-      {this.controller, this.inputType = TextInputType.text});
+      {this.controller, this.inputType = TextInputType.text,this.hint_Text=""});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,12 @@ class TextFieldWidget extends StatelessWidget {
         keyboardType: inputType,
         controller: controller,
         decoration: InputDecoration(
+            hintText:hint_Text,
+            hintStyle: TextStyle(
+              fontSize: SizeConfig.scaleTextFont(12),
+              fontFamily: 'Poppins',
+              color: Colors.grey.shade400,
+            ),
             fillColor: Colors.white,
             filled: true,
             enabledBorder: OutlineInputBorder(

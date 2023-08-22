@@ -7,6 +7,7 @@ import '../../../model/CompanyModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
+import '../CompanyScreens/com_logo.dart';
 import '../shared_screens/login.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -468,10 +469,10 @@ class _SignupScreenState extends State<SignupScreen> {
       ));
       if (userCredential != null) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return LoginScreen(userType: widget.userType);
+          return ComLogoScreen(comName: _companyNameCom!.text,);
         }));
       }
-    } else {
+    }  else {
       Fluttertoast.showToast(
         msg: "Email or Password can't be empty",
         toastLength: Toast.LENGTH_SHORT,

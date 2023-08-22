@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/model/CompanyModel.dart';
 
 import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
+import '../shared_screens/login.dart';
 import 'com_home.dart';
 
 class ComLogoScreen extends StatefulWidget {
   static const String id = "com_logo_screen";
+  String comName;
+  ComLogoScreen({required this.comName});
 
   @override
   State<ComLogoScreen> createState() => _ComLogoScreenState();
 }
 
 class _ComLogoScreenState extends State<ComLogoScreen> {
+
   @override
   void initState() {
     Future.delayed(
@@ -20,7 +25,7 @@ class _ComLogoScreenState extends State<ComLogoScreen> {
         seconds: 3,
       ),
     ).then(
-      (value) => Navigator.of(context)
+          (value) => Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
         return ComHomeScreen();
       })),
@@ -38,24 +43,10 @@ class _ComLogoScreenState extends State<ComLogoScreen> {
             width: SizeConfig.screenWidth,
             height: SizeConfig.screenHeight,
             fit: BoxFit.fill,
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.8),
             colorBlendMode: BlendMode.darken,
           ),
-          Center(
-            child: Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-              ),
-              child: Image(
-                  width: SizeConfig.scaleWidth(244),
-                  height: SizeConfig.scaleHeight(190),
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/images/magic.jpg',
-                  )),
-            ),
-          ),
+
           Positioned(
               top: SizeConfig.scaleHeight(520),
               left: SizeConfig.scaleWidth(63),
@@ -83,7 +74,7 @@ class _ComLogoScreenState extends State<ComLogoScreen> {
             top: SizeConfig.scaleHeight(600),
             left: SizeConfig.scaleWidth(123),
             child: TextStyleWidget(
-              'Magic Company',
+              widget.comName,
               Color(0xffCBB523),
               SizeConfig.scaleTextFont(22),
               FontWeight.w600,

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -353,15 +354,32 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     return false;
   }
 
-  Future store() async {
-    await FirebaseFireStoreHelper.instance
-        .create(FirebaseAuthController.fireAuthHelper.userId(), getJobs());
+  // Future store() async {
+  //   await FirebaseFireStoreHelper.instance
+  //       .create( getJobs());
+  //
+  //   clear();
+  //   // if(stored)
+  //   //   print("Successfull");
+  //   // else print("Falied");
+  // }
 
+
+  Future<void> store() async {
+
+    DocumentReference documentReference = await FirebaseFireStoreHelper.instance.create(getJobs());
+    String newJobId = documentReference.id;
+
+    Jobs newJob = getJobs();
+    newJob.job_id = newJobId;
+         await documentReference.update({'job_id': newJobId});
     clear();
-    // if(stored)
-    //   print("Successfull");
-    // else print("Falied");
   }
+
+
+
+
+
 
   Jobs getJobs() {
     return Jobs(

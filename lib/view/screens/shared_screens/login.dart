@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_logo.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
+import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
+import '../../customWidget/RichTextWidget.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
+import '../CompanyScreens/com_logo.dart';
 import 'forget_password.dart';
 import '../ProgrammerScreen/home.dart';
 
@@ -136,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
                                 borderSide:
-                                    BorderSide(color: Colors.white, width: 1)),
+                                BorderSide(color: Colors.white, width: 1)),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                             )),
@@ -178,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
                                 borderSide:
-                                    BorderSide(color: Colors.white, width: 1)),
+                                BorderSide(color: Colors.white, width: 1)),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                             )),
@@ -239,8 +241,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) {
-                            return SignupScreen(userType: widget.userType);
-                          }));
+                                return SignupScreen(userType: widget.userType);
+                              }));
                         },
                         child: TextStyleWidget("Sign up", Color(0xFFB8852F),
                             SizeConfig.scaleTextFont(12), FontWeight.normal),
@@ -258,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future performLoginProg() async {
     if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
       UserCredential? userCredential =
-          await FirebaseAuthController.fireAuthHelper.signIn(
+      await FirebaseAuthController.fireAuthHelper.signIn(
         _emailProg!.text,
         _passwordProg!.text,
       );
@@ -289,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool checkData() {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       return true;
-    } else {
+    }else {
       Fluttertoast.showToast(
         msg: "Email or Password can't be empty",
         toastLength: Toast.LENGTH_SHORT,
@@ -309,7 +311,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return ComLogoScreen();
+            return ComHomeScreen();
           },
         ),
       );

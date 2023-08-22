@@ -316,9 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             builder: (context) {
                                                       return SubmitJopScreen(
                                                         itemsComInfo: comInfo,
-                                                        ComId:
-                                                            companiesJobsProvider
-                                                                        .JobsList
+                                                        ComId: companiesJobsProvider.JobsList
                                                                     .elementAt(
                                                                         index)
                                                                 .id!,
