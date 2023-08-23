@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:uuid/uuid.dart';
@@ -16,6 +17,7 @@ class FirebaseFireStoreHelper {
   static final String companyCollection = "Company";
   final String jobsCollection = "jobs";
   final String SubmittedjobCollection = "Submitted Job";
+  final String archiveCollection = "Archive Job";
 
   static FirebaseFireStoreHelper get instance {
     return fireStoreHelper;
@@ -58,7 +60,7 @@ class FirebaseFireStoreHelper {
   Future<DocumentReference> create(Jobs jobs)async{
 
     DocumentReference documentReference=await firestore.collection(companyCollection).doc(FirebaseAuthController.fireAuthHelper.userId()).collection(jobsCollection).add(jobs.toMap());
-     return documentReference;
+    return documentReference;
   }
 
   // لاسترجاع بيانات المبرمج بناء على ال ID
@@ -162,5 +164,43 @@ class FirebaseFireStoreHelper {
       "fileUrl": fileUrl,
     });
   }
+  // لتخزين الوظائف المؤرشفة
+  Future<DocumentReference> createArchiveJob(Jobs jobs) async {
+    DocumentReference? documentReference;
+    try {
+      final userUid = FirebaseAuthController.fireAuthHelper.userId();
+      final companyDocRef = firestore.collection(companyCollection).doc(userUid);
+
+     documentReference=await companyDocRef.collection(archiveCollection).add(jobs.toMap());
+      print("Job archive created successfully.");
+
+    } catch (error) {
+      print("Error Job archive : $error");
+    }
+    return documentReference!;
+  }
+  void deleteDocument(String jobsId) {
+    FirebaseFirestore.instance.collection(companyCollection).
+    doc(FirebaseAuthController.fireAuthHelper.userId()).collection(jobsCollection).doc(jobsId).delete();
+
+    }
+
+   // لاسترجاع كل الوظائف المؤرشفة
+  Future<List<QueryDocumentSnapshot>> getArchiveJobs()async {
+    List<QueryDocumentSnapshot> allArchive = [];
+    final QuerySnapshot ArchiveJobs = await firestore
+        .collection(companyCollection)
+        .doc(FirebaseAuthController.fireAuthHelper.userId())
+        .collection(archiveCollection)
+        .get();
+    allArchive.addAll(ArchiveJobs.docs);
+    return allArchive;
+  }
+
 }
+
+
+
+
+
 

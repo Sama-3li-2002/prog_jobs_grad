@@ -375,12 +375,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
          await documentReference.update({'job_id': newJobId});
     clear();
   }
-
-
-
-
-
-
   Jobs getJobs() {
     return Jobs(
       id: FirebaseAuthController.fireAuthHelper.userId(),
