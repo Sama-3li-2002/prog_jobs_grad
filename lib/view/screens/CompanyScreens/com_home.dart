@@ -120,84 +120,61 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                         isPressedList.add(false);
                       }
                       return Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white),
-                          margin: EdgeInsets.all(
-                            SizeConfig.scaleWidth(15),
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (context) {
-                                    return JobsCompanyDetailsScreen(items: [
-                                      companyJobsProvider.JobsList
-                                          .elementAt(index),
-                                    ]);
-                                  }));
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(5),
-                                        bottomRight: Radius.circular(5),
-                                      )),
-                                  child: Image.network(
-                                    companyJobsProvider
-                                        .JobsList.isNotEmpty
-                                        ? companyJobsProvider
-                                        .JobsList[index]
-                                        .job_image ??
-                                        ""
-                                        : "No Image",
-                                    fit: BoxFit.cover,
-                                    width: SizeConfig.scaleWidth(96),
-                                    height: SizeConfig.scaleHeight(105),
-                                    color: Color(0xff4C5175)
-                                        .withOpacity(0.5),
-                                    colorBlendMode: BlendMode.darken,
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      left: SizeConfig.scaleWidth(10),
+                        margin: EdgeInsets.all(
+                          SizeConfig.scaleWidth(15),
+                        ),
+                        child: Material(
+                          elevation:2 ,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.white,
+                              ),
+
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                        return JobsCompanyDetailsScreen(items: [
+                                          companyJobsProvider.JobsList
+                                              .elementAt(index),
+                                        ]);
+                                      }));
+                                },
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5),
+                                            bottomRight: Radius.circular(5),
+                                          )),
+                                      child: Image.network(
+                                        companyJobsProvider
+                                            .JobsList.isNotEmpty
+                                            ? companyJobsProvider
+                                            .JobsList[index]
+                                            .job_image ??
+                                            ""
+                                            : "No Image",
+                                        fit: BoxFit.cover,
+                                        width: SizeConfig.scaleWidth(96),
+                                        height: SizeConfig.scaleHeight(105),
+                                        color: Color(0xff4C5175)
+                                            .withOpacity(0.5),
+                                        colorBlendMode: BlendMode.darken,
+                                      ),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            TextStyleWidget(
-                                              companyJobsProvider
-                                                  .JobsList
-                                                  .isNotEmpty
-                                                  ? companyJobsProvider
-                                                  .JobsList[
-                                              index]
-                                                  .job_name ??
-                                                  ""
-                                                  : "No Job Name",
-                                              Color(0xff4C5175),
-                                              SizeConfig.scaleTextFont(
-                                                  15),
-                                              FontWeight.w500,
-                                            ),
-                                          ],
+                                    Flexible(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: SizeConfig.scaleWidth(10),
                                         ),
-                                        Row(
+                                        child: Column(
                                           children: [
                                             Row(
                                               children: [
-                                                Icon(
-                                                  Icons.apartment,
-                                                  size: SizeConfig
-                                                      .scaleWidth(15),
-                                                  color:
-                                                  Color(0xffcbb523),
-                                                ),
                                                 TextStyleWidget(
                                                   companyJobsProvider
                                                       .JobsList
@@ -205,34 +182,26 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                       ? companyJobsProvider
                                                       .JobsList[
                                                   index]
-                                                      .company_name ??
+                                                      .job_name ??
                                                       ""
-                                                      : "No Company Name",
-                                                  Colors.black,
-                                                  SizeConfig
-                                                      .scaleTextFont(
-                                                      10),
+                                                      : "No Job Name",
+                                                  Color(0xff4C5175),
+                                                  SizeConfig.scaleTextFont(
+                                                      15),
                                                   FontWeight.w500,
                                                 ),
                                               ],
                                             ),
-                                            Spacer(),
-                                            Column(
+                                            Row(
                                               children: [
                                                 Row(
                                                   children: [
                                                     Icon(
-                                                      Icons.access_time,
+                                                      Icons.apartment,
                                                       size: SizeConfig
-                                                          .scaleWidth(
-                                                          14),
-                                                      color: Color(
-                                                          0xffcbb523),
-                                                    ),
-                                                    SizedBox(
-                                                      width: SizeConfig
-                                                          .scaleWidth(
-                                                          3),
+                                                          .scaleWidth(15),
+                                                      color:
+                                                      Color(0xffcbb523),
                                                     ),
                                                     TextStyleWidget(
                                                       companyJobsProvider
@@ -241,9 +210,9 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                           ? companyJobsProvider
                                                           .JobsList[
                                                       index]
-                                                          .current_date ??
+                                                          .company_name ??
                                                           ""
-                                                          : "No Current Date",
+                                                          : "No Company Name",
                                                       Colors.black,
                                                       SizeConfig
                                                           .scaleTextFont(
@@ -252,109 +221,150 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                     ),
                                                   ],
                                                 ),
-                                                TextStyleWidget(
-                                                  companyJobsProvider
-                                                      .JobsList
-                                                      .isNotEmpty
-                                                      ? companyJobsProvider
-                                                      .JobsList[
-                                                  index]
-                                                      .current_time ??
-                                                      ""
-                                                      : "No Current Time",
-                                                  Colors.black,
-                                                  SizeConfig
-                                                      .scaleTextFont(
-                                                      10),
-                                                  FontWeight.w500,
-                                                ),
+                                                Spacer(),
+                                                Padding(
+                                                  padding:  EdgeInsets.only(right: 8),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.access_time,
+                                                            size: SizeConfig
+                                                                .scaleWidth(
+                                                                14),
+                                                            color: Color(
+                                                                0xffcbb523),
+                                                          ),
+                                                          SizedBox(
+                                                            width: SizeConfig
+                                                                .scaleWidth(
+                                                                3),
+                                                          ),
+                                                          TextStyleWidget(
+                                                            companyJobsProvider
+                                                                .JobsList
+                                                                .isNotEmpty
+                                                                ? companyJobsProvider
+                                                                .JobsList[
+                                                            index]
+                                                                .current_date ??
+                                                                ""
+                                                                : "No Current Date",
+                                                            Colors.black,
+                                                            SizeConfig
+                                                                .scaleTextFont(
+                                                                10),
+                                                            FontWeight.w500,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      TextStyleWidget(
+                                                        companyJobsProvider
+                                                            .JobsList
+                                                            .isNotEmpty
+                                                            ? companyJobsProvider
+                                                            .JobsList[
+                                                        index]
+                                                            .current_time ??
+                                                            ""
+                                                            : "No Current Time",
+                                                        Colors.black,
+                                                        SizeConfig
+                                                            .scaleTextFont(
+                                                            10),
+                                                        FontWeight.w500,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
                                               ],
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              height: SizeConfig
-                                                  .scaleHeight(30),
-                                              child: ElevatedButton(
-                                                child: TextStyleWidget(
-                                                  'number of requests',
-                                                  Colors.white,
-                                                  SizeConfig
-                                                      .scaleTextFont(
-                                                      10),
-                                                  FontWeight.w500,
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder:
-                                                              (context) {
-                                                            return NumberOfRequestsScreen();
-                                                          }));
-                                                },
-                                                style: ElevatedButton
-                                                    .styleFrom(
-                                                  backgroundColor:
-                                                  Color(0xff4C5175),
-                                                  shape:
-                                                  RoundedRectangleBorder(
-                                                    borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        2),
+                                            ),
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: SizeConfig
+                                                      .scaleHeight(30),
+                                                  child: ElevatedButton(
+                                                    child: TextStyleWidget(
+                                                      'number of requests',
+                                                      Colors.white,
+                                                      SizeConfig
+                                                          .scaleTextFont(
+                                                          10),
+                                                      FontWeight.w500,
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                                return NumberOfRequestsScreen();
+                                                              }));
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                      Color(0xff4C5175),
+                                                      shape:
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            2),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                            Spacer(),
-                                            IconButton(
-                                              alignment:
-                                              Alignment.centerRight,
-                                              icon: isPressedList[index]
-                                                  ? Icon(
-                                                Icons.bookmark,
-                                                color: Color(
-                                                    0xffcbb523),
-                                              )
-                                                  : Icon(
-                                                  Icons
-                                                      .bookmark_border,
-                                                  color: Color(
-                                                      0xffcbb523)),
-                                              onPressed: () async {
-                                                setState(() {
-                                                  isPressedList[index] =
-                                                  !isPressedList[
-                                                  index];
-                                                });
-                                                await archiveJobs(
-                                                    companyJobsProvider
-                                                        .JobsList
-                                                        .elementAt(
-                                                        index));
-                                                delete(
-                                                    companyJobsProvider
-                                                        .JobsList
-                                                        .elementAt(
-                                                        index)
-                                                        .job_id!);
-                                                setState(() {
-                                                  companyJobsProvider.JobsList.removeAt(index);
+                                                Spacer(),
+                                                IconButton(
+                                                  alignment:
+                                                  Alignment.centerRight,
+                                                  icon: isPressedList[index]
+                                                      ? Icon(
+                                                    Icons.bookmark,
+                                                    color: Color(
+                                                        0xffcbb523),
+                                                  )
+                                                      : Icon(
+                                                      Icons
+                                                          .bookmark_border,
+                                                      color: Color(
+                                                          0xffcbb523)),
+                                                  onPressed: () async {
+                                                    setState(() {
+                                                      isPressedList[index] =
+                                                      !isPressedList[
+                                                      index];
+                                                    });
+                                                    await archiveJobs(
+                                                        companyJobsProvider
+                                                            .JobsList
+                                                            .elementAt(
+                                                            index));
+                                                    delete(
+                                                        companyJobsProvider
+                                                            .JobsList
+                                                            .elementAt(
+                                                            index)
+                                                            .job_id!);
+                                                    setState(() {
+                                                      companyJobsProvider.JobsList.removeAt(index);
 
-                                                });
-                                              },
-                                            )
+                                                    });
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ));
+                              )),
+                        ),
+                      );
                     },
                   ),
                   SizedBox(
@@ -398,12 +408,16 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                         isPressedList.add(false);
                       }
                       return Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white),
                           margin: EdgeInsets.all(
-                            SizeConfig.scaleWidth(15),
-                          ),
+                          SizeConfig.scaleWidth(15),
+                      ),
+                      child: Material(
+                      elevation:2 ,
+                      child: Container(
+                      decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                      ),
                           child: InkWell(
                             onTap: () {
                               Navigator.push(
@@ -498,58 +512,61 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                               ],
                                             ),
                                             Spacer(),
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.access_time,
-                                                      size: SizeConfig
-                                                          .scaleWidth(
-                                                          14),
-                                                      color: Color(
-                                                          0xffcbb523),
-                                                    ),
-                                                    SizedBox(
-                                                      width: SizeConfig
-                                                          .scaleWidth(
-                                                          3),
-                                                    ),
-                                                    TextStyleWidget(
-                                                      companyJobsProvider
-                                                          .JobsList
-                                                          .isNotEmpty
-                                                          ? companyJobsProvider
-                                                          .JobsList[
-                                                      index]
-                                                          .current_date ??
-                                                          ""
-                                                          : "No Current Date",
-                                                      Colors.black,
-                                                      SizeConfig
-                                                          .scaleTextFont(
-                                                          10),
-                                                      FontWeight.w500,
-                                                    ),
-                                                  ],
-                                                ),
-                                                TextStyleWidget(
-                                                  companyJobsProvider
-                                                      .JobsList
-                                                      .isNotEmpty
-                                                      ? companyJobsProvider
-                                                      .JobsList[
-                                                  index]
-                                                      .current_time ??
-                                                      ""
-                                                      : "No Current Time",
-                                                  Colors.black,
-                                                  SizeConfig
-                                                      .scaleTextFont(
-                                                      10),
-                                                  FontWeight.w500,
-                                                ),
-                                              ],
+                                            Padding(
+                                              padding:  EdgeInsets.only(right: 8),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.access_time,
+                                                        size: SizeConfig
+                                                            .scaleWidth(
+                                                            14),
+                                                        color: Color(
+                                                            0xffcbb523),
+                                                      ),
+                                                      SizedBox(
+                                                        width: SizeConfig
+                                                            .scaleWidth(
+                                                            3),
+                                                      ),
+                                                      TextStyleWidget(
+                                                        companyJobsProvider
+                                                            .JobsList
+                                                            .isNotEmpty
+                                                            ? companyJobsProvider
+                                                            .JobsList[
+                                                        index]
+                                                            .current_date ??
+                                                            ""
+                                                            : "No Current Date",
+                                                        Colors.black,
+                                                        SizeConfig
+                                                            .scaleTextFont(
+                                                            10),
+                                                        FontWeight.w500,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  TextStyleWidget(
+                                                    companyJobsProvider
+                                                        .JobsList
+                                                        .isNotEmpty
+                                                        ? companyJobsProvider
+                                                        .JobsList[
+                                                    index]
+                                                        .current_time ??
+                                                        ""
+                                                        : "No Current Time",
+                                                    Colors.black,
+                                                    SizeConfig
+                                                        .scaleTextFont(
+                                                        10),
+                                                    FontWeight.w500,
+                                                  ),
+                                                ],
+                                              ),
                                             )
                                           ],
                                         ),
@@ -634,7 +651,9 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                 ),
                               ],
                             ),
-                          ));
+                          )
+                                  ))
+                      );
                     },
                   ),
                 ],

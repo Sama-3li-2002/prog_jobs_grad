@@ -97,13 +97,18 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                           isPressedList.add(false);
                         }
                         return Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white),
                             margin: EdgeInsets.all(
-                              SizeConfig.scaleWidth(15),
-                            ),
-                            child: InkWell(
+                            SizeConfig.scaleWidth(15),
+                        ),
+                        child: Material(
+                        elevation:2 ,
+                        child: Container(
+                        decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                        ),
+
+                        child: InkWell(
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -197,58 +202,61 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                 ],
                                               ),
                                               Spacer(),
-                                              Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.access_time,
-                                                        size: SizeConfig
-                                                            .scaleWidth(
-                                                            14),
-                                                        color: Color(
-                                                            0xffcbb523),
-                                                      ),
-                                                      SizedBox(
-                                                        width: SizeConfig
-                                                            .scaleWidth(
-                                                            3),
-                                                      ),
-                                                      TextStyleWidget(
-                                                        companyJobsProvider
-                                                            .JobsList
-                                                            .isNotEmpty
-                                                            ? companyJobsProvider
-                                                            .JobsList[
-                                                        index]
-                                                            .current_date ??
-                                                            ""
-                                                            : "No Current Date",
-                                                        Colors.black,
-                                                        SizeConfig
-                                                            .scaleTextFont(
-                                                            10),
-                                                        FontWeight.w500,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  TextStyleWidget(
-                                                    companyJobsProvider
-                                                        .JobsList
-                                                        .isNotEmpty
-                                                        ? companyJobsProvider
-                                                        .JobsList[
-                                                    index]
-                                                        .current_time ??
-                                                        ""
-                                                        : "No Current Time",
-                                                    Colors.black,
-                                                    SizeConfig
-                                                        .scaleTextFont(
-                                                        10),
-                                                    FontWeight.w500,
-                                                  ),
-                                                ],
+                                              Padding(
+                                                padding:  EdgeInsets.only(right: 8.0),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.access_time,
+                                                          size: SizeConfig
+                                                              .scaleWidth(
+                                                              14),
+                                                          color: Color(
+                                                              0xffcbb523),
+                                                        ),
+                                                        SizedBox(
+                                                          width: SizeConfig
+                                                              .scaleWidth(
+                                                              3),
+                                                        ),
+                                                        TextStyleWidget(
+                                                          companyJobsProvider
+                                                              .JobsList
+                                                              .isNotEmpty
+                                                              ? companyJobsProvider
+                                                              .JobsList[
+                                                          index]
+                                                              .current_date ??
+                                                              ""
+                                                              : "No Current Date",
+                                                          Colors.black,
+                                                          SizeConfig
+                                                              .scaleTextFont(
+                                                              10),
+                                                          FontWeight.w500,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    TextStyleWidget(
+                                                      companyJobsProvider
+                                                          .JobsList
+                                                          .isNotEmpty
+                                                          ? companyJobsProvider
+                                                          .JobsList[
+                                                      index]
+                                                          .current_time ??
+                                                          ""
+                                                          : "No Current Time",
+                                                      Colors.black,
+                                                      SizeConfig
+                                                          .scaleTextFont(
+                                                          10),
+                                                      FontWeight.w500,
+                                                    ),
+                                                  ],
+                                                ),
                                               )
                                             ],
                                           ),
@@ -333,7 +341,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                   ),
                                 ],
                               ),
-                            ));
+                            ))));
                       },
                     ),
                   ],

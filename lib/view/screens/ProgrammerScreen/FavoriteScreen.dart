@@ -84,7 +84,7 @@ class _FavoriteState extends State<Favorite> {
         body:
             Consumer<FavoriteProvider>(builder: (context, favoriteProvider, _) {
           return favoriteProvider.favoriteJobsList.isEmpty
-              ? Center(child: Text("Not available favorite jobs"))
+              ? Center(child: Text("No available favorite jobs"))
               : SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,13 +101,18 @@ class _FavoriteState extends State<Favorite> {
                         itemCount: favoriteProvider.favoriteJobsList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.white),
                               margin: EdgeInsets.all(
-                                SizeConfig.scaleWidth(15),
-                              ),
-                              child: InkWell(
+                              SizeConfig.scaleWidth(15),
+                          ),
+                          child: Material(
+                          elevation:2 ,
+                          child: Container(
+                          decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white,
+                          ),
+
+                          child: InkWell(
                                 onTap: () async {
                                   List<Company> comInfo = await helper
                                       .getComInfoById(favoriteProvider
@@ -186,26 +191,48 @@ class _FavoriteState extends State<Favorite> {
                                                   ],
                                                 ),
                                                 Spacer(),
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.access_time,
-                                                      size:
-                                                          SizeConfig.scaleWidth(
-                                                              14),
-                                                      color: Color(0xffcbb523),
-                                                    ),
-                                                    TextStyleWidget(
-                                                        favoriteProvider
-                                                            .favoriteJobsList[
-                                                                index]
-                                                            .current_time!,
-                                                        Colors.black,
-                                                        SizeConfig
-                                                            .scaleTextFont(10),
-                                                        FontWeight.w500),
-                                                  ],
-                                                ),
+                                                Padding(
+                                                  padding:  EdgeInsets.only(right: 8),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.access_time,
+                                                            size: SizeConfig
+                                                                .scaleWidth(
+                                                                14),
+                                                            color: Color(
+                                                                0xffcbb523),
+                                                          ),
+                                                          SizedBox(
+                                                            width: SizeConfig
+                                                                .scaleWidth(
+                                                                3),
+                                                          ),
+                                                          TextStyleWidget(
+                                                              favoriteProvider
+                                                                  .favoriteJobsList[
+                                                              index]
+                                                                  .current_date!,
+                                                              Colors.black,
+                                                              SizeConfig
+                                                                  .scaleTextFont(10),
+                                                              FontWeight.w500),
+                                                        ],
+                                                      ),
+                                                      TextStyleWidget(
+                                                          favoriteProvider
+                                                              .favoriteJobsList[
+                                                          index]
+                                                              .current_time!,
+                                                          Colors.black,
+                                                          SizeConfig
+                                                              .scaleTextFont(10),
+                                                          FontWeight.w500),
+                                                    ],
+                                                  ),
+                                                )
                                               ],
                                             ),
                                             Row(
@@ -307,7 +334,7 @@ class _FavoriteState extends State<Favorite> {
                                     ),
                                   ],
                                 ),
-                              ));
+                              ))));
                         },
                       ),
                     ],
