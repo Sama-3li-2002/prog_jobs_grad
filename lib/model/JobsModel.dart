@@ -14,19 +14,19 @@ class Jobs {
   String? current_time;
 
   Jobs({
-             this.id,
-              this.job_id,
-             this.job_image,
-             this.job_name,
-             this.company_name,
+    this.id,
+    this.job_id,
+    this.job_image,
+    this.job_name,
+    this.company_name,
     required this.salary,
     required this.job_description,
     required this.required_skills_one,
-             this.required_skills_two,
-             this.required_skills_three,
-             this.required_skills_four,
-             this.current_date,
-             this.current_time,
+    this.required_skills_two,
+    this.required_skills_three,
+    this.required_skills_four,
+    this.current_date,
+    this.current_time,
   });
 
   Jobs.fromMap(Map<String, dynamic> map) {

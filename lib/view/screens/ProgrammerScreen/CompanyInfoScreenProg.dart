@@ -59,7 +59,7 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Image.asset(
+                        child: Image.network(
                           widget.itemsComInfo.isNotEmpty
                               ? widget.itemsComInfo[0].image ?? ""
                               : "No Image",
@@ -342,7 +342,7 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                                     CircleAvatar(
                                       backgroundColor: Colors.white,
                                       radius: 30,
-                                      backgroundImage: AssetImage(
+                                      backgroundImage: NetworkImage(
                                         widget.itemsComInfo.isNotEmpty
                                             ? widget.itemsComInfo[0]
                                                     .managerImage ??

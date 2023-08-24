@@ -126,6 +126,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                   ? companyJobsProvider.JobsList.sublist(0, 2)
                   : companyJobsProvider.JobsList;
               print("the length $newJobs.length");
+
               return companyJobsProvider.JobsList.isEmpty
                   ? Center(child: Text("Not available jobs"))
                   : SingleChildScrollView(
@@ -175,7 +176,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                             topLeft: Radius.circular(5),
                                             bottomRight: Radius.circular(5),
                                           )),
-                                          child: Image.asset(
+                                          child: Image.network(
                                             companyJobsProvider
                                                     .JobsList.isNotEmpty
                                                 ? companyJobsProvider
@@ -463,7 +464,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                             topLeft: Radius.circular(5),
                                             bottomRight: Radius.circular(5),
                                           )),
-                                          child: Image.asset(
+                                          child: Image.network(
                                             companyJobsProvider
                                                     .JobsList.isNotEmpty
                                                 ? companyJobsProvider

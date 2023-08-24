@@ -203,7 +203,7 @@ Widget BuildMenuItems(BuildContext context) {
               children: [
                 Icon(Icons.favorite_border_outlined, color: Color(0xffCBB523)),
                 SizedBox(width: SizeConfig.scaleWidth(10)),
-                Text("Favourites"),
+                Text("Favorites"),
               ],
             ),
             onTap: () {

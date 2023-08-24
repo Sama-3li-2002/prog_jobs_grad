@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
 import 'package:prog_jobs_grad/providers/CompaniesJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/CompanyJobsProvider.dart';
+import 'package:prog_jobs_grad/providers/FavoriteProvider.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ArchiveScreen.dart';
@@ -47,6 +48,9 @@ void main() async {
       }),
       ChangeNotifierProvider<CompaniesJobsProvider>(create: (context) {
         return CompaniesJobsProvider();
+      }),
+      ChangeNotifierProvider<FavoriteProvider>(create: (context) {
+        return FavoriteProvider();
       }),
     ],
     child: MyApp(),

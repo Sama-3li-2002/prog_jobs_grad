@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:prog_jobs_grad/model/CompanyModel.dart';
 
 import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
-import '../shared_screens/login.dart';
 import 'com_home.dart';
 
 class ComLogoScreen extends StatefulWidget {
   static const String id = "com_logo_screen";
   String comName;
+
   ComLogoScreen({required this.comName});
 
   @override
@@ -17,7 +16,6 @@ class ComLogoScreen extends StatefulWidget {
 }
 
 class _ComLogoScreenState extends State<ComLogoScreen> {
-
   @override
   void initState() {
     Future.delayed(
@@ -25,7 +23,7 @@ class _ComLogoScreenState extends State<ComLogoScreen> {
         seconds: 3,
       ),
     ).then(
-          (value) => Navigator.of(context)
+      (value) => Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
         return ComHomeScreen();
       })),
@@ -46,7 +44,6 @@ class _ComLogoScreenState extends State<ComLogoScreen> {
             color: Colors.black.withOpacity(0.8),
             colorBlendMode: BlendMode.darken,
           ),
-
           Positioned(
               top: SizeConfig.scaleHeight(520),
               left: SizeConfig.scaleWidth(63),

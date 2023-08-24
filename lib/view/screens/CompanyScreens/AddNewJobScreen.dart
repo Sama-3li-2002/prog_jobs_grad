@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
@@ -29,9 +31,11 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   late List<TextEditingController> controllers;
 
   // For Image Picker
-  // final ImagePicker _imagePicker = ImagePicker();
-  File? _pickedImage;
-  String? _imageString = "assets/images/addJob.png";
+  PickedFile? _pickedImage;
+  final ImagePicker _picker = ImagePicker();
+  Reference? _storageReference;
+  String? jobImage =
+      'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/job_images%2FaddJob.png?alt=media&token=17e22a09-6a3a-4f01-a0da-23eeaee0aba8';
 
   TextEditingController? _job_nameTextController;
   TextEditingController? _company_nameTextController;
@@ -122,22 +126,20 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                   children: [
                     Container(
                       child: Card(
+                        clipBehavior: Clip.antiAlias,
                         color: Colors.white,
                         elevation: 7,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Image.asset(
-                            _imageString!.isEmpty
-                                ? "assets/images/addJob.png"
-                                : _imageString!,
-                            width: SizeConfig.scaleWidth(150),
-                            height: SizeConfig.scaleHeight(145),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        child: jobImage != null
+                            ? Image.network(
+                                jobImage!,
+                                width: SizeConfig.scaleWidth(150),
+                                height: SizeConfig.scaleHeight(145),
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset('assets/images/addJob.png'),
                       ),
                     ),
                     Positioned(
@@ -148,8 +150,8 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                         height: 40,
                         child: FloatingActionButton(
                             backgroundColor: Color(0xff4C5175),
-                            onPressed: () async {
-                              await _pickImage();
+                            onPressed: () {
+                              _pickImage();
                             },
                             child: Icon(
                               Icons.camera_alt_outlined,
@@ -354,37 +356,20 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     return false;
   }
 
-  // Future store() async {
-  //   await FirebaseFireStoreHelper.instance
-  //       .create( getJobs());
-  //
-  //   clear();
-  //   // if(stored)
-  //   //   print("Successfull");
-  //   // else print("Falied");
-  // }
-
-
-  Future<void> store() async {
-
-    DocumentReference documentReference = await FirebaseFireStoreHelper.instance.create(getJobs());
+  Future store() async {
+    DocumentReference documentReference =
+        await FirebaseFireStoreHelper.instance.create(getJobs());
     String newJobId = documentReference.id;
-
     Jobs newJob = getJobs();
     newJob.job_id = newJobId;
-         await documentReference.update({'job_id': newJobId});
+    await documentReference.update({'job_id': newJobId});
     clear();
   }
-
-
-
-
-
 
   Jobs getJobs() {
     return Jobs(
       id: FirebaseAuthController.fireAuthHelper.userId(),
-      job_image: _imageString,
+      job_image: jobImage,
       current_date: formattedDate,
       current_time: formattedTime,
       job_name: _job_nameTextController!.text,
@@ -409,36 +394,28 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     _controllerFourSkills!.text = "";
   }
 
-  // Future <void> _pickImage() async {
-  //   try {
-  //     final pickedImage =await  _imagePicker.pickImage(source: ImageSource.gallery);
-  //     if (pickedImage != null) {
-  //       setState(() {
-  //         _pickedImage = File(pickedImage.path);
-  //         _imageString = _pickedImage!.path;
-  //       });
-  //     }
-  //   } catch (e) {
-  //     print('Error picking image: $e');
-  //   }
-  // }
-
-  Future<void> _pickImage() async {
-    try {
-      const platform = MethodChannel(
-          'image_picker_channel'); // Change the channel name accordingly
-
-      final String imagePath =
-          await platform.invokeMethod('pickImageFromGallery');
-
-      if (imagePath != null) {
-        setState(() {
-          _pickedImage = File(imagePath);
-          _imageString = _pickedImage!.path;
+  Future _pickImage() async {
+    _pickedImage = await _picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (_pickedImage != null) {
+        _storageReference = FirebaseStorage.instance
+            .ref()
+            .child('job_images')
+            .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
+        _storageReference!
+            .putFile(File(_pickedImage!.path))
+            .then((taskSnapshot) {
+          taskSnapshot.ref.getDownloadURL().then((downloadUrll) {
+            setState(() {
+              jobImage = downloadUrll;
+            });
+          });
+        }).catchError((error) {
+          print("Error uploading image: $error");
         });
+      } else {
+        print('No Image Selected');
       }
-    } catch (e) {
-      print('Error picking image: $e');
-    }
+    });
   }
 }

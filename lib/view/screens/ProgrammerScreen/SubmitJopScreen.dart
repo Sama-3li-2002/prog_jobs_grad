@@ -103,7 +103,7 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
                               elevation: 5,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              child: Image.asset(
+                              child: Image.network(
                                 widget.itemsComInfo.isNotEmpty
                                     ? widget.itemsComInfo[0].image ?? ""
                                     : "No Image",

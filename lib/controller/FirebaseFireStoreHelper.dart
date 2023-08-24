@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
-import 'package:uuid/uuid.dart';
 
 import '../model/CompanyModel.dart';
 import '../model/UsersModel.dart';
@@ -9,13 +8,13 @@ import 'FirebaseAuthController.dart';
 class FirebaseFireStoreHelper {
   FirebaseFireStoreHelper._();
 
-  Uuid uuid = Uuid();
   static FirebaseFireStoreHelper fireStoreHelper = FirebaseFireStoreHelper._();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final String userCollection = "Programmers";
   static final String companyCollection = "Company";
   final String jobsCollection = "jobs";
   final String SubmittedjobCollection = "Submitted Job";
+  final String FavoriteJobsCollection = "Favorite Jobs";
 
   static FirebaseFireStoreHelper get instance {
     return fireStoreHelper;
@@ -55,10 +54,14 @@ class FirebaseFireStoreHelper {
   }
 
   // لعمل كولكشن jobs بداخل الكولكشن تبع الشركة لاضافة وظيفة جديدة اعتمادا على ID الشركة
-  Future<DocumentReference> create(Jobs jobs)async{
+  Future create(Jobs jobs) async {
+    DocumentReference documentReference = await firestore
+        .collection(companyCollection)
+        .doc(FirebaseAuthController.fireAuthHelper.userId())
+        .collection(jobsCollection)
+        .add(jobs.toMap());
 
-    DocumentReference documentReference=await firestore.collection(companyCollection).doc(FirebaseAuthController.fireAuthHelper.userId()).collection(jobsCollection).add(jobs.toMap());
-     return documentReference;
+    return documentReference;
   }
 
   // لاسترجاع بيانات المبرمج بناء على ال ID
@@ -89,11 +92,11 @@ class FirebaseFireStoreHelper {
 
     try {
       QuerySnapshot allCompanies =
-      await FirebaseFirestore.instance.collection(companyCollection).get();
+          await FirebaseFirestore.instance.collection(companyCollection).get();
 
       for (QueryDocumentSnapshot companyDoc in allCompanies.docs) {
         QuerySnapshot companyJobs =
-        await companyDoc.reference.collection(jobsCollection).get();
+            await companyDoc.reference.collection(jobsCollection).get();
         allJobsFromAllCompanies.addAll(companyJobs.docs);
       }
 
@@ -105,43 +108,48 @@ class FirebaseFireStoreHelper {
   }
 
   // استرجاع بيانات البروفايل الخاص بالشركة بناء على ال ID
-  Future<DocumentSnapshot<Map<String, dynamic>>> getComInfoById(
-      String id) async {
+  Future<List<Company>> getComInfoById(String id) async {
+    List<Company> comInfoList = [];
     final DocumentSnapshot<Map<String, dynamic>> comInfoSnapshot =
-    await firestore.collection(companyCollection).doc(id).get();
-    print("com Info $comInfoSnapshot");
-    return comInfoSnapshot;
+        await firestore.collection(companyCollection).doc(id).get();
+    if (comInfoSnapshot.exists) {
+      comInfoList.add(Company.fromMap(comInfoSnapshot.data()!));
+    }
+    return comInfoList;
   }
 
   // لتحديث بيانات معلومات بروفايل الشركة حسب ال ID
   Future updateCompanyProfileInfo(Company company) async {
-    await firestore.collection(companyCollection).doc(
-        FirebaseAuthController.fireAuthHelper.userId()).update(company.toMap());
+    await firestore
+        .collection(companyCollection)
+        .doc(FirebaseAuthController.fireAuthHelper.userId())
+        .update(company.toMap());
   }
 
 // تحديث معلومات الوظيفة
   Future<void> updateJobsDetails(Jobs jobs, String idJob) async {
     try {
       final userUid = FirebaseAuthController.fireAuthHelper.userId();
-      final companyDocRef = firestore.collection(companyCollection).doc(userUid);
+      final companyDocRef =
+          firestore.collection(companyCollection).doc(userUid);
       final jobDocRef = companyDocRef.collection(jobsCollection).doc(idJob);
 
       final jobDataMap = jobs.toMap();
 
       await jobDocRef.update(jobDataMap);
       print("Job details updated successfully.");
-
     } catch (error) {
       print("Error updating job details: $error");
     }
   }
 
-
-  Future SaveProgInfoForSubmittedJob(Users users,
-      String ProgId,
-      String ComId,
-      String JobId,
-      String fileUrl,) async {
+  Future SaveProgInfoForSubmittedJob(
+    Users users,
+    String ProgId,
+    String ComId,
+    String JobId,
+    String fileUrl,
+  ) async {
     firestore
         .collection(companyCollection)
         .doc(ComId)
@@ -162,5 +170,46 @@ class FirebaseFireStoreHelper {
       "fileUrl": fileUrl,
     });
   }
-}
 
+  Future<void> addToFavorites(String userId, String jobId) async {
+    await firestore
+        .collection(userCollection)
+        .doc(userId)
+        .collection(FavoriteJobsCollection)
+        .add({'jobId': jobId});
+  }
+
+  Future<void> removeFromFavorites(String userId, String jobId) async {
+    QuerySnapshot favoritesSnapshot = await firestore
+        .collection(userCollection)
+        .doc(userId)
+        .collection(FavoriteJobsCollection)
+        .where('jobId', isEqualTo: jobId)
+        .get();
+
+    for (QueryDocumentSnapshot documentSnapshot in favoritesSnapshot.docs) {
+      await documentSnapshot.reference.delete();
+    }
+  }
+
+  Future<bool> isJobFavorited(String userId, String jobId) async {
+    QuerySnapshot favoritesSnapshot = await firestore
+        .collection(userCollection)
+        .doc(userId)
+        .collection(FavoriteJobsCollection)
+        .where('jobId', isEqualTo: jobId)
+        .get();
+
+    bool isFavorite = favoritesSnapshot.docs.isNotEmpty;
+
+    return isFavorite;
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getUserFavorites(String userId) {
+    return firestore
+        .collection(userCollection)
+        .doc(userId)
+        .collection(FavoriteJobsCollection)
+        .get();
+  }
+}
