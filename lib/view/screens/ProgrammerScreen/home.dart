@@ -358,13 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .job_id!,
                                                   ),
                                                   builder: (context, snapshot) {
-                                                    if (snapshot
-                                                            .connectionState ==
-                                                        ConnectionState
-                                                            .waiting) {
-                                                      // Display a loading indicator while checking favorited status
-                                                      return CircularProgressIndicator();
-                                                    } else if (snapshot
+                                                   if (snapshot
                                                         .hasError) {
                                                       print('Error');
                                                       return Icon(Icons

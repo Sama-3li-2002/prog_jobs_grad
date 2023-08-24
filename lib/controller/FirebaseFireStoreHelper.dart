@@ -15,6 +15,7 @@ class FirebaseFireStoreHelper {
   final String jobsCollection = "jobs";
   final String SubmittedjobCollection = "Submitted Job";
   final String FavoriteJobsCollection = "Favorite Jobs";
+  final String archiveCollection = "Archive Job";
 
   static FirebaseFireStoreHelper get instance {
     return fireStoreHelper;
@@ -40,7 +41,6 @@ class FirebaseFireStoreHelper {
       "id": id,
       "companyName": company.companyName,
       "email": company.email,
-      "password": company.password,
       "phone": company.phone,
       "address": company.address,
       "managerName": company.managerName,
@@ -92,11 +92,11 @@ class FirebaseFireStoreHelper {
 
     try {
       QuerySnapshot allCompanies =
-          await FirebaseFirestore.instance.collection(companyCollection).get();
+      await FirebaseFirestore.instance.collection(companyCollection).get();
 
       for (QueryDocumentSnapshot companyDoc in allCompanies.docs) {
         QuerySnapshot companyJobs =
-            await companyDoc.reference.collection(jobsCollection).get();
+        await companyDoc.reference.collection(jobsCollection).get();
         allJobsFromAllCompanies.addAll(companyJobs.docs);
       }
 
@@ -111,7 +111,7 @@ class FirebaseFireStoreHelper {
   Future<List<Company>> getComInfoById(String id) async {
     List<Company> comInfoList = [];
     final DocumentSnapshot<Map<String, dynamic>> comInfoSnapshot =
-        await firestore.collection(companyCollection).doc(id).get();
+    await firestore.collection(companyCollection).doc(id).get();
     if (comInfoSnapshot.exists) {
       comInfoList.add(Company.fromMap(comInfoSnapshot.data()!));
     }
@@ -131,7 +131,7 @@ class FirebaseFireStoreHelper {
     try {
       final userUid = FirebaseAuthController.fireAuthHelper.userId();
       final companyDocRef =
-          firestore.collection(companyCollection).doc(userUid);
+      firestore.collection(companyCollection).doc(userUid);
       final jobDocRef = companyDocRef.collection(jobsCollection).doc(idJob);
 
       final jobDataMap = jobs.toMap();
@@ -144,12 +144,12 @@ class FirebaseFireStoreHelper {
   }
 
   Future SaveProgInfoForSubmittedJob(
-    Users users,
-    String ProgId,
-    String ComId,
-    String JobId,
-    String fileUrl,
-  ) async {
+      Users users,
+      String ProgId,
+      String ComId,
+      String JobId,
+      String fileUrl,
+      ) async {
     firestore
         .collection(companyCollection)
         .doc(ComId)
@@ -211,5 +211,43 @@ class FirebaseFireStoreHelper {
         .doc(userId)
         .collection(FavoriteJobsCollection)
         .get();
+  }
+
+  // لتخزين الوظائف المؤرشفة
+  Future<DocumentReference> createArchiveJob(Jobs jobs) async {
+    DocumentReference? documentReference;
+    try {
+      final userUid = FirebaseAuthController.fireAuthHelper.userId();
+      final companyDocRef =
+      firestore.collection(companyCollection).doc(userUid);
+
+      documentReference =
+      await companyDocRef.collection(archiveCollection).add(jobs.toMap());
+      print("Job archive created successfully.");
+    } catch (error) {
+      print("Error Job archive : $error");
+    }
+    return documentReference!;
+  }
+  // لحذف الجوب
+  void deleteDocument(String jobsId) {
+    FirebaseFirestore.instance
+        .collection(companyCollection)
+        .doc(FirebaseAuthController.fireAuthHelper.userId())
+        .collection(jobsCollection)
+        .doc(jobsId)
+        .delete();
+  }
+
+  // لاسترجاع كل الوظائف المؤرشفة
+  Future<List<QueryDocumentSnapshot>> getArchiveJobs() async {
+    List<QueryDocumentSnapshot> allArchive = [];
+    final QuerySnapshot ArchiveJobs = await firestore
+        .collection(companyCollection)
+        .doc(FirebaseAuthController.fireAuthHelper.userId())
+        .collection(archiveCollection)
+        .get();
+    allArchive.addAll(ArchiveJobs.docs);
+    return allArchive;
   }
 }

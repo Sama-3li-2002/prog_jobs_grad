@@ -38,8 +38,7 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
   @override
   void initState() {
     super.initState();
-    company =
-        Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
+    company = Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
 
     _company_name = TextEditingController(text: company.companyName!);
     _phone = TextEditingController(text: company.phone);
@@ -110,13 +109,13 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
                         ),
                         child: company.image != null
                             ? Image.network(
-                                company.image!,
-                                width: SizeConfig.scaleWidth(150),
-                                height: SizeConfig.scaleHeight(145),
-                                fit: BoxFit.cover,
-                              )
+                          company.image!,
+                          width: SizeConfig.scaleWidth(150),
+                          height: SizeConfig.scaleHeight(145),
+                          fit: BoxFit.cover,
+                        )
                             : Image.asset(
-                                'assets/images/withoutImageCompany.png'),
+                            'assets/images/withoutImageCompany.png'),
                       ),
                       Positioned(
                         bottom: SizeConfig.scaleHeight(0),

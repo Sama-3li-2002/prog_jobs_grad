@@ -105,7 +105,7 @@ class MyApp extends StatelessWidget {
         Favorite.id: (context) => Favorite(),
         CompanyInfoEdit.id: (context) => CompanyInfoEdit(),
         CompanyInfo.id: (context) => CompanyInfo(),
-        ProfileInfoEdit.id: (context) => CompanyInfoEdit(),
+        ProfileInfoEdit.id: (context) => ProfileInfoEdit(),
         ProfileInfo.id: (context) => CompanyInfo(),
       },
     );

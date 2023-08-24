@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
+import 'package:prog_jobs_grad/model/CompanyModel.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
@@ -16,6 +18,7 @@ import 'com_home.dart';
 
 class AddNewJobScreen extends StatefulWidget {
   static const String id = "add_new_job_screen";
+
 
   @override
   State<AddNewJobScreen> createState() => _AddNewJobScreenState();
@@ -37,12 +40,13 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   String? jobImage =
       'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/job_images%2FaddJob.png?alt=media&token=17e22a09-6a3a-4f01-a0da-23eeaee0aba8';
 
+
+
   TextEditingController? _job_nameTextController;
   TextEditingController? _company_nameTextController;
   TextEditingController? _salaryTextController;
   TextEditingController? _job_descriptionTextController;
 
-  // TextEditingController? _required_skillsTextController;
 
   //For Controller
   late TextEditingController _controllerOneSkills;
@@ -60,7 +64,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     _company_nameTextController = TextEditingController();
     _salaryTextController = TextEditingController();
     _job_descriptionTextController = TextEditingController();
-    // _required_skillsTextController = TextEditingController();
+
 
     // For controller
     _controllerOneSkills = TextEditingController();
@@ -172,7 +176,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
               TextStyleWidget("Company Name:", Color(0xff4C5175),
                   SizeConfig.scaleTextFont(12), FontWeight.w500),
               TextFieldWidget.textfieldCon(
-                controller: _company_nameTextController,
+                controller:_company_nameTextController,
               ),
               SizedBox(height: SizeConfig.scaleHeight(12)),
               TextStyleWidget("Salary:", Color(0xff4C5175),
@@ -245,11 +249,12 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                             index++;
                           });
                         }
-                        ;
                       },
+
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff4C5175),
+                          backgroundColor:  _clickCount == 3 ?Colors.grey :Color(0xff4C5175)
                       ),
+
                       child: Row(children: [
                         // Icon(Icons.add),
                         Image.asset("assets/images/add.png"),
@@ -418,4 +423,5 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
       }
     });
   }
+
 }

@@ -216,13 +216,11 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Container(
-                                        width: double.infinity,
-                                      ),
+                                        width: double.infinity,),
                                       Padding(
                                         padding: EdgeInsets.only(
                                             left: SizeConfig.scaleWidth(20),
@@ -238,10 +236,7 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                             SizeConfig.scaleTextFont(12),
                                             FontWeight.w500),
                                       ),
-                                      if (widget.items
-                                          .elementAt(0)
-                                          .required_skills_two!
-                                          .isNotEmpty)
+                                      if (widget.items.elementAt(0).required_skills_two !="")
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -273,10 +268,7 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                             ),
                                           ],
                                         ),
-                                      if (widget.items
-                                          .elementAt(0)
-                                          .required_skills_three!
-                                          .isNotEmpty)
+                                       if (widget.items.elementAt(0).required_skills_three !="")
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -307,10 +299,7 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                             ),
                                           ],
                                         ),
-                                      if (widget.items
-                                          .elementAt(0)
-                                          .required_skills_four!
-                                          .isNotEmpty)
+                                       if (widget.items.elementAt(0).required_skills_four !="")
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,

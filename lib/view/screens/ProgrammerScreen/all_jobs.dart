@@ -82,9 +82,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
         companiesJobsProvider.JobsList.sort(
             (a, b) => b.current_time!.compareTo(a.current_time!));
 
-        List<Jobs> newJobs = companiesJobsProvider.JobsList.length >= 2
-            ? companiesJobsProvider.JobsList.sublist(0, 2)
-            : companiesJobsProvider.JobsList;
+
         print("the job lis $companiesJobsProvider.JobsList");
         return companiesJobsProvider.JobsList.isEmpty
             ? Center(child: Text("Not available jobs"))
@@ -332,12 +330,6 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                   ),
                                                   builder: (context, snapshot) {
                                                     if (snapshot
-                                                            .connectionState ==
-                                                        ConnectionState
-                                                            .waiting) {
-                                                      // Display a loading indicator while checking favorited status
-                                                      return CircularProgressIndicator();
-                                                    } else if (snapshot
                                                         .hasError) {
                                                       print('Error');
                                                       return Icon(Icons

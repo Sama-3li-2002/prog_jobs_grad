@@ -44,7 +44,6 @@ class Company {
   Company.fromMap(Map<String, dynamic> map) {
     this.companyName = map['companyName'];
     this.email = map['email'];
-    this.password = map['password'];
     this.phone = map['phone'];
     this.address = map['address'];
     this.managerName = map['managerName'];

@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/view/customWidget/DrawerWidget.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/JobsCompanyDetailsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/no_of_request.dart';
 import 'package:provider/provider.dart';
+import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../providers/CompanyJobsProvider.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -28,11 +30,18 @@ class ComHomeScreen extends StatefulWidget {
 class _ComHomeScreenState extends State<ComHomeScreen> {
   int _currentSlideIndex = 0;
 
+  //For archive Icon
+  List<bool> isPressedList = [];
+
+
+
+
   @override
   void initState() {
     super.initState();
-    Provider.of<CompanyJobsProvider>(context, listen: false)
-        .getAllJobsObjects();
+    Provider.of<CompanyJobsProvider>(context, listen: false).getAllJobsObjects();
+
+
   }
 
   @override
@@ -92,7 +101,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                     return Container(
                       clipBehavior: Clip.antiAlias,
                       decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                      BoxDecoration(borderRadius: BorderRadius.circular(5)),
                       width: SizeConfig.screenWidth,
                       child: Image.asset(path, fit: BoxFit.cover),
                     );
@@ -112,587 +121,575 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                     borderRadius: BorderRadius.circular(5),
                     shape: BoxShape.rectangle,
                     color:
-                        _currentSlideIndex == index ? Colors.blue : Colors.grey,
+                    _currentSlideIndex == index ? Colors.blue : Colors.grey,
                   ),
                 );
               }).toList(),
             ),
             Consumer<CompanyJobsProvider>(
                 builder: (context, companyJobsProvider, _) {
-              companyJobsProvider.JobsList.sort(
-                  (a, b) => b.current_time!.compareTo(a.current_time!));
+                  companyJobsProvider.JobsList.sort(
+                          (a, b) => b.current_time!.compareTo(a.current_time!));
 
-              List<Jobs> newJobs = companyJobsProvider.JobsList.length >= 2
-                  ? companyJobsProvider.JobsList.sublist(0, 2)
-                  : companyJobsProvider.JobsList;
-              print("the length $newJobs.length");
+                  List<Jobs> newJobs = companyJobsProvider.JobsList.length >= 2
+                      ? companyJobsProvider.JobsList.sublist(0, 2)
+                      : companyJobsProvider.JobsList;
+                  print("the length $newJobs.length");
 
-              return companyJobsProvider.JobsList.isEmpty
-                  ? Center(child: Text("Not available jobs"))
-                  : SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: SizeConfig.scaleWidth(10),
-                              top: SizeConfig.scaleWidth(10),
-                            ),
-                            child: TextStyleWidget(
-                              'New Jobs:',
-                              Color(0xffCBB523),
-                              SizeConfig.scaleTextFont(15),
-                              FontWeight.w500,
-                            ),
+                  return companyJobsProvider.JobsList.isEmpty
+                      ? Center(child: Text("Not available jobs"))
+                      : SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: SizeConfig.scaleWidth(10),
+                            top: SizeConfig.scaleWidth(10),
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: newJobs.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.white),
-                                  margin: EdgeInsets.all(
-                                    SizeConfig.scaleWidth(15),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                        return JobsCompanyDetailsScreen(items: [
-                                          companyJobsProvider.JobsList
-                                              .elementAt(index),
-                                        ]);
-                                      }));
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            bottomRight: Radius.circular(5),
-                                          )),
-                                          child: Image.network(
-                                            companyJobsProvider
-                                                    .JobsList.isNotEmpty
-                                                ? companyJobsProvider
-                                                        .JobsList[index]
-                                                        .job_image ??
-                                                    ""
-                                                : "No Image",
-                                            fit: BoxFit.cover,
-                                            width: SizeConfig.scaleWidth(96),
-                                            height: SizeConfig.scaleHeight(105),
-                                            color: Color(0xff4C5175)
-                                                .withOpacity(0.5),
-                                            colorBlendMode: BlendMode.darken,
-                                          ),
-                                        ),
-                                        Flexible(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                              left: SizeConfig.scaleWidth(10),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    TextStyleWidget(
-                                                      companyJobsProvider
-                                                              .JobsList
-                                                              .isNotEmpty
-                                                          ? companyJobsProvider
-                                                                  .JobsList[
-                                                                      index]
-                                                                  .job_name ??
-                                                              ""
-                                                          : "No Job Name",
-                                                      Color(0xff4C5175),
-                                                      SizeConfig.scaleTextFont(
-                                                          15),
-                                                      FontWeight.w500,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.apartment,
-                                                          size: SizeConfig
-                                                              .scaleWidth(15),
-                                                          color:
-                                                              Color(0xffcbb523),
-                                                        ),
-                                                        TextStyleWidget(
-                                                          companyJobsProvider
-                                                                  .JobsList
-                                                                  .isNotEmpty
-                                                              ? companyJobsProvider
-                                                                      .JobsList[
-                                                                          index]
-                                                                      .company_name ??
-                                                                  ""
-                                                              : "No Company Name",
-                                                          Colors.black,
-                                                          SizeConfig
-                                                              .scaleTextFont(
-                                                                  10),
-                                                          FontWeight.w500,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Spacer(),
-                                                    Column(
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            Icon(
-                                                              Icons.access_time,
-                                                              size: SizeConfig
-                                                                  .scaleWidth(
-                                                                      14),
-                                                              color: Color(
-                                                                  0xffcbb523),
-                                                            ),
-                                                            SizedBox(
-                                                              width: SizeConfig
-                                                                  .scaleWidth(
-                                                                      3),
-                                                            ),
-                                                            TextStyleWidget(
-                                                              companyJobsProvider
-                                                                      .JobsList
-                                                                      .isNotEmpty
-                                                                  ? companyJobsProvider
-                                                                          .JobsList[
-                                                                              index]
-                                                                          .current_date ??
-                                                                      ""
-                                                                  : "No Current Date",
-                                                              Colors.black,
-                                                              SizeConfig
-                                                                  .scaleTextFont(
-                                                                      10),
-                                                              FontWeight.w500,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        TextStyleWidget(
-                                                          companyJobsProvider
-                                                                  .JobsList
-                                                                  .isNotEmpty
-                                                              ? companyJobsProvider
-                                                                      .JobsList[
-                                                                          index]
-                                                                      .current_time ??
-                                                                  ""
-                                                              : "No Current Time",
-                                                          Colors.black,
-                                                          SizeConfig
-                                                              .scaleTextFont(
-                                                                  10),
-                                                          FontWeight.w500,
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      width:
-                                                          SizeConfig.scaleWidth(
-                                                              145),
-                                                      height: SizeConfig
-                                                          .scaleHeight(30),
-                                                      child: ElevatedButton(
-                                                        child: Row(
-                                                          children: [
-                                                            Container(
-                                                              height: SizeConfig
-                                                                  .scaleHeight(
-                                                                      18),
-                                                              width: SizeConfig
-                                                                  .scaleWidth(
-                                                                      18),
-                                                              child: Text(
-                                                                '12',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  backgroundColor:
-                                                                      Color(
-                                                                          0xffcbb523),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize: SizeConfig
-                                                                      .scaleTextFont(
-                                                                          10),
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            TextStyleWidget(
-                                                              'number of requests',
-                                                              Colors.white,
-                                                              SizeConfig
-                                                                  .scaleTextFont(
-                                                                      10),
-                                                              FontWeight.w500,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.of(context).push(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                            return NumberOfRequestsScreen();
-                                                          }));
-                                                        },
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              Color(0xff4C5175),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        2),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Spacer(),
-                                                    IconButton(
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      icon: Icon(
-                                                        Icons.bookmark_border,
-                                                        size: SizeConfig
-                                                            .scaleWidth(20),
-                                                      ),
-                                                      color: Color(
-                                                        0xffcbb523,
-                                                      ),
-                                                      onPressed: () {},
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ));
-                            },
+                          child: TextStyleWidget(
+                            'New Jobs:',
+                            Color(0xffCBB523),
+                            SizeConfig.scaleTextFont(15),
+                            FontWeight.w500,
                           ),
-                          SizedBox(
-                            height: SizeConfig.scaleHeight(10),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.scaleWidth(10)),
-                            child: Row(
-                              children: [
-                                TextStyleWidget(
-                                  'All Jobs:',
-                                  Color(0xffcbb523),
-                                  SizeConfig.scaleTextFont(15),
-                                  FontWeight.w500,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: newJobs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (isPressedList.length <= index) {
+                              isPressedList.add(false);
+                            }
+                            return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.white),
+                                margin: EdgeInsets.all(
+                                  SizeConfig.scaleWidth(15),
                                 ),
-                                Spacer(),
-                                InkWell(
+                                child: InkWell(
                                   onTap: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(builder: (context) {
-                                      return ComAllJobScreen();
-                                    }));
-                                  },
-                                  child: TextStyleWidget(
-                                    'see all',
-                                    Color(0xffCB3423),
-                                    SizeConfig.scaleTextFont(12),
-                                    FontWeight.normal,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: companyJobsProvider.JobsList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.white),
-                                  margin: EdgeInsets.all(
-                                    SizeConfig.scaleWidth(15),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              JobsCompanyDetailsScreen(items: [
+                                          return JobsCompanyDetailsScreen(items: [
                                             companyJobsProvider.JobsList
                                                 .elementAt(index),
-                                          ]),
+                                          ]);
+                                        }));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(5),
+                                              bottomRight: Radius.circular(5),
+                                            )),
+                                        child: Image.network(
+                                          companyJobsProvider
+                                              .JobsList.isNotEmpty
+                                              ? companyJobsProvider
+                                              .JobsList[index]
+                                              .job_image ??
+                                              ""
+                                              : "No Image",
+                                          fit: BoxFit.cover,
+                                          width: SizeConfig.scaleWidth(96),
+                                          height: SizeConfig.scaleHeight(105),
+                                          color: Color(0xff4C5175)
+                                              .withOpacity(0.5),
+                                          colorBlendMode: BlendMode.darken,
                                         ),
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            bottomRight: Radius.circular(5),
-                                          )),
-                                          child: Image.network(
-                                            companyJobsProvider
-                                                    .JobsList.isNotEmpty
-                                                ? companyJobsProvider
-                                                        .JobsList[index]
-                                                        .job_image ??
-                                                    ""
-                                                : "No Image",
-                                            fit: BoxFit.cover,
-                                            width: SizeConfig.scaleWidth(96),
-                                            height: SizeConfig.scaleHeight(105),
-                                            color: Color(0xff4C5175)
-                                                .withOpacity(0.5),
-                                            colorBlendMode: BlendMode.darken,
+                                      ),
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left: SizeConfig.scaleWidth(10),
                                           ),
-                                        ),
-                                        Flexible(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                              left: SizeConfig.scaleWidth(10),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    TextStyleWidget(
-                                                      companyJobsProvider
-                                                              .JobsList
-                                                              .isNotEmpty
-                                                          ? companyJobsProvider
-                                                                  .JobsList[
-                                                                      index]
-                                                                  .job_name ??
-                                                              ""
-                                                          : "No Job Name",
-                                                      Color(0xff4C5175),
-                                                      SizeConfig.scaleTextFont(
-                                                          15),
-                                                      FontWeight.w500,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.apartment,
-                                                          size: SizeConfig
-                                                              .scaleWidth(15),
-                                                          color:
-                                                              Color(0xffcbb523),
-                                                        ),
-                                                        TextStyleWidget(
-                                                          companyJobsProvider
-                                                                  .JobsList
-                                                                  .isNotEmpty
-                                                              ? companyJobsProvider
-                                                                      .JobsList[
-                                                                          index]
-                                                                      .company_name ??
-                                                                  ""
-                                                              : "No Company Name",
-                                                          Colors.black,
-                                                          SizeConfig
-                                                              .scaleTextFont(
-                                                                  10),
-                                                          FontWeight.w500,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Spacer(),
-                                                    Column(
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            Icon(
-                                                              Icons.access_time,
-                                                              size: SizeConfig
-                                                                  .scaleWidth(
-                                                                      14),
-                                                              color: Color(
-                                                                  0xffcbb523),
-                                                            ),
-                                                            SizedBox(
-                                                              width: SizeConfig
-                                                                  .scaleWidth(
-                                                                      3),
-                                                            ),
-                                                            TextStyleWidget(
-                                                              companyJobsProvider
-                                                                      .JobsList
-                                                                      .isNotEmpty
-                                                                  ? companyJobsProvider
-                                                                          .JobsList[
-                                                                              index]
-                                                                          .current_date ??
-                                                                      ""
-                                                                  : "No Current Date",
-                                                              Colors.black,
-                                                              SizeConfig
-                                                                  .scaleTextFont(
-                                                                      10),
-                                                              FontWeight.w500,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        TextStyleWidget(
-                                                          companyJobsProvider
-                                                                  .JobsList
-                                                                  .isNotEmpty
-                                                              ? companyJobsProvider
-                                                                      .JobsList[
-                                                                          index]
-                                                                      .current_time ??
-                                                                  ""
-                                                              : "No Current Time",
-                                                          Colors.black,
-                                                          SizeConfig
-                                                              .scaleTextFont(
-                                                                  10),
-                                                          FontWeight.w500,
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      width:
-                                                          SizeConfig.scaleWidth(
-                                                              145),
-                                                      height: SizeConfig
-                                                          .scaleHeight(30),
-                                                      child: ElevatedButton(
-                                                        child: Row(
-                                                          children: [
-                                                            Container(
-                                                              height: SizeConfig
-                                                                  .scaleHeight(
-                                                                      18),
-                                                              width: SizeConfig
-                                                                  .scaleWidth(
-                                                                      18),
-                                                              child: Text(
-                                                                '12',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  backgroundColor:
-                                                                      Color(
-                                                                          0xffcbb523),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize: SizeConfig
-                                                                      .scaleTextFont(
-                                                                          10),
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            TextStyleWidget(
-                                                              'number of requests',
-                                                              Colors.white,
-                                                              SizeConfig
-                                                                  .scaleTextFont(
-                                                                      10),
-                                                              FontWeight.w500,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.of(context).push(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                            return NumberOfRequestsScreen();
-                                                          }));
-                                                        },
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              Color(0xff4C5175),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        2),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Spacer(),
-                                                    IconButton(
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      icon: Icon(
-                                                        Icons.bookmark_border,
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  TextStyleWidget(
+                                                    companyJobsProvider
+                                                        .JobsList
+                                                        .isNotEmpty
+                                                        ? companyJobsProvider
+                                                        .JobsList[
+                                                    index]
+                                                        .job_name ??
+                                                        ""
+                                                        : "No Job Name",
+                                                    Color(0xff4C5175),
+                                                    SizeConfig.scaleTextFont(
+                                                        15),
+                                                    FontWeight.w500,
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.apartment,
                                                         size: SizeConfig
-                                                            .scaleWidth(20),
+                                                            .scaleWidth(15),
+                                                        color:
+                                                        Color(0xffcbb523),
                                                       ),
+                                                      TextStyleWidget(
+                                                        companyJobsProvider
+                                                            .JobsList
+                                                            .isNotEmpty
+                                                            ? companyJobsProvider
+                                                            .JobsList[
+                                                        index]
+                                                            .company_name ??
+                                                            ""
+                                                            : "No Company Name",
+                                                        Colors.black,
+                                                        SizeConfig
+                                                            .scaleTextFont(
+                                                            10),
+                                                        FontWeight.w500,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Spacer(),
+                                                  Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.access_time,
+                                                            size: SizeConfig
+                                                                .scaleWidth(
+                                                                14),
+                                                            color: Color(
+                                                                0xffcbb523),
+                                                          ),
+                                                          SizedBox(
+                                                            width: SizeConfig
+                                                                .scaleWidth(
+                                                                3),
+                                                          ),
+                                                          TextStyleWidget(
+                                                            companyJobsProvider
+                                                                .JobsList
+                                                                .isNotEmpty
+                                                                ? companyJobsProvider
+                                                                .JobsList[
+                                                            index]
+                                                                .current_date ??
+                                                                ""
+                                                                : "No Current Date",
+                                                            Colors.black,
+                                                            SizeConfig
+                                                                .scaleTextFont(
+                                                                10),
+                                                            FontWeight.w500,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      TextStyleWidget(
+                                                        companyJobsProvider
+                                                            .JobsList
+                                                            .isNotEmpty
+                                                            ? companyJobsProvider
+                                                            .JobsList[
+                                                        index]
+                                                            .current_time ??
+                                                            ""
+                                                            : "No Current Time",
+                                                        Colors.black,
+                                                        SizeConfig
+                                                            .scaleTextFont(
+                                                            10),
+                                                        FontWeight.w500,
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                    height: SizeConfig
+                                                        .scaleHeight(30),
+                                                    child: ElevatedButton(
+                                                      child: TextStyleWidget(
+                                                        'number of requests',
+                                                        Colors.white,
+                                                        SizeConfig
+                                                            .scaleTextFont(
+                                                            10),
+                                                        FontWeight.w500,
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) {
+                                                                  return NumberOfRequestsScreen();
+                                                                }));
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                        Color(0xff4C5175),
+                                                        shape:
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              2),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  IconButton(
+                                                    alignment:
+                                                    Alignment.centerRight,
+                                                    icon: isPressedList[index]
+                                                        ? Icon(
+                                                      Icons.bookmark,
                                                       color: Color(
-                                                        0xffcbb523,
-                                                      ),
-                                                      onPressed: () {},
+                                                          0xffcbb523),
                                                     )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                                        : Icon(
+                                                        Icons
+                                                            .bookmark_border,
+                                                        color: Color(
+                                                            0xffcbb523)),
+                                                    onPressed: () async {
+                                                      setState(() {
+                                                        isPressedList[index] =
+                                                        !isPressedList[
+                                                        index];
+                                                      });
+                                                      await archiveJobs(
+                                                          companyJobsProvider
+                                                              .JobsList
+                                                              .elementAt(
+                                                              index));
+                                                      delete(
+                                                          companyJobsProvider
+                                                              .JobsList
+                                                              .elementAt(
+                                                              index)
+                                                              .job_id!);
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ));
-                            },
+                                      ),
+                                    ],
+                                  ),
+                                ));
+                          },
+                        ),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(10),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: SizeConfig.scaleWidth(10)),
+                          child: Row(
+                            children: [
+                              TextStyleWidget(
+                                'All Jobs:',
+                                Color(0xffcbb523),
+                                SizeConfig.scaleTextFont(15),
+                                FontWeight.w500,
+                              ),
+                              Spacer(),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                        return ComAllJobScreen();
+                                      }));
+                                },
+                                child: TextStyleWidget(
+                                  'see all',
+                                  Color(0xffCB3423),
+                                  SizeConfig.scaleTextFont(12),
+                                  FontWeight.normal,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-            }),
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: companyJobsProvider.JobsList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (isPressedList.length <= index) {
+                              isPressedList.add(false);
+                            }
+                            return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.white),
+                                margin: EdgeInsets.all(
+                                  SizeConfig.scaleWidth(15),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            JobsCompanyDetailsScreen(items: [
+                                              companyJobsProvider.JobsList
+                                                  .elementAt(index),
+                                            ]),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(5),
+                                              bottomRight: Radius.circular(5),
+                                            )),
+                                        child: Image.network(
+                                          companyJobsProvider
+                                              .JobsList.isNotEmpty
+                                              ? companyJobsProvider
+                                              .JobsList[index]
+                                              .job_image ??
+                                              ""
+                                              : "No Image",
+                                          fit: BoxFit.cover,
+                                          width: SizeConfig.scaleWidth(96),
+                                          height: SizeConfig.scaleHeight(105),
+                                          color: Color(0xff4C5175)
+                                              .withOpacity(0.5),
+                                          colorBlendMode: BlendMode.darken,
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left: SizeConfig.scaleWidth(10),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  TextStyleWidget(
+                                                    companyJobsProvider
+                                                        .JobsList
+                                                        .isNotEmpty
+                                                        ? companyJobsProvider
+                                                        .JobsList[
+                                                    index]
+                                                        .job_name ??
+                                                        ""
+                                                        : "No Job Name",
+                                                    Color(0xff4C5175),
+                                                    SizeConfig.scaleTextFont(
+                                                        15),
+                                                    FontWeight.w500,
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.apartment,
+                                                        size: SizeConfig
+                                                            .scaleWidth(15),
+                                                        color:
+                                                        Color(0xffcbb523),
+                                                      ),
+                                                      TextStyleWidget(
+                                                        companyJobsProvider
+                                                            .JobsList
+                                                            .isNotEmpty
+                                                            ? companyJobsProvider
+                                                            .JobsList[
+                                                        index]
+                                                            .company_name ??
+                                                            ""
+                                                            : "No Company Name",
+                                                        Colors.black,
+                                                        SizeConfig
+                                                            .scaleTextFont(
+                                                            10),
+                                                        FontWeight.w500,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Spacer(),
+                                                  Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.access_time,
+                                                            size: SizeConfig
+                                                                .scaleWidth(
+                                                                14),
+                                                            color: Color(
+                                                                0xffcbb523),
+                                                          ),
+                                                          SizedBox(
+                                                            width: SizeConfig
+                                                                .scaleWidth(
+                                                                3),
+                                                          ),
+                                                          TextStyleWidget(
+                                                            companyJobsProvider
+                                                                .JobsList
+                                                                .isNotEmpty
+                                                                ? companyJobsProvider
+                                                                .JobsList[
+                                                            index]
+                                                                .current_date ??
+                                                                ""
+                                                                : "No Current Date",
+                                                            Colors.black,
+                                                            SizeConfig
+                                                                .scaleTextFont(
+                                                                10),
+                                                            FontWeight.w500,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      TextStyleWidget(
+                                                        companyJobsProvider
+                                                            .JobsList
+                                                            .isNotEmpty
+                                                            ? companyJobsProvider
+                                                            .JobsList[
+                                                        index]
+                                                            .current_time ??
+                                                            ""
+                                                            : "No Current Time",
+                                                        Colors.black,
+                                                        SizeConfig
+                                                            .scaleTextFont(
+                                                            10),
+                                                        FontWeight.w500,
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                    height: SizeConfig
+                                                        .scaleHeight(30),
+                                                    child: ElevatedButton(
+                                                      child: TextStyleWidget(
+                                                        'number of requests',
+                                                        Colors.white,
+                                                        SizeConfig
+                                                            .scaleTextFont(
+                                                            10),
+                                                        FontWeight.w500,
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) {
+                                                                  return NumberOfRequestsScreen();
+                                                                }));
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                        Color(0xff4C5175),
+                                                        shape:
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              2),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  IconButton(
+                                                    alignment:
+                                                    Alignment.centerRight,
+                                                    icon: isPressedList[index]
+                                                        ? Icon(
+                                                      Icons.bookmark,
+                                                      color: Color(
+                                                          0xffcbb523),
+                                                    )
+                                                        : Icon(
+                                                        Icons
+                                                            .bookmark_border,
+                                                        color: Color(
+                                                            0xffcbb523)),
+                                                    onPressed: () async {
+                                                      setState(() {
+                                                        isPressedList[index] =
+                                                        !isPressedList[
+                                                        index];
+                                                      });
+                                                      await archiveJobs(
+                                                          companyJobsProvider
+                                                              .JobsList
+                                                              .elementAt(
+                                                              index));
+                                                      delete(
+                                                          companyJobsProvider
+                                                              .JobsList
+                                                              .elementAt(
+                                                              index)
+                                                              .job_id!);
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ));
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> archiveJobs(Jobs jobs) async {
+    DocumentReference documentReference =
+    await FirebaseFireStoreHelper.instance.createArchiveJob(jobs);
+    String newJobId = documentReference.id;
+  }
+
+  void delete(String jobId) {
+    FirebaseFireStoreHelper.instance.deleteDocument(jobId);
   }
 }

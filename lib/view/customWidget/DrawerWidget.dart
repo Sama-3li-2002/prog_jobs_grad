@@ -260,7 +260,7 @@ void showLogoutDialog(BuildContext context) {
               FirebaseAuthController.fireAuthHelper.signOut();
               Navigator.of(context)
                   .pushReplacement(MaterialPageRoute(builder: (context) {
-                return LoginScreen(userType: UserTypeScreen.type!);
+                return UserTypeScreen();
               }));
             },
             child: Text("Log Out"),

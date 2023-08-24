@@ -8,14 +8,14 @@ class ArchiveProvider extends ChangeNotifier {
 
   Future<void> getArchiveJobsObjects() async {
     List<Jobs> newArchiveList = [];
-    // List<QueryDocumentSnapshot> allArchives =
-    //     await FirebaseFireStoreHelper.instance.getArchiveJobs();
+    List<QueryDocumentSnapshot> allArchives =
+        await FirebaseFireStoreHelper.instance.getArchiveJobs();
 
-    // for (var element in allArchives) {
-    //   newArchiveList.add(Jobs.fromMap(element.data() as Map<String, dynamic>));
+    for (var element in allArchives) {
+      newArchiveList.add(Jobs.fromMap(element.data() as Map<String, dynamic>));
   }
 
-  // archiveList = newArchiveList;
+  archiveList = newArchiveList;
   notifyListeners();
-// }
+}
 }
