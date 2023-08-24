@@ -320,6 +320,9 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                           .elementAt(
                                                           index)
                                                           .job_id!);
+                                                  setState(() {
+                                                    companyJobsProvider.JobsList.removeAt(index);
+                                                  });
                                                 },
                                               )
                                             ],
