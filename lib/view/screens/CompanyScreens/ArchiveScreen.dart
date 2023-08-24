@@ -52,7 +52,7 @@ class _ArchiveState extends State<Archive> {
       ),
       body:Consumer<ArchiveProvider>(
         builder: (context, archiveProvider, _) => archiveProvider.archiveList.isEmpty
-            ? Center(child: Text("Not available Archive jobs"))
+            ? Center(child: Text("No available Archive jobs"))
             : SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

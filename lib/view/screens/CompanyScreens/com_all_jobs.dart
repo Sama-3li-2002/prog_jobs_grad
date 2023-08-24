@@ -75,7 +75,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
             companyJobsProvider.JobsList.sort(
                     (a, b) => b.current_time!.compareTo(a.current_time!));
           return  companyJobsProvider.JobsList.isEmpty
-              ? Center(child: Text("Not available jobs"))
+              ? Center(child: Text("No available jobs"))
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
