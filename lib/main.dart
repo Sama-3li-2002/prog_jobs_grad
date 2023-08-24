@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/providers/ArchiveProvider.dart';
 import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
 import 'package:prog_jobs_grad/providers/CompaniesJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/CompanyJobsProvider.dart';
@@ -51,6 +52,9 @@ void main() async {
       }),
       ChangeNotifierProvider<FavoriteProvider>(create: (context) {
         return FavoriteProvider();
+      }),
+      ChangeNotifierProvider<ArchiveProvider>(create: (context) {
+        return ArchiveProvider();
       }),
     ],
     child: MyApp(),
