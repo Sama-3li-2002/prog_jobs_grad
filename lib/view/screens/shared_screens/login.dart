@@ -142,7 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          suffixIcon: GestureDetector(
+                          suffixIcon:
+
+                          GestureDetector(
                             onTap: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -150,8 +152,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Icon(
                               _obscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off
+                                  :  Icons.visibility,
+
                               color: _obscureText
                                   ? Color(0xffcbb523)
                                   : Color(0xffcbb523),
@@ -208,8 +211,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Icon(
                               _obscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off
+                                  :  Icons.visibility,
                               color: _obscureText
                                   ? Color(0xffcbb523)
                                   : Color(0xffcbb523),

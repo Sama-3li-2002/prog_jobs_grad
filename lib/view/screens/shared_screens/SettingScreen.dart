@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -315,8 +317,8 @@ class _SettingScreenState extends State<SettingScreen> {
                         },
                         child: Icon(
                           _obscureTextCurrent
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                              ? Icons.visibility_off
+                              :  Icons.visibility,
                           color: _obscureTextCurrent
                               ?  Color(0xffcbb523)
                               : Color(0xffcbb523),
@@ -369,8 +371,8 @@ class _SettingScreenState extends State<SettingScreen> {
                         },
                         child: Icon(
                           _obscureTextNew
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                              ? Icons.visibility_off
+                              :  Icons.visibility,
                           color: _obscureTextNew
                               ?  Color(0xffcbb523)
                               : Color(0xffcbb523),
@@ -422,8 +424,8 @@ class _SettingScreenState extends State<SettingScreen> {
                         },
                         child: Icon(
                           _obscureTextConfirmNew
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                              ? Icons.visibility_off
+                              :  Icons.visibility,
                           color: _obscureTextConfirmNew
                               ?  Color(0xffcbb523)
                               : Color(0xffcbb523),
