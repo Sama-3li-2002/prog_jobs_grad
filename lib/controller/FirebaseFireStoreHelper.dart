@@ -204,6 +204,32 @@ class FirebaseFireStoreHelper {
 
     return isFavorite;
   }
+  // لتغيير كلمة مرور الشركة
+
+  Future<void> updateCompanyPassword(String companyId, String newPassword) async {
+    await firestore.collection(companyCollection).doc(companyId).update({
+      "password": newPassword,
+    });
+  }
+  // لتغيير كلمة مرور المبرمج
+  Future<void> updateProgrammerPassword(String programmerId, String newPassword) async {
+    await firestore.collection(userCollection).doc(programmerId).update({
+      "password": newPassword,
+    });
+  }
+         // للحصول على كلمة المرور المخزنة للشركة ومقارنتها مع حقل الكلمة القديمة
+  Future<String> getPasswordForCompany(String userId) async {
+    DocumentSnapshot snapshot = await firestore.collection(companyCollection).doc(userId).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    return data?['password'] ?? '';
+  }
+  // للحصول على كلمة المرور المخزنة للمبرمج ومقارنتها مع حقل الكلمة القديمة
+  Future<String> getPasswordForProgrammer(String userId) async {
+    DocumentSnapshot snapshot = await firestore.collection(userCollection).doc(userId).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    return data?['password'] ?? '';
+  }
+
 
   Future<QuerySnapshot<Map<String, dynamic>>> getUserFavorites(String userId) {
     return firestore

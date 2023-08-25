@@ -18,171 +18,171 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Color(0xfffafafa),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(
-              SizeConfig.scaleWidth(29),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: SizeConfig.scaleHeight(77)),
+        child: Scaffold(
+            backgroundColor: Color(0xfffafafa),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(
+                  SizeConfig.scaleWidth(29),
                 ),
-                TextStyleWidget(
-                  'LOG IN AS ...',
-                  Color(0xffcbb523),
-                  SizeConfig.scaleTextFont(22),
-                  FontWeight.bold,
-                ),
-                TextStyleWidget(
-                    'Please choose to log in as ...',
-                    Color(0xffBBBDD0),
-                    SizeConfig.scaleTextFont(12),
-                    FontWeight.normal),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      UserTypeScreen.type = 'programmer';
-                    });
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(77)),
+                    ),
+                    TextStyleWidget(
+                      'LOG IN AS ...',
+                      Color(0xffcbb523),
+                      SizeConfig.scaleTextFont(22),
+                      FontWeight.bold,
+                    ),
+                    TextStyleWidget(
+                        'Please choose to log in as ...',
+                        Color(0xffBBBDD0),
+                        SizeConfig.scaleTextFont(12),
+                        FontWeight.normal),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          UserTypeScreen.type = 'programmer';
+                        });
 
-                      if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return HomeScreen();
-                        }));
-
-                      }else{
+                        // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return LoginScreen(userType: 'programmer');
                         }));
 
-                      }
-                  },
-                  child: Center(
-                    child: Container(
-                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/images/programmer.jpg',
-                            height: SizeConfig.scaleHeight(151),
-                            width: SizeConfig.scaleWidth(319),
-                            fit: BoxFit.fill,
-                            color: Colors.black.withOpacity(0.5),
-                            colorBlendMode: BlendMode.darken,
+                        // }else{
+                        //   Navigator.of(context)
+                        //       .push(MaterialPageRoute(builder: (context) {
+                        //     return LoginScreen(userType: 'programmer');
+                        //   }));
+                        //
+                        // }
+                      },
+                      child: Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          TextStyleWidget(
-                            'Programmer',
-                            Colors.white,
-                            SizeConfig.scaleTextFont(20),
-                            FontWeight.bold,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/programmer.jpg',
+                                height: SizeConfig.scaleHeight(151),
+                                width: SizeConfig.scaleWidth(319),
+                                fit: BoxFit.fill,
+                                color: Colors.black.withOpacity(0.5),
+                                colorBlendMode: BlendMode.darken,
+                              ),
+                              TextStyleWidget(
+                                'Programmer',
+                                Colors.white,
+                                SizeConfig.scaleTextFont(20),
+                                FontWeight.bold,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      UserTypeScreen.type = 'company';
-                    });
-                    if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return ComHomeScreen();
-                      }));
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          UserTypeScreen.type = 'company';
+                        });
+                        // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return LoginScreen(userType: 'company');
+                        }));
 
-                    }else{
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return LoginScreen(userType: 'company');
-                      }));
-
-                    }
-                  },
-                  child: Center(
-                    child: Container(
-                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/images/company.jpg',
-                            height: SizeConfig.scaleHeight(151),
-                            width: SizeConfig.scaleWidth(319),
-                            fit: BoxFit.fill,
-                            color: Colors.black.withOpacity(0.5),
-                            colorBlendMode: BlendMode.darken,
+                        // }else{
+                        //   Navigator.of(context)
+                        //       .push(MaterialPageRoute(builder: (context) {
+                        //     return LoginScreen(userType: 'programmer');
+                        //   }));
+                        //
+                        // }
+                      },
+                      child: Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          TextStyleWidget(
-                            'Company',
-                            Colors.white,
-                            SizeConfig.scaleTextFont(20),
-                            FontWeight.bold,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/company.jpg',
+                                height: SizeConfig.scaleHeight(151),
+                                width: SizeConfig.scaleWidth(319),
+                                fit: BoxFit.fill,
+                                color: Colors.black.withOpacity(0.5),
+                                colorBlendMode: BlendMode.darken,
+                              ),
+                              TextStyleWidget(
+                                'Company',
+                                Colors.white,
+                                SizeConfig.scaleTextFont(20),
+                                FontWeight.bold,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return LoginScreen(
-                        userType: '',
-                      );
-                    }));
-                  },
-                  child: Center(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: SizeConfig.scaleHeight(10)),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/images/admin.jpg',
-                            height: SizeConfig.scaleHeight(151),
-                            width: SizeConfig.scaleWidth(319),
-                            fit: BoxFit.fill,
-                            color: Colors.black.withOpacity(0.5),
-                            colorBlendMode: BlendMode.darken,
-                          ),
-                          TextStyleWidget(
-                            'Admin',
-                            Colors.white,
-                            SizeConfig.scaleTextFont(20),
-                            FontWeight.bold,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return LoginScreen(
+                            userType: '',
+                          );
+                        }));
+                      },
+                      child: Center(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: SizeConfig.scaleHeight(10)),
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/admin.jpg',
+                                height: SizeConfig.scaleHeight(151),
+                                width: SizeConfig.scaleWidth(319),
+                                fit: BoxFit.fill,
+                                color: Colors.black.withOpacity(0.5),
+                                colorBlendMode: BlendMode.darken,
+                              ),
+                              TextStyleWidget(
+                                'Admin',
+                                Colors.white,
+                                SizeConfig.scaleTextFont(20),
+                                FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
+            ),
+       );
+    }
 }

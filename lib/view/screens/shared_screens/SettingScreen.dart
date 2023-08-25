@@ -327,8 +327,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
-      height: 500,
+      height: SizeConfig.scaleHeight(500),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -347,7 +346,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 5,
+              height: SizeConfig.scaleHeight(5),
               margin: EdgeInsetsDirectional.only(
                 top: SizeConfig.scaleHeight(20),
                 start: SizeConfig.scaleWidth(150),
@@ -359,12 +358,12 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height:SizeConfig.scaleHeight(10),
             ),
             TextStyleWidget("Change Password", Color(0xffCBB523),
                 SizeConfig.scaleTextFont(22), FontWeight.w500),
             SizedBox(
-              height: 10,
+              height: SizeConfig.scaleHeight(10),
             ),
             TextStyleWidget("Current Password: ", Color(0xff4C5175),
                 SizeConfig.scaleTextFont(15), FontWeight.w500),
@@ -373,7 +372,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
             ),
 
             SizedBox(
-              height: 50,
+              height: SizeConfig.scaleHeight(50),
               child: TextField(
                 controller:currentPasswordController ,
                 keyboardType: TextInputType.text,
@@ -383,19 +382,19 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                   fillColor: Colors.grey.shade200,
                   hintStyle: TextStyle(
                     color: Colors.grey,
-                    fontSize: 10,
+                    fontSize: SizeConfig.scaleTextFont(10),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: 0,
+                      width: SizeConfig.scaleWidth(0),
                       color: Colors.grey.shade100,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: 1.5,
+                      width: SizeConfig.scaleWidth(1.5),
                       color: Colors.blue,
                     ),
                   ),
@@ -420,16 +419,16 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: SizeConfig.scaleHeight(10),
             ),
 
             TextStyleWidget("New Password: ", Color(0xff4C5175),
                 SizeConfig.scaleTextFont(15), FontWeight.w500),
             SizedBox(
-              height: 5,
+              height: SizeConfig.scaleHeight(5),
             ),
             SizedBox(
-              height: 50,
+              height: SizeConfig.scaleHeight(50),
               child: TextField(
                 controller:newPasswordController ,
                 keyboardType: TextInputType.text,
@@ -439,19 +438,19 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                   fillColor: Colors.grey.shade200,
                   hintStyle: TextStyle(
                     color: Colors.grey,
-                    fontSize: 10,
+                    fontSize: SizeConfig.scaleTextFont(10),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: 0,
+                      width: SizeConfig.scaleWidth(0),
                       color: Colors.grey.shade100,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: 1.5,
+                      width: SizeConfig.scaleWidth(1.5),
                       color: Colors.blue,
                     ),
                   ),
@@ -474,15 +473,15 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: SizeConfig.scaleHeight(5),
             ),
             TextStyleWidget("Confirm Password: ", Color(0xff4C5175),
                 SizeConfig.scaleTextFont(15), FontWeight.w500),
             SizedBox(
-              height: 5,
+              height: SizeConfig.scaleHeight(1.5),
             ),
             SizedBox(
-              height: 50,
+              height: SizeConfig.scaleHeight(50),
               child: TextField(
                 controller:confirmPasswordController ,
                 keyboardType: TextInputType.text,
@@ -492,19 +491,19 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                   fillColor: Colors.grey.shade200,
                   hintStyle: TextStyle(
                     color: Colors.grey,
-                    fontSize: 10,
+                    fontSize: SizeConfig.scaleTextFont(5),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: 0,
+                      width:SizeConfig.scaleWidth( 0),
                       color: Colors.grey.shade100,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: 1.5,
+                      width: SizeConfig.scaleWidth(1.5),
                       color: Colors.blue,
                     ),
                   ),
@@ -527,12 +526,12 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
             SizedBox(
-              height: 25,
+              height: SizeConfig.scaleHeight(25),
             ),
             Center(
               child: Container(
-                height: 50,
-                width: 300,
+                height: SizeConfig.scaleHeight(50),
+                width: SizeConfig.scaleWidth(500),
                 child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0xff4C5175),
@@ -552,11 +551,9 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
+        )),
+       );
+    }
   //change password----------------------------------------
   Future<bool> _changePassword() async {
     late bool isCorrect ;

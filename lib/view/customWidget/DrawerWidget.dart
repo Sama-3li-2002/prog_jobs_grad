@@ -267,7 +267,7 @@ void showLogoutDialog(BuildContext context) {
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // إغلاق مربع الحوار
+              Navigator.of(context).pop();
             },
             child: Text("Cancel"),
           ),
