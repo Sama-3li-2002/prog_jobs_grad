@@ -499,8 +499,8 @@ class _SignupScreenState extends State<SignupScreen> {
         _twitterAccountCom!.text,
         _InstagramAccountCom!.text,
         _aboutCom!.text,
-        "assets/images/withoutImageCompany.png",
-        "assets/images/withoutImagePerson.jpg",
+        'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=98b7a6e2-b895-4254-bed0-598c5f10ec2b',
+        'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
       ));
       if (userCredential != null) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {

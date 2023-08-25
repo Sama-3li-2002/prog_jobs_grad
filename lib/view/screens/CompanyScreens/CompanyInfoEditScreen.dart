@@ -38,7 +38,8 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
   @override
   void initState() {
     super.initState();
-    company = Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
+    company =
+        Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
 
     _company_name = TextEditingController(text: company.companyName!);
     _phone = TextEditingController(text: company.phone);
@@ -109,13 +110,13 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
                         ),
                         child: company.image != null
                             ? Image.network(
-                          company.image!,
-                          width: SizeConfig.scaleWidth(150),
-                          height: SizeConfig.scaleHeight(145),
-                          fit: BoxFit.cover,
-                        )
-                            : Image.asset(
-                            'assets/images/withoutImageCompany.png'),
+                                company.image!,
+                                width: SizeConfig.scaleWidth(150),
+                                height: SizeConfig.scaleHeight(145),
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=98b7a6e2-b895-4254-bed0-598c5f10ec2b'),
                       ),
                       Positioned(
                         bottom: SizeConfig.scaleHeight(0),

@@ -42,7 +42,6 @@ class FirebaseFireStoreHelper {
       "id": id,
       "companyName": company.companyName,
       "email": company.email,
-      "password": company.password,
       "phone": company.phone,
       "address": company.address,
       "managerName": company.managerName,

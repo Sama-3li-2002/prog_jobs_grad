@@ -10,6 +10,7 @@ class Company {
   String? InstagramAccount;
   String? about;
   String? image;
+
   String? managerImage;
 
   Company({
