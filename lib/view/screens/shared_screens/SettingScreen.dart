@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:prog_jobs_grad/model/UsersModel.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 
 import '../../../controller/FirebaseAuthController.dart';
 import '../../../model/UserSettings.dart';
@@ -18,12 +22,23 @@ class _SettingScreenState extends State<SettingScreen> {
   bool recNot = true;
   String userId = FirebaseAuthController.fireAuthHelper.userId();
 
+  // change pass
+  late TextEditingController oldPasswordController;
+  late TextEditingController newPasswordController;
+  late TextEditingController confirmPasswordController;
+  bool isOldPasswordCorrect = true;
+
   @override
   void initState() {
     super.initState();
     setState(() {
       _loadSettings();
     });
+
+    //change pass
+    oldPasswordController = TextEditingController();
+    newPasswordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
   }
 
   @override
@@ -168,7 +183,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-            InkWell(
+              InkWell(
               onTap: () {
                 showBottomSheet(context);
               },
@@ -213,7 +228,7 @@ class _SettingScreenState extends State<SettingScreen> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 350,
+          height: 500,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -251,14 +266,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                TextStyleWidget("Old Password: ", Color(0xff4C5175),
+                TextStyleWidget("Current Password: ", Color(0xff4C5175),
                     SizeConfig.scaleTextFont(15), FontWeight.w500),
+
                 SizedBox(
                   height: 5,
                 ),
                 SizedBox(
                   height: 50,
                   child: TextField(
+                    controller:oldPasswordController ,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       filled: true,
@@ -287,6 +304,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 SizedBox(
                   height: 10,
                 ),
+
                 TextStyleWidget("New Password: ", Color(0xff4C5175),
                     SizeConfig.scaleTextFont(15), FontWeight.w500),
                 SizedBox(
@@ -295,6 +313,44 @@ class _SettingScreenState extends State<SettingScreen> {
                 SizedBox(
                   height: 50,
                   child: TextField(
+                    controller: newPasswordController,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.grey.shade200,
+                      hintStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 10,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          width: 0,
+                          color: Colors.grey.shade100,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          width: 1.5,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextStyleWidget("Confirm Password: ", Color(0xff4C5175),
+                    SizeConfig.scaleTextFont(15), FontWeight.w500),
+                SizedBox(
+                  height: 5,
+                ),
+                SizedBox(
+                  height: 50,
+                  child: TextField(
+                    controller: confirmPasswordController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       filled: true,
@@ -334,7 +390,13 @@ class _SettingScreenState extends State<SettingScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: ()async {
+                        if(await _changePassword())
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) {
+                                return LoginScreen(userType: "programmer");
+                              }));
+                        },
                         child: TextStyleWidget("Save ", Colors.white,
                             SizeConfig.scaleTextFont(20), FontWeight.w500)),
                   ),
@@ -401,4 +463,54 @@ class _SettingScreenState extends State<SettingScreen> {
           (value) => _handleSwitchChange(value, '$userId-recNot'));
     });
   }
+
+
+  //change password----------------------------------------
+  Future<bool> _changePassword() async {
+    late bool isCorrect ;
+
+    String oldPassword = oldPasswordController.text;
+    String newPassword = newPasswordController.text;
+    String confirmPassword = confirmPasswordController.text;
+
+    if (newPassword != confirmPassword) {
+      Fluttertoast.showToast(
+        msg: "the confirm Password is worng",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return false;
+    }
+
+    if (await isOldPasswordCorrects(oldPassword) ) {
+
+      try {
+        User user = FirebaseAuthController.fireAuthHelper.getCurrentUser();
+        await user.updatePassword(newPassword);
+        Fluttertoast.showToast(
+          msg: "Password changed successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        isCorrect = true;
+      } catch (e) {
+        print("Error changing password: $e");
+        isCorrect= false;
+      }
+    }
+    return isCorrect;
+  }
+
+  Future<bool> isOldPasswordCorrects(String enteredOldPassword) async {
+    User user = FirebaseAuthController.fireAuthHelper.getCurrentUser();
+    return await FirebaseAuthController.fireAuthHelper.signInToChangePass(user.email!, enteredOldPassword);
+  }
+  //-----------------------------------------------------------------------------------------
+
 }

@@ -14,8 +14,8 @@ class FirebaseAuthController {
   Future<UserCredential?> createAccount(Users users) async {
     try {
       UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-              email: users.email!, password: users.password!);
+      await _auth.createUserWithEmailAndPassword(
+          email: users.email!, password: users.password!);
       String id = userCredential.user!.uid;
       FirebaseFireStoreHelper.fireStoreHelper.SaveUserData(users, id);
       return userCredential;
@@ -75,8 +75,8 @@ class FirebaseAuthController {
   Future<UserCredential?> createComAccount(Company company) async {
     try {
       UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-              email: company.email!, password: company.password!);
+      await _auth.createUserWithEmailAndPassword(
+          email: company.email!, password: company.password!);
       String id = userCredential.user!.uid;
       FirebaseFireStoreHelper.fireStoreHelper.saveCompanyData(company, id);
       return userCredential;
@@ -206,4 +206,36 @@ class FirebaseAuthController {
   String userId() {
     return _auth.currentUser!.uid;
   }
+
+  // For change password---------------------------------------------------------------
+  User getCurrentUser() {
+    return _auth.currentUser!;
+  }
+
+  Future<bool> signInToChangePass(String email, String password) async {
+    late bool isCorrect ;
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      isCorrect= true;
+    } on FirebaseAuthException catch (e) {
+      print("signIn: code" + e.code);
+      if (e.code == "wrong-password") {
+        print("signIn:  code" + e.message!);
+        Fluttertoast.showToast(
+          msg: "The current password is wrong ",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        isCorrect= false;
+      }
+
+    }
+
+    return isCorrect;
+  }
+  //-----------------------------------------------------------------------------------
 }

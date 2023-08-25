@@ -304,6 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future logIn() async {
     UserCredential? userCredential = await FirebaseAuthController.fireAuthHelper
         .signIn(_emailCom!.text, _passwordCom!.text);
+
     if (userCredential != null) {
       Navigator.of(context).push(
         MaterialPageRoute(
