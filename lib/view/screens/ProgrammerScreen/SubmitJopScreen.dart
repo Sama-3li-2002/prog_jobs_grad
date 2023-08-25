@@ -4,12 +4,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
+import 'package:prog_jobs_grad/model/Request.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
 import '../../../controller/FirebaseAuthController.dart';
 import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../model/CompanyModel.dart';
-import '../../../model/UsersModel.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
 
@@ -39,6 +40,9 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
   String uploadedFileName = '';
   String downloadUrl = '';
 
+  late String formattedDate;
+  late String formattedTime;
+
   @override
   void initState() {
     super.initState();
@@ -48,6 +52,11 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
     _university = TextEditingController();
     _specialization = TextEditingController();
     _skills = TextEditingController();
+
+    // for time & date
+    DateTime currentDate = DateTime.now();
+    formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
+    formattedTime = DateFormat('hh:mm:ss a').format(currentDate);
   }
 
   @override
@@ -330,20 +339,22 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
         _specialization!.text.isNotEmpty &&
         _skills!.text.isNotEmpty &&
         uploadedFileName.isNotEmpty) {
-      Users users = Users.submitJob(
-        _fullName!.text,
-        _email!.text,
-        _city!.text,
-        _university!.text,
-        _skills!.text,
-        _specialization!.text,
-      );
+      Request request = Request.submitJob(
+          _fullName!.text,
+          _email!.text,
+          _city!.text,
+          uploadedFileName,
+          _university!.text,
+          _skills!.text,
+          _specialization!.text,
+          formattedTime,
+          formattedDate);
 
       String JobId = widget.JobId!;
       String ComId = widget.ComId!;
 
       FirebaseFireStoreHelper.fireStoreHelper.SaveProgInfoForSubmittedJob(
-          users, Progid, ComId, JobId, downloadUrl);
+          request, Progid, ComId, JobId, downloadUrl);
       Navigator.pop(context);
     } else {
       Fluttertoast.showToast(

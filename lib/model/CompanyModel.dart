@@ -59,7 +59,6 @@ class Company {
     Map<String, dynamic> map = Map<String, dynamic>();
     map['companyName'] = this.companyName;
     map['email'] = this.email;
-    map['password'] = this.password;
     map['phone'] = this.phone;
     map['address'] = this.address;
     map['managerName'] = this.managerName;

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
+
 import '../model/CompanyModel.dart';
 import 'FirebaseFireStoreHelper.dart';
 
@@ -14,8 +15,8 @@ class FirebaseAuthController {
   Future<UserCredential?> createAccount(Users users) async {
     try {
       UserCredential userCredential =
-      await _auth.createUserWithEmailAndPassword(
-          email: users.email!, password: users.password!);
+          await _auth.createUserWithEmailAndPassword(
+              email: users.email!, password: users.password!);
       String id = userCredential.user!.uid;
       FirebaseFireStoreHelper.fireStoreHelper.SaveUserData(users, id);
       return userCredential;
@@ -75,8 +76,8 @@ class FirebaseAuthController {
   Future<UserCredential?> createComAccount(Company company) async {
     try {
       UserCredential userCredential =
-      await _auth.createUserWithEmailAndPassword(
-          email: company.email!, password: company.password!);
+          await _auth.createUserWithEmailAndPassword(
+              email: company.email!, password: company.password!);
       String id = userCredential.user!.uid;
       FirebaseFireStoreHelper.fireStoreHelper.saveCompanyData(company, id);
       return userCredential;
@@ -213,11 +214,11 @@ class FirebaseAuthController {
   }
 
   Future<bool> signInToChangePass(String email, String password) async {
-    late bool isCorrect ;
+    late bool isCorrect;
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      isCorrect= true;
+      isCorrect = true;
     } on FirebaseAuthException catch (e) {
       print("signIn: code" + e.code);
       if (e.code == "wrong-password") {
@@ -230,12 +231,10 @@ class FirebaseAuthController {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-        isCorrect= false;
+        isCorrect = false;
       }
-
     }
 
     return isCorrect;
   }
-  //-----------------------------------------------------------------------------------
 }

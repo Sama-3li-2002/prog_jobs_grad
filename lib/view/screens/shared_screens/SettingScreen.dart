@@ -1,11 +1,7 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:prog_jobs_grad/model/UsersModel.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 
 import '../../../controller/FirebaseAuthController.dart';
@@ -25,13 +21,10 @@ class _SettingScreenState extends State<SettingScreen> {
   bool recNot = true;
   String userId = FirebaseAuthController.fireAuthHelper.userId();
 
-
-
   // change pass
   late TextEditingController currentPasswordController;
   late TextEditingController newPasswordController;
   late TextEditingController confirmPasswordController;
-
 
   @override
   void initState() {
@@ -188,7 +181,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-              InkWell(
+            InkWell(
               onTap: () {
                 showBottomSheet(context);
               },
@@ -291,10 +284,8 @@ class _SettingScreenState extends State<SettingScreen> {
           (value) => _handleSwitchChange(value, '$userId-recNot'));
     });
   }
-
-
-
 }
+
 class PasswordChangeSheet extends StatefulWidget {
   const PasswordChangeSheet({super.key});
 
@@ -303,7 +294,6 @@ class PasswordChangeSheet extends StatefulWidget {
 }
 
 class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
-
   // change pass
   late TextEditingController currentPasswordController;
   late TextEditingController newPasswordController;
@@ -314,7 +304,6 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
   bool _obscureTextNew = true;
   bool _obscureTextConfirmNew = true;
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -324,10 +313,11 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
     newPasswordController = TextEditingController();
     confirmPasswordController = TextEditingController();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: SizeConfig.scaleHeight(500),
+      // height: SizeConfig.scaleHeight(500),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -337,8 +327,8 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
       ),
       child: Padding(
         padding: EdgeInsetsDirectional.only(
-          top: SizeConfig.scaleHeight(20),
-          bottom: SizeConfig.scaleHeight(20),
+          top: SizeConfig.scaleHeight(10),
+          bottom: SizeConfig.scaleHeight(10),
           start: SizeConfig.scaleWidth(20),
           end: SizeConfig.scaleWidth(20),
         ),
@@ -346,7 +336,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: SizeConfig.scaleHeight(5),
+              height: 5,
               margin: EdgeInsetsDirectional.only(
                 top: SizeConfig.scaleHeight(20),
                 start: SizeConfig.scaleWidth(150),
@@ -358,23 +348,22 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
             SizedBox(
-              height:SizeConfig.scaleHeight(10),
+              height: 10,
             ),
             TextStyleWidget("Change Password", Color(0xffCBB523),
                 SizeConfig.scaleTextFont(22), FontWeight.w500),
             SizedBox(
-              height: SizeConfig.scaleHeight(10),
+              height: 10,
             ),
             TextStyleWidget("Current Password: ", Color(0xff4C5175),
                 SizeConfig.scaleTextFont(15), FontWeight.w500),
             SizedBox(
               height: 5,
             ),
-
             SizedBox(
-              height: SizeConfig.scaleHeight(50),
+              height: 50,
               child: TextField(
-                controller:currentPasswordController ,
+                controller: currentPasswordController,
                 keyboardType: TextInputType.text,
                 obscureText: _obscureTextCurrent,
                 decoration: InputDecoration(
@@ -382,36 +371,34 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                   fillColor: Colors.grey.shade200,
                   hintStyle: TextStyle(
                     color: Colors.grey,
-                    fontSize: SizeConfig.scaleTextFont(10),
+                    fontSize: 10,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: SizeConfig.scaleWidth(0),
+                      width: 0,
                       color: Colors.grey.shade100,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: SizeConfig.scaleWidth(1.5),
+                      width: 1.5,
                       color: Colors.blue,
                     ),
                   ),
                   suffixIcon: GestureDetector(
                     onTap: () {
-
                       setState(() {
                         _obscureTextCurrent = !_obscureTextCurrent;
                       });
-
                     },
                     child: Icon(
                       _obscureTextCurrent
                           ? Icons.visibility_off
-                          :  Icons.visibility,
+                          : Icons.visibility,
                       color: _obscureTextCurrent
-                          ?  Color(0xffcbb523)
+                          ? Color(0xffcbb523)
                           : Color(0xffcbb523),
                     ),
                   ),
@@ -419,18 +406,17 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
             SizedBox(
-              height: SizeConfig.scaleHeight(10),
+              height: 10,
             ),
-
             TextStyleWidget("New Password: ", Color(0xff4C5175),
                 SizeConfig.scaleTextFont(15), FontWeight.w500),
             SizedBox(
-              height: SizeConfig.scaleHeight(5),
+              height: 5,
             ),
             SizedBox(
-              height: SizeConfig.scaleHeight(50),
+              height: 50,
               child: TextField(
-                controller:newPasswordController ,
+                controller: newPasswordController,
                 keyboardType: TextInputType.text,
                 obscureText: _obscureTextNew,
                 decoration: InputDecoration(
@@ -438,19 +424,19 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                   fillColor: Colors.grey.shade200,
                   hintStyle: TextStyle(
                     color: Colors.grey,
-                    fontSize: SizeConfig.scaleTextFont(10),
+                    fontSize: 10,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: SizeConfig.scaleWidth(0),
+                      width: 0,
                       color: Colors.grey.shade100,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: SizeConfig.scaleWidth(1.5),
+                      width: 1.5,
                       color: Colors.blue,
                     ),
                   ),
@@ -461,11 +447,9 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                       });
                     },
                     child: Icon(
-                      _obscureTextNew
-                          ? Icons.visibility_off
-                          :  Icons.visibility,
+                      _obscureTextNew ? Icons.visibility_off : Icons.visibility,
                       color: _obscureTextNew
-                          ?  Color(0xffcbb523)
+                          ? Color(0xffcbb523)
                           : Color(0xffcbb523),
                     ),
                   ),
@@ -473,17 +457,17 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
             SizedBox(
-              height: SizeConfig.scaleHeight(5),
+              height: 10,
             ),
             TextStyleWidget("Confirm Password: ", Color(0xff4C5175),
                 SizeConfig.scaleTextFont(15), FontWeight.w500),
             SizedBox(
-              height: SizeConfig.scaleHeight(1.5),
+              height: 5,
             ),
             SizedBox(
-              height: SizeConfig.scaleHeight(50),
+              height: 50,
               child: TextField(
-                controller:confirmPasswordController ,
+                controller: confirmPasswordController,
                 keyboardType: TextInputType.text,
                 obscureText: _obscureTextConfirmNew,
                 decoration: InputDecoration(
@@ -491,19 +475,19 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                   fillColor: Colors.grey.shade200,
                   hintStyle: TextStyle(
                     color: Colors.grey,
-                    fontSize: SizeConfig.scaleTextFont(5),
+                    fontSize: 10,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width:SizeConfig.scaleWidth( 0),
+                      width: 0,
                       color: Colors.grey.shade100,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
-                      width: SizeConfig.scaleWidth(1.5),
+                      width: 1.5,
                       color: Colors.blue,
                     ),
                   ),
@@ -516,9 +500,9 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                     child: Icon(
                       _obscureTextConfirmNew
                           ? Icons.visibility_off
-                          :  Icons.visibility,
+                          : Icons.visibility,
                       color: _obscureTextConfirmNew
-                          ?  Color(0xffcbb523)
+                          ? Color(0xffcbb523)
                           : Color(0xffcbb523),
                     ),
                   ),
@@ -526,12 +510,12 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
               ),
             ),
             SizedBox(
-              height: SizeConfig.scaleHeight(25),
+              height: 25,
             ),
             Center(
               child: Container(
-                height: SizeConfig.scaleHeight(50),
-                width: SizeConfig.scaleWidth(500),
+                height: 50,
+                width: 300,
                 child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0xff4C5175),
@@ -539,21 +523,26 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: ()async {
-                      if(await _changePassword())
-                       Navigator.pop(context);
+                    onPressed: () async {
+                      if (await _changePassword())
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) {
+                          return LoginScreen(userType: "programmer");
+                        }));
                     },
                     child: TextStyleWidget("Save ", Colors.white,
                         SizeConfig.scaleTextFont(20), FontWeight.w500)),
               ),
             ),
           ],
-        )),
-       );
-    }
+        ),
+      ),
+    );
+  }
+
   //change password----------------------------------------
   Future<bool> _changePassword() async {
-    late bool isCorrect ;
+    late bool isCorrect;
 
     String oldPassword = currentPasswordController.text;
     String newPassword = newPasswordController.text;
@@ -571,8 +560,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
       return false;
     }
 
-    if (await isCurrentPasswordCorrects(oldPassword) ) {
-
+    if (await isCurrentPasswordCorrects(oldPassword)) {
       try {
         User user = FirebaseAuthController.fireAuthHelper.getCurrentUser();
         await user.updatePassword(newPassword);
@@ -587,7 +575,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
         isCorrect = true;
       } catch (e) {
         print("Error changing password: $e");
-        isCorrect= false;
+        isCorrect = false;
       }
     }
     return isCorrect;
@@ -595,8 +583,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
 
   Future<bool> isCurrentPasswordCorrects(String enteredCurrentPassword) async {
     User user = FirebaseAuthController.fireAuthHelper.getCurrentUser();
-    return await FirebaseAuthController.fireAuthHelper.signInToChangePass(user.email!, enteredCurrentPassword);
+    return await FirebaseAuthController.fireAuthHelper
+        .signInToChangePass(user.email!, enteredCurrentPassword);
   }
-//-----------------------------------------------------------------------------------------
 }
-

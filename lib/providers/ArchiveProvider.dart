@@ -13,9 +13,9 @@ class ArchiveProvider extends ChangeNotifier {
 
     for (var element in allArchives) {
       newArchiveList.add(Jobs.fromMap(element.data() as Map<String, dynamic>));
-  }
+    }
 
-  archiveList = newArchiveList;
-  notifyListeners();
-}
+    archiveList = newArchiveList;
+    notifyListeners();
+  }
 }

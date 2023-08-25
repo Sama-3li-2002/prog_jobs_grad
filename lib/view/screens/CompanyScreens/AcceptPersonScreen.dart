@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/model/UsersModel.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/pdf_viewer_page.dart';
 
+import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../customWidget/textStyleWidget.dart';
 
 class AcceptPerson extends StatefulWidget {
   static const String id = "accept_person_screen";
+
+  String progId;
+  String fileUrl;
+  String uploadedFileName;
+
+  AcceptPerson(
+      {required this.progId,
+      required this.fileUrl,
+      required this.uploadedFileName});
 
   @override
   State<AcceptPerson> createState() => _AcceptPersonState();
 }
 
 class _AcceptPersonState extends State<AcceptPerson> {
+  Users? users;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      fetchUserInfo(widget.progId);
+    });
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
@@ -57,8 +79,8 @@ class _AcceptPersonState extends State<AcceptPerson> {
                   width: SizeConfig.scaleWidth(150),
                   height: SizeConfig.scaleHeight(150),
                   child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/prof1.png',
+                    child: Image.network(
+                      users!.imageUrl,
                       fit: BoxFit.cover,
                       // fit: BoxFit.cover,
                     ),
@@ -91,13 +113,13 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                   TextStyleWidget(
                                       "Programmer's name:",
                                       Color(0xffCBB523),
-                                      SizeConfig.scaleTextFont(17),
+                                      SizeConfig.scaleTextFont(15),
                                       FontWeight.w500),
                                   SizedBox(
-                                    width: SizeConfig.scaleWidth(10),
+                                    width: SizeConfig.scaleWidth(5),
                                   ),
                                   TextStyleWidget(
-                                      "Sohib Naesr Khalaf",
+                                      users!.username!,
                                       Colors.black,
                                       SizeConfig.scaleTextFont(15),
                                       FontWeight.w500),
@@ -117,7 +139,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                     width: SizeConfig.scaleWidth(10),
                                   ),
                                   TextStyleWidget(
-                                      "sohibnkhalaf@gmail.com",
+                                      users!.email!,
                                       Colors.black,
                                       SizeConfig.scaleTextFont(15),
                                       FontWeight.w500),
@@ -137,7 +159,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                     width: SizeConfig.scaleWidth(10),
                                   ),
                                   TextStyleWidget(
-                                      "Web Programmer",
+                                      users!.specialization!,
                                       Colors.black,
                                       SizeConfig.scaleTextFont(15),
                                       FontWeight.w500),
@@ -157,7 +179,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                     width: SizeConfig.scaleWidth(10),
                                   ),
                                   TextStyleWidget(
-                                      "24 year's old",
+                                      users!.age!.toString() + " Years Old",
                                       Colors.black,
                                       SizeConfig.scaleTextFont(15),
                                       FontWeight.w500),
@@ -177,7 +199,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                     width: SizeConfig.scaleWidth(10),
                                   ),
                                   TextStyleWidget(
-                                      "0597768136",
+                                      users!.phone!,
                                       Colors.black,
                                       SizeConfig.scaleTextFont(15),
                                       FontWeight.w500),
@@ -209,7 +231,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                         bottom: SizeConfig.scaleHeight(15),
                                         right: SizeConfig.scaleWidth(10)),
                                     child: Text(
-                                      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eopksio laborum. Sed ut perspiciatis unde omnis istpoe natus error sit voluptatem accusantium doloremque eopsloi laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunot explicabo. Nemo ernim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sedopk quia consequuntur magni dolores eos qui rationesopl voluptatem sequi nesciunt. Neque porro quisquameo est, qui dolorem ipsum quia dolor sit amet, eopsmiep consectetur, adipisci velit, seisud quia non numquam eius modi tempora incidunt ut labore et dolore wopeir magnam aliquam quaerat voluptatem eoplmuriquisqu",
+                                      users!.about!,
                                       maxLines: 15,
                                       style: TextStyle(
                                           fontSize:
@@ -237,27 +259,38 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                   ),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: SizeConfig.scaleWidth(10),
-                                      ),
-                                      Icon(
-                                        Icons.picture_as_pdf,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: SizeConfig.scaleWidth(10),
-                                      ),
-                                      Text(
-                                        "Sohib Naesr Khalaf.pdf",
-                                        style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.scaleTextFont(15),
-                                            color: Colors.black,
-                                            wordSpacing: 4),
-                                      ),
-                                    ],
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PdfViewerPage(
+                                                      fileUrl: widget.fileUrl,
+                                                      fileName: widget
+                                                          .uploadedFileName)));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: SizeConfig.scaleWidth(10),
+                                        ),
+                                        Icon(
+                                          Icons.picture_as_pdf,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(
+                                          width: SizeConfig.scaleWidth(10),
+                                        ),
+                                        Text(
+                                          widget.uploadedFileName,
+                                          style: TextStyle(
+                                              fontSize:
+                                                  SizeConfig.scaleTextFont(15),
+                                              color: Colors.black,
+                                              wordSpacing: 4),
+                                        ),
+                                      ],
+                                    ),
                                   )),
                               SizedBox(
                                 height: SizeConfig.scaleHeight(20),
@@ -265,9 +298,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                               Row(
                                 children: [
                                   Container(
-                                    // height: SizeConfig.scaleHeight(50),
                                     width: SizeConfig.scaleWidth(150),
-                                    // margin: EdgeInsetsDirectional.only(start:SizeConfig.scaleWidth(250)),
                                     child: TextButton(
                                         style: TextButton.styleFrom(
                                           backgroundColor: Color(0xff4C5175),
@@ -320,5 +351,13 @@ class _AcceptPersonState extends State<AcceptPerson> {
         ),
       ),
     );
+  }
+
+  Future fetchUserInfo(String userId) async {
+    Users user =
+        await FirebaseFireStoreHelper.instance.getUserForAccept(userId);
+    setState(() {
+      users = user;
+    });
   }
 }

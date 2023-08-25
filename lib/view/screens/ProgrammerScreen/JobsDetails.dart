@@ -107,14 +107,14 @@ class _JobsDetailsState extends State<JobsDetails> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.location_on_sharp,
+                  Icons.apartment,
                   color: Color(0xffCBB523),
                   size: SizeConfig.scaleWidth(15),
                 ),
                 TextStyleWidget(
                     widget.itemsComInfo.isNotEmpty
-                        ? widget.itemsComInfo[0].address ?? ""
-                        : "No Address",
+                        ? widget.itemsComInfo[0].companyName ?? ""
+                        : "No Company Name",
                     Color(0xff4C5175),
                     SizeConfig.scaleTextFont(15),
                     FontWeight.w500),
@@ -395,11 +395,7 @@ class _JobsDetailsState extends State<JobsDetails> {
                                   widget.items[0].job_id!,
                                 ),
                                 builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    // Display a loading indicator while checking favorited status
-                                    return CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
+                                  if (snapshot.hasError) {
                                     print('Error');
                                     return Icon(
                                       Icons.favorite_border_outlined,

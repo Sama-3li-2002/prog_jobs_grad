@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,7 +5,6 @@ import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
-import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -144,9 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          suffixIcon:
-
-                          GestureDetector(
+                          suffixIcon: GestureDetector(
                             onTap: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -154,9 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Icon(
                               _obscureText
-                                  ? Icons.visibility_off
-                                  :  Icons.visibility,
-
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: _obscureText
                                   ? Color(0xffcbb523)
                                   : Color(0xffcbb523),
@@ -213,8 +208,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Icon(
                               _obscureText
-                                  ? Icons.visibility_off
-                                  :  Icons.visibility,
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: _obscureText
                                   ? Color(0xffcbb523)
                                   : Color(0xffcbb523),
@@ -296,28 +291,15 @@ class _LoginScreenState extends State<LoginScreen> {
   // Programmer Info
   Future performLoginProg() async {
     if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
-
-      UserCredential? userCredential = await FirebaseAuthController.fireAuthHelper.signIn(
+      UserCredential? userCredential =
+          await FirebaseAuthController.fireAuthHelper.signIn(
         _emailProg!.text,
         _passwordProg!.text,
       );
-      bool isUserInUserCollection = await checkIfUserInUserCollection(FirebaseAuthController.fireAuthHelper.userId());
-
-      if (isUserInUserCollection) {
-        if (userCredential != null) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return HomeScreen();
-          }));
-        }
-      } else {
-        Fluttertoast.showToast(
-          msg: "You cannot log in with a company account here.",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+      if (userCredential != null) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }));
       }
     } else {
       Fluttertoast.showToast(
@@ -330,40 +312,18 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
+
   // Company Info
   Future performLoginCom() async {
     if (checkData()) {
-
-      UserCredential? userCredential = await FirebaseAuthController.fireAuthHelper.signIn(
-        _emailCom!.text,
-        _passwordCom!.text,
-      );
-      bool isUserInCompanyCollection = await checkIfUserInCompanyCollection(FirebaseAuthController.fireAuthHelper.userId());
-
-      if (isUserInCompanyCollection) {
-        if (userCredential != null) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return ComHomeScreen();
-          }));
-        }
-      } else {
-        Fluttertoast.showToast(
-          msg: "You cannot log in with a programmer account here.",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
+      await logIn();
     }
   }
-
 
   bool checkData() {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       return true;
-    }else {
+    } else {
       Fluttertoast.showToast(
         msg: "Email or Password can't be empty",
         toastLength: Toast.LENGTH_SHORT,
@@ -376,23 +336,18 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<bool> checkIfUserInUserCollection(String userId) async {
-    try {
-      DocumentSnapshot<Map<String, dynamic>> docSnapshot =
-      await FirebaseFirestore.instance.collection(FirebaseFireStoreHelper.instance.userCollection).doc(userId).get();
-      return docSnapshot.exists;
-    } catch (e) {
-      return false;
-    }
-  }
-  Future<bool> checkIfUserInCompanyCollection(String userId) async {
-    try {
-      DocumentSnapshot<Map<String, dynamic>> docSnapshot =
-      await FirebaseFirestore.instance.collection(FirebaseFireStoreHelper.companyCollection).doc(userId).get();
-      return docSnapshot.exists;
-    } catch (e) {
-      return false;
-    }
-  }
+  Future logIn() async {
+    UserCredential? userCredential = await FirebaseAuthController.fireAuthHelper
+        .signIn(_emailCom!.text, _passwordCom!.text);
 
+    if (userCredential != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return ComHomeScreen();
+          },
+        ),
+      );
+    }
+  }
 }

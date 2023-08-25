@@ -172,15 +172,15 @@ class _SignupScreenState extends State<SignupScreen> {
                         controller: _passwordProg,
                         obscureText: _obscureText,
                         decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 1)),
-                            focusedBorder: OutlineInputBorder(
+                          fillColor: Colors.white,
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
-                            ),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1)),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                           suffixIcon: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -189,14 +189,13 @@ class _SignupScreenState extends State<SignupScreen> {
                             },
                             child: Icon(
                               _obscureText
-                                  ? Icons.visibility_off
-                                  :  Icons.visibility,
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: _obscureText
-                                  ?  Color(0xffcbb523)
+                                  ? Color(0xffcbb523)
                                   : Color(0xffcbb523),
                             ),
                           ),
-
                         ),
                       ),
                     ),
@@ -307,15 +306,15 @@ class _SignupScreenState extends State<SignupScreen> {
                         controller: _passwordCom,
                         obscureText: _obscureText,
                         decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 1)),
-                            focusedBorder: OutlineInputBorder(
+                          fillColor: Colors.white,
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
-                            ),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1)),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                           suffixIcon: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -324,10 +323,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             },
                             child: Icon(
                               _obscureText
-                                  ? Icons.visibility_off
-                                  :  Icons.visibility,
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: _obscureText
-                                  ?  Color(0xffcbb523)
+                                  ? Color(0xffcbb523)
                                   : Color(0xffcbb523),
                             ),
                           ),

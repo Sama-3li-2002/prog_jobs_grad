@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 
 import '../model/CompanyModel.dart';
+import '../model/Request.dart';
 import '../model/UsersModel.dart';
 import 'FirebaseAuthController.dart';
 
@@ -41,6 +42,7 @@ class FirebaseFireStoreHelper {
       "id": id,
       "companyName": company.companyName,
       "email": company.email,
+      "password": company.password,
       "phone": company.phone,
       "address": company.address,
       "managerName": company.managerName,
@@ -92,11 +94,11 @@ class FirebaseFireStoreHelper {
 
     try {
       QuerySnapshot allCompanies =
-      await FirebaseFirestore.instance.collection(companyCollection).get();
+          await FirebaseFirestore.instance.collection(companyCollection).get();
 
       for (QueryDocumentSnapshot companyDoc in allCompanies.docs) {
         QuerySnapshot companyJobs =
-        await companyDoc.reference.collection(jobsCollection).get();
+            await companyDoc.reference.collection(jobsCollection).get();
         allJobsFromAllCompanies.addAll(companyJobs.docs);
       }
 
@@ -111,7 +113,7 @@ class FirebaseFireStoreHelper {
   Future<List<Company>> getComInfoById(String id) async {
     List<Company> comInfoList = [];
     final DocumentSnapshot<Map<String, dynamic>> comInfoSnapshot =
-    await firestore.collection(companyCollection).doc(id).get();
+        await firestore.collection(companyCollection).doc(id).get();
     if (comInfoSnapshot.exists) {
       comInfoList.add(Company.fromMap(comInfoSnapshot.data()!));
     }
@@ -131,7 +133,7 @@ class FirebaseFireStoreHelper {
     try {
       final userUid = FirebaseAuthController.fireAuthHelper.userId();
       final companyDocRef =
-      firestore.collection(companyCollection).doc(userUid);
+          firestore.collection(companyCollection).doc(userUid);
       final jobDocRef = companyDocRef.collection(jobsCollection).doc(idJob);
 
       final jobDataMap = jobs.toMap();
@@ -144,12 +146,12 @@ class FirebaseFireStoreHelper {
   }
 
   Future SaveProgInfoForSubmittedJob(
-      Users users,
-      String ProgId,
-      String ComId,
-      String JobId,
-      String fileUrl,
-      ) async {
+    Request request,
+    String ProgId,
+    String ComId,
+    String JobId,
+    String fileUrl,
+  ) async {
     firestore
         .collection(companyCollection)
         .doc(ComId)
@@ -161,13 +163,16 @@ class FirebaseFireStoreHelper {
       "ProgId": ProgId,
       "ComId": ComId,
       "JobId": JobId,
-      "fullName": users.fullName,
-      "email": users.email,
-      "city": users.city,
-      "university": users.university,
-      "specialization": users.specialization,
-      "skills": users.skills,
+      "fullName": request.fullName,
+      "email": request.email,
+      "city": request.city,
+      "university": request.university,
+      "specialization": request.specialization,
+      "skills": request.skills,
       "fileUrl": fileUrl,
+      "uploadedFileName": request.uploadedFileName,
+      "current_date": request.current_date,
+      "current_time": request.current_time,
     });
   }
 
@@ -204,32 +209,6 @@ class FirebaseFireStoreHelper {
 
     return isFavorite;
   }
-  // لتغيير كلمة مرور الشركة
-
-  Future<void> updateCompanyPassword(String companyId, String newPassword) async {
-    await firestore.collection(companyCollection).doc(companyId).update({
-      "password": newPassword,
-    });
-  }
-  // لتغيير كلمة مرور المبرمج
-  Future<void> updateProgrammerPassword(String programmerId, String newPassword) async {
-    await firestore.collection(userCollection).doc(programmerId).update({
-      "password": newPassword,
-    });
-  }
-         // للحصول على كلمة المرور المخزنة للشركة ومقارنتها مع حقل الكلمة القديمة
-  Future<String> getPasswordForCompany(String userId) async {
-    DocumentSnapshot snapshot = await firestore.collection(companyCollection).doc(userId).get();
-    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-    return data?['password'] ?? '';
-  }
-  // للحصول على كلمة المرور المخزنة للمبرمج ومقارنتها مع حقل الكلمة القديمة
-  Future<String> getPasswordForProgrammer(String userId) async {
-    DocumentSnapshot snapshot = await firestore.collection(userCollection).doc(userId).get();
-    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-    return data?['password'] ?? '';
-  }
-
 
   Future<QuerySnapshot<Map<String, dynamic>>> getUserFavorites(String userId) {
     return firestore
@@ -245,17 +224,17 @@ class FirebaseFireStoreHelper {
     try {
       final userUid = FirebaseAuthController.fireAuthHelper.userId();
       final companyDocRef =
-      firestore.collection(companyCollection).doc(userUid);
+          firestore.collection(companyCollection).doc(userUid);
 
       documentReference =
-      await companyDocRef.collection(archiveCollection).add(jobs.toMap());
+          await companyDocRef.collection(archiveCollection).add(jobs.toMap());
       print("Job archive created successfully.");
     } catch (error) {
       print("Error Job archive : $error");
     }
     return documentReference!;
   }
-  // لحذف الجوب
+
   void deleteDocument(String jobsId) {
     FirebaseFirestore.instance
         .collection(companyCollection)
@@ -275,5 +254,47 @@ class FirebaseFireStoreHelper {
         .get();
     allArchive.addAll(ArchiveJobs.docs);
     return allArchive;
+  }
+
+  Future<List<Request>> getSubmittedRequestsForJob(String jobId) async {
+    List<Request> submittedRequests = [];
+
+    QuerySnapshot<Map<String, dynamic>> submittedRequestsSnapshot =
+        await firestore
+            .collection(companyCollection)
+            .doc(FirebaseAuthController.fireAuthHelper.userId())
+            .collection(jobsCollection)
+            .doc(jobId)
+            .collection(SubmittedjobCollection)
+            .get();
+
+    submittedRequestsSnapshot.docs.forEach((doc) {
+      submittedRequests.add(Request.fromJson(doc.data()));
+    });
+    return submittedRequests;
+  }
+
+  Future<String> getUserImage(String userId) async {
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+        await firestore.collection(userCollection).doc(userId).get();
+
+    if (userSnapshot.exists) {
+      String imageUrl = userSnapshot.data()!['imageUrl'];
+      return imageUrl;
+    } else {
+      return '';
+    }
+  }
+
+  Future<Users> getUserForAccept(String userId) async {
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+        await firestore.collection(userCollection).doc(userId).get();
+
+    if (userSnapshot.exists) {
+      Users user = Users.fromJson(userSnapshot.data()!);
+      return user;
+    } else {
+      return Users();
+    }
   }
 }

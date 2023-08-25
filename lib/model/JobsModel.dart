@@ -13,6 +13,8 @@ class Jobs {
   String? current_date;
   String? current_time;
 
+  Jobs.main();
+
   Jobs({
     this.id,
     this.job_id,

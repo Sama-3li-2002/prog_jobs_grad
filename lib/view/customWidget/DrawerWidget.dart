@@ -12,7 +12,6 @@ import 'package:prog_jobs_grad/view/screens/shared_screens/SettingScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/request_status.dart';
-import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
 import '../../utils/size_config.dart';

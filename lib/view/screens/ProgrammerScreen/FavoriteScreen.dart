@@ -102,239 +102,275 @@ class _FavoriteState extends State<Favorite> {
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
                               margin: EdgeInsets.all(
-                              SizeConfig.scaleWidth(15),
-                          ),
-                          child: Material(
-                          elevation:2 ,
-                          child: Container(
-                          decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          ),
-
-                          child: InkWell(
-                                onTap: () async {
-                                  List<Company> comInfo = await helper
-                                      .getComInfoById(favoriteProvider
-                                          .favoriteJobsList[index].id!);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return JobsDetails(
-                                        items: [
-                                          favoriteProvider
-                                              .favoriteJobsList[index],
-                                        ],
-                                        itemsComInfo: comInfo,
-                                      );
-                                    }),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      clipBehavior: Clip.antiAlias,
+                                SizeConfig.scaleWidth(15),
+                              ),
+                              child: Material(
+                                  elevation: 2,
+                                  child: Container(
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(5),
-                                        bottomRight: Radius.circular(5),
-                                      )),
-                                      child: Image.asset(
-                                        'assets/images/computer.png',
-                                        fit: BoxFit.cover,
-                                        width: SizeConfig.scaleWidth(96),
-                                        height: SizeConfig.scaleHeight(105),
-                                        color:
-                                            Color(0xff4C5175).withOpacity(0.5),
-                                        colorBlendMode: BlendMode.darken,
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.white,
                                       ),
-                                    ),
-                                    Flexible(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: SizeConfig.scaleWidth(10),
-                                        ),
-                                        child: Column(
+                                      child: InkWell(
+                                        onTap: () async {
+                                          List<Company> comInfo = await helper
+                                              .getComInfoById(favoriteProvider
+                                                  .favoriteJobsList[index].id!);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return JobsDetails(
+                                                items: [
+                                                  favoriteProvider
+                                                      .favoriteJobsList[index],
+                                                ],
+                                                itemsComInfo: comInfo,
+                                              );
+                                            }),
+                                          );
+                                        },
+                                        child: Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                TextStyleWidget(
-                                                    favoriteProvider
-                                                        .favoriteJobsList[index]
-                                                        .job_name!,
-                                                    Color(0xff4C5175),
-                                                    SizeConfig.scaleTextFont(
-                                                        15),
-                                                    FontWeight.w500),
-                                              ],
+                                            Container(
+                                              padding: EdgeInsets.zero,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                topLeft: Radius.circular(5),
+                                                bottomRight: Radius.circular(5),
+                                              )),
+                                              child: Image.network(
+                                                favoriteProvider
+                                                    .favoriteJobsList[index]
+                                                    .job_image!,
+                                                fit: BoxFit.cover,
+                                                width:
+                                                    SizeConfig.scaleWidth(96),
+                                                height:
+                                                    SizeConfig.scaleHeight(105),
+                                                color: Color(0xff4C5175)
+                                                    .withOpacity(0.5),
+                                                colorBlendMode:
+                                                    BlendMode.darken,
+                                              ),
                                             ),
-                                            Row(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.apartment,
-                                                      size:
-                                                          SizeConfig.scaleWidth(
-                                                              15),
-                                                      color: Color(0xffcbb523),
-                                                    ),
-                                                    TextStyleWidget(
-                                                        favoriteProvider
-                                                            .favoriteJobsList[
-                                                                index]
-                                                            .company_name!,
-                                                        Colors.black,
-                                                        SizeConfig
-                                                            .scaleTextFont(10),
-                                                        FontWeight.w500),
-                                                  ],
+                                            Flexible(
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  left:
+                                                      SizeConfig.scaleWidth(10),
                                                 ),
-                                                Spacer(),
-                                                Padding(
-                                                  padding:  EdgeInsets.only(right: 8),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.access_time,
-                                                            size: SizeConfig
-                                                                .scaleWidth(
-                                                                14),
-                                                            color: Color(
-                                                                0xffcbb523),
-                                                          ),
-                                                          SizedBox(
-                                                            width: SizeConfig
-                                                                .scaleWidth(
-                                                                3),
-                                                          ),
-                                                          TextStyleWidget(
-                                                              favoriteProvider
-                                                                  .favoriteJobsList[
-                                                              index]
-                                                                  .current_date!,
-                                                              Colors.black,
-                                                              SizeConfig
-                                                                  .scaleTextFont(10),
-                                                              FontWeight.w500),
-                                                        ],
-                                                      ),
-                                                      TextStyleWidget(
-                                                          favoriteProvider
-                                                              .favoriteJobsList[
-                                                          index]
-                                                              .current_time!,
-                                                          Colors.black,
-                                                          SizeConfig
-                                                              .scaleTextFont(10),
-                                                          FontWeight.w500),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: SizeConfig.scaleWidth(
-                                                      120),
-                                                  height:
-                                                      SizeConfig.scaleHeight(
-                                                          26),
-                                                  child: ElevatedButton(
-                                                    child: Row(
+                                                child: Column(
+                                                  children: [
+                                                    Row(
                                                       children: [
-                                                        Icon(
-                                                          Icons
-                                                              .touch_app_outlined,
-                                                          color:
-                                                              Color(0xffcbb523),
-                                                          size: SizeConfig
-                                                              .scaleWidth(14),
-                                                        ),
-                                                        SizedBox(
-                                                            width: SizeConfig
-                                                                .scaleWidth(
-                                                                    10)),
-                                                        TextStyleWidget(
-                                                            'Submition',
-                                                            Colors.white,
-                                                            SizeConfig
-                                                                .scaleTextFont(
-                                                                    10),
-                                                            FontWeight.w500),
-                                                      ],
-                                                    ),
-                                                    onPressed: () async {
-                                                      List<Company> comInfo =
-                                                          await helper.getComInfoById(
+                                                        Padding(
+                                                          padding: EdgeInsets.only(
+                                                              top: SizeConfig
+                                                                  .scaleHeight(
+                                                                      5)),
+                                                          child: TextStyleWidget(
                                                               favoriteProvider
                                                                   .favoriteJobsList[
                                                                       index]
-                                                                  .id!);
-
-                                                      Navigator.of(context).push(
-                                                          MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                        return SubmitJopScreen(
-                                                          itemsComInfo: comInfo,
-                                                          ComId: favoriteProvider
-                                                              .favoriteJobsList[
-                                                                  index]
-                                                              .id!,
-                                                          JobId: favoriteProvider
-                                                              .favoriteJobsList[
-                                                                  index]
-                                                              .job_id!,
-                                                        );
-                                                      }));
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          Color(0xff4C5175),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(2),
-                                                      ),
+                                                                  .job_name!,
+                                                              Color(0xff4C5175),
+                                                              SizeConfig
+                                                                  .scaleTextFont(
+                                                                      15),
+                                                              FontWeight.w500),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
+                                                    Row(
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons.apartment,
+                                                              size: SizeConfig
+                                                                  .scaleWidth(
+                                                                      15),
+                                                              color: Color(
+                                                                  0xffcbb523),
+                                                            ),
+                                                            TextStyleWidget(
+                                                                favoriteProvider
+                                                                    .favoriteJobsList[
+                                                                        index]
+                                                                    .company_name!,
+                                                                Colors.black,
+                                                                SizeConfig
+                                                                    .scaleTextFont(
+                                                                        10),
+                                                                FontWeight
+                                                                    .w500),
+                                                          ],
+                                                        ),
+                                                        Spacer(),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  right: 8),
+                                                          child: Column(
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons
+                                                                        .access_time,
+                                                                    size: SizeConfig
+                                                                        .scaleWidth(
+                                                                            14),
+                                                                    color: Color(
+                                                                        0xffcbb523),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: SizeConfig
+                                                                        .scaleWidth(
+                                                                            3),
+                                                                  ),
+                                                                  TextStyleWidget(
+                                                                      favoriteProvider
+                                                                          .favoriteJobsList[
+                                                                              index]
+                                                                          .current_date!,
+                                                                      Colors
+                                                                          .black,
+                                                                      SizeConfig
+                                                                          .scaleTextFont(
+                                                                              10),
+                                                                      FontWeight
+                                                                          .w500),
+                                                                ],
+                                                              ),
+                                                              TextStyleWidget(
+                                                                  favoriteProvider
+                                                                      .favoriteJobsList[
+                                                                          index]
+                                                                      .current_time!,
+                                                                  Colors.black,
+                                                                  SizeConfig
+                                                                      .scaleTextFont(
+                                                                          10),
+                                                                  FontWeight
+                                                                      .w500),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: SizeConfig
+                                                              .scaleWidth(120),
+                                                          height: SizeConfig
+                                                              .scaleHeight(26),
+                                                          child: ElevatedButton(
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(
+                                                                  Icons
+                                                                      .touch_app_outlined,
+                                                                  color: Color(
+                                                                      0xffcbb523),
+                                                                  size: SizeConfig
+                                                                      .scaleWidth(
+                                                                          14),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: SizeConfig
+                                                                        .scaleWidth(
+                                                                            10)),
+                                                                TextStyleWidget(
+                                                                    'Submition',
+                                                                    Colors
+                                                                        .white,
+                                                                    SizeConfig
+                                                                        .scaleTextFont(
+                                                                            10),
+                                                                    FontWeight
+                                                                        .w500),
+                                                              ],
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              List<Company>
+                                                                  comInfo =
+                                                                  await helper.getComInfoById(
+                                                                      favoriteProvider
+                                                                          .favoriteJobsList[
+                                                                              index]
+                                                                          .id!);
+
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .push(MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) {
+                                                                return SubmitJopScreen(
+                                                                  itemsComInfo:
+                                                                      comInfo,
+                                                                  ComId: favoriteProvider
+                                                                      .favoriteJobsList[
+                                                                          index]
+                                                                      .id!,
+                                                                  JobId: favoriteProvider
+                                                                      .favoriteJobsList[
+                                                                          index]
+                                                                      .job_id!,
+                                                                );
+                                                              }));
+                                                            },
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  Color(
+                                                                      0xff4C5175),
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            2),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Spacer(),
+                                                        IconButton(
+                                                          alignment: Alignment
+                                                              .centerRight,
+                                                          icon: Icon(
+                                                            Icons.favorite,
+                                                            size: SizeConfig
+                                                                .scaleWidth(20),
+                                                          ),
+                                                          color: Color(
+                                                            0xffcbb523,
+                                                          ),
+                                                          onPressed: () async {
+                                                            await favoriteProvider
+                                                                .removeFromFavorites(
+                                                                    favoriteProvider
+                                                                        .favoriteJobsList[
+                                                                            index]
+                                                                        .job_id!);
+                                                          },
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ],
                                                 ),
-                                                Spacer(),
-                                                IconButton(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  icon: Icon(
-                                                    Icons.favorite,
-                                                    size: SizeConfig.scaleWidth(
-                                                        20),
-                                                  ),
-                                                  color: Color(
-                                                    0xffcbb523,
-                                                  ),
-                                                  onPressed: () async {
-                                                    await favoriteProvider
-                                                        .removeFromFavorites(
-                                                            favoriteProvider
-                                                                .favoriteJobsList[
-                                                                    index]
-                                                                .job_id!);
-                                                  },
-                                                )
-                                              ],
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ))));
+                                      ))));
                         },
                       ),
                     ],

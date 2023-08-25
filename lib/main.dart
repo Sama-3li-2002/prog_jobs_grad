@@ -5,6 +5,7 @@ import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
 import 'package:prog_jobs_grad/providers/CompaniesJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/CompanyJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/FavoriteProvider.dart';
+import 'package:prog_jobs_grad/providers/NumberOfRequestsProvider.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ArchiveScreen.dart';
@@ -36,6 +37,8 @@ import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 import 'package:provider/provider.dart';
 
+import 'model/JobsModel.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -55,6 +58,9 @@ void main() async {
       }),
       ChangeNotifierProvider<ArchiveProvider>(create: (context) {
         return ArchiveProvider();
+      }),
+      ChangeNotifierProvider<NumberOfRequestsProvider>(create: (context) {
+        return NumberOfRequestsProvider();
       }),
     ],
     child: MyApp(),
@@ -91,7 +97,9 @@ class MyApp extends StatelessWidget {
               JobId: '',
             ),
         ComLogoScreen.id: (context) => ComLogoScreen(comName: ""),
-        NumberOfRequestsScreen.id: (context) => NumberOfRequestsScreen(),
+        NumberOfRequestsScreen.id: (context) => NumberOfRequestsScreen(
+              jobs: Jobs.main(),
+            ),
         ComAllJobScreen.id: (context) => ComAllJobScreen(),
         ComHomeScreen.id: (context) => ComHomeScreen(),
         AddNewJobScreen.id: (context) => AddNewJobScreen(),
@@ -100,7 +108,11 @@ class MyApp extends StatelessWidget {
         EditJobScreen.id: (context) => EditJobScreen(jobInfo: []),
         NotificationDetailsScreen.id: (context) => NotificationDetailsScreen(),
         ConversationScreen.id: (context) => ConversationScreen(),
-        AcceptPerson.id: (context) => AcceptPerson(),
+        AcceptPerson.id: (context) => AcceptPerson(
+              progId: '',
+              uploadedFileName: '',
+              fileUrl: '',
+            ),
         Archive.id: (context) => Archive(),
         Favorite.id: (context) => Favorite(),
         CompanyInfoEdit.id: (context) => CompanyInfoEdit(),

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
+import 'package:provider/provider.dart';
+import '../../../model/JobsModel.dart';
+import '../../../providers/NumberOfRequestsProvider.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 
 class NumberOfRequestsScreen extends StatefulWidget {
   static const String id = "no_of_request_screen";
+
+  Jobs jobs;
+
+  NumberOfRequestsScreen({required this.jobs});
 
   @override
   State<NumberOfRequestsScreen> createState() => _NumberOfRequestsScreenState();
@@ -12,171 +20,235 @@ class NumberOfRequestsScreen extends StatefulWidget {
 
 class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
   @override
+  void initState() {
+    super.initState();
+
+    Provider.of<NumberOfRequestsProvider>(context, listen: false)
+        .getSubmittedRequests(widget.jobs.job_id!);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xfffafafa),
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: SizeConfig.scaleWidth(20),
-          ),
-          color: Color(0xff4C5175),
-        ),
-        actions: [
-          IconButton(
+        appBar: AppBar(
+          backgroundColor: Color(0xfffafafa),
+          elevation: 0,
+          leading: IconButton(
             onPressed: () {
-              showBottomSheet(context);
+              Navigator.pop(context);
             },
             icon: Icon(
-              Icons.tune,
-              size: SizeConfig.scaleWidth(30),
+              Icons.arrow_back_ios,
+              size: SizeConfig.scaleWidth(20),
             ),
             color: Color(0xff4C5175),
           ),
-        ],
-      ),
-      backgroundColor: Color(0xfffafafa),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: SizeConfig.scaleWidth(10)),
-              child: TextStyleWidget(
-                'Requests:',
-                Color(0xffcbb523),
-                SizeConfig.scaleTextFont(15),
-                FontWeight.w500,
+          actions: [
+            IconButton(
+              onPressed: () {
+                showBottomSheet(context);
+              },
+              icon: Icon(
+                Icons.tune,
+                size: SizeConfig.scaleWidth(30),
               ),
+              color: Color(0xff4C5175),
             ),
-            ListView.builder(
-                itemCount: 10,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                right: SizeConfig.scaleWidth(15)),
-                            child: TextStyleWidget(
-                              'Today 11:30 AM',
-                              Color(0xff4C5175),
-                              SizeConfig.scaleTextFont(10),
-                              FontWeight.w500,
-                            ),
-                          )),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return AcceptPerson();
-                          }));
-                        },
-                        child: Container(
-                            height: SizeConfig.scaleHeight(80),
-                            width: SizeConfig.scaleWidth(360),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white),
-                            margin: EdgeInsets.only(
-                              left: SizeConfig.scaleWidth(15),
-                              right: SizeConfig.scaleWidth(15),
-                              bottom: SizeConfig.scaleWidth(25),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(SizeConfig.scaleWidth(8)),
-                              child: Row(
-                                children: [
-                                  Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: CircleBorder(),
-                                    elevation: 4,
-                                    color: Color(0xffcbb523),
-                                    child: SizedBox(
-                                      width: SizeConfig.scaleWidth(60),
-                                      height: SizeConfig.scaleHeight(100),
-                                      child: ClipOval(
-                                        child: Image.asset(
-                                          'assets/images/prof1.png',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Column(
-                                      children: [
-                                        Spacer(),
-                                        Row(
-                                          children: [
-                                            TextStyleWidget(
-                                              'Web Programmer',
-                                              Color(0xff4C5175),
-                                              SizeConfig.scaleTextFont(15),
-                                              FontWeight.w500,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.account_circle,
-                                                  size:
-                                                      SizeConfig.scaleWidth(15),
-                                                  color: Color(0xffcbb523),
-                                                ),
-                                                TextStyleWidget(
-                                                  'Sohib Naser Khalaf',
-                                                  Colors.black,
-                                                  SizeConfig.scaleTextFont(10),
-                                                  FontWeight.w500,
-                                                ),
-                                              ],
-                                            ),
-                                            Spacer(),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.access_time,
-                                                  size:
-                                                      SizeConfig.scaleWidth(14),
-                                                  color: Color(0xffcbb523),
-                                                ),
-                                                TextStyleWidget(
-                                                  ' a minute ago',
-                                                  Colors.black,
-                                                  SizeConfig.scaleTextFont(10),
-                                                  FontWeight.w500,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Spacer(),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )),
-                      )
-                    ],
-                  );
-                })
           ],
         ),
-      ),
-    );
+        backgroundColor: Color(0xfffafafa),
+        body: Consumer<NumberOfRequestsProvider>(
+            builder: (context, NoOfRequestsProvider, _) => NoOfRequestsProvider
+                    .submittedRequests.isEmpty
+                ? Center(
+                    child: Text('There is No Submitted Request On This Job'))
+                : SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:
+                              EdgeInsets.only(left: SizeConfig.scaleWidth(10)),
+                          child: TextStyleWidget(
+                            'Requests:',
+                            Color(0xffcbb523),
+                            SizeConfig.scaleTextFont(15),
+                            FontWeight.w500,
+                          ),
+                        ),
+                        ListView.builder(
+                            itemCount:
+                                NoOfRequestsProvider.submittedRequests.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, int index) {
+                              return Column(children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return AcceptPerson(
+                                            progId: NoOfRequestsProvider
+                                                .submittedRequests[index]
+                                                .ProgId!,
+                                            fileUrl: NoOfRequestsProvider
+                                                .submittedRequests[index]
+                                                .fileUrl!,
+                                            uploadedFileName:
+                                                NoOfRequestsProvider
+                                                    .submittedRequests[index]
+                                                    .uploadedFileName!);
+                                      }));
+                                    },
+                                    child: Container(
+                                        height: SizeConfig.scaleHeight(80),
+                                        width: SizeConfig.scaleWidth(360),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Colors.white),
+                                        margin: EdgeInsets.only(
+                                          left: SizeConfig.scaleWidth(15),
+                                          right: SizeConfig.scaleWidth(15),
+                                          bottom: SizeConfig.scaleHeight(10),
+                                        ),
+                                        child: Padding(
+                                            padding: EdgeInsets.all(
+                                                SizeConfig.scaleWidth(8)),
+                                            child: Row(children: [
+                                              Card(
+                                                  clipBehavior: Clip.antiAlias,
+                                                  shape: CircleBorder(),
+                                                  elevation: 4,
+                                                  color: Color(0xffcbb523),
+                                                  child: SizedBox(
+                                                      width:
+                                                          SizeConfig.scaleWidth(
+                                                              60),
+                                                      height: SizeConfig
+                                                          .scaleHeight(100),
+                                                      child: ClipOval(
+                                                          child: FutureBuilder<
+                                                                  String>(
+                                                              future: fetchUserImage(
+                                                                  NoOfRequestsProvider
+                                                                      .submittedRequests[
+                                                                          index]
+                                                                      .ProgId!),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                final imageUrl =
+                                                                    snapshot
+                                                                        .data;
+                                                                if (imageUrl !=
+                                                                        null &&
+                                                                    imageUrl
+                                                                        .isNotEmpty) {
+                                                                  return Image
+                                                                      .network(
+                                                                    imageUrl,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  );
+                                                                } else {
+                                                                  return Text(
+                                                                      'User image is empty.');
+                                                                }
+                                                              })))),
+                                              Flexible(
+                                                child: Column(
+                                                  children: [
+                                                    Spacer(),
+                                                    Row(
+                                                      children: [
+                                                        TextStyleWidget(
+                                                          widget.jobs.job_name!,
+                                                          Color(0xff4C5175),
+                                                          SizeConfig
+                                                              .scaleTextFont(
+                                                                  15),
+                                                          FontWeight.w500,
+                                                        ),
+                                                        Spacer(),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            right: SizeConfig
+                                                                .scaleWidth(15),
+                                                          ),
+                                                          child:
+                                                              TextStyleWidget(
+                                                            NoOfRequestsProvider
+                                                                .submittedRequests[
+                                                                    index]
+                                                                .current_time!,
+                                                            Color(0xff4C5175),
+                                                            SizeConfig
+                                                                .scaleTextFont(
+                                                                    10),
+                                                            FontWeight.w500,
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.account_circle,
+                                                          size: SizeConfig
+                                                              .scaleWidth(15),
+                                                          color:
+                                                              Color(0xffcbb523),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        TextStyleWidget(
+                                                          NoOfRequestsProvider
+                                                              .submittedRequests[
+                                                                  index]
+                                                              .fullName!,
+                                                          Colors.black,
+                                                          SizeConfig
+                                                              .scaleTextFont(
+                                                                  10),
+                                                          FontWeight.w500,
+                                                        ),
+                                                        Spacer(),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            right: SizeConfig
+                                                                .scaleWidth(15),
+                                                          ),
+                                                          child:
+                                                              TextStyleWidget(
+                                                            NoOfRequestsProvider
+                                                                .submittedRequests[
+                                                                    index]
+                                                                .current_date!,
+                                                            Color(0xff4C5175),
+                                                            SizeConfig
+                                                                .scaleTextFont(
+                                                                    10),
+                                                            FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Spacer(),
+                                                  ],
+                                                ),
+                                              )
+                                            ]))))
+                              ]);
+                            })
+                      ],
+                    ),
+                  )));
   }
 
   void showBottomSheet(BuildContext context) {
@@ -328,5 +400,11 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
         );
       },
     );
+  }
+
+  Future<String> fetchUserImage(String userId) async {
+    String imageUrl =
+        await FirebaseFireStoreHelper.instance.getUserImage(userId);
+    return imageUrl;
   }
 }

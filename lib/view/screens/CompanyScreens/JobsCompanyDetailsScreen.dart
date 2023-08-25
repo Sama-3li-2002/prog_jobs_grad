@@ -134,15 +134,16 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.location_on_sharp,
+                              Icons.apartment,
                               color: Color(0xffCBB523),
                               size: SizeConfig.scaleWidth(15),
                             ),
                             TextStyleWidget(
                                 comInfoProvider.comInfoList.isNotEmpty
-                                    ? comInfoProvider.comInfoList[0].address ??
+                                    ? comInfoProvider
+                                            .comInfoList[0].companyName ??
                                         ""
-                                    : "No Address",
+                                    : "No Company Name",
                                 Color(0xff4C5175),
                                 SizeConfig.scaleTextFont(15),
                                 FontWeight.w500),
