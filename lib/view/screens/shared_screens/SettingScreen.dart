@@ -22,11 +22,13 @@ class _SettingScreenState extends State<SettingScreen> {
   bool recNot = true;
   String userId = FirebaseAuthController.fireAuthHelper.userId();
 
+
+
   // change pass
-  late TextEditingController oldPasswordController;
+  late TextEditingController currentPasswordController;
   late TextEditingController newPasswordController;
   late TextEditingController confirmPasswordController;
-  bool isOldPasswordCorrect = true;
+
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _SettingScreenState extends State<SettingScreen> {
     });
 
     //change pass
-    oldPasswordController = TextEditingController();
+    currentPasswordController = TextEditingController();
     newPasswordController = TextEditingController();
     confirmPasswordController = TextEditingController();
   }
@@ -218,6 +220,11 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   void showBottomSheet(BuildContext context) {
+     // visible pass
+    bool _obscureTextCurrent = true;
+    bool _obscureTextNew = true;
+    bool _obscureTextConfirmNew = true;
+
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -228,6 +235,7 @@ class _SettingScreenState extends State<SettingScreen> {
       context: context,
       builder: (BuildContext context) {
         return Container(
+
           height: 500,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -268,15 +276,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
                 TextStyleWidget("Current Password: ", Color(0xff4C5175),
                     SizeConfig.scaleTextFont(15), FontWeight.w500),
-
                 SizedBox(
                   height: 5,
                 ),
+
                 SizedBox(
                   height: 50,
                   child: TextField(
-                    controller:oldPasswordController ,
+                    controller:currentPasswordController ,
                     keyboardType: TextInputType.text,
+                    obscureText: _obscureTextCurrent,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.grey.shade200,
@@ -298,6 +307,21 @@ class _SettingScreenState extends State<SettingScreen> {
                           color: Colors.blue,
                         ),
                       ),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _obscureTextCurrent = !_obscureTextCurrent;
+                          });
+                        },
+                        child: Icon(
+                          _obscureTextCurrent
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: _obscureTextCurrent
+                              ?  Color(0xffcbb523)
+                              : Color(0xffcbb523),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -313,13 +337,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 SizedBox(
                   height: 50,
                   child: TextField(
-                    controller: newPasswordController,
+                    controller:newPasswordController ,
                     keyboardType: TextInputType.text,
+                    obscureText: _obscureTextNew,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.grey.shade200,
                       hintStyle: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey,
                         fontSize: 10,
                       ),
                       enabledBorder: OutlineInputBorder(
@@ -334,6 +359,21 @@ class _SettingScreenState extends State<SettingScreen> {
                         borderSide: BorderSide(
                           width: 1.5,
                           color: Colors.blue,
+                        ),
+                      ),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _obscureTextNew = !_obscureTextNew;
+                          });
+                        },
+                        child: Icon(
+                          _obscureTextNew
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: _obscureTextNew
+                              ?  Color(0xffcbb523)
+                              : Color(0xffcbb523),
                         ),
                       ),
                     ),
@@ -350,13 +390,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 SizedBox(
                   height: 50,
                   child: TextField(
-                    controller: confirmPasswordController,
+                    controller:confirmPasswordController ,
                     keyboardType: TextInputType.text,
+                    obscureText: _obscureTextConfirmNew,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.grey.shade200,
                       hintStyle: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey,
                         fontSize: 10,
                       ),
                       enabledBorder: OutlineInputBorder(
@@ -371,6 +412,21 @@ class _SettingScreenState extends State<SettingScreen> {
                         borderSide: BorderSide(
                           width: 1.5,
                           color: Colors.blue,
+                        ),
+                      ),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _obscureTextConfirmNew = !_obscureTextConfirmNew;
+                          });
+                        },
+                        child: Icon(
+                          _obscureTextConfirmNew
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: _obscureTextConfirmNew
+                              ?  Color(0xffcbb523)
+                              : Color(0xffcbb523),
                         ),
                       ),
                     ),
@@ -469,7 +525,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Future<bool> _changePassword() async {
     late bool isCorrect ;
 
-    String oldPassword = oldPasswordController.text;
+    String oldPassword = currentPasswordController.text;
     String newPassword = newPasswordController.text;
     String confirmPassword = confirmPasswordController.text;
 
@@ -485,7 +541,7 @@ class _SettingScreenState extends State<SettingScreen> {
       return false;
     }
 
-    if (await isOldPasswordCorrects(oldPassword) ) {
+    if (await isCurrentPasswordCorrects(oldPassword) ) {
 
       try {
         User user = FirebaseAuthController.fireAuthHelper.getCurrentUser();
@@ -507,9 +563,9 @@ class _SettingScreenState extends State<SettingScreen> {
     return isCorrect;
   }
 
-  Future<bool> isOldPasswordCorrects(String enteredOldPassword) async {
+  Future<bool> isCurrentPasswordCorrects(String enteredCurrentPassword) async {
     User user = FirebaseAuthController.fireAuthHelper.getCurrentUser();
-    return await FirebaseAuthController.fireAuthHelper.signInToChangePass(user.email!, enteredOldPassword);
+    return await FirebaseAuthController.fireAuthHelper.signInToChangePass(user.email!, enteredCurrentPassword);
   }
   //-----------------------------------------------------------------------------------------
 

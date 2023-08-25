@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'login.dart';
@@ -44,10 +47,20 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     setState(() {
                       UserTypeScreen.type = 'programmer';
                     });
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return LoginScreen(userType: 'programmer');
-                    }));
+
+                      if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return HomeScreen();
+                        }));
+
+                      }else{
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return LoginScreen(userType: 'programmer');
+                        }));
+
+                      }
                   },
                   child: Center(
                     child: Container(
@@ -83,10 +96,19 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     setState(() {
                       UserTypeScreen.type = 'company';
                     });
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return LoginScreen(userType: 'company');
-                    }));
+                    if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return ComHomeScreen();
+                      }));
+
+                    }else{
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return LoginScreen(userType: 'company');
+                      }));
+
+                    }
                   },
                   child: Center(
                     child: Container(

@@ -43,6 +43,9 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? _aboutCom;
   TextEditingController? _managerCom;
 
+  // visible pass
+  bool _obscureText = true;
+
   @override
   void initState() {
     super.initState();
@@ -167,7 +170,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: SizeConfig.scaleHeight(48),
                       child: TextField(
                         controller: _passwordProg,
-                        obscureText: true,
+                        obscureText: _obscureText,
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
@@ -177,7 +180,24 @@ class _SignupScreenState extends State<SignupScreen> {
                                     BorderSide(color: Colors.white, width: 1)),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
-                            )),
+                            ),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            child: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: _obscureText
+                                  ?  Color(0xffcbb523)
+                                  : Color(0xffcbb523),
+                            ),
+                          ),
+
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -285,7 +305,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: SizeConfig.scaleHeight(48),
                       child: TextField(
                         controller: _passwordCom,
-                        obscureText: true,
+                        obscureText: _obscureText,
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
@@ -295,7 +315,23 @@ class _SignupScreenState extends State<SignupScreen> {
                                     BorderSide(color: Colors.white, width: 1)),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
-                            )),
+                            ),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            child: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: _obscureText
+                                  ?  Color(0xffcbb523)
+                                  : Color(0xffcbb523),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
