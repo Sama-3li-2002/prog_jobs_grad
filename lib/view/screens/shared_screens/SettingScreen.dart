@@ -541,10 +541,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                     ),
                     onPressed: ()async {
                       if(await _changePassword())
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) {
-                              return LoginScreen(userType: "programmer");
-                            }));
+                       Navigator.pop(context);
                     },
                     child: TextStyleWidget("Save ", Colors.white,
                         SizeConfig.scaleTextFont(20), FontWeight.w500)),
