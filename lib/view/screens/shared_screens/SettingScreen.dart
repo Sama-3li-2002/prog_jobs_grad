@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
@@ -222,11 +223,6 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   void showBottomSheet(BuildContext context) {
-     // visible pass
-    bool _obscureTextCurrent = true;
-    bool _obscureTextNew = true;
-    bool _obscureTextConfirmNew = true;
-
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -236,233 +232,7 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
       context: context,
       builder: (BuildContext context) {
-        return Container(
-
-          height: 500,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40),
-              topRight: Radius.circular(40),
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsetsDirectional.only(
-              top: SizeConfig.scaleHeight(20),
-              bottom: SizeConfig.scaleHeight(20),
-              start: SizeConfig.scaleWidth(20),
-              end: SizeConfig.scaleWidth(20),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 5,
-                  margin: EdgeInsetsDirectional.only(
-                    top: SizeConfig.scaleHeight(20),
-                    start: SizeConfig.scaleWidth(150),
-                    end: SizeConfig.scaleWidth(150),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color(0xffCBB523),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextStyleWidget("Change Password", Color(0xffCBB523),
-                    SizeConfig.scaleTextFont(22), FontWeight.w500),
-                SizedBox(
-                  height: 10,
-                ),
-                TextStyleWidget("Current Password: ", Color(0xff4C5175),
-                    SizeConfig.scaleTextFont(15), FontWeight.w500),
-                SizedBox(
-                  height: 5,
-                ),
-
-                SizedBox(
-                  height: 50,
-                  child: TextField(
-                    controller:currentPasswordController ,
-                    keyboardType: TextInputType.text,
-                    obscureText: _obscureTextCurrent,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 0,
-                          color: Colors.grey.shade100,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 1.5,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _obscureTextCurrent = !_obscureTextCurrent;
-                          });
-                        },
-                        child: Icon(
-                          _obscureTextCurrent
-                              ? Icons.visibility_off
-                              :  Icons.visibility,
-                          color: _obscureTextCurrent
-                              ?  Color(0xffcbb523)
-                              : Color(0xffcbb523),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-
-                TextStyleWidget("New Password: ", Color(0xff4C5175),
-                    SizeConfig.scaleTextFont(15), FontWeight.w500),
-                SizedBox(
-                  height: 5,
-                ),
-                SizedBox(
-                  height: 50,
-                  child: TextField(
-                    controller:newPasswordController ,
-                    keyboardType: TextInputType.text,
-                    obscureText: _obscureTextNew,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 0,
-                          color: Colors.grey.shade100,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 1.5,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _obscureTextNew = !_obscureTextNew;
-                          });
-                        },
-                        child: Icon(
-                          _obscureTextNew
-                              ? Icons.visibility_off
-                              :  Icons.visibility,
-                          color: _obscureTextNew
-                              ?  Color(0xffcbb523)
-                              : Color(0xffcbb523),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextStyleWidget("Confirm Password: ", Color(0xff4C5175),
-                    SizeConfig.scaleTextFont(15), FontWeight.w500),
-                SizedBox(
-                  height: 5,
-                ),
-                SizedBox(
-                  height: 50,
-                  child: TextField(
-                    controller:confirmPasswordController ,
-                    keyboardType: TextInputType.text,
-                    obscureText: _obscureTextConfirmNew,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 0,
-                          color: Colors.grey.shade100,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 1.5,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _obscureTextConfirmNew = !_obscureTextConfirmNew;
-                          });
-                        },
-                        child: Icon(
-                          _obscureTextConfirmNew
-                              ? Icons.visibility_off
-                              :  Icons.visibility,
-                          color: _obscureTextConfirmNew
-                              ?  Color(0xffcbb523)
-                              : Color(0xffcbb523),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Center(
-                  child: Container(
-                    height: 50,
-                    width: 300,
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: Color(0xff4C5175),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        onPressed: ()async {
-                        if(await _changePassword())
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) {
-                                return LoginScreen(userType: "programmer");
-                              }));
-                        },
-                        child: TextStyleWidget("Save ", Colors.white,
-                            SizeConfig.scaleTextFont(20), FontWeight.w500)),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
+        return PasswordChangeSheet(); // Use the StatefulWidget for the bottom sheet content.
       },
     );
   }
@@ -523,6 +293,270 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
 
+
+}
+class PasswordChangeSheet extends StatefulWidget {
+  const PasswordChangeSheet({super.key});
+
+  @override
+  State<PasswordChangeSheet> createState() => _PasswordChangeSheetState();
+}
+
+class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
+
+  // change pass
+  late TextEditingController currentPasswordController;
+  late TextEditingController newPasswordController;
+  late TextEditingController confirmPasswordController;
+
+  // visible pass
+  bool _obscureTextCurrent = true;
+  bool _obscureTextNew = true;
+  bool _obscureTextConfirmNew = true;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //change pass
+    currentPasswordController = TextEditingController();
+    newPasswordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+      height: 500,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsetsDirectional.only(
+          top: SizeConfig.scaleHeight(20),
+          bottom: SizeConfig.scaleHeight(20),
+          start: SizeConfig.scaleWidth(20),
+          end: SizeConfig.scaleWidth(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 5,
+              margin: EdgeInsetsDirectional.only(
+                top: SizeConfig.scaleHeight(20),
+                start: SizeConfig.scaleWidth(150),
+                end: SizeConfig.scaleWidth(150),
+              ),
+              decoration: BoxDecoration(
+                color: Color(0xffCBB523),
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextStyleWidget("Change Password", Color(0xffCBB523),
+                SizeConfig.scaleTextFont(22), FontWeight.w500),
+            SizedBox(
+              height: 10,
+            ),
+            TextStyleWidget("Current Password: ", Color(0xff4C5175),
+                SizeConfig.scaleTextFont(15), FontWeight.w500),
+            SizedBox(
+              height: 5,
+            ),
+
+            SizedBox(
+              height: 50,
+              child: TextField(
+                controller:currentPasswordController ,
+                keyboardType: TextInputType.text,
+                obscureText: _obscureTextCurrent,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      width: 0,
+                      color: Colors.grey.shade100,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      width: 1.5,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+
+                      setState(() {
+                        _obscureTextCurrent = !_obscureTextCurrent;
+                      });
+
+                    },
+                    child: Icon(
+                      _obscureTextCurrent
+                          ? Icons.visibility_off
+                          :  Icons.visibility,
+                      color: _obscureTextCurrent
+                          ?  Color(0xffcbb523)
+                          : Color(0xffcbb523),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+            TextStyleWidget("New Password: ", Color(0xff4C5175),
+                SizeConfig.scaleTextFont(15), FontWeight.w500),
+            SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              height: 50,
+              child: TextField(
+                controller:newPasswordController ,
+                keyboardType: TextInputType.text,
+                obscureText: _obscureTextNew,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      width: 0,
+                      color: Colors.grey.shade100,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      width: 1.5,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obscureTextNew = !_obscureTextNew;
+                      });
+                    },
+                    child: Icon(
+                      _obscureTextNew
+                          ? Icons.visibility_off
+                          :  Icons.visibility,
+                      color: _obscureTextNew
+                          ?  Color(0xffcbb523)
+                          : Color(0xffcbb523),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextStyleWidget("Confirm Password: ", Color(0xff4C5175),
+                SizeConfig.scaleTextFont(15), FontWeight.w500),
+            SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              height: 50,
+              child: TextField(
+                controller:confirmPasswordController ,
+                keyboardType: TextInputType.text,
+                obscureText: _obscureTextConfirmNew,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      width: 0,
+                      color: Colors.grey.shade100,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      width: 1.5,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obscureTextConfirmNew = !_obscureTextConfirmNew;
+                      });
+                    },
+                    child: Icon(
+                      _obscureTextConfirmNew
+                          ? Icons.visibility_off
+                          :  Icons.visibility,
+                      color: _obscureTextConfirmNew
+                          ?  Color(0xffcbb523)
+                          : Color(0xffcbb523),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Center(
+              child: Container(
+                height: 50,
+                width: 300,
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color(0xff4C5175),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: ()async {
+                      if(await _changePassword())
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) {
+                              return LoginScreen(userType: "programmer");
+                            }));
+                    },
+                    child: TextStyleWidget("Save ", Colors.white,
+                        SizeConfig.scaleTextFont(20), FontWeight.w500)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   //change password----------------------------------------
   Future<bool> _changePassword() async {
     late bool isCorrect ;
@@ -569,6 +603,6 @@ class _SettingScreenState extends State<SettingScreen> {
     User user = FirebaseAuthController.fireAuthHelper.getCurrentUser();
     return await FirebaseAuthController.fireAuthHelper.signInToChangePass(user.email!, enteredCurrentPassword);
   }
-  //-----------------------------------------------------------------------------------------
-
+//-----------------------------------------------------------------------------------------
 }
+
