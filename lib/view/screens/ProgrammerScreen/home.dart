@@ -22,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<List<Jobs>> _futureJobs;
+
   int? currentIndex;
   String user_id = FirebaseAuthController.fireAuthHelper.userId();
   FirebaseFireStoreHelper firestore_helper = FirebaseFireStoreHelper.instance;

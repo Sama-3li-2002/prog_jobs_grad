@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/view/customWidget/ProfWidget.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
 import 'package:provider/provider.dart';
-
 import '../../../controller/FirebaseAuthController.dart';
 import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../model/CompanyModel.dart';
@@ -20,11 +20,36 @@ class AllJobScreen extends StatefulWidget {
 }
 
 class _AllJobScreenState extends State<AllJobScreen> {
+  // For search icon
+  TextEditingController _searchController = TextEditingController();
+  List<Jobs> _filteredJobs = [];
+  late List<Jobs> allJobsList;
+
   @override
   void initState() {
     super.initState();
-    Provider.of<CompaniesJobsProvider>(context, listen: false)
-        .getAllJobsObjects();
+
+    //for provider
+    allJobsList = Provider.of<CompaniesJobsProvider>(context, listen: false).JobsList;
+
+    // For search icon
+    _searchController.addListener(_performSearch);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _searchController.dispose();
+  }
+  void _performSearch() {
+    String query = _searchController.text.toLowerCase();
+
+    setState(() {
+      _filteredJobs =allJobsList.where((job) {
+        return job.job_name!.toLowerCase().contains(query);
+      }).toList();
+    });
   }
 
   String user_id = FirebaseAuthController.fireAuthHelper.userId();
@@ -47,14 +72,15 @@ class _AllJobScreenState extends State<AllJobScreen> {
           color: Color(0xff4C5175),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search,
-              size: SizeConfig.scaleWidth(30),
-            ),
-            color: Color(0xff4C5175),
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.search,color: Colors.grey,),
+          //   onPressed: () {
+          //     setState(() {
+          //       _searchController.clear();
+          //       _filteredJobs.clear();
+          //     });
+          //   },
+          // ),
           InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -74,15 +100,44 @@ class _AllJobScreenState extends State<AllJobScreen> {
             ),
           ),
         ],
-      ),
+        title:
+           PreferredSize(
+                preferredSize: Size.fromHeight(30),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (query) {
+                    _performSearch();
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    prefixIcon: Icon(Icons.search),
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                  ),
+                  style: TextStyle(
+                    fontSize: 16.0, // Adjust the font size
+                    color: Colors.black, // Text color
+                  ),
+                ),
+                ),
+              ),
+
       backgroundColor: Color(0xfffafafa),
       body: Consumer<CompaniesJobsProvider>(
           builder: (context, companiesJobsProvider, _) {
-        companiesJobsProvider.JobsList.sort(
+            allJobsList.sort(
             (a, b) => b.current_time!.compareTo(a.current_time!));
 
-        print("the job lis $companiesJobsProvider.JobsList");
-        return companiesJobsProvider.JobsList.isEmpty
+        return allJobsList.isEmpty
             ? Center(child: Text("Not available jobs"))
             : SingleChildScrollView(
                 child: Column(
@@ -93,10 +148,11 @@ class _AllJobScreenState extends State<AllJobScreen> {
                       child: TextStyleWidget('All Jobs:', Color(0xffcbb523),
                           SizeConfig.scaleTextFont(15), FontWeight.w500),
                     ),
+                    if(_searchController.text.isEmpty)
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: companiesJobsProvider.JobsList.length,
+                      itemCount:allJobsList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                             margin: EdgeInsets.all(
@@ -113,7 +169,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                       onTap: () async {
                                         List<Company> comInfo =
                                             await getCompanyInfo(
-                                                companiesJobsProvider.JobsList
+                                                allJobsList
                                                         .elementAt(index)
                                                     .id);
                                         Navigator.push(
@@ -121,7 +177,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                           MaterialPageRoute(builder: (context) {
                                             return JobsDetails(
                                               items: [
-                                                companiesJobsProvider.JobsList
+                                                allJobsList
                                                     .elementAt(index),
                                               ],
                                               itemsComInfo: comInfo,
@@ -138,14 +194,15 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                               topLeft: Radius.circular(5),
                                               bottomRight: Radius.circular(5),
                                             )),
-                                            child: Image.network(
-                                              companiesJobsProvider
-                                                      .JobsList.isNotEmpty
-                                                  ? companiesJobsProvider
-                                                          .JobsList[index]
-                                                          .job_image ??
-                                                      ""
-                                                  : "No Image",
+                                            child: Image.asset(
+                                              // companiesJobsProvider
+                                              //         .JobsList.isNotEmpty
+                                              //     ? companiesJobsProvider
+                                              //             .JobsList[index]
+                                              //             .job_image ??
+                                              //         ""
+                                              //     : "No Image",
+                                              "assets/images/withoutImageCompany.png",
                                               fit: BoxFit.cover,
                                               width: SizeConfig.scaleWidth(96),
                                               height:
@@ -165,11 +222,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                   Row(
                                                     children: [
                                                       TextStyleWidget(
-                                                          companiesJobsProvider
-                                                                  .JobsList
+                                                          allJobsList
                                                                   .isNotEmpty
-                                                              ? companiesJobsProvider
-                                                                      .JobsList[
+                                                              ? allJobsList[
                                                                           index]
                                                                       .job_name ??
                                                                   ""
@@ -193,11 +248,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                 0xffcbb523),
                                                           ),
                                                           TextStyleWidget(
-                                                              companiesJobsProvider
-                                                                      .JobsList
+                                                              allJobsList
                                                                       .isNotEmpty
-                                                                  ? companiesJobsProvider
-                                                                          .JobsList[
+                                                                  ?allJobsList[
                                                                               index]
                                                                           .company_name ??
                                                                       ""
@@ -233,11 +286,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                           3),
                                                                 ),
                                                                 TextStyleWidget(
-                                                                  companiesJobsProvider
-                                                                          .JobsList
+                                                                  allJobsList
                                                                           .isNotEmpty
-                                                                      ? companiesJobsProvider
-                                                                              .JobsList[index]
+                                                                      ? allJobsList[index]
                                                                               .current_date ??
                                                                           ""
                                                                       : "No Current Date",
@@ -251,11 +302,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                               ],
                                                             ),
                                                             TextStyleWidget(
-                                                              companiesJobsProvider
-                                                                      .JobsList
+                                                              allJobsList
                                                                       .isNotEmpty
-                                                                  ? companiesJobsProvider
-                                                                          .JobsList[
+                                                                  ? allJobsList[
                                                                               index]
                                                                           .current_time ??
                                                                       ""
@@ -308,7 +357,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                             List<Company>
                                                                 comInfo =
                                                                 await getCompanyInfo(
-                                                                    companiesJobsProvider.JobsList.elementAt(
+                                                                    allJobsList.elementAt(
                                                                             index)
                                                                         .id);
                                                             Navigator.of(
@@ -319,13 +368,11 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                               return SubmitJopScreen(
                                                                 itemsComInfo:
                                                                     comInfo,
-                                                                ComId: companiesJobsProvider
-                                                                            .JobsList
+                                                                ComId: allJobsList
                                                                         .elementAt(
                                                                             index)
                                                                     .id,
-                                                                JobId: companiesJobsProvider
-                                                                            .JobsList
+                                                                JobId: allJobsList
                                                                         .elementAt(
                                                                             index)
                                                                     .job_id,
@@ -354,8 +401,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                         icon:
                                                             FutureBuilder<bool>(
                                                           future: isFav(
-                                                            companiesJobsProvider
-                                                                        .JobsList
+                                                            allJobsList
                                                                     .elementAt(
                                                                         index)
                                                                 .job_id!,
@@ -386,8 +432,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                             Color(0xffcbb523),
                                                         onPressed: () async {
                                                           bool isJobFavorited = await isFav(
-                                                              companiesJobsProvider
-                                                                          .JobsList
+                                                              allJobsList
                                                                       .elementAt(
                                                                           index)
                                                                   .job_id!);
@@ -395,16 +440,14 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                           if (isJobFavorited) {
                                                             await firestore_helper.removeFromFavorites(
                                                                 user_id,
-                                                                companiesJobsProvider
-                                                                            .JobsList
+                                                                allJobsList
                                                                         .elementAt(
                                                                             index)
                                                                     .job_id!);
                                                           } else {
                                                             await firestore_helper.addToFavorites(
                                                                 user_id,
-                                                                companiesJobsProvider
-                                                                            .JobsList
+                                                                allJobsList
                                                                         .elementAt(
                                                                             index)
                                                                     .job_id!);
@@ -427,6 +470,325 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                     ))));
                       },
                     ),
+                    if(_searchController.text.isNotEmpty)
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: _filteredJobs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                              margin: EdgeInsets.all(
+                                SizeConfig.scaleWidth(15),
+                              ),
+                              child: Material(
+                                  elevation: 2,
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.white,
+                                      ),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          List<Company> comInfo =
+                                          await getCompanyInfo(
+                                              _filteredJobs
+                                                  .elementAt(index).id);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) {
+                                              return JobsDetails(
+                                                items: [
+                                                _filteredJobs
+                                                      .elementAt(index),
+                                                ],
+                                                itemsComInfo: comInfo,
+                                              );
+                                            }),
+                                          );
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    bottomRight: Radius.circular(5),
+                                                  )),
+                                              child: Image.asset(
+                                                // companiesJobsProvider
+                                                //     .JobsList.isNotEmpty
+                                                //     ? companiesJobsProvider
+                                                //     .JobsList[index]
+                                                //     .job_image ??
+                                                //     ""
+                                                //     : "No Image",
+                                                "assets/images/withoutImageCompany.png",
+                                                fit: BoxFit.cover,
+                                                width: SizeConfig.scaleWidth(96),
+                                                height:
+                                                SizeConfig.scaleHeight(105),
+                                                color: Color(0xff4C5175)
+                                                    .withOpacity(0.5),
+                                                colorBlendMode: BlendMode.darken,
+                                              ),
+                                            ),
+                                            Flexible(
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  left: SizeConfig.scaleWidth(10),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        TextStyleWidget(
+                                                            _filteredJobs
+                                                                .isNotEmpty
+                                                                ? _filteredJobs[
+                                                            index]
+                                                                .job_name ??
+                                                                ""
+                                                                : "No Job Name",
+                                                            Color(0xff4C5175),
+                                                            SizeConfig
+                                                                .scaleTextFont(
+                                                                15),
+                                                            FontWeight.w500),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons.apartment,
+                                                              size: SizeConfig
+                                                                  .scaleWidth(15),
+                                                              color: Color(
+                                                                  0xffcbb523),
+                                                            ),
+                                                            TextStyleWidget(
+                                                                _filteredJobs
+                                                                    .isNotEmpty
+                                                                    ? _filteredJobs.elementAt(index).company_name ??
+                                                                    ""
+                                                                    : "No Company Name",
+                                                                Colors.black,
+                                                                SizeConfig
+                                                                    .scaleTextFont(
+                                                                    10),
+                                                                FontWeight.w500),
+                                                          ],
+                                                        ),
+                                                        Spacer(),
+                                                        Padding(
+                                                          padding:
+                                                          EdgeInsets.only(
+                                                              right: 8.0),
+                                                          child: Column(
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons
+                                                                        .access_time,
+                                                                    size: SizeConfig
+                                                                        .scaleWidth(
+                                                                        14),
+                                                                    color: Color(
+                                                                        0xffcbb523),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: SizeConfig
+                                                                        .scaleWidth(
+                                                                        3),
+                                                                  ),
+                                                                  TextStyleWidget(
+                                                                    _filteredJobs
+                                                                        .isNotEmpty
+                                                                        ? _filteredJobs[index]
+                                                                        .current_date ??
+                                                                        ""
+                                                                        : "No Current Date",
+                                                                    Colors.black,
+                                                                    SizeConfig
+                                                                        .scaleTextFont(
+                                                                        10),
+                                                                    FontWeight
+                                                                        .w500,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              TextStyleWidget(
+                                                                _filteredJobs
+                                                                    .isNotEmpty
+                                                                    ? _filteredJobs[
+                                                                index]
+                                                                    .current_time ??
+                                                                    ""
+                                                                    : "No Current Time",
+                                                                Colors.black,
+                                                                SizeConfig
+                                                                    .scaleTextFont(
+                                                                    10),
+                                                                FontWeight.w500,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: SizeConfig
+                                                              .scaleWidth(120),
+                                                          height: SizeConfig
+                                                              .scaleHeight(26),
+                                                          child: ElevatedButton(
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(
+                                                                  Icons
+                                                                      .touch_app_outlined,
+                                                                  color: Color(
+                                                                      0xffcbb523),
+                                                                  size: SizeConfig
+                                                                      .scaleWidth(
+                                                                      14),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: SizeConfig
+                                                                        .scaleWidth(
+                                                                        10)),
+                                                                TextStyleWidget(
+                                                                    'Submition',
+                                                                    Colors.white,
+                                                                    SizeConfig
+                                                                        .scaleTextFont(
+                                                                        10),
+                                                                    FontWeight
+                                                                        .w500),
+                                                              ],
+                                                            ),
+                                                            onPressed: () async {
+                                                              List<Company>
+                                                              comInfo =
+                                                              await getCompanyInfo(
+                                                                  _filteredJobs.elementAt(
+                                                                      index)
+                                                                      .id);
+                                                              Navigator.of(
+                                                                  context)
+                                                                  .push(MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) {
+                                                                    return SubmitJopScreen(
+                                                                      itemsComInfo:
+                                                                      comInfo,
+                                                                      ComId: _filteredJobs
+                                                                          .elementAt(
+                                                                          index)
+                                                                          .id,
+                                                                      JobId:_filteredJobs
+                                                                          .elementAt(
+                                                                          index)
+                                                                          .job_id,
+                                                                    );
+                                                                  }));
+                                                            },
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              backgroundColor:
+                                                              Color(
+                                                                  0xff4C5175),
+                                                              shape:
+                                                              RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    2),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Spacer(),
+                                                        IconButton(
+                                                          alignment: Alignment
+                                                              .centerRight,
+                                                          icon:
+                                                          FutureBuilder<bool>(
+                                                            future: isFav(
+                                                              _filteredJobs
+                                                                  .elementAt(
+                                                                  index)
+                                                                  .job_id!,
+                                                            ),
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              if (snapshot
+                                                                  .hasError) {
+                                                                print('Error');
+                                                                return Icon(Icons
+                                                                    .favorite_border_outlined);
+                                                              } else {
+                                                                return Icon(
+                                                                  snapshot.data ==
+                                                                      true
+                                                                      ? Icons
+                                                                      .favorite
+                                                                      : Icons
+                                                                      .favorite_border_outlined,
+                                                                  size: SizeConfig
+                                                                      .scaleWidth(
+                                                                      20),
+                                                                );
+                                                              }
+                                                            },
+                                                          ),
+                                                          color:
+                                                          Color(0xffcbb523),
+                                                          onPressed: () async {
+                                                            bool isJobFavorited = await isFav(
+                                                                _filteredJobs
+                                                                    .elementAt(
+                                                                    index)
+                                                                    .job_id!);
+
+                                                            if (isJobFavorited) {
+                                                              await firestore_helper.removeFromFavorites(
+                                                                  user_id,
+                                                                  _filteredJobs
+                                                                      .elementAt(
+                                                                      index)
+                                                                      .job_id!);
+                                                            } else {
+                                                              await firestore_helper.addToFavorites(
+                                                                  user_id,
+                                                                  _filteredJobs
+                                                                      .elementAt(
+                                                                      index)
+                                                                      .job_id!);
+                                                            }
+
+                                                            setState(() {
+                                                              isJobFavorited =
+                                                              !isJobFavorited;
+                                                            });
+                                                          },
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ))));
+                        },
+                      ),
                   ],
                 ),
               );
@@ -444,4 +806,6 @@ class _AllJobScreenState extends State<AllJobScreen> {
   Future<bool> isFav(job_id) {
     return firestore_helper.isJobFavorited(user_id, job_id);
   }
+
+
 }

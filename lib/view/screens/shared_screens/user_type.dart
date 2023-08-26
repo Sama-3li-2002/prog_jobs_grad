@@ -48,17 +48,19 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                       UserTypeScreen.type = 'programmer';
                     });
 
-                    if (FirebaseAuthController.fireAuthHelper.isLoggedIn()) {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return HomeScreen();
-                      }));
-                    } else {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return LoginScreen(userType: 'programmer');
-                      }));
-                    }
+                      // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return LoginScreen(userType: 'programmer');
+                        }));
+
+                      // }else{
+                      //   Navigator.of(context)
+                      //       .push(MaterialPageRoute(builder: (context) {
+                      //     return LoginScreen(userType: 'programmer');
+                      //   }));
+                      //
+                      // }
                   },
                   child: Center(
                     child: Container(
@@ -94,17 +96,19 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     setState(() {
                       UserTypeScreen.type = 'company';
                     });
-                    if (FirebaseAuthController.fireAuthHelper.isLoggedIn()) {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return ComHomeScreen();
-                      }));
-                    } else {
+                    // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return LoginScreen(userType: 'company');
                       }));
-                    }
+
+                    // }else{
+                    //   Navigator.of(context)
+                    //       .push(MaterialPageRoute(builder: (context) {
+                    //     return LoginScreen(userType: 'programmer');
+                    //   }));
+                    //
+                    // }
                   },
                   child: Center(
                     child: Container(
