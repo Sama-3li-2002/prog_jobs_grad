@@ -115,7 +115,9 @@ class MyApp extends StatelessWidget {
         AcceptPerson.id: (context) => AcceptPerson(
               progId: '',
               uploadedFileName: '',
-              fileUrl: '', request_status: '',
+              fileUrl: '',
+              request_status: '',
+              jobId: '',
             ),
         Archive.id: (context) => Archive(),
         Favorite.id: (context) => Favorite(),

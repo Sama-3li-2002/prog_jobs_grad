@@ -14,7 +14,7 @@ class RequestStatusProvider extends ChangeNotifier {
             .collectionGroup("Submitted Job")
             .where('ProgId', isEqualTo: userId)
             .get();
-
+    submittedJobs.clear();
     submittedJobsSnapshot.docs.forEach((doc) {
       submittedJobs.add(Request.fromJson(doc.data()));
     });

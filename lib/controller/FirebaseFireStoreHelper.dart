@@ -312,4 +312,34 @@ class FirebaseFireStoreHelper {
       return Jobs.main();
     }
   }
+
+  Future<void> updateRequest(String JobId, String ProgId, String status) async {
+    QuerySnapshot<Map<String, dynamic>> submittedJobsSnapshot = await firestore
+        .collection(companyCollection)
+        .doc(FirebaseAuthController.fireAuthHelper.userId())
+        .collection(jobsCollection)
+        .doc(JobId)
+        .collection(SubmittedjobCollection)
+        .get();
+
+    for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
+        in submittedJobsSnapshot.docs) {
+      if (docSnapshot.data() != null) {
+        Map<String, dynamic> data = docSnapshot.data();
+        if (data['ProgId'] == ProgId) {
+          DocumentReference docRef = firestore
+              .collection(companyCollection)
+              .doc(FirebaseAuthController.fireAuthHelper.userId())
+              .collection(jobsCollection)
+              .doc(JobId)
+              .collection(SubmittedjobCollection)
+              .doc(docSnapshot.id);
+
+          await docRef.update({
+            'status': status,
+          });
+        }
+      }
+    }
+  }
 }

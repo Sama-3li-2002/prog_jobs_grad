@@ -22,7 +22,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   int? currentIndex;
   String user_id = FirebaseAuthController.fireAuthHelper.userId();
   FirebaseFireStoreHelper firestore_helper = FirebaseFireStoreHelper.instance;
@@ -80,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-
         ],
       ),
       backgroundColor: Color(0xfffafafa),

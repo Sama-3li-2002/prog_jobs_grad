@@ -215,7 +215,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                     width: SizeConfig.scaleWidth(90),
                     height: SizeConfig.scaleHeight(40),
                     child: ElevatedButton(
-
                       onPressed: () {
                         if (_clickCount < 4) {
                           setState(() {

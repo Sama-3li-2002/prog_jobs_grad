@@ -78,10 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         backgroundColor: Color(0xfffafafa),
-
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
+            padding:
+                EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -145,9 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            suffixIcon:
-
-                            GestureDetector(
+                            suffixIcon: GestureDetector(
                               onTap: () {
                                 setState(() {
                                   _obscureText = !_obscureText;
@@ -156,8 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Icon(
                                 _obscureText
                                     ? Icons.visibility_off
-                                    :  Icons.visibility,
-
+                                    : Icons.visibility,
                                 color: _obscureText
                                     ? Color(0xffcbb523)
                                     : Color(0xffcbb523),
@@ -215,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Icon(
                                 _obscureText
                                     ? Icons.visibility_off
-                                    :  Icons.visibility,
+                                    : Icons.visibility,
                                 color: _obscureText
                                     ? Color(0xffcbb523)
                                     : Color(0xffcbb523),
@@ -237,8 +234,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       }));
                     },
-                    child: TextStyleWidget('Forget Password?', Color(0xFFB8852F),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
+                    child: TextStyleWidget(
+                        'Forget Password?',
+                        Color(0xFFB8852F),
+                        SizeConfig.scaleTextFont(12),
+                        FontWeight.w500),
                   ),
                 ),
                 SizedBox(
@@ -299,12 +299,13 @@ class _LoginScreenState extends State<LoginScreen> {
 // Programmer Info
   Future performLoginProg() async {
     if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
-
-      UserCredential? userCredential = await FirebaseAuthController.fireAuthHelper.signIn(
+      UserCredential? userCredential =
+          await FirebaseAuthController.fireAuthHelper.signIn(
         _emailProg!.text.trim(),
         _passwordProg!.text.trim(),
       );
-      bool isUserInUserCollection = await checkIfUserInUserCollection(FirebaseAuthController.fireAuthHelper.userId());
+      bool isUserInUserCollection = await checkIfUserInUserCollection(
+          FirebaseAuthController.fireAuthHelper.userId());
 
       if (isUserInUserCollection) {
         if (userCredential != null) {
@@ -333,15 +334,17 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
+
   // Company Info
   Future performLoginCom() async {
     if (checkData()) {
-
-      UserCredential? userCredential = await FirebaseAuthController.fireAuthHelper.signIn(
+      UserCredential? userCredential =
+          await FirebaseAuthController.fireAuthHelper.signIn(
         _emailCom!.text.trim(),
         _passwordCom!.text.trim(),
       );
-      bool isUserInCompanyCollection = await checkIfUserInCompanyCollection(FirebaseAuthController.fireAuthHelper.userId());
+      bool isUserInCompanyCollection = await checkIfUserInCompanyCollection(
+          FirebaseAuthController.fireAuthHelper.userId());
 
       if (isUserInCompanyCollection) {
         if (userCredential != null) {
@@ -362,11 +365,10 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
   bool checkData() {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       return true;
-    }else {
+    } else {
       Fluttertoast.showToast(
         msg: "Email or Password can't be empty",
         toastLength: Toast.LENGTH_SHORT,
@@ -382,23 +384,26 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<bool> checkIfUserInUserCollection(String userId) async {
     try {
       DocumentSnapshot<Map<String, dynamic>> docSnapshot =
-      await FirebaseFirestore.instance.collection(FirebaseFireStoreHelper.instance.userCollection).doc(userId).get();
+          await FirebaseFirestore.instance
+              .collection(FirebaseFireStoreHelper.instance.userCollection)
+              .doc(userId)
+              .get();
       return docSnapshot.exists;
     } catch (e) {
       return false;
     }
   }
+
   Future<bool> checkIfUserInCompanyCollection(String userId) async {
     try {
       DocumentSnapshot<Map<String, dynamic>> docSnapshot =
-      await FirebaseFirestore.instance.collection(FirebaseFireStoreHelper.companyCollection).doc(userId).get();
+          await FirebaseFirestore.instance
+              .collection(FirebaseFireStoreHelper.companyCollection)
+              .doc(userId)
+              .get();
       return docSnapshot.exists;
     } catch (e) {
       return false;
     }
   }
-
 }
-
-
-

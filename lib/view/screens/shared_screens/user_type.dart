@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'login.dart';
@@ -48,19 +45,19 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                       UserTypeScreen.type = 'programmer';
                     });
 
-                      // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return LoginScreen(userType: 'programmer');
-                        }));
+                    // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return LoginScreen(userType: 'programmer');
+                    }));
 
-                      // }else{
-                      //   Navigator.of(context)
-                      //       .push(MaterialPageRoute(builder: (context) {
-                      //     return LoginScreen(userType: 'programmer');
-                      //   }));
-                      //
-                      // }
+                    // }else{
+                    //   Navigator.of(context)
+                    //       .push(MaterialPageRoute(builder: (context) {
+                    //     return LoginScreen(userType: 'programmer');
+                    //   }));
+                    //
+                    // }
                   },
                   child: Center(
                     child: Container(
@@ -97,10 +94,10 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                       UserTypeScreen.type = 'company';
                     });
                     // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return LoginScreen(userType: 'company');
-                      }));
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return LoginScreen(userType: 'company');
+                    }));
 
                     // }else{
                     //   Navigator.of(context)

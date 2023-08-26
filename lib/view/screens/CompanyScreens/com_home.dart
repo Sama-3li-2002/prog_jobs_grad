@@ -15,7 +15,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class ComHomeScreen extends StatefulWidget {
   static const String id = "com_home_screen";
-  CarouselController _carouselController = CarouselController();
 
   final List<String> imagePaths = [
     'assets/images/jomhoorak.jpg',

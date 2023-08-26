@@ -14,12 +14,14 @@ class AcceptPerson extends StatefulWidget {
   String fileUrl;
   String uploadedFileName;
   String request_status;
+  String jobId;
 
   AcceptPerson({
     required this.progId,
     required this.fileUrl,
     required this.uploadedFileName,
     required this.request_status,
+    required this.jobId,
   });
 
   @override
@@ -315,6 +317,12 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                             widget.request_status =
                                                 "Accepted Request";
                                           });
+
+                                          FirebaseFireStoreHelper.instance
+                                              .updateRequest(
+                                                  widget.jobId,
+                                                  widget.progId,
+                                                  widget.request_status);
                                         },
                                         child: TextStyleWidget(
                                             "Accept",
@@ -342,6 +350,12 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                             widget.request_status =
                                                 "Rejected Request";
                                           });
+
+                                          FirebaseFireStoreHelper.instance
+                                              .updateRequest(
+                                                  widget.jobId,
+                                                  widget.progId,
+                                                  widget.request_status);
                                         },
                                         child: TextStyleWidget(
                                             "Reject",

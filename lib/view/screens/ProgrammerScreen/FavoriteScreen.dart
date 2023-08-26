@@ -133,7 +133,8 @@ class _FavoriteState extends State<Favorite> {
                                         child: Row(
                                           children: [
                                             Container(
-                                              height: SizeConfig.scaleHeight(130),
+                                              height:
+                                                  SizeConfig.scaleHeight(130),
                                               padding: EdgeInsets.zero,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: BoxDecoration(

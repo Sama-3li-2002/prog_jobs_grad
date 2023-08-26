@@ -101,6 +101,8 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                               .uploadedFileName!,
                                           request_status: NoOfRequestsProvider
                                               .submittedRequests[index].status!,
+                                          jobId: NoOfRequestsProvider
+                                              .submittedRequests[index].JobId!,
                                         );
                                       }));
                                     },
