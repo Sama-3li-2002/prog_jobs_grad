@@ -132,6 +132,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                       child: Row(
                                         children: [
                                           Container(
+                                            height: SizeConfig.scaleHeight(130),
                                             clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(

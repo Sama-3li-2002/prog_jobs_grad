@@ -275,7 +275,7 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
                           SizedBox(
                             height: SizeConfig.scaleHeight(12),
                           ),
-                          TextStyleWidget("cv:", Color(0xff4C5175),
+                          TextStyleWidget("CV (.pdf Only):", Color(0xff4C5175),
                               SizeConfig.scaleTextFont(12), FontWeight.w500),
                           Row(
                             children: [
@@ -338,7 +338,8 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
         _university!.text.isNotEmpty &&
         _specialization!.text.isNotEmpty &&
         _skills!.text.isNotEmpty &&
-        uploadedFileName.isNotEmpty) {
+        uploadedFileName.isNotEmpty &&
+        downloadUrl.length != 1) {
       Request request = Request.submitJob(
           _fullName!.text,
           _email!.text,
@@ -353,6 +354,7 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
       String JobId = widget.JobId!;
       String ComId = widget.ComId!;
 
+      setState(() {});
       FirebaseFireStoreHelper.fireStoreHelper.SaveProgInfoForSubmittedJob(
           request, Progid, ComId, JobId, downloadUrl);
       Navigator.pop(context);
