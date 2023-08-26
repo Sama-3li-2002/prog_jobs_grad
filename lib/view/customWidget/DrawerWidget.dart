@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/MessagesCom.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ArchiveScreen.dart';

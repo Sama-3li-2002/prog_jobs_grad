@@ -332,6 +332,8 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
   }
 
   Future saveProgInfoForSubmJob() async {
+    String JobId = widget.JobId!;
+    String ComId = widget.ComId!;
     if (_fullName!.text.isNotEmpty &&
         _email!.text.isNotEmpty &&
         _city!.text.isNotEmpty &&
@@ -341,6 +343,8 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
         uploadedFileName.isNotEmpty &&
         downloadUrl.length != 1) {
       Request request = Request.submitJob(
+          JobId,
+          ComId,
           _fullName!.text,
           _email!.text,
           _city!.text,
@@ -349,14 +353,12 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
           _skills!.text,
           _specialization!.text,
           formattedTime,
-          formattedDate);
-
-      String JobId = widget.JobId!;
-      String ComId = widget.ComId!;
+          formattedDate,
+          "waiting reply");
 
       setState(() {});
-      FirebaseFireStoreHelper.fireStoreHelper.SaveProgInfoForSubmittedJob(
-          request, Progid, ComId, JobId, downloadUrl);
+      FirebaseFireStoreHelper.fireStoreHelper
+          .SaveProgInfoForSubmittedJob(request, Progid, downloadUrl);
       Navigator.pop(context);
     } else {
       Fluttertoast.showToast(

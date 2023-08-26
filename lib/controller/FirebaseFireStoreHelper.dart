@@ -147,21 +147,19 @@ class FirebaseFireStoreHelper {
   Future SaveProgInfoForSubmittedJob(
     Request request,
     String ProgId,
-    String ComId,
-    String JobId,
     String fileUrl,
   ) async {
     firestore
         .collection(companyCollection)
-        .doc(ComId)
+        .doc(request.ComId)
         .collection(jobsCollection)
-        .doc(JobId)
+        .doc(request.JobId)
         .collection(SubmittedjobCollection)
         .doc()
         .set({
       "ProgId": ProgId,
-      "ComId": ComId,
-      "JobId": JobId,
+      "ComId": request.ComId,
+      "JobId": request.JobId,
       "fullName": request.fullName,
       "email": request.email,
       "city": request.city,
@@ -172,6 +170,7 @@ class FirebaseFireStoreHelper {
       "uploadedFileName": request.uploadedFileName,
       "current_date": request.current_date,
       "current_time": request.current_time,
+      "status": request.status,
     });
   }
 
@@ -294,6 +293,23 @@ class FirebaseFireStoreHelper {
       return user;
     } else {
       return Users();
+    }
+  }
+
+  Future<Jobs> getRequestJobInfo(String jobId, String comId) async {
+    DocumentSnapshot<Map<String, dynamic>> jobRequestInfoSnapshot =
+        await firestore
+            .collection(companyCollection)
+            .doc(comId)
+            .collection(jobsCollection)
+            .doc(jobId)
+            .get();
+
+    if (jobRequestInfoSnapshot.exists) {
+      Jobs job = Jobs.fromMap(jobRequestInfoSnapshot.data()!);
+      return job;
+    } else {
+      return Jobs.main();
     }
   }
 }
