@@ -13,11 +13,14 @@ class AcceptPerson extends StatefulWidget {
   String progId;
   String fileUrl;
   String uploadedFileName;
+  String request_status;
 
-  AcceptPerson(
-      {required this.progId,
-      required this.fileUrl,
-      required this.uploadedFileName});
+  AcceptPerson({
+    required this.progId,
+    required this.fileUrl,
+    required this.uploadedFileName,
+    required this.request_status,
+  });
 
   @override
   State<AcceptPerson> createState() => _AcceptPersonState();
@@ -307,9 +310,14 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                                 BorderRadius.circular(10),
                                           ),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            widget.request_status =
+                                                "Accepted Request";
+                                          });
+                                        },
                                         child: TextStyleWidget(
-                                            "Accept ",
+                                            "Accept",
                                             Colors.white,
                                             SizeConfig.scaleTextFont(17),
                                             FontWeight.w500)),
@@ -329,9 +337,14 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                                 BorderRadius.circular(10),
                                           ),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            widget.request_status =
+                                                "Rejected Request";
+                                          });
+                                        },
                                         child: TextStyleWidget(
-                                            "Reject ",
+                                            "Reject",
                                             Colors.white,
                                             SizeConfig.scaleTextFont(17),
                                             FontWeight.w500)),

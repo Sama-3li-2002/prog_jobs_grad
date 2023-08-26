@@ -91,16 +91,17 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(builder: (context) {
                                         return AcceptPerson(
-                                            progId: NoOfRequestsProvider
-                                                .submittedRequests[index]
-                                                .ProgId!,
-                                            fileUrl: NoOfRequestsProvider
-                                                .submittedRequests[index]
-                                                .fileUrl!,
-                                            uploadedFileName:
-                                                NoOfRequestsProvider
-                                                    .submittedRequests[index]
-                                                    .uploadedFileName!);
+                                          progId: NoOfRequestsProvider
+                                              .submittedRequests[index].ProgId!,
+                                          fileUrl: NoOfRequestsProvider
+                                              .submittedRequests[index]
+                                              .fileUrl!,
+                                          uploadedFileName: NoOfRequestsProvider
+                                              .submittedRequests[index]
+                                              .uploadedFileName!,
+                                          request_status: NoOfRequestsProvider
+                                              .submittedRequests[index].status!,
+                                        );
                                       }));
                                     },
                                     child: Container(

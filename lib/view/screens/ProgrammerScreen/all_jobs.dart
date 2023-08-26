@@ -528,7 +528,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                 topLeft: Radius.circular(5),
                                                 bottomRight: Radius.circular(5),
                                               )),
-                                              child: Image.asset(
+                                              child: Image.network(
                                                 companiesJobsProvider
                                                         .JobsList.isNotEmpty
                                                     ? companiesJobsProvider
