@@ -146,9 +146,6 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
                       ),
                     ],
                   ),
-
-
-
                 ),
                 SizedBox(
                   height: SizeConfig.scaleHeight(10),

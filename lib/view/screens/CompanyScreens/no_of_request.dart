@@ -119,35 +119,35 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(5),
-                                               ),
+                                                color: Colors.white),
                                             margin: EdgeInsets.only(
-                                              left: SizeConfig.scaleWidth(5),
+                                              left: SizeConfig.scaleWidth(15),
                                               right: SizeConfig.scaleWidth(15),
-                                              bottom: SizeConfig.scaleHeight(10),
+                                              bottom:
+                                                  SizeConfig.scaleHeight(10),
                                             ),
                                             child: Padding(
                                                 padding: EdgeInsets.all(
                                                     SizeConfig.scaleWidth(8)),
                                                 child: Row(children: [
                                                   Card(
-                                                      clipBehavior: Clip.antiAlias,
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
                                                       shape: CircleBorder(),
                                                       elevation: 4,
                                                       color: Color(0xffcbb523),
                                                       child: SizedBox(
-                                                          width:
-                                                              SizeConfig.scaleWidth(
-                                                                  60),
+                                                          width: SizeConfig
+                                                              .scaleWidth(60),
                                                           height: SizeConfig
                                                               .scaleHeight(100),
                                                           child: ClipOval(
                                                               child: FutureBuilder<
                                                                       String>(
-                                                                  future: fetchUserImage(
-                                                                      NoOfRequestsProvider
-                                                                          .submittedRequests[
-                                                                              index]
-                                                                          .ProgId!),
+                                                                  future: fetchUserImage(NoOfRequestsProvider
+                                                                      .submittedRequests[
+                                                                          index]
+                                                                      .ProgId!),
                                                                   builder: (context,
                                                                       snapshot) {
                                                                     final imageUrl =
@@ -175,7 +175,8 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                                         Row(
                                                           children: [
                                                             TextStyleWidget(
-                                                              widget.jobs.job_name!,
+                                                              widget.jobs
+                                                                  .job_name!,
                                                               Color(0xff4C5175),
                                                               SizeConfig
                                                                   .scaleTextFont(
@@ -184,26 +185,28 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                                             ),
                                                             Spacer(),
                                                             TextStyleWidget(
-                                                                NoOfRequestsProvider
-                                                              .submittedRequests[
-                                                                  index]
-                                                              .current_time!,
-                                                                Color(0xff4C5175),
-                                                                SizeConfig
-                                                              .scaleTextFont(
-                                                                  10),
-                                                                FontWeight.w500,
-                                                              )
+                                                              NoOfRequestsProvider
+                                                                  .submittedRequests[
+                                                                      index]
+                                                                  .current_time!,
+                                                              Color(0xff4C5175),
+                                                              SizeConfig
+                                                                  .scaleTextFont(
+                                                                      10),
+                                                              FontWeight.w500,
+                                                            )
                                                           ],
                                                         ),
                                                         Row(
                                                           children: [
                                                             Icon(
-                                                              Icons.account_circle,
+                                                              Icons
+                                                                  .account_circle,
                                                               size: SizeConfig
-                                                                  .scaleWidth(15),
-                                                              color:
-                                                                  Color(0xffcbb523),
+                                                                  .scaleWidth(
+                                                                      15),
+                                                              color: Color(
+                                                                  0xffcbb523),
                                                             ),
                                                             SizedBox(
                                                               width: 5,
@@ -221,16 +224,16 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                                             ),
                                                             Spacer(),
                                                             TextStyleWidget(
-                                                                NoOfRequestsProvider
-                                                              .submittedRequests[
-                                                                  index]
-                                                              .current_date!,
-                                                                Color(0xff4C5175),
-                                                                SizeConfig
-                                                              .scaleTextFont(
-                                                                  10),
-                                                                FontWeight.w500,
-                                                              ),
+                                                              NoOfRequestsProvider
+                                                                  .submittedRequests[
+                                                                      index]
+                                                                  .current_date!,
+                                                              Color(0xff4C5175),
+                                                              SizeConfig
+                                                                  .scaleTextFont(
+                                                                      10),
+                                                              FontWeight.w500,
+                                                            ),
                                                           ],
                                                         ),
                                                         Spacer(),
