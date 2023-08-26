@@ -453,7 +453,13 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future createProgAccount() async {
-    if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
+    if (_emailProg!.text.isNotEmpty &&
+        _passwordProg!.text.isNotEmpty &&
+        _usernameProg!.text.isNotEmpty &&
+        _phoneProg!.text.isNotEmpty &&
+        _ageProg!.text.isNotEmpty &&
+        _specializationProg!.text.isNotEmpty &&
+        _aboutProg!.text.isNotEmpty) {
       UserCredential? userCredential = await FirebaseAuthController
           .fireAuthHelper
           .createAccount(Users.signup(
@@ -474,7 +480,7 @@ class _SignupScreenState extends State<SignupScreen> {
       }
     } else {
       Fluttertoast.showToast(
-        msg: "Email or Password can't be empty",
+        msg: "Please Fill All Fields",
         toastLength: Toast.LENGTH_SHORT,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.black,
@@ -485,7 +491,13 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future createComAccount() async {
-    if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
+    if (_emailCom!.text.isNotEmpty &&
+        _passwordCom!.text.isNotEmpty &&
+        _companyNameCom!.text.isNotEmpty &&
+        _phoneCom!.text.isNotEmpty &&
+        _addressCom!.text.isNotEmpty &&
+        _managerCom!.text.isNotEmpty &&
+        _aboutCom!.text.isNotEmpty) {
       UserCredential? userCredential = await FirebaseAuthController
           .fireAuthHelper
           .createComAccount(Company.signUP(
@@ -511,7 +523,7 @@ class _SignupScreenState extends State<SignupScreen> {
       }
     } else {
       Fluttertoast.showToast(
-        msg: "Email or Password can't be empty",
+        msg: "Please Fill All Fields",
         toastLength: Toast.LENGTH_SHORT,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.black,

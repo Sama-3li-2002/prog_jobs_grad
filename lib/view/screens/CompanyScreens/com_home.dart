@@ -16,12 +16,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 class ComHomeScreen extends StatefulWidget {
   static const String id = "com_home_screen";
 
-  final List<String> imagePaths = [
-    'assets/images/jomhoorak.jpg',
-    'assets/images/img1.jpg',
-    'assets/images/img2.jpg',
-  ];
-
   @override
   State<ComHomeScreen> createState() => _ComHomeScreenState();
 }
@@ -688,9 +682,9 @@ class AdImages extends StatefulWidget {
   CarouselController _carouselController = CarouselController();
 
   final List<String> imagePaths = [
-    'assets/images/jomhoorak.jpg',
-    'assets/images/img1.jpg',
+    'assets/images/img1.png',
     'assets/images/img2.jpg',
+    'assets/images/img3.jpg',
   ];
 
   @override

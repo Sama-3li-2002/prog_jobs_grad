@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
+import 'package:prog_jobs_grad/view/customWidget/textStyleWidget.dart';
 
 import 'user_type.dart';
 
@@ -31,10 +32,17 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Color(0xff3b3f5b),
       body: Center(
-        child: Image(
-          width: SizeConfig.scaleWidth(205),
-          height: SizeConfig.scaleHeight(163),
-          image: AssetImage('assets/images/LOGO.png'),
+        child: Stack(
+          children: [
+            Image.asset(
+              'assets/images/progPng.png',
+            ),
+            Positioned(
+                top: SizeConfig.scaleHeight(200),
+                left: SizeConfig.scaleWidth(130),
+                child: TextStyleWidget(
+                    'Prog Jobs', Colors.white, 30, FontWeight.bold))
+          ],
         ),
       ),
     );
