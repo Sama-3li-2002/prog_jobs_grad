@@ -104,8 +104,9 @@ class _ArchiveState extends State<Archive> {
                                           topLeft: Radius.circular(5),
                                           bottomRight: Radius.circular(5),
                                         )),
-                                        child: Image.asset(
-                                          'assets/images/computer.png',
+                                        child: Image.network(
+                                          archiveProvider
+                                              .archiveList[index].job_image!,
                                           fit: BoxFit.cover,
                                           width: SizeConfig.scaleWidth(96),
                                           height: SizeConfig.scaleHeight(115),
@@ -243,49 +244,16 @@ class _ArchiveState extends State<Archive> {
                                               Row(
                                                 children: [
                                                   SizedBox(
-                                                    width:
-                                                        SizeConfig.scaleWidth(
-                                                            145),
                                                     height:
                                                         SizeConfig.scaleHeight(
                                                             30),
                                                     child: ElevatedButton(
-                                                      child: Row(
-                                                        children: [
-                                                          Container(
-                                                            height: SizeConfig
-                                                                .scaleHeight(
-                                                                    18),
-                                                            width: SizeConfig
-                                                                .scaleWidth(18),
-                                                            child: Text(
-                                                              '12',
-                                                              style: TextStyle(
-                                                                fontFamily:
-                                                                    'Poppins',
-                                                                backgroundColor:
-                                                                    Color(
-                                                                        0xffcbb523),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize: SizeConfig
-                                                                    .scaleTextFont(
-                                                                        10),
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          TextStyleWidget(
-                                                            'number of requests',
-                                                            Colors.white,
-                                                            SizeConfig
-                                                                .scaleTextFont(
-                                                                    10),
-                                                            FontWeight.w500,
-                                                          ),
-                                                        ],
+                                                      child: TextStyleWidget(
+                                                        'number of requests',
+                                                        Colors.white,
+                                                        SizeConfig
+                                                            .scaleTextFont(10),
+                                                        FontWeight.w500,
                                                       ),
                                                       onPressed: () {
                                                         Navigator.of(context).push(

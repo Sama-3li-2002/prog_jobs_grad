@@ -12,16 +12,14 @@ import '../../customWidget/textStyleWidget.dart';
 class SettingScreen extends StatefulWidget {
   static const String id = "setting_screen";
 
-
   @override
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  bool showProfPic = true;
+  bool showProfPic = false;
   bool recNot = true;
   String userId = FirebaseAuthController.fireAuthHelper.userId();
-
 
   // change pass
   late TextEditingController currentPasswordController;
@@ -167,8 +165,8 @@ class _SettingScreenState extends State<SettingScreen> {
                       child: buildPrivacyOptionRow(
                           'Show Profile Picture',
                           showProfPic,
-                          (value) =>
-                              _handleSwitchChange(value, '$userId-showProfPic')),
+                          (value) => _handleSwitchChange(
+                              value, '$userId-showProfPic')),
                     ),
                     Divider(),
                     Padding(
@@ -320,7 +318,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container (
+    return Container(
       // height: SizeConfig.scaleHeight(500),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -340,7 +338,6 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
               Container(
                 height: 5,
@@ -454,7 +451,9 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                         });
                       },
                       child: Icon(
-                        _obscureTextNew ? Icons.visibility_off : Icons.visibility,
+                        _obscureTextNew
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                         color: _obscureTextNew
                             ? Color(0xffcbb523)
                             : Color(0xffcbb523),

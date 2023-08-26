@@ -134,6 +134,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                   child: Row(
                                     children: [
                                       Container(
+                                        height: SizeConfig.scaleHeight(130),
                                         clipBehavior: Clip.antiAlias,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.only(
@@ -425,6 +426,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                       child: Row(
                                         children: [
                                           Container(
+                                            height: SizeConfig.scaleHeight(130),
                                             clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
@@ -682,9 +684,9 @@ class AdImages extends StatefulWidget {
   CarouselController _carouselController = CarouselController();
 
   final List<String> imagePaths = [
-    'assets/images/img1.png',
-    'assets/images/img2.jpg',
-    'assets/images/img3.jpg',
+    'assets/images/img1.jpeg',
+    'assets/images/img2.jpeg',
+    'assets/images/img3.jpeg',
   ];
 
   @override

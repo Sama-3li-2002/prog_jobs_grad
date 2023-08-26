@@ -123,6 +123,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                       child: Row(
                                         children: [
                                           Container(
+                                            height: SizeConfig.scaleHeight(130),
                                             clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
