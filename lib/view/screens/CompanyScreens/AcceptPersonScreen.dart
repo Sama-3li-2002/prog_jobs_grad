@@ -1,10 +1,13 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/pdf_viewer_page.dart';
 
 import '../../../controller/FirebaseFireStoreHelper.dart';
+import '../../../main.dart';
 import '../../customWidget/textStyleWidget.dart';
 
 class AcceptPerson extends StatefulWidget {
@@ -34,6 +37,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -227,7 +231,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                   decoration: BoxDecoration(
                                     color: Colors.grey.withOpacity(.1),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(10)),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.only(
@@ -240,7 +244,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                       maxLines: 15,
                                       style: TextStyle(
                                           fontSize:
-                                              SizeConfig.scaleTextFont(15),
+                                          SizeConfig.scaleTextFont(15),
                                           color: Colors.black,
                                           wordSpacing: 4),
                                     ),
@@ -262,7 +266,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                   decoration: BoxDecoration(
                                     color: Colors.grey.withOpacity(.1),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(10)),
                                   ),
                                   child: InkWell(
                                     onTap: () {
@@ -290,7 +294,7 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                           widget.uploadedFileName,
                                           style: TextStyle(
                                               fontSize:
-                                                  SizeConfig.scaleTextFont(15),
+                                              SizeConfig.scaleTextFont(15),
                                               color: Colors.black,
                                               wordSpacing: 4),
                                         ),
@@ -309,20 +313,20 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                           backgroundColor: Color(0xff4C5175),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                            BorderRadius.circular(10),
                                           ),
                                         ),
                                         onPressed: () {
                                           setState(() {
                                             widget.request_status =
-                                                "Accepted Request";
+                                            "Accepted Request";
                                           });
 
                                           FirebaseFireStoreHelper.instance
                                               .updateRequest(
-                                                  widget.jobId,
-                                                  widget.progId,
-                                                  widget.request_status);
+                                              widget.jobId,
+                                              widget.progId,
+                                              widget.request_status);
                                         },
                                         child: TextStyleWidget(
                                             "Accept",
@@ -342,20 +346,20 @@ class _AcceptPersonState extends State<AcceptPerson> {
                                           backgroundColor: Color(0xff4C5175),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                            BorderRadius.circular(10),
                                           ),
                                         ),
                                         onPressed: () {
                                           setState(() {
                                             widget.request_status =
-                                                "Rejected Request";
+                                            "Rejected Request";
                                           });
 
                                           FirebaseFireStoreHelper.instance
                                               .updateRequest(
-                                                  widget.jobId,
-                                                  widget.progId,
-                                                  widget.request_status);
+                                              widget.jobId,
+                                              widget.progId,
+                                              widget.request_status);
                                         },
                                         child: TextStyleWidget(
                                             "Reject",
@@ -382,9 +386,10 @@ class _AcceptPersonState extends State<AcceptPerson> {
 
   Future fetchUserInfo(String userId) async {
     Users user =
-        await FirebaseFireStoreHelper.instance.getUserForAccept(userId);
+    await FirebaseFireStoreHelper.instance.getUserForAccept(userId);
     setState(() {
       users = user;
     });
   }
+
 }

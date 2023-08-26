@@ -12,6 +12,7 @@ import '../../customWidget/textStyleWidget.dart';
 class SettingScreen extends StatefulWidget {
   static const String id = "setting_screen";
 
+
   @override
   State<SettingScreen> createState() => _SettingScreenState();
 }
@@ -20,6 +21,7 @@ class _SettingScreenState extends State<SettingScreen> {
   bool showProfPic = true;
   bool recNot = true;
   String userId = FirebaseAuthController.fireAuthHelper.userId();
+
 
   // change pass
   late TextEditingController currentPasswordController;
@@ -32,7 +34,6 @@ class _SettingScreenState extends State<SettingScreen> {
     setState(() {
       _loadSettings();
     });
-
     //change pass
     currentPasswordController = TextEditingController();
     newPasswordController = TextEditingController();
@@ -41,175 +42,177 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF5F5F5),
-      appBar: AppBar(
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Color(0xffF5F5F5),
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: SizeConfig.scaleWidth(20),
+        appBar: AppBar(
+          backgroundColor: Color(0xffF5F5F5),
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: SizeConfig.scaleWidth(20),
+            ),
+            color: Color(0xff4C5175),
           ),
-          color: Color(0xff4C5175),
         ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(15),
-        child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            TextStyleWidget("Settings", Color(0xffCBB523),
-                SizeConfig.scaleTextFont(15), FontWeight.w500),
-            SizedBox(
-              height: SizeConfig.scaleHeight(30),
-            ),
-            Center(
-              child: Image.asset(
-                "assets/images/setting_image.png",
-                width: SizeConfig.scaleWidth(160),
-                height: SizeConfig.scaleHeight(180),
-                fit: BoxFit.cover,
+        body: Padding(
+          padding: EdgeInsets.all(15),
+          child: SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              TextStyleWidget("Settings", Color(0xffCBB523),
+                  SizeConfig.scaleTextFont(15), FontWeight.w500),
+              SizedBox(
+                height: SizeConfig.scaleHeight(30),
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.scaleHeight(10),
-            ),
-            TextStyleWidget("Language", Color(0xffCBB523),
-                SizeConfig.scaleTextFont(15), FontWeight.w500),
-            SizedBox(
-              height: SizeConfig.scaleHeight(7),
-            ),
-            Card(
-              elevation: 7,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+              Center(
+                child: Image.asset(
+                  "assets/images/setting_image.png",
+                  width: SizeConfig.scaleWidth(160),
+                  height: SizeConfig.scaleHeight(180),
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.scaleWidth(20),
-                      top: SizeConfig.scaleHeight(15),
-                      right: SizeConfig.scaleWidth(20),
-                    ),
-                    child: Row(
-                      children: [
-                        Image.asset("assets/images/UK.png"),
-                        SizedBox(
-                          width: SizeConfig.scaleWidth(50),
-                        ),
-                        TextStyleWidget(
-                            "English(United kingdom)",
-                            Color(0xff091A20),
-                            SizeConfig.scaleTextFont(10),
-                            FontWeight.w500),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(
-                            Icons.verified_rounded,
-                            color: Color(0xffCBB523),
-                            size: SizeConfig.scaleWidth(18),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Divider(),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: SizeConfig.scaleWidth(20),
-                        bottom: SizeConfig.scaleHeight(15)),
-                    child: Row(
-                      children: [
-                        Image.asset("assets/images/SA.png"),
-                        SizedBox(
-                          width: SizeConfig.scaleWidth(50),
-                        ),
-                        TextStyleWidget(
-                            "Arabic (Saudi Arabia)",
-                            Color(0xff091A20),
-                            SizeConfig.scaleTextFont(10),
-                            FontWeight.w500),
-                        SizedBox(
-                          width: SizeConfig.scaleWidth(100),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+              SizedBox(
+                height: SizeConfig.scaleHeight(10),
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.scaleHeight(5),
-            ),
-            TextStyleWidget("privacy & security", Color(0xffCBB523),
-                SizeConfig.scaleTextFont(15), FontWeight.w500),
-            SizedBox(
-              height: SizeConfig.scaleHeight(5),
-            ),
-            Card(
-              elevation: 7,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+              TextStyleWidget("Language", Color(0xffCBB523),
+                  SizeConfig.scaleTextFont(15), FontWeight.w500),
+              SizedBox(
+                height: SizeConfig.scaleHeight(7),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.scaleWidth(20)),
-                    child: buildPrivacyOptionRow(
-                        'Show Profile Picture',
-                        showProfPic,
-                        (value) =>
-                            _handleSwitchChange(value, '$userId-showProfPic')),
-                  ),
-                  Divider(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.scaleWidth(20)),
-                    child: buildPrivacyOptionRow(
-                        "Receive notifications",
-                        recNot,
-                        (value) =>
-                            _handleSwitchChange(value, '$userId-recNot')),
-                  ),
-                ],
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                showBottomSheet(context);
-              },
-              child: Card(
+              Card(
                 elevation: 7,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.scaleWidth(20),
-                      vertical: SizeConfig.scaleHeight(15)),
-                  child: Row(
-                    children: [
-                      Icon(Icons.lock_reset,
-                          color: Color(0xffCBB523),
-                          size: SizeConfig.scaleWidth(22)),
-                      SizedBox(
-                        width: SizeConfig.scaleWidth(10),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: SizeConfig.scaleWidth(20),
+                        top: SizeConfig.scaleHeight(15),
+                        right: SizeConfig.scaleWidth(20),
                       ),
-                      TextStyleWidget("Change Password", Color(0xff091A20),
-                          SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    ],
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/UK.png"),
+                          SizedBox(
+                            width: SizeConfig.scaleWidth(50),
+                          ),
+                          TextStyleWidget(
+                              "English(United kingdom)",
+                              Color(0xff091A20),
+                              SizeConfig.scaleTextFont(10),
+                              FontWeight.w500),
+                          Spacer(),
+                          InkWell(
+                            child: Icon(
+                              Icons.verified_rounded,
+                              color: Color(0xffCBB523),
+                              size: SizeConfig.scaleWidth(18),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Divider(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: SizeConfig.scaleWidth(20),
+                          bottom: SizeConfig.scaleHeight(15)),
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/SA.png"),
+                          SizedBox(
+                            width: SizeConfig.scaleWidth(50),
+                          ),
+                          TextStyleWidget(
+                              "Arabic (Saudi Arabia)",
+                              Color(0xff091A20),
+                              SizeConfig.scaleTextFont(10),
+                              FontWeight.w500),
+                          SizedBox(
+                            width: SizeConfig.scaleWidth(100),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.scaleHeight(5),
+              ),
+              TextStyleWidget("privacy & security", Color(0xffCBB523),
+                  SizeConfig.scaleTextFont(15), FontWeight.w500),
+              SizedBox(
+                height: SizeConfig.scaleHeight(5),
+              ),
+              Card(
+                elevation: 7,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.scaleWidth(20)),
+                      child: buildPrivacyOptionRow(
+                          'Show Profile Picture',
+                          showProfPic,
+                          (value) =>
+                              _handleSwitchChange(value, '$userId-showProfPic')),
+                    ),
+                    Divider(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.scaleWidth(20)),
+                      child: buildPrivacyOptionRow(
+                          "Receive notifications",
+                          recNot,
+                          (value) =>
+                              _handleSwitchChange(value, '$userId-recNot')),
+                    ),
+                  ],
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  showBottomSheet(context);
+                },
+                child: Card(
+                  elevation: 7,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.scaleWidth(20),
+                        vertical: SizeConfig.scaleHeight(15)),
+                    child: Row(
+                      children: [
+                        Icon(Icons.lock_reset,
+                            color: Color(0xffCBB523),
+                            size: SizeConfig.scaleWidth(22)),
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(10),
+                        ),
+                        TextStyleWidget("Change Password", Color(0xff091A20),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
     );
@@ -217,6 +220,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   void showBottomSheet(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(40),
@@ -316,7 +320,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container (
       // height: SizeConfig.scaleHeight(500),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -325,216 +329,220 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
           topRight: Radius.circular(40),
         ),
       ),
-      child: Padding(
-        padding: EdgeInsetsDirectional.only(
-          top: SizeConfig.scaleHeight(10),
-          bottom: SizeConfig.scaleHeight(10),
-          start: SizeConfig.scaleWidth(20),
-          end: SizeConfig.scaleWidth(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 5,
-              margin: EdgeInsetsDirectional.only(
-                top: SizeConfig.scaleHeight(20),
-                start: SizeConfig.scaleWidth(150),
-                end: SizeConfig.scaleWidth(150),
-              ),
-              decoration: BoxDecoration(
-                color: Color(0xffCBB523),
-                borderRadius: BorderRadius.circular(5),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextStyleWidget("Change Password", Color(0xffCBB523),
-                SizeConfig.scaleTextFont(22), FontWeight.w500),
-            SizedBox(
-              height: 10,
-            ),
-            TextStyleWidget("Current Password: ", Color(0xff4C5175),
-                SizeConfig.scaleTextFont(15), FontWeight.w500),
-            SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              height: 50,
-              child: TextField(
-                controller: currentPasswordController,
-                keyboardType: TextInputType.text,
-                obscureText: _obscureTextCurrent,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.shade200,
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      width: 0,
-                      color: Colors.grey.shade100,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      width: 1.5,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _obscureTextCurrent = !_obscureTextCurrent;
-                      });
-                    },
-                    child: Icon(
-                      _obscureTextCurrent
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: _obscureTextCurrent
-                          ? Color(0xffcbb523)
-                          : Color(0xffcbb523),
-                    ),
-                  ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsetsDirectional.only(
+            top: SizeConfig.scaleHeight(10),
+            // bottom: SizeConfig.scaleHeight(10),
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            start: SizeConfig.scaleWidth(20),
+            end: SizeConfig.scaleWidth(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Container(
+                height: 5,
+                margin: EdgeInsetsDirectional.only(
+                  top: SizeConfig.scaleHeight(20),
+                  start: SizeConfig.scaleWidth(150),
+                  end: SizeConfig.scaleWidth(150),
+                ),
+                decoration: BoxDecoration(
+                  color: Color(0xffCBB523),
+                  borderRadius: BorderRadius.circular(5),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextStyleWidget("New Password: ", Color(0xff4C5175),
-                SizeConfig.scaleTextFont(15), FontWeight.w500),
-            SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              height: 50,
-              child: TextField(
-                controller: newPasswordController,
-                keyboardType: TextInputType.text,
-                obscureText: _obscureTextNew,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.shade200,
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      width: 0,
-                      color: Colors.grey.shade100,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      width: 1.5,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _obscureTextNew = !_obscureTextNew;
-                      });
-                    },
-                    child: Icon(
-                      _obscureTextNew ? Icons.visibility_off : Icons.visibility,
-                      color: _obscureTextNew
-                          ? Color(0xffcbb523)
-                          : Color(0xffcbb523),
-                    ),
-                  ),
-                ),
+              SizedBox(
+                height: 10,
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextStyleWidget("Confirm Password: ", Color(0xff4C5175),
-                SizeConfig.scaleTextFont(15), FontWeight.w500),
-            SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              height: 50,
-              child: TextField(
-                controller: confirmPasswordController,
-                keyboardType: TextInputType.text,
-                obscureText: _obscureTextConfirmNew,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.shade200,
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      width: 0,
-                      color: Colors.grey.shade100,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      width: 1.5,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _obscureTextConfirmNew = !_obscureTextConfirmNew;
-                      });
-                    },
-                    child: Icon(
-                      _obscureTextConfirmNew
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: _obscureTextConfirmNew
-                          ? Color(0xffcbb523)
-                          : Color(0xffcbb523),
-                    ),
-                  ),
-                ),
+              TextStyleWidget("Change Password", Color(0xffCBB523),
+                  SizeConfig.scaleTextFont(22), FontWeight.w500),
+              SizedBox(
+                height: 10,
               ),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Center(
-              child: Container(
+              TextStyleWidget("Current Password: ", Color(0xff4C5175),
+                  SizeConfig.scaleTextFont(15), FontWeight.w500),
+              SizedBox(
+                height: 5,
+              ),
+              SizedBox(
                 height: 50,
-                width: 300,
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xff4C5175),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                child: TextField(
+                  controller: currentPasswordController,
+                  keyboardType: TextInputType.text,
+                  obscureText: _obscureTextCurrent,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        width: 0,
+                        color: Colors.grey.shade100,
                       ),
                     ),
-                    onPressed: () async {
-                      if (await _changePassword())
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) {
-                          return LoginScreen(userType: "programmer");
-                        }));
-                    },
-                    child: TextStyleWidget("Save ", Colors.white,
-                        SizeConfig.scaleTextFont(20), FontWeight.w500)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        width: 1.5,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureTextCurrent = !_obscureTextCurrent;
+                        });
+                      },
+                      child: Icon(
+                        _obscureTextCurrent
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: _obscureTextCurrent
+                            ? Color(0xffcbb523)
+                            : Color(0xffcbb523),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 10,
+              ),
+              TextStyleWidget("New Password: ", Color(0xff4C5175),
+                  SizeConfig.scaleTextFont(15), FontWeight.w500),
+              SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: newPasswordController,
+                  keyboardType: TextInputType.text,
+                  obscureText: _obscureTextNew,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        width: 0,
+                        color: Colors.grey.shade100,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        width: 1.5,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureTextNew = !_obscureTextNew;
+                        });
+                      },
+                      child: Icon(
+                        _obscureTextNew ? Icons.visibility_off : Icons.visibility,
+                        color: _obscureTextNew
+                            ? Color(0xffcbb523)
+                            : Color(0xffcbb523),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextStyleWidget("Confirm Password: ", Color(0xff4C5175),
+                  SizeConfig.scaleTextFont(15), FontWeight.w500),
+              SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: confirmPasswordController,
+                  keyboardType: TextInputType.text,
+                  obscureText: _obscureTextConfirmNew,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        width: 0,
+                        color: Colors.grey.shade100,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        width: 1.5,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureTextConfirmNew = !_obscureTextConfirmNew;
+                        });
+                      },
+                      child: Icon(
+                        _obscureTextConfirmNew
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: _obscureTextConfirmNew
+                            ? Color(0xffcbb523)
+                            : Color(0xffcbb523),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Center(
+                child: Container(
+                  height: 50,
+                  width: 300,
+                  child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Color(0xff4C5175),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (await _changePassword())
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) {
+                            return LoginScreen(userType: "programmer");
+                          }));
+                      },
+                      child: TextStyleWidget("Save ", Colors.white,
+                          SizeConfig.scaleTextFont(20), FontWeight.w500)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
