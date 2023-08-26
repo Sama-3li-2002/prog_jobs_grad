@@ -96,6 +96,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xfffF5F5F5),
       appBar: AppBar(
         backgroundColor: Color(0xfffF5F5F5),
@@ -214,6 +215,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                     width: SizeConfig.scaleWidth(90),
                     height: SizeConfig.scaleHeight(40),
                     child: ElevatedButton(
+
                       onPressed: () {
                         if (_clickCount < 4) {
                           setState(() {
@@ -221,6 +223,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                             textFields.add(
                               TextField(
                                 controller: controllers[index],
+                                // enabled: _clickCount <= 3,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                     hintText: 'write...',

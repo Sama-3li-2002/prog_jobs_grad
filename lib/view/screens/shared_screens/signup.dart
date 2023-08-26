@@ -98,6 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Color(0xfffafafa),
         elevation: 0,
@@ -113,7 +114,6 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
       backgroundColor: Color(0xfffafafa),
-      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
