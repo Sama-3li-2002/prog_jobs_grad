@@ -242,36 +242,81 @@ Widget BuildMenuItems(BuildContext context) {
   );
 }
 
+
 void showLogoutDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Log Out"),
-        content: Text("Are you sure you want to log out?"),
-        elevation: 20,
+      return Dialog(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(color: Colors.grey, width: 1.5)),
-        actions: [
-          TextButton(
-            onPressed: () {
-              FirebaseAuthController.fireAuthHelper.signOut();
-              Navigator.of(context)
-                  .pushReplacement(MaterialPageRoute(builder: (context) {
-                return UserTypeScreen();
-              }));
-            },
-            child: Text("Log Out"),
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16.0),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("Cancel"),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "Log Out",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Divider(),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "Are you sure you want to log out?",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              ButtonBar(
+                alignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      FirebaseAuthController.fireAuthHelper.signOut();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+                        return UserTypeScreen();
+                      }));
+                    },
+                    child: Text(
+                      "Log Out",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       );
     },
   );
 }
+
+

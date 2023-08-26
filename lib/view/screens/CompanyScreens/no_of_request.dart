@@ -107,146 +107,139 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                       }));
                                     },
                                     child: Container(
-                                        height: SizeConfig.scaleHeight(80),
-                                        width: SizeConfig.scaleWidth(360),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.white),
-                                        margin: EdgeInsets.only(
-                                          left: SizeConfig.scaleWidth(15),
-                                          right: SizeConfig.scaleWidth(15),
-                                          bottom: SizeConfig.scaleHeight(10),
-                                        ),
-                                        child: Padding(
-                                            padding: EdgeInsets.all(
-                                                SizeConfig.scaleWidth(8)),
-                                            child: Row(children: [
-                                              Card(
-                                                  clipBehavior: Clip.antiAlias,
-                                                  shape: CircleBorder(),
-                                                  elevation: 4,
-                                                  color: Color(0xffcbb523),
-                                                  child: SizedBox(
-                                                      width:
-                                                          SizeConfig.scaleWidth(
-                                                              60),
-                                                      height: SizeConfig
-                                                          .scaleHeight(100),
-                                                      child: ClipOval(
-                                                          child: FutureBuilder<
-                                                                  String>(
-                                                              future: fetchUserImage(
-                                                                  NoOfRequestsProvider
-                                                                      .submittedRequests[
-                                                                          index]
-                                                                      .ProgId!),
-                                                              builder: (context,
-                                                                  snapshot) {
-                                                                final imageUrl =
-                                                                    snapshot
-                                                                        .data;
-                                                                if (imageUrl !=
-                                                                        null &&
-                                                                    imageUrl
-                                                                        .isNotEmpty) {
-                                                                  return Image
-                                                                      .network(
-                                                                    imageUrl,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  );
-                                                                } else {
-                                                                  return Text(
-                                                                      'User image is empty.');
-                                                                }
-                                                              })))),
-                                              Flexible(
-                                                child: Column(
-                                                  children: [
-                                                    Spacer(),
-                                                    Row(
+                                      color: Colors.white,
+                                      margin: EdgeInsets.all(
+                                        SizeConfig.scaleWidth(15),
+                                      ),
+                                      child: Material(
+                                        elevation: 2,
+                                        child: Container(
+                                            height: SizeConfig.scaleHeight(80),
+                                            width: SizeConfig.scaleWidth(360),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                               ),
+                                            margin: EdgeInsets.only(
+                                              left: SizeConfig.scaleWidth(5),
+                                              right: SizeConfig.scaleWidth(15),
+                                              bottom: SizeConfig.scaleHeight(10),
+                                            ),
+                                            child: Padding(
+                                                padding: EdgeInsets.all(
+                                                    SizeConfig.scaleWidth(8)),
+                                                child: Row(children: [
+                                                  Card(
+                                                      clipBehavior: Clip.antiAlias,
+                                                      shape: CircleBorder(),
+                                                      elevation: 4,
+                                                      color: Color(0xffcbb523),
+                                                      child: SizedBox(
+                                                          width:
+                                                              SizeConfig.scaleWidth(
+                                                                  60),
+                                                          height: SizeConfig
+                                                              .scaleHeight(100),
+                                                          child: ClipOval(
+                                                              child: FutureBuilder<
+                                                                      String>(
+                                                                  future: fetchUserImage(
+                                                                      NoOfRequestsProvider
+                                                                          .submittedRequests[
+                                                                              index]
+                                                                          .ProgId!),
+                                                                  builder: (context,
+                                                                      snapshot) {
+                                                                    final imageUrl =
+                                                                        snapshot
+                                                                            .data;
+                                                                    if (imageUrl !=
+                                                                            null &&
+                                                                        imageUrl
+                                                                            .isNotEmpty) {
+                                                                      return Image
+                                                                          .network(
+                                                                        imageUrl,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      );
+                                                                    } else {
+                                                                      return Text(
+                                                                          'User image is empty.');
+                                                                    }
+                                                                  })))),
+                                                  Flexible(
+                                                    child: Column(
                                                       children: [
-                                                        TextStyleWidget(
-                                                          widget.jobs.job_name!,
-                                                          Color(0xff4C5175),
-                                                          SizeConfig
-                                                              .scaleTextFont(
-                                                                  15),
-                                                          FontWeight.w500,
-                                                        ),
                                                         Spacer(),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                            right: SizeConfig
-                                                                .scaleWidth(15),
-                                                          ),
-                                                          child:
-                                                              TextStyleWidget(
-                                                            NoOfRequestsProvider
-                                                                .submittedRequests[
-                                                                    index]
-                                                                .current_time!,
-                                                            Color(0xff4C5175),
-                                                            SizeConfig
-                                                                .scaleTextFont(
-                                                                    10),
-                                                            FontWeight.w500,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.account_circle,
-                                                          size: SizeConfig
-                                                              .scaleWidth(15),
-                                                          color:
-                                                              Color(0xffcbb523),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        TextStyleWidget(
-                                                          NoOfRequestsProvider
+                                                        Row(
+                                                          children: [
+                                                            TextStyleWidget(
+                                                              widget.jobs.job_name!,
+                                                              Color(0xff4C5175),
+                                                              SizeConfig
+                                                                  .scaleTextFont(
+                                                                      15),
+                                                              FontWeight.w500,
+                                                            ),
+                                                            Spacer(),
+                                                            TextStyleWidget(
+                                                                NoOfRequestsProvider
                                                               .submittedRequests[
                                                                   index]
-                                                              .fullName!,
-                                                          Colors.black,
-                                                          SizeConfig
+                                                              .current_time!,
+                                                                Color(0xff4C5175),
+                                                                SizeConfig
                                                               .scaleTextFont(
                                                                   10),
-                                                          FontWeight.w500,
+                                                                FontWeight.w500,
+                                                              )
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons.account_circle,
+                                                              size: SizeConfig
+                                                                  .scaleWidth(15),
+                                                              color:
+                                                                  Color(0xffcbb523),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            TextStyleWidget(
+                                                              NoOfRequestsProvider
+                                                                  .submittedRequests[
+                                                                      index]
+                                                                  .fullName!,
+                                                              Colors.black,
+                                                              SizeConfig
+                                                                  .scaleTextFont(
+                                                                      10),
+                                                              FontWeight.w500,
+                                                            ),
+                                                            Spacer(),
+                                                            TextStyleWidget(
+                                                                NoOfRequestsProvider
+                                                              .submittedRequests[
+                                                                  index]
+                                                              .current_date!,
+                                                                Color(0xff4C5175),
+                                                                SizeConfig
+                                                              .scaleTextFont(
+                                                                  10),
+                                                                FontWeight.w500,
+                                                              ),
+                                                          ],
                                                         ),
                                                         Spacer(),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                            right: SizeConfig
-                                                                .scaleWidth(15),
-                                                          ),
-                                                          child:
-                                                              TextStyleWidget(
-                                                            NoOfRequestsProvider
-                                                                .submittedRequests[
-                                                                    index]
-                                                                .current_date!,
-                                                            Color(0xff4C5175),
-                                                            SizeConfig
-                                                                .scaleTextFont(
-                                                                    10),
-                                                            FontWeight.w500,
-                                                          ),
-                                                        ),
                                                       ],
                                                     ),
-                                                    Spacer(),
-                                                  ],
-                                                ),
-                                              )
-                                            ]))))
+                                                  )
+                                                ]))),
+                                      ),
+                                    ))
                               ]);
                             })
                       ],

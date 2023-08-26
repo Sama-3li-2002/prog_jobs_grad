@@ -58,7 +58,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                                     child: Icon(
                                       Icons.arrow_back_ios,
                                       color: Colors.white,
-                                      size: SizeConfig.scaleWidth(14),
+                                      size: SizeConfig.scaleWidth(20),
                                     ),
                                   )),
                               Padding(
@@ -74,7 +74,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                                     },
                                     child: Icon(Icons.edit_sharp,
                                         color: Colors.white,
-                                        size: SizeConfig.scaleWidth(20)),
+                                        size: SizeConfig.scaleWidth(23)),
                                   )),
                             ],
                           ),

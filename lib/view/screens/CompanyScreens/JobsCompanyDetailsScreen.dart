@@ -119,7 +119,7 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                       },
                                       icon: Icon(
                                         Icons.edit_calendar_rounded,
-                                        size: SizeConfig.scaleWidth(30),
+                                        size: SizeConfig.scaleWidth(25),
                                       ),
                                       color: Color(0xffD2D0D0FF))
                                 ],
@@ -168,7 +168,7 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                   alignment: Alignment.centerRight,
                                   child: TextStyleWidget(
                                       widget.items.isNotEmpty
-                                          ? widget.items[0].salary ?? ""
+                                          ? widget.items[0].salary! +""+r"$/month" ?? ""
                                           : "No Salary",
                                       Color(0xff000000),
                                       SizeConfig.scaleTextFont(15),
@@ -185,7 +185,7 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                 Container(
                                   width: double.infinity,
                                   child: Card(
-                                    elevation: 7,
+                                    elevation: 3,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -212,7 +212,7 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                     SizeConfig.scaleTextFont(15),
                                     FontWeight.w500),
                                 Card(
-                                  elevation: 7,
+                                  elevation: 4,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),

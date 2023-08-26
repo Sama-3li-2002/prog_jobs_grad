@@ -372,7 +372,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                       child: Row(
                         children: [
                           TextStyleWidget(
-                            'All Jobs:',
+                            'Available Jobs:',
                             Color(0xffcbb523),
                             SizeConfig.scaleTextFont(15),
                             FontWeight.w500,

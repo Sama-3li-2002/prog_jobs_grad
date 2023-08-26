@@ -72,7 +72,6 @@ class _MessageComState extends State<MessageCom> {
                           }));
                         },
                         child: Card(
-                          elevation: 4,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),

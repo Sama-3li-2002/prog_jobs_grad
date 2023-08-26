@@ -170,7 +170,7 @@ class _JobsDetailsState extends State<JobsDetails> {
                       alignment: Alignment.centerRight,
                       child: TextStyleWidget(
                           widget.items.isNotEmpty
-                              ? widget.items[0].salary ?? ""
+                              ? widget.items[0].salary!+""+r"$/month"  ?? ""
                               : "No Salary",
                           Color(0xff000000),
                           SizeConfig.scaleTextFont(15),
@@ -184,7 +184,7 @@ class _JobsDetailsState extends State<JobsDetails> {
                     Container(
                       width: double.infinity,
                       child: Card(
-                        elevation: 7,
+                        elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -206,7 +206,7 @@ class _JobsDetailsState extends State<JobsDetails> {
                     TextStyleWidget("required skills:", Color(0xff4C5175),
                         SizeConfig.scaleTextFont(15), FontWeight.w500),
                     Card(
-                      elevation: 7,
+                      elevation: 2,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

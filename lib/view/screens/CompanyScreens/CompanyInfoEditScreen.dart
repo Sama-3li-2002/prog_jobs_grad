@@ -121,23 +121,34 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
                       Positioned(
                         bottom: SizeConfig.scaleHeight(0),
                         right: SizeConfig.scaleWidth(0),
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.grey[400]!,
+                              width: 1.5, // Border width
+                            ),
+                          ),
                           child: FloatingActionButton(
-                              backgroundColor: Color(0xff4C5175),
+                              backgroundColor: Colors.grey.shade200,
+                              foregroundColor: Colors.grey,
                               onPressed: () {
                                 _pickCompanyImage();
                               },
                               child: Icon(
                                 Icons.camera_alt_outlined,
-                                color: Colors.white,
-                                size: SizeConfig.scaleWidth(20),
+                                color: Color(0xff4C5175),
+                                size: SizeConfig.scaleWidth(16),
                               )),
                         ),
                       ),
                     ],
                   ),
+
+
+
                 ),
                 SizedBox(
                   height: SizeConfig.scaleHeight(10),

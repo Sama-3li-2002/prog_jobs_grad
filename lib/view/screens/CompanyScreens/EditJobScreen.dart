@@ -144,19 +144,21 @@ class _EditJobScreenState extends State<EditJobScreen> {
                         SizedBox(
                           height: SizeConfig.scaleHeight(65),
                         ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.location_on_sharp,
+                              Icons.apartment,
                               color: Color(0xffCBB523),
                               size: SizeConfig.scaleWidth(15),
                             ),
                             TextStyleWidget(
                                 comInfoProvider.comInfoList.isNotEmpty
-                                    ? comInfoProvider.comInfoList[0].address ??
-                                        ""
-                                    : "No Address",
+                                    ? comInfoProvider
+                                    .comInfoList[0].companyName ??
+                                    ""
+                                    : "No Company Name",
                                 Color(0xff4C5175),
                                 SizeConfig.scaleTextFont(15),
                                 FontWeight.w500),
@@ -186,7 +188,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                     SizeConfig.scaleTextFont(14),
                                     FontWeight.w500),
                                 Card(
-                                  elevation: 7,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -198,9 +199,10 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                       height: SizeConfig.scaleHeight(55),
                                       child: TextField(
                                         controller: _sarlary,
+                                          autofocus: true,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: 'Write..',
+                                            hintText: r"$/months",
                                             hintStyle: TextStyle(
                                               fontSize:
                                                   SizeConfig.scaleTextFont(12),
@@ -218,7 +220,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                     SizeConfig.scaleTextFont(14),
                                     FontWeight.w500),
                                 Card(
-                                  elevation: 7,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -237,22 +238,14 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: SizeConfig.scaleHeight(5),
-                                ),
-                                Row(
-                                  children: [
-                                    TextStyleWidget(
-                                        "required skills:",
-                                        Color(0xff4C5175),
-                                        SizeConfig.scaleTextFont(14),
-                                        FontWeight.w500),
-                                  ],
-                                ),
-                                SizedBox(
                                   height: SizeConfig.scaleHeight(10),
                                 ),
+                                TextStyleWidget(
+                                    "required skills:",
+                                    Color(0xff4C5175),
+                                    SizeConfig.scaleTextFont(14),
+                                    FontWeight.w500),
                                 Card(
-                                  elevation: 7,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -262,13 +255,79 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.only(
-                                          left: SizeConfig.scaleWidth(5),
+                                          left: SizeConfig.scaleWidth(8),
                                           top: SizeConfig.scaleHeight(2),
                                           bottom: SizeConfig.scaleHeight(2),
                                         ),
-                                        child: TextFieldWidget.textfieldCon(
-                                          controller: _requried_skills_one,
-                                          hint_Text: "add the skill",
+
+                                        child: SizedBox(
+                                          width: SizeConfig.scaleWidth(360),
+                                          height: SizeConfig.scaleHeight(48),
+                                          child: TextField(
+                                            controller: _requried_skills_one,
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: 'add the skill..',
+                                                hintStyle: TextStyle(
+                                                  fontSize:
+                                                  SizeConfig.scaleTextFont(12),
+                                                )),
+                                          ),
+                                        ),
+
+                                      ),
+                                      Container(
+                                        width: double.infinity,
+                                        height: 1.5,
+                                        color: Colors.grey.shade100,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: SizeConfig.scaleWidth(8),
+                                          top: SizeConfig.scaleHeight(2),
+                                          bottom: SizeConfig.scaleHeight(2),
+                                        ),
+
+                                        child: SizedBox(
+                                          width: SizeConfig.scaleWidth(360),
+                                          height: SizeConfig.scaleHeight(48),
+                                          child: TextField(
+                                            controller: _requried_skills_two,
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: 'add the skill..',
+                                                hintStyle: TextStyle(
+                                                  fontSize:
+                                                  SizeConfig.scaleTextFont(12),
+                                                )),
+                                          ),
+                                        ),
+
+                                      ),
+                                      Container(
+                                        width: double.infinity,
+                                        height: 1.5,
+                                        color: Colors.grey.shade100,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: SizeConfig.scaleWidth(8),
+                                          top: SizeConfig.scaleHeight(2),
+                                          bottom: SizeConfig.scaleHeight(2),
+                                        ),
+                                        child: SizedBox(
+                                          width: SizeConfig.scaleWidth(360),
+                                          height: SizeConfig.scaleHeight(48),
+                                          child: TextField(
+                                            controller: _requried_skills_three,
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: 'add the skill..',
+                                                hintStyle: TextStyle(
+                                                  fontSize:
+                                                  SizeConfig.scaleTextFont(12),
+                                                )),
+                                          ),
                                         ),
                                       ),
                                       Container(
@@ -278,45 +337,24 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
-                                          left: SizeConfig.scaleWidth(5),
-                                          top: SizeConfig.scaleHeight(2),
-                                          bottom: SizeConfig.scaleHeight(2),
-                                        ),
-                                        child: TextFieldWidget.textfieldCon(
-                                          controller: _requried_skills_two,
-                                          hint_Text: "add the skill",
-                                        ),
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        height: 1.5,
-                                        color: Colors.grey.shade100,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: SizeConfig.scaleWidth(5),
-                                          top: SizeConfig.scaleHeight(2),
-                                          bottom: SizeConfig.scaleHeight(2),
-                                        ),
-                                        child: TextFieldWidget.textfieldCon(
-                                          controller: _requried_skills_three,
-                                          hint_Text: "add the skill",
-                                        ),
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        height: 1.5,
-                                        color: Colors.grey.shade100,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: SizeConfig.scaleWidth(5),
+                                          left: SizeConfig.scaleWidth(8),
                                           bottom: SizeConfig.scaleHeight(2),
                                           top: SizeConfig.scaleHeight(2),
                                         ),
-                                        child: TextFieldWidget.textfieldCon(
-                                          controller: _requried_skills_four,
-                                          hint_Text: "add the skill",
+
+                                        child: SizedBox(
+                                          width: SizeConfig.scaleWidth(360),
+                                          height: SizeConfig.scaleHeight(48),
+                                          child: TextField(
+                                            controller: _requried_skills_four,
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: 'add the skill..',
+                                                hintStyle: TextStyle(
+                                                  fontSize:
+                                                  SizeConfig.scaleTextFont(12),
+                                                )),
+                                          ),
                                         ),
                                       ),
                                     ],

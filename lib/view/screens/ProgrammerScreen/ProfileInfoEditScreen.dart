@@ -134,21 +134,30 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                       ),
                     ),
                   ),
+
                   Positioned(
-                    bottom: SizeConfig.scaleHeight(0),
-                    right: SizeConfig.scaleWidth(10),
-                    child: SizedBox(
-                      width: 40,
-                      height: 40,
+                    bottom: SizeConfig.scaleHeight(12),
+                    right: SizeConfig.scaleWidth(15),
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.grey[400]!,
+                          width: 1.5,
+                        ),
+                      ),
                       child: FloatingActionButton(
-                          backgroundColor: Color(0xff4C5175),
+                          backgroundColor: Colors.grey.shade200,
+                          foregroundColor: Colors.grey,
                           onPressed: () {
                             _pickImage();
                           },
                           child: Icon(
                             Icons.camera_alt_outlined,
-                            color: Colors.white,
-                            size: SizeConfig.scaleWidth(22),
+                            color: Color(0xff4C5175),
+                            size: SizeConfig.scaleWidth(16),
                           )),
                     ),
                   ),
@@ -159,7 +168,7 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: SizeConfig.scaleHeight(10),
+                  top: SizeConfig.scaleHeight(15),
                 ),
                 child: Stack(
                   children: [
@@ -458,8 +467,8 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                     Align(
                       alignment: Alignment.topCenter,
                       child: SizedBox(
-                        width: SizeConfig.scaleWidth(80),
-                        height: SizeConfig.scaleHeight(80),
+                        width: SizeConfig.scaleWidth(65),
+                        height: SizeConfig.scaleHeight(65),
                         child: CircleAvatar(
                           backgroundColor: Color(0xff4C5175),
                           radius: 50,

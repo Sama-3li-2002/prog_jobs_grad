@@ -121,7 +121,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
                           height: SizeConfig.scaleHeight(30),
                         ),
                         Card(
-                          elevation: 10,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(50),
@@ -134,12 +133,12 @@ class _ProfileInfoState extends State<ProfileInfo> {
                               right: SizeConfig.scaleWidth(20),
                             ),
                             child: Container(
-                              constraints: BoxConstraints(minHeight: 380),
+                              constraints: BoxConstraints(minHeight: 420),
                               width: double.infinity,
                               child: Column(
                                 children: [
                                   SizedBox(
-                                    height: SizeConfig.scaleHeight(15),
+                                    height: SizeConfig.scaleHeight(25),
                                   ),
                                   Align(
                                       alignment: Alignment.bottomLeft,

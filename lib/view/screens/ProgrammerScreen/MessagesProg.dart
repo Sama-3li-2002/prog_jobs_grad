@@ -75,7 +75,6 @@ class _MessagesProgState extends State<MessagesProg> {
                           }));
                         },
                         child: Card(
-                          elevation: 4,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),

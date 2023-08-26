@@ -467,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           horizontal: SizeConfig.scaleWidth(10)),
                       child: Row(
                         children: [
-                          TextStyleWidget('All Jobs:', Color(0xffcbb523),
+                          TextStyleWidget('Available Jobs:', Color(0xffcbb523),
                               SizeConfig.scaleTextFont(15), FontWeight.w500),
                           Spacer(),
                           InkWell(

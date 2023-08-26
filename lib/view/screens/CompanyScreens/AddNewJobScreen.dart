@@ -144,18 +144,26 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                     Positioned(
                       bottom: SizeConfig.scaleHeight(0),
                       right: SizeConfig.scaleWidth(0),
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.grey[400]!,
+                            width: 1.5, // Border width
+                          ),
+                        ),
                         child: FloatingActionButton(
-                            backgroundColor: Color(0xff4C5175),
+                            backgroundColor: Colors.grey.shade200,
+                            foregroundColor: Colors.grey,
                             onPressed: () {
                               _pickImage();
                             },
                             child: Icon(
                               Icons.camera_alt_outlined,
-                              color: Colors.white,
-                              size: SizeConfig.scaleWidth(22),
+                              color: Color(0xff4C5175),
+                              size: SizeConfig.scaleWidth(16),
                             )),
                       ),
                     ),
@@ -178,6 +186,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                   SizeConfig.scaleTextFont(12), FontWeight.w500),
               TextFieldWidget.textfieldCon(
                 controller: _salaryTextController,
+               hint_Text:  r"$/months",
               ),
               SizedBox(height: SizeConfig.scaleHeight(12)),
               TextStyleWidget("Job description:", Color(0xff4C5175),
