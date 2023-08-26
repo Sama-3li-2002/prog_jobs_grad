@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/FirebaseAuthController.dart';
@@ -127,6 +128,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: newJobs.length,
                       itemBuilder: (BuildContext context, int index) {
+
+                        // لازالة الثواني من الوقت
+                        late String formattedTime;
+                        String timeString =newJobs[index].current_time ?? "";
+                        try {
+                          formattedTime = DateFormat('hh:mm a').format(DateFormat('hh:mm:ss a').parse(timeString));
+                        } catch (e) {
+                          print("Invalid data format: $timeString");
+                          formattedTime = "Invalid time format";
+                        }
+
                         currentIndex = index;
                         return Container(
                             margin: EdgeInsets.all(
@@ -281,21 +293,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            TextStyleWidget(
-                                                              companiesJobsProvider
-                                                                      .JobsList
-                                                                      .isNotEmpty
-                                                                  ? companiesJobsProvider
-                                                                          .JobsList[
-                                                                              index]
-                                                                          .current_time ??
-                                                                      ""
-                                                                  : "No Current Time",
-                                                              Colors.black,
-                                                              SizeConfig
-                                                                  .scaleTextFont(
-                                                                      10),
-                                                              FontWeight.w500,
+                                                            Padding(
+                                                              padding:  EdgeInsets.only(left: 15),
+                                                              child: TextStyleWidget(
+                                                                companiesJobsProvider
+                                                                        .JobsList
+                                                                        .isNotEmpty
+                                                                    ? formattedTime??
+                                                                        ""
+                                                                    : "No Current Time",
+                                                                Colors.black,
+                                                                SizeConfig
+                                                                    .scaleTextFont(
+                                                                        10),
+                                                                FontWeight.w500,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -491,6 +503,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: companiesJobsProvider.JobsList.length,
                       itemBuilder: (BuildContext context, int index) {
+
+                        // لازالة الثواني من الوقت
+                        late String formattedTime;
+                        String timeString = companiesJobsProvider.JobsList[index].current_time ?? "";
+                        try {
+                          formattedTime = DateFormat('hh:mm a').format(DateFormat('hh:mm:ss a').parse(timeString));
+                        } catch (e) {
+                          print("Invalid data format: $timeString");
+                          formattedTime = "Invalid time format";
+                        }
+
                         return Container(
                             margin: EdgeInsets.all(
                               SizeConfig.scaleWidth(15),
@@ -644,21 +667,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            TextStyleWidget(
-                                                              companiesJobsProvider
-                                                                      .JobsList
-                                                                      .isNotEmpty
-                                                                  ? companiesJobsProvider
-                                                                          .JobsList[
-                                                                              index]
-                                                                          .current_time ??
-                                                                      ""
-                                                                  : "No Current Time",
-                                                              Colors.black,
-                                                              SizeConfig
-                                                                  .scaleTextFont(
-                                                                      10),
-                                                              FontWeight.w500,
+                                                            Padding(
+                                                              padding:  EdgeInsets.only(left: 15),
+                                                              child: TextStyleWidget(
+                                                                companiesJobsProvider
+                                                                        .JobsList
+                                                                        .isNotEmpty
+                                                                    ? formattedTime??
+                                                                        ""
+                                                                    : "No Current Time",
+                                                                Colors.black,
+                                                                SizeConfig
+                                                                    .scaleTextFont(
+                                                                        10),
+                                                                FontWeight.w500,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),

@@ -478,6 +478,7 @@ class _SignupScreenState extends State<SignupScreen> {
           );
         }));
       }
+
     } else {
       Fluttertoast.showToast(
         msg: "Please Fill All Fields",
@@ -498,29 +499,32 @@ class _SignupScreenState extends State<SignupScreen> {
         _addressCom!.text.isNotEmpty &&
         _managerCom!.text.isNotEmpty &&
         _aboutCom!.text.isNotEmpty) {
-      UserCredential? userCredential = await FirebaseAuthController
-          .fireAuthHelper
-          .createComAccount(Company.signUP(
-        _companyNameCom!.text,
-        _emailCom!.text,
-        _passwordCom!.text,
-        _phoneCom!.text,
-        _addressCom!.text,
-        _managerCom!.text,
-        _facebookAccountCom!.text,
-        _twitterAccountCom!.text,
-        _InstagramAccountCom!.text,
-        _aboutCom!.text,
-        'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=98b7a6e2-b895-4254-bed0-598c5f10ec2b',
-        'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
-      ));
-      if (userCredential != null) {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return ComLogoScreen(
-            comName: _companyNameCom!.text,
-          );
-        }));
-      }
+
+
+        UserCredential? userCredential = await FirebaseAuthController
+            .fireAuthHelper
+            .createComAccount(Company.signUP(
+          _companyNameCom!.text,
+          _emailCom!.text,
+          _passwordCom!.text,
+          _phoneCom!.text,
+          _addressCom!.text,
+          _managerCom!.text,
+          _facebookAccountCom!.text,
+          _twitterAccountCom!.text,
+          _InstagramAccountCom!.text,
+          _aboutCom!.text,
+          'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=98b7a6e2-b895-4254-bed0-598c5f10ec2b',
+          'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
+        ));
+        if (userCredential != null) {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return ComLogoScreen(
+              comName: _companyNameCom!.text,
+            );
+          }));
+        }
+
     } else {
       Fluttertoast.showToast(
         msg: "Please Fill All Fields",
@@ -532,4 +536,5 @@ class _SignupScreenState extends State<SignupScreen> {
       );
     }
   }
+
 }
