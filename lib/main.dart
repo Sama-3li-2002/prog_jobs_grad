@@ -6,6 +6,7 @@ import 'package:prog_jobs_grad/providers/CompaniesJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/CompanyJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/FavoriteProvider.dart';
 import 'package:prog_jobs_grad/providers/NumberOfRequestsProvider.dart';
+import 'package:prog_jobs_grad/providers/RequestStatusProvider.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ArchiveScreen.dart';
@@ -61,6 +62,9 @@ void main() async {
       }),
       ChangeNotifierProvider<NumberOfRequestsProvider>(create: (context) {
         return NumberOfRequestsProvider();
+      }),
+      ChangeNotifierProvider<RequestStatusProvider>(create: (context) {
+        return RequestStatusProvider();
       }),
     ],
     child: MyApp(),

@@ -327,7 +327,7 @@ class _JobsDetailsState extends State<JobsDetails> {
                           margin: EdgeInsets.only(
                               left: SizeConfig.scaleWidth(15),
                               top: SizeConfig.scaleHeight(15)),
-                          width: SizeConfig.scaleWidth(190),
+                          width: SizeConfig.scaleWidth(130),
                           height: SizeConfig.scaleHeight(35),
                           child: ElevatedButton(
                             onPressed: () async {
@@ -367,7 +367,6 @@ class _JobsDetailsState extends State<JobsDetails> {
                           margin: EdgeInsets.only(
                               left: SizeConfig.scaleWidth(15),
                               top: SizeConfig.scaleHeight(15)),
-                          width: SizeConfig.scaleWidth(50),
                           height: SizeConfig.scaleHeight(35),
                           child: ElevatedButton(
                             onPressed: () async {

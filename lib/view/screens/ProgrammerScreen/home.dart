@@ -164,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Container(
                                             clipBehavior: Clip.antiAlias,
+                                            height: SizeConfig.scaleHeight(130),
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
                                               topLeft: Radius.circular(5),
@@ -525,6 +526,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Row(
                                         children: [
                                           Container(
+                                            height: SizeConfig.scaleHeight(130),
                                             clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
