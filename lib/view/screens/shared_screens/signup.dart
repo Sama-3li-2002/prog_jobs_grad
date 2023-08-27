@@ -22,6 +22,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+
   // Programmer Info
   TextEditingController? _usernameProg;
   TextEditingController? _emailProg;
@@ -46,6 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
   // visible pass
   bool _obscureText = true;
 
+
   @override
   void initState() {
     super.initState();
@@ -69,6 +71,8 @@ class _SignupScreenState extends State<SignupScreen> {
     _InstagramAccountCom = TextEditingController();
     _aboutCom = TextEditingController();
     _managerCom = TextEditingController();
+
+
   }
 
   @override
@@ -219,6 +223,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
+
                         child: TextFieldWidget.textfieldCon(
                           controller: _phoneProg,
                           inputType: TextInputType.phone,
@@ -341,6 +346,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
+
                         child: TextFieldWidget.textfieldCon(
                           controller: _phoneCom,
                           inputType: TextInputType.phone,
@@ -453,6 +459,9 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future createProgAccount() async {
+    String phoneNumber = _phoneProg!.text;
+    String password = _passwordProg!.text;
+
     if (_emailProg!.text.isNotEmpty &&
         _passwordProg!.text.isNotEmpty &&
         _usernameProg!.text.isNotEmpty &&
@@ -460,23 +469,52 @@ class _SignupScreenState extends State<SignupScreen> {
         _ageProg!.text.isNotEmpty &&
         _specializationProg!.text.isNotEmpty &&
         _aboutProg!.text.isNotEmpty) {
-      UserCredential? userCredential = await FirebaseAuthController
-          .fireAuthHelper
-          .createAccount(Users.signup(
-        _usernameProg!.text,
-        _emailProg!.text,
-        _passwordProg!.text,
-        _phoneProg!.text,
-        int.tryParse(_ageProg!.text),
-        _specializationProg!.text,
-        _aboutProg!.text,
-      ));
-      if (userCredential != null) {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return LoginScreen(
-            userType: widget.userType,
-          );
-        }));
+      // قيود على كلمة السر
+      if (password.length >= 6 &&
+          password.contains(RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
+      // قيود على رقم الهاتف
+      if (phoneNumber.length == 10 &&
+          phoneNumber.startsWith('05') &&
+          int.tryParse(phoneNumber) != null &&
+          !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+        UserCredential? userCredential = await FirebaseAuthController
+            .fireAuthHelper
+            .createAccount(Users.signup(
+          _usernameProg!.text,
+          _emailProg!.text,
+          _passwordProg!.text,
+          _phoneProg!.text,
+          int.tryParse(_ageProg!.text),
+          _specializationProg!.text,
+          _aboutProg!.text,
+        ));
+
+        if (userCredential != null) {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return LoginScreen(
+              userType: widget.userType,
+            );
+          }));
+        }
+      } else {
+        Fluttertoast.showToast(
+          msg: "Please enter a valid phone number",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+      } else {
+        Fluttertoast.showToast(
+          msg: "Please enter a strong password",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
 
     } else {
@@ -492,6 +530,9 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future createComAccount() async {
+    String phoneNumber = _phoneCom!.text;
+    String password = _passwordCom!.text;
+
     if (_emailCom!.text.isNotEmpty &&
         _passwordCom!.text.isNotEmpty &&
         _companyNameCom!.text.isNotEmpty &&
@@ -500,29 +541,57 @@ class _SignupScreenState extends State<SignupScreen> {
         _managerCom!.text.isNotEmpty &&
         _aboutCom!.text.isNotEmpty) {
 
+      // قيود على كلمة السر
+      if (password.length >= 6 &&
+          password.contains(RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
+            // قيود على رقم الهاتف
+      if (phoneNumber.length == 10 &&
+          phoneNumber.startsWith('05') &&
+          int.tryParse(phoneNumber) != null &&
+          !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
 
-        UserCredential? userCredential = await FirebaseAuthController
-            .fireAuthHelper
-            .createComAccount(Company.signUP(
-          _companyNameCom!.text,
-          _emailCom!.text,
-          _passwordCom!.text,
-          _phoneCom!.text,
-          _addressCom!.text,
-          _managerCom!.text,
-          _facebookAccountCom!.text,
-          _twitterAccountCom!.text,
-          _InstagramAccountCom!.text,
-          _aboutCom!.text,
-          'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=98b7a6e2-b895-4254-bed0-598c5f10ec2b',
-          'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
-        ));
-        if (userCredential != null) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return ComLogoScreen(
-              comName: _companyNameCom!.text,
-            );
-          }));
+          UserCredential? userCredential = await FirebaseAuthController
+              .fireAuthHelper
+              .createComAccount(Company.signUP(
+            _companyNameCom!.text,
+            _emailCom!.text,
+            _passwordCom!.text,
+            _phoneCom!.text,
+            _addressCom!.text,
+            _managerCom!.text,
+            _facebookAccountCom!.text,
+            _twitterAccountCom!.text,
+            _InstagramAccountCom!.text,
+            _aboutCom!.text,
+            'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=98b7a6e2-b895-4254-bed0-598c5f10ec2b',
+            'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
+          ));
+          if (userCredential != null) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return ComLogoScreen(
+                comName: _companyNameCom!.text,
+              );
+            }));
+          }
+      } else {
+        Fluttertoast.showToast(
+          msg: "Please enter a valid phone number",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+        } else {
+          Fluttertoast.showToast(
+            msg: "Please enter a strong password",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         }
 
     } else {
@@ -536,5 +605,6 @@ class _SignupScreenState extends State<SignupScreen> {
       );
     }
   }
+
 
 }

@@ -51,6 +51,8 @@ dependencies:
   flutter_pdfview: ^1.2.2
   firebase_messaging: ^14.6.7
   flutter_local_notifications: ^15.1.1
+  email_validator: ^2.1.17
+  mailer: ^5.2.0
 
 dev_dependencies:
   flutter_test:
