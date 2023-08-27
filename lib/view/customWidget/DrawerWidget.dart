@@ -284,7 +284,9 @@ void showLogoutDialog(BuildContext context) {
                 children: [
                   TextButton(
                     onPressed: () {
+
                       FirebaseAuthController.fireAuthHelper.signOut();
+
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
                         return UserTypeScreen();
                       }));

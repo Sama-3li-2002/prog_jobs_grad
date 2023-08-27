@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'login.dart';
@@ -40,24 +45,30 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     SizeConfig.scaleTextFont(12),
                     FontWeight.normal),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     setState(() {
                       UserTypeScreen.type = 'programmer';
                     });
 
-                    // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return LoginScreen(userType: 'programmer');
-                    }));
-
-                    // }else{
-                    //   Navigator.of(context)
-                    //       .push(MaterialPageRoute(builder: (context) {
-                    //     return LoginScreen(userType: 'programmer');
-                    //   }));
-                    //
-                    // }
+                    if (FirebaseAuthController.fireAuthHelper.isLoggedIn()) {
+                      if (await checkIfUserInUserCollection(
+                          FirebaseAuthController.fireAuthHelper.userId())) {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return HomeScreen();
+                        }));
+                      } else {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return LoginScreen(userType: 'programmer');
+                        }));
+                      }
+                    } else {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return LoginScreen(userType: 'programmer');
+                      }));
+                    }
                   },
                   child: Center(
                     child: Container(
@@ -89,23 +100,30 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     setState(() {
                       UserTypeScreen.type = 'company';
                     });
-                    // if(FirebaseAuthController.fireAuthHelper.isLoggedIn()){
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return LoginScreen(userType: 'company');
-                    }));
 
-                    // }else{
-                    //   Navigator.of(context)
-                    //       .push(MaterialPageRoute(builder: (context) {
-                    //     return LoginScreen(userType: 'programmer');
-                    //   }));
-                    //
-                    // }
+                    if (FirebaseAuthController.fireAuthHelper.isLoggedIn()) {
+                      if (await checkIfUserInCompanyCollection(
+                          FirebaseAuthController.fireAuthHelper.userId())) {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return ComHomeScreen();
+                        }));
+                      } else {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return LoginScreen(userType: 'company');
+                        }));
+                      }
+                    } else {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return LoginScreen(userType: 'company');
+                      }));
+                    }
                   },
                   child: Center(
                     child: Container(
@@ -181,5 +199,31 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> checkIfUserInCompanyCollection(String userId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+          await FirebaseFirestore.instance
+              .collection(FirebaseFireStoreHelper.companyCollection)
+              .doc(userId)
+              .get();
+      return docSnapshot.exists;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> checkIfUserInUserCollection(String userId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+          await FirebaseFirestore.instance
+              .collection(FirebaseFireStoreHelper.instance.userCollection)
+              .doc(userId)
+              .get();
+      return docSnapshot.exists;
+    } catch (e) {
+      return false;
+    }
   }
 }
