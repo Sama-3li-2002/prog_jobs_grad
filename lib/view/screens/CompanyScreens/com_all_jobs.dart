@@ -118,14 +118,14 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
         ),
       ),
       backgroundColor: Color(0xfffafafa),
-      body: SingleChildScrollView(
-        child: Consumer<CompanyJobsProvider>(
-            builder: (context, companyJobsProvider, _) {
-          allJobsList
-              .sort((a, b) => b.current_time!.compareTo(a.current_time!));
-          return allJobsList.isEmpty
-              ? Center(child: Text("No available jobs"))
-              : Column(
+      body: Consumer<CompanyJobsProvider>(
+          builder: (context, companyJobsProvider, _) {
+        allJobsList
+            .sort((a, b) => b.current_time!.compareTo(a.current_time!));
+        return allJobsList.isEmpty
+            ? Center(child: Text("No available jobs"))
+            :SingleChildScrollView(
+              child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
@@ -718,9 +718,9 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                         ),
                       )
                   ],
-                );
-        }),
-      ),
+                ),
+            );
+      }),
     );
   }
 

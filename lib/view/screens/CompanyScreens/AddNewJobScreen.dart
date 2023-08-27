@@ -9,8 +9,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
+import 'package:prog_jobs_grad/model/CompanyModel.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
+import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
+import 'package:provider/provider.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'com_home.dart';
@@ -39,7 +42,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
       'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/job_images%2FaddJob.png?alt=media&token=5cdcaa1f-d727-4462-a2b6-78a5813f9c81';
 
   TextEditingController? _job_nameTextController;
-  TextEditingController? _company_nameTextController;
+  TextEditingController? _companynameTextController;
   TextEditingController? _salaryTextController;
   TextEditingController? _job_descriptionTextController;
 
@@ -49,16 +52,26 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   late TextEditingController _cotrollerThreeSkills;
   late TextEditingController _controllerFourSkills;
 
+  // for date and time
   late String formattedDate;
   late String formattedTime;
+
+
+
 
   @override
   void initState() {
     super.initState();
+
+    Company comInfo = Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
+
     _job_nameTextController = TextEditingController();
-    _company_nameTextController = TextEditingController();
+    _companynameTextController = TextEditingController(text: comInfo.companyName!);
     _salaryTextController = TextEditingController();
     _job_descriptionTextController = TextEditingController();
+
+
+
 
     // For controller
     _controllerOneSkills = TextEditingController();
@@ -76,13 +89,15 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     DateTime currentDate = DateTime.now();
     formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
     formattedTime = DateFormat('hh:mm:ss a').format(currentDate);
+
+
   }
 
   @override
   void dispose() {
     super.dispose();
     _job_nameTextController?.dispose();
-    _company_nameTextController?.dispose();
+    _companynameTextController?.dispose();
     _salaryTextController?.dispose();
     _job_descriptionTextController?.dispose();
 
@@ -112,7 +127,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
           color: Color(0xff4C5175),
         ),
       ),
-      body: SingleChildScrollView(
+      body:SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(15),
           child: Column(
@@ -179,7 +194,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
               TextStyleWidget("Company Name:", Color(0xff4C5175),
                   SizeConfig.scaleTextFont(12), FontWeight.w500),
               TextFieldWidget.textfieldCon(
-                controller: _company_nameTextController,
+                controller: _companynameTextController,
               ),
               SizedBox(height: SizeConfig.scaleHeight(12)),
               TextStyleWidget("Salary:", Color(0xff4C5175),
@@ -338,6 +353,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
           ),
         ),
       ),
+
     );
   }
 
@@ -347,7 +363,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
 
   bool checkData() {
     if (_job_nameTextController!.text.isNotEmpty &&
-        _company_nameTextController!.text.isNotEmpty &&
+        _companynameTextController!.text.isNotEmpty &&
         _salaryTextController!.text.isNotEmpty &&
         _job_descriptionTextController!.text.isNotEmpty &&
         _controllerOneSkills!.text.isNotEmpty)
@@ -382,7 +398,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
       current_date: formattedDate,
       current_time: formattedTime,
       job_name: _job_nameTextController!.text,
-      company_name: _company_nameTextController!.text,
+      company_name: _companynameTextController!.text,
       salary: _salaryTextController!.text,
       job_description: _job_descriptionTextController!.text,
       required_skills_one: _controllerOneSkills!.text,
@@ -394,7 +410,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
 
   void clear() {
     _job_nameTextController!.text = "";
-    _company_nameTextController!.text = "";
+    _companynameTextController!.text = "";
     _salaryTextController!.text = "";
     _job_descriptionTextController!.text = "";
     _controllerOneSkills!.text = "";

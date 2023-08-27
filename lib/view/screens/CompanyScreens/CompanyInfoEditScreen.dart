@@ -21,6 +21,7 @@ class CompanyInfoEdit extends StatefulWidget {
 }
 
 class _CompanyInfoEditState extends State<CompanyInfoEdit> {
+
   TextEditingController? _company_name;
   TextEditingController? _phone;
   TextEditingController? _address;
@@ -38,8 +39,7 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
   @override
   void initState() {
     super.initState();
-    company =
-        Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
+    company = Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
 
     _company_name = TextEditingController(text: company.companyName!);
     _phone = TextEditingController(text: company.phone);

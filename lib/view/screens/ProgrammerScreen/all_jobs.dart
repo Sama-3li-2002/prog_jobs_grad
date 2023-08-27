@@ -141,7 +141,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
         allJobsList.sort((a, b) => b.current_time!.compareTo(a.current_time!));
 
         return allJobsList.isEmpty
-            ? Center(child: Text("Not available jobs"))
+            ? Center(child: Text("No available jobs"))
             : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -862,7 +862,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                   ],
                 ),
               );
-      }),
+      },
+
+      ),
     );
   }
 
