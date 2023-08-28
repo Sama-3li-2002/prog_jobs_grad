@@ -25,6 +25,8 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
   //For archive Icon
   List<bool> isPressedList = [];
 
+  List<Jobs> jobs = [];
+
   //for provider
   bool isDataLoaded = false;
 
@@ -32,23 +34,21 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
   void initState() {
     super.initState();
 
-    Provider.of<CompanyJobsProvider>(context, listen: false).getAllJobsObjects();
+    loadDataWithDelay();
+  }
+  Future<void> loadDataWithDelay() async {
+
+
+    await Provider.of<CompanyJobsProvider>(context, listen: false).getAllJobsObjects();
+
+    Future.delayed(Duration(seconds: 7));
+
+
     setState(() {
       isDataLoaded = true;
     });
+
   }
-  // Future<void> loadDataWithDelay() async {
-  //   // // تأخير عرض رمز التحميل لمدة ثانيتين (يمكنك تغيير الوقت حسب الحاجة)
-  //   // await Future.delayed(Duration(seconds: 2));
-  //
-  //   Provider.of<CompanyJobsProvider>(context, listen: false).getAllJobsObjects();
-  //
-  //   // بمجرد استلام البيانات، نحدث isDataLoaded
-  //   setState(() {
-  //     isDataLoaded = true;
-  //   });
-  //
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +99,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
 
             if (!isDataLoaded) {
               return Center(child: CircularProgressIndicator());
-            } else if (companyJobsProvider.JobsList.isEmpty) {
-              Future.delayed(Duration(seconds: 4));
+            } if (companyJobsProvider.JobsList.isEmpty) {
               return Center(
                 child: Text(
                   'No available job',
