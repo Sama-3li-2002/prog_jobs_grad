@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
 import '../../../model/CompanyModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
@@ -579,6 +580,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 comName: _companyNameCom!.text,
               );
             }));
+            AddNewJobScreen.companyName = _companyNameCom!.text;
           }
         } else {
           Fluttertoast.showToast(

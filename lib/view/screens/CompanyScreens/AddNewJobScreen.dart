@@ -21,11 +21,15 @@ import 'com_home.dart';
 class AddNewJobScreen extends StatefulWidget {
   static const String id = "add_new_job_screen";
 
+  // For company name
+  static String? companyName;
+
   @override
   State<AddNewJobScreen> createState() => _AddNewJobScreenState();
 }
 
 class _AddNewJobScreenState extends State<AddNewJobScreen> {
+
   // عدد النقرات على زر add skills
   int _clickCount = 0;
 
@@ -56,14 +60,16 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   late String formattedDate;
   late String formattedTime;
 
+
+
   @override
   void initState() {
     super.initState();
 
-    Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
+
 
     _job_nameTextController = TextEditingController();
-    _companynameTextController = TextEditingController();
+    _companynameTextController = TextEditingController(text: AddNewJobScreen.companyName!);
     _salaryTextController = TextEditingController();
     _job_descriptionTextController = TextEditingController();
 
@@ -119,13 +125,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
           color: Color(0xff4C5175),
         ),
       ),
-      body: Consumer<ComInfoProvider>(builder: (context, comInfoProvider, _) {
-        if (comInfoProvider.comInfoList.isEmpty)
-          return Center(child: CircularProgressIndicator());
-        else {
-          _companynameTextController?.text =
-              comInfoProvider.comInfoList[0].companyName!;
-          return SingleChildScrollView(
+      body:SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(15),
               child: Column(
@@ -191,9 +191,24 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                   SizedBox(height: SizeConfig.scaleHeight(12)),
                   TextStyleWidget("Company Name:", Color(0xff4C5175),
                       SizeConfig.scaleTextFont(12), FontWeight.w500),
-                  TextFieldWidget.textfieldCon(
+
+                Container(
+                  height: SizeConfig.scaleHeight(48),
+                  child: TextField(
+                  enabled: false,
                     controller: _companynameTextController,
+                    decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        )),
                   ),
+                ),
                   SizedBox(height: SizeConfig.scaleHeight(12)),
                   TextStyleWidget("Salary:", Color(0xff4C5175),
                       SizeConfig.scaleTextFont(12), FontWeight.w500),
@@ -356,11 +371,10 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                 ],
               ),
             ),
-          );
-        }
-      }),
+          ),
     );
-  }
+        }
+
 
   Future performStore() async {
     if (checkData()) await store();

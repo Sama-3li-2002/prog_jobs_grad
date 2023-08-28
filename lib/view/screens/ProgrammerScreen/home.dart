@@ -91,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
         List<Jobs> newJobs = companiesJobsProvider.JobsList.length >= 2
             ? companiesJobsProvider.JobsList.sublist(0, 2)
             : companiesJobsProvider.JobsList;
+
         print("the job list $companiesJobsProvider.JobsList");
         return companiesJobsProvider.isLoading
             ? Center(

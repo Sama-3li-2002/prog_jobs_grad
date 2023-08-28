@@ -27,8 +27,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
 
   List<Jobs> jobs = [];
 
-  //for provider
-  bool isDataLoaded = false;
+
 
   @override
   void initState() {
@@ -83,16 +82,21 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                 : companyJobsProvider.JobsList;
             print("the length $newJobs.length");
 
+
             return companyJobsProvider.isLoading
                 ? Center(child: CircularProgressIndicator())
                 : (companyJobsProvider.JobsList.isEmpty)
-                ? Center(
-              child: Text(
-                'No available job',
-                style: TextStyle(fontSize: 18.0),
-              ),)
+                ? Column(
+                  children: [
+                    AdImages(),
+                    Center(
+                    child: Text('No available job',
+                    style: TextStyle(fontSize: 18.0),
+                    ),),
+                  ],
+                )
                 : SingleChildScrollView(
-              child: Column(
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AdImages(),

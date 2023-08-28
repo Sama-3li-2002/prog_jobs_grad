@@ -20,6 +20,8 @@ class Favorite extends StatefulWidget {
 }
 
 class _FavoriteState extends State<Favorite> {
+
+
   @override
   void initState() {
     super.initState();
