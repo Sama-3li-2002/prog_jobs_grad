@@ -654,12 +654,19 @@ void showDeleteDialog(BuildContext context) {
             children: [
               Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text(
-                  "Delete Account",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  children: [
+                    Icon(Icons.warning,size: 23,color: Color(0xffcbb523),),
+                    SizedBox(width: 7,),
+                    Text(
+                      "Delete Account",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Divider(),
@@ -667,7 +674,7 @@ void showDeleteDialog(BuildContext context) {
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   "Are you sure you want to delete your account?",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 14,fontFamily: "Poppins",),
                 ),
               ),
               ButtonBar(
@@ -681,7 +688,8 @@ void showDeleteDialog(BuildContext context) {
                       "Yes",
                       style: TextStyle(
                         color: Colors.red,
-                        fontSize: 16,
+                        fontSize: 14,
+                        fontFamily: "Poppins",
                       ),
                     ),
                   ),
@@ -693,7 +701,8 @@ void showDeleteDialog(BuildContext context) {
                       "Cancel",
                       style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 16,
+                        fontSize: 14,
+                        fontFamily: "Poppins",
                       ),
                     ),
                   ),
@@ -716,23 +725,51 @@ Future<SignInResult> _showSignInScreen(BuildContext context) async {
     SignInResult signInResult = await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Sign In Again'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('For security reasons, please sign in again.'),
-              SizedBox(height: 10),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
-                controller: _emailController,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Password'),
-                controller: _passwordController,
-                obscureText: true,
-              ),
-            ],
+        return AlertDialog (
+          title: TextStyleWidget("Sign In Again", Colors.black, 20, FontWeight.w500),
+          content: Container(
+            height: SizeConfig.scaleHeight(180),
+            width: SizeConfig.scaleWidth(300),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20)
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.warning,size: 15,color: Color(0xffcbb523),),
+                    SizedBox(width: SizeConfig.scaleWidth(7),),
+                    TextStyleWidget("For security reasons,"
+                        " please sign in again.", Colors.red.shade400, 11, FontWeight.w500),
+                  ],
+                ),
+                SizedBox(height: SizeConfig.scaleHeight(20)),
+                SizedBox(
+                  height: SizeConfig.scaleHeight(50),
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'Email',
+                        prefixIcon: Icon(Icons.email,size: 15,),
+                        labelStyle: TextStyle(fontFamily: "Poppins",fontSize: 10)
+                    ),
+                    controller: _emailController,
+                  ),
+                ),
+                SizedBox(height: SizeConfig.scaleHeight(20),),
+                SizedBox(
+                  height: SizeConfig.scaleHeight(50),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.key,size: 15,),
+                        labelStyle: TextStyle(fontFamily: "Poppins",fontSize: 10)
+                    ),
+                    controller: _passwordController,
+                    obscureText: true,
+                  ),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -750,13 +787,13 @@ Future<SignInResult> _showSignInScreen(BuildContext context) async {
                   Navigator.pop(context, SignInResult.error);
                 }
               },
-              child: Text('Sign In'),
+              child: Text('Sign In',style: TextStyle(fontFamily: "Poppins"),),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, SignInResult.cancelled);
               },
-              child: Text('Cancel'),
+              child: Text('Cancel',style: TextStyle(fontFamily: "Poppins"),),
             ),
           ],
         );
