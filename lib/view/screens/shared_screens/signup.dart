@@ -181,7 +181,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
-                                  BorderSide(color: Colors.white, width: 1)),
+                              BorderSide(color: Colors.white, width: 1)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -316,7 +316,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
-                                  BorderSide(color: Colors.white, width: 1)),
+                              BorderSide(color: Colors.white, width: 1)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -472,40 +472,40 @@ class _SignupScreenState extends State<SignupScreen> {
       // قيود على كلمة السر
       if (password.length >= 6 &&
           password.contains(RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
-      // قيود على رقم الهاتف
-      if (phoneNumber.length == 10 &&
-          phoneNumber.startsWith('05') &&
-          int.tryParse(phoneNumber) != null &&
-          !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-        UserCredential? userCredential = await FirebaseAuthController
-            .fireAuthHelper
-            .createAccount(Users.signup(
-          _usernameProg!.text,
-          _emailProg!.text,
-          _passwordProg!.text,
-          _phoneProg!.text,
-          int.tryParse(_ageProg!.text),
-          _specializationProg!.text,
-          _aboutProg!.text,
-        ));
+        // قيود على رقم الهاتف
+        if (phoneNumber.length == 10 &&
+            phoneNumber.startsWith('05') &&
+            int.tryParse(phoneNumber) != null &&
+            !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+          UserCredential? userCredential = await FirebaseAuthController
+              .fireAuthHelper
+              .createAccount(Users.signup(
+            _usernameProg!.text,
+            _emailProg!.text,
+            _passwordProg!.text,
+            _phoneProg!.text,
+            int.tryParse(_ageProg!.text),
+            _specializationProg!.text,
+            _aboutProg!.text,
+          ));
 
-        if (userCredential != null) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return LoginScreen(
-              userType: widget.userType,
-            );
-          }));
+          if (userCredential != null) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return LoginScreen(
+                userType: widget.userType,
+              );
+            }));
+          }
+        } else {
+          Fluttertoast.showToast(
+            msg: "Please enter a valid phone number",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         }
-      } else {
-        Fluttertoast.showToast(
-          msg: "Please enter a valid phone number",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
       } else {
         Fluttertoast.showToast(
           msg: "Please enter a strong password",
@@ -544,11 +544,11 @@ class _SignupScreenState extends State<SignupScreen> {
       // قيود على كلمة السر
       if (password.length >= 6 &&
           password.contains(RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
-            // قيود على رقم الهاتف
-      if (phoneNumber.length == 10 &&
-          phoneNumber.startsWith('05') &&
-          int.tryParse(phoneNumber) != null &&
-          !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+        // قيود على رقم الهاتف
+        if (phoneNumber.length == 10 &&
+            phoneNumber.startsWith('05') &&
+            int.tryParse(phoneNumber) != null &&
+            !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
 
           UserCredential? userCredential = await FirebaseAuthController
               .fireAuthHelper
@@ -573,19 +573,9 @@ class _SignupScreenState extends State<SignupScreen> {
               );
             }));
           }
-      } else {
-        Fluttertoast.showToast(
-          msg: "Please enter a valid phone number",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
         } else {
           Fluttertoast.showToast(
-            msg: "Please enter a strong password",
+            msg: "Please enter a valid phone number",
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
@@ -593,6 +583,16 @@ class _SignupScreenState extends State<SignupScreen> {
             fontSize: 16.0,
           );
         }
+      } else {
+        Fluttertoast.showToast(
+          msg: "Please enter a strong password",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
 
     } else {
       Fluttertoast.showToast(
@@ -608,3 +608,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
 
 }
+
+
+
