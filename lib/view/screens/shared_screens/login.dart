@@ -263,6 +263,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             await performLoginProg();
                           } else if (UserTypeScreen.type == 'company') {
                             await performLoginCom();
+                            FocusScope.of(context).unfocus(); // عشان الكيبورد يروح لما نضغط عالزر
                           }
 
                         },

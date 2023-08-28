@@ -6,6 +6,7 @@ import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import '../model/JobsModel.dart';
 
 class FavoriteProvider with ChangeNotifier {
+  bool isLoading = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   String userId = FirebaseAuthController.fireAuthHelper.userId();
   FirebaseFireStoreHelper helper = FirebaseFireStoreHelper.instance;
@@ -13,7 +14,11 @@ class FavoriteProvider with ChangeNotifier {
   List<Jobs> favoriteJobsList = [];
   List favoriteJobIds = [];
 
+
+
   Future getFavoriteJobsForUser(String userId) async {
+    isLoading = true;
+    notifyListeners();
     List<Jobs> favoriteJobList = [];
 
     QuerySnapshot<Map<String, dynamic>> favoriteJobsSnapshot =
@@ -33,6 +38,7 @@ class FavoriteProvider with ChangeNotifier {
       }
     }
     favoriteJobsList = favoriteJobList;
+    isLoading = false;
     notifyListeners();
     return favoriteJobsList;
   }
@@ -41,6 +47,7 @@ class FavoriteProvider with ChangeNotifier {
     await FirebaseFireStoreHelper.instance.removeFromFavorites(
         FirebaseAuthController.fireAuthHelper.userId(), jobId);
     favoriteJobIds.remove(jobId);
+
 
     notifyListeners();
   }

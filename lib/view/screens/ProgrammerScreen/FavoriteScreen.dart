@@ -85,9 +85,13 @@ class _FavoriteState extends State<Favorite> {
         ),
         body:
             Consumer<FavoriteProvider>(builder: (context, favoriteProvider, _) {
-          return favoriteProvider.favoriteJobsList.isEmpty
-              ? Center(child: Text("No available favorite jobs"))
-              : SingleChildScrollView(
+              return favoriteProvider.isLoading
+                  ? Center(
+                child: CircularProgressIndicator(),
+              )
+                  : favoriteProvider.favoriteJobsList.isEmpty
+                  ? Center(child: Text("No available favorite jobs"))
+                  :SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

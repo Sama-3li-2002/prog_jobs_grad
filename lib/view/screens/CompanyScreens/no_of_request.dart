@@ -58,11 +58,14 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
         ),
         backgroundColor: Color(0xfffafafa),
         body: Consumer<NumberOfRequestsProvider>(
-            builder: (context, NoOfRequestsProvider, _) => NoOfRequestsProvider
-                    .submittedRequests.isEmpty
-                ? Center(
-                    child: Text('There is No Submitted Request On This Job'))
-                : SingleChildScrollView(
+            builder: (context, NoOfRequestsProvider, _) {
+              return NoOfRequestsProvider.isLoading
+                  ? Center(
+                child: CircularProgressIndicator(),
+              )
+                  : NoOfRequestsProvider.submittedRequests.isEmpty
+                  ? Center(child: Text("There is No Submitted Request On This Job"))
+                  : SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -247,7 +250,9 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                             })
                       ],
                     ),
-                  )));
+                  );
+  } )
+    );
   }
 
   void showBottomSheet(BuildContext context) {

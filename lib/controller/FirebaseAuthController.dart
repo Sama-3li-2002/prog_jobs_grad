@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -241,4 +243,4 @@ class FirebaseAuthController {
     return isCorrect;
   }
 //-----------------------------------------------------------------------------------
-}
+  }

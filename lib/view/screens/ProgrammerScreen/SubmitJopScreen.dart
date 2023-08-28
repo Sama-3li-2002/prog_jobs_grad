@@ -313,6 +313,7 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
                               child: ElevatedButton(
                                   onPressed: () {
                                     saveProgInfoForSubmJob();
+                                    FocusScope.of(context).unfocus();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xff4C5175),

@@ -31,54 +31,54 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xfffafafa),
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: SizeConfig.scaleWidth(20),
-          ),
-          color: Color(0xff4C5175),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
+        appBar: AppBar(
+          backgroundColor: Color(0xfffafafa),
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: Icon(
-              Icons.search,
-              size: SizeConfig.scaleWidth(30),
+              Icons.arrow_back_ios,
+              size: SizeConfig.scaleWidth(20),
             ),
             color: Color(0xff4C5175),
           ),
-          InkWell(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return ProfileInfo();
-              }));
-            },
-            child: Card(
-              clipBehavior: Clip.antiAlias,
-              shape: CircleBorder(),
-              elevation: 4,
-              color: Color(0xffcbb523),
-              child: SizedBox(
-                width: SizeConfig.scaleWidth(30),
-                height: SizeConfig.scaleHeight(30),
-                child: ProfWidget(),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.search,
+                size: SizeConfig.scaleWidth(30),
+              ),
+              color: Color(0xff4C5175),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return ProfileInfo();
+                }));
+              },
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                shape: CircleBorder(),
+                elevation: 4,
+                color: Color(0xffcbb523),
+                child: SizedBox(
+                  width: SizeConfig.scaleWidth(30),
+                  height: SizeConfig.scaleHeight(30),
+                  child: ProfWidget(),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      backgroundColor: Color(0xfffafafa),
-      body: Consumer<RequestStatusProvider>(
-          builder: (context, requestStatusProvider, _) {
-        return requestStatusProvider.submittedJobs.isEmpty
-            ? Center(child: Text("You didn't submit any request yet"))
-            : SingleChildScrollView(
+          ],
+        ),
+        backgroundColor: Color(0xfffafafa),
+        body: Consumer<RequestStatusProvider>(
+            builder: (context, requestStatusProvider, _) {
+              return requestStatusProvider.submittedJobs.isEmpty
+                  ? Center(child: Text("You didn't submit any request yet"))
+                  : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -114,9 +114,9 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                                     clipBehavior: Clip.antiAlias,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(5),
-                                      bottomRight: Radius.circular(5),
-                                    )),
+                                          topLeft: Radius.circular(5),
+                                          bottomRight: Radius.circular(5),
+                                        )),
                                     child: Image.network(
                                       snapshot.data!.job_image!,
                                       fit: BoxFit.cover,
@@ -143,11 +143,11 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                                           ),
                                           Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(
                                                 height:
-                                                    SizeConfig.scaleHeight(10),
+                                                SizeConfig.scaleHeight(10),
                                               ),
                                               Row(
                                                 children: [
@@ -159,8 +159,8 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                                                   ),
                                                   SizedBox(
                                                     width:
-                                                        SizeConfig.scaleWidth(
-                                                            5),
+                                                    SizeConfig.scaleWidth(
+                                                        5),
                                                   ),
                                                   TextStyleWidget(
                                                       snapshot
@@ -173,16 +173,16 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                                               ),
                                               SizedBox(
                                                 height:
-                                                    SizeConfig.scaleHeight(10),
+                                                SizeConfig.scaleHeight(10),
                                               ),
                                               Container(
                                                 width:
-                                                    SizeConfig.scaleWidth(99),
+                                                SizeConfig.scaleWidth(99),
                                                 height:
-                                                    SizeConfig.scaleHeight(26),
+                                                SizeConfig.scaleHeight(26),
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(5),
+                                                  BorderRadius.circular(5),
                                                   color: Color(0xff4C5175),
                                                 ),
                                                 child: Center(
@@ -212,7 +212,7 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                   ],
                 ),
               );
-      }),
-    );
-  }
+            }),
+       );
+    }
 }

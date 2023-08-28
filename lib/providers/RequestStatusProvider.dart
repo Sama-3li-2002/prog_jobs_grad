@@ -7,6 +7,8 @@ import 'package:prog_jobs_grad/model/Request.dart';
 class RequestStatusProvider extends ChangeNotifier {
   List<Request> submittedJobs = [];
   Jobs jobs = Jobs.main();
+  bool isLoading = false;
+
 
   Future<List<Request>> getSubmittedJobsForUser(String userId) async {
     QuerySnapshot<Map<String, dynamic>> submittedJobsSnapshot =
@@ -18,7 +20,6 @@ class RequestStatusProvider extends ChangeNotifier {
     submittedJobsSnapshot.docs.forEach((doc) {
       submittedJobs.add(Request.fromJson(doc.data()));
     });
-
     notifyListeners();
     return submittedJobs;
   }
