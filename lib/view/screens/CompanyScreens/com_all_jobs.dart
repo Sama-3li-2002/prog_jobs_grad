@@ -28,12 +28,18 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
   List<Jobs> _filteredJobs = [];
   late List<Jobs> allJobsList;
 
+  //for provider
+  bool isDataLoaded = false;
+
   @override
   void initState() {
     super.initState();
     allJobsList =
         Provider.of<CompanyJobsProvider>(context, listen: false).JobsList;
 
+    setState(() {
+      isDataLoaded = true;
+    });
 
     // For search icon
     _searchController.addListener(_performSearch);
@@ -122,9 +128,19 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
           builder: (context, companyJobsProvider, _) {
         allJobsList
             .sort((a, b) => b.current_time!.compareTo(a.current_time!));
-        return allJobsList.isEmpty
-            ? Center(child: Text("No available jobs"))
-            :SingleChildScrollView(
+
+         if (!isDataLoaded) {
+          return Center(child: CircularProgressIndicator());
+        } else if (companyJobsProvider.JobsList.isEmpty) {
+          Future.delayed(Duration(seconds: 4));
+          return Center(
+            child: Text(
+              'No available job',
+              style: TextStyle(fontSize: 18.0),
+            ),
+          );
+        } else {
+        return SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -720,7 +736,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                   ],
                 ),
             );
-      }),
+      }}),
     );
   }
 
