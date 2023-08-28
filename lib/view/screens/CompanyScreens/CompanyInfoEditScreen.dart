@@ -97,13 +97,13 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
                     SizeConfig.scaleTextFont(20),
                     FontWeight.w500),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Center(
                   child: Stack(
                     children: [
                       Card(
-                        elevation: 5,
+                        elevation: 3,
                         clipBehavior: Clip.antiAlias,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -111,8 +111,8 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
                         child: company.image != null
                             ? Image.network(
                                 company.image!,
-                                width: SizeConfig.scaleWidth(150),
-                                height: SizeConfig.scaleHeight(145),
+                                width: SizeConfig.scaleWidth(130),
+                                height: SizeConfig.scaleHeight(130),
                                 fit: BoxFit.cover,
                               )
                             : Image.network(

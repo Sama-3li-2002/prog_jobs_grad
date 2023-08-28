@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 
 import '../model/CompanyModel.dart';
 import 'FirebaseFireStoreHelper.dart';
@@ -20,6 +21,7 @@ class FirebaseAuthController {
       String id = userCredential.user!.uid;
       FirebaseFireStoreHelper.fireStoreHelper.SaveUserData(users, id);
       return userCredential;
+
     } on FirebaseAuthException catch (e) {
       print("creatAccount:  code" + e.message!);
       if (e.code == "email-already-in-use") {
@@ -138,9 +140,10 @@ class FirebaseAuthController {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-
+      LoginScreen.isSignInComplete= true;
       return userCredential;
     } on FirebaseAuthException catch (e) {
+      LoginScreen.isSignInComplete= false;
       print("signIn: code" + e.code);
       if (e.code == "user-not-found") {
         print("signIn:  code" + e.message!);

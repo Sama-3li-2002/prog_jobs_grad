@@ -17,6 +17,10 @@ class LoginScreen extends StatefulWidget {
   static const String id = "login_screen";
   final String userType;
 
+
+  // For circular validation
+  static bool? isSignInComplete ;
+
   LoginScreen({required this.userType});
 
   @override
@@ -316,31 +320,39 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
     });
+
     if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
-      UserCredential? userCredential =
-          await FirebaseAuthController.fireAuthHelper.signIn(
+       await FirebaseAuthController.fireAuthHelper.signIn(
         _emailProg!.text.trim(),
         _passwordProg!.text.trim(),
       );
-      bool isUserInUserCollection = await checkIfUserInUserCollection(
-          FirebaseAuthController.fireAuthHelper.userId());
+       if(LoginScreen.isSignInComplete== false){
+         setState(() {
+           _isLoading = false;
+         });
+       }else{
+         bool isUserInUserCollection = await checkIfUserInUserCollection(
+             FirebaseAuthController.fireAuthHelper.userId());
 
-      if (isUserInUserCollection) {
-        if (userCredential != null) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return HomeScreen();
-          }));
-        }
-      } else {
-        Fluttertoast.showToast(
-          msg: "You cannot log in with a company account here.",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
+         if (isUserInUserCollection)
+             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+               return HomeScreen();
+             }));
+        else {
+           setState(() {
+             _isLoading = false;
+           });
+           Fluttertoast.showToast(
+             msg: "You cannot log in with a company account here.",
+             toastLength: Toast.LENGTH_SHORT,
+             timeInSecForIosWeb: 1,
+             backgroundColor: Colors.black,
+             textColor: Colors.white,
+             fontSize: 16.0,
+           );
+         }
+       }
+
     } else {
       Fluttertoast.showToast(
         msg: "Email or Password can't be empty",
@@ -351,9 +363,6 @@ class _LoginScreenState extends State<LoginScreen> {
         fontSize: 16.0,
       );
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   // Company Info
@@ -363,10 +372,15 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (checkData()) {
       UserCredential? userCredential =
-          await FirebaseAuthController.fireAuthHelper.signIn(
+      await FirebaseAuthController.fireAuthHelper.signIn(
         _emailCom!.text.trim(),
         _passwordCom!.text.trim(),
       );
+      if(LoginScreen.isSignInComplete== false){
+        setState(() {
+          _isLoading = false;
+        });
+      }else{
       bool isUserInCompanyCollection = await checkIfUserInCompanyCollection(
           FirebaseAuthController.fireAuthHelper.userId());
 
@@ -377,6 +391,9 @@ class _LoginScreenState extends State<LoginScreen> {
           }));
         }
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         Fluttertoast.showToast(
           msg: "You cannot log in with a programmer account here.",
           toastLength: Toast.LENGTH_SHORT,
@@ -387,15 +404,16 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     }
-    setState(() {
-      _isLoading = false;
-    });
+    }
   }
 
   bool checkData() {
     if (_emailCom!.text.isNotEmpty && _passwordCom!.text.isNotEmpty) {
       return true;
     } else {
+      setState(() {
+        _isLoading = false;
+      });
       Fluttertoast.showToast(
         msg: "Email or Password can't be empty",
         toastLength: Toast.LENGTH_SHORT,

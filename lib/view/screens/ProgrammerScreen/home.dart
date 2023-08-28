@@ -95,10 +95,20 @@ class _HomeScreenState extends State<HomeScreen> {
         print("the job list $companiesJobsProvider.JobsList");
         return companiesJobsProvider.isLoading
             ? Center(
-                child: CircularProgressIndicator(),
-              )
+                child: CircularProgressIndicator(),)
             : companiesJobsProvider.JobsList.isEmpty
-                ? Center(child: Text("Not available jobs"))
+                ? Column(
+                  children: [
+                    Image(
+                        width: SizeConfig.scaleWidth(390),
+                        height: SizeConfig.scaleHeight(158),
+                        fit: BoxFit.fill,
+                        image: AssetImage(
+                          'assets/images/home.png',
+                        )),
+                    Center(child: Text("Not available jobs")),
+                  ],
+                )
                 : SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,8 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   width:
                                                       SizeConfig.scaleWidth(96),
                                                   height:
-                                                      SizeConfig.scaleHeight(
-                                                          105),
+                                                      SizeConfig.scaleHeight(90),
                                                   color: Color(0xff4C5175)
                                                       .withOpacity(0.5),
                                                   colorBlendMode:
