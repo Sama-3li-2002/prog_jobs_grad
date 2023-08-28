@@ -53,6 +53,7 @@ dependencies:
   flutter_local_notifications: ^15.1.1
   email_validator: ^2.1.17
   mailer: ^5.2.0
+  flutter_progress_hud: ^2.0.2
 
 dev_dependencies:
   flutter_test:
