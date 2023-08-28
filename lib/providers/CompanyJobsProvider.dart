@@ -7,8 +7,11 @@ import '../model/JobsModel.dart';
 
 class CompanyJobsProvider extends ChangeNotifier {
   List<Jobs> JobsList = [];
+  bool isLoading = false;
 
   Future getAllJobsObjects() async {
+    isLoading = true;
+    notifyListeners();
     final QuerySnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFireStoreHelper.instance.getAllCompanyJobsById(
             FirebaseAuthController.fireAuthHelper.userId());
@@ -16,6 +19,7 @@ class CompanyJobsProvider extends ChangeNotifier {
     for (var element in snapshot.docs) {
       JobsList.add(Jobs.fromMap(element.data()));
     }
+    isLoading = false;
     notifyListeners();
   }
 }

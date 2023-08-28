@@ -6,8 +6,11 @@ import '../model/JobsModel.dart';
 
 class CompaniesJobsProvider extends ChangeNotifier {
   List<Jobs> JobsList = [];
+  bool isLoading = false;
 
   Future<void> getAllJobsObjects() async {
+    isLoading = true;
+    notifyListeners();
     List<Jobs> jobsList = [];
     List<QueryDocumentSnapshot> allJobs =
         await FirebaseFireStoreHelper.instance.getAllJobsFromAllCompanies();
@@ -17,6 +20,7 @@ class CompaniesJobsProvider extends ChangeNotifier {
     }
 
     JobsList = jobsList;
+    isLoading = false;
     notifyListeners();
   }
 }

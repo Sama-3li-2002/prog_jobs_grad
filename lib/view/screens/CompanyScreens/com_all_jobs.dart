@@ -128,19 +128,15 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
           builder: (context, companyJobsProvider, _) {
         allJobsList
             .sort((a, b) => b.current_time!.compareTo(a.current_time!));
-
-         if (!isDataLoaded) {
-          return Center(child: CircularProgressIndicator());
-        } else if (companyJobsProvider.JobsList.isEmpty) {
-          Future.delayed(Duration(seconds: 4));
-          return Center(
-            child: Text(
-              'No available job',
-              style: TextStyle(fontSize: 18.0),
-            ),
-          );
-        } else {
-        return SingleChildScrollView(
+        return companyJobsProvider.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : (companyJobsProvider.JobsList.isEmpty)
+            ? Center(
+          child: Text(
+            'No available job',
+            style: TextStyle(fontSize: 18.0),
+          ),)
+            : SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -736,7 +732,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                   ],
                 ),
             );
-      }}),
+      }),
     );
   }
 

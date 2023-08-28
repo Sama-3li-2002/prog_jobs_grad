@@ -139,8 +139,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
       body: Consumer<CompaniesJobsProvider>(
           builder: (context, companiesJobsProvider, _) {
         allJobsList.sort((a, b) => b.current_time!.compareTo(a.current_time!));
-
-        return allJobsList.isEmpty
+        return companiesJobsProvider.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : (allJobsList.isEmpty)
             ? Center(child: Text("No available jobs"))
             : SingleChildScrollView(
                 child: Column(

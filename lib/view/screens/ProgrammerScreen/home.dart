@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     Provider.of<CompaniesJobsProvider>(context, listen: false)
         .getAllJobsObjects();
+
   }
 
   @override
@@ -92,8 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ? companiesJobsProvider.JobsList.sublist(0, 2)
             : companiesJobsProvider.JobsList;
         print("the job list $companiesJobsProvider.JobsList");
-        return companiesJobsProvider.JobsList.isEmpty
-            ? Center(child: Text("Not available jobs"))
+        return companiesJobsProvider.isLoading
+            ? Center(child: CircularProgressIndicator(),)
+            : companiesJobsProvider.JobsList.isEmpty
+        ?Center(child: Text("Not available jobs"))
             : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
