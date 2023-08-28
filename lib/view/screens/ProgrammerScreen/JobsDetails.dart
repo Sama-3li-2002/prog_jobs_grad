@@ -170,7 +170,7 @@ class _JobsDetailsState extends State<JobsDetails> {
                       alignment: Alignment.centerRight,
                       child: TextStyleWidget(
                           widget.items.isNotEmpty
-                              ? widget.items[0].salary!+""+r"$/month"  ?? ""
+                              ? widget.items[0].salary! + "" + r"$/month" ?? ""
                               : "No Salary",
                           Color(0xff000000),
                           SizeConfig.scaleTextFont(15),
@@ -378,7 +378,9 @@ class _JobsDetailsState extends State<JobsDetails> {
                                     user_id, widget.items[0].job_id!);
                               } else {
                                 await firestore_helper.addToFavorites(
-                                    user_id, widget.items[0].job_id!);
+                                    user_id,
+                                    widget.items[0].job_id!,
+                                    widget.items[0].id!);
                               }
 
                               setState(() {

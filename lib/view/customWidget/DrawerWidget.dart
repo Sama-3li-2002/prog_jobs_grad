@@ -242,7 +242,6 @@ Widget BuildMenuItems(BuildContext context) {
   );
 }
 
-
 void showLogoutDialog(BuildContext context) {
   showDialog(
     context: context,
@@ -284,10 +283,10 @@ void showLogoutDialog(BuildContext context) {
                 children: [
                   TextButton(
                     onPressed: () {
-
                       FirebaseAuthController.fireAuthHelper.signOut();
 
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) {
                         return UserTypeScreen();
                       }));
                     },
@@ -320,5 +319,3 @@ void showLogoutDialog(BuildContext context) {
     },
   );
 }
-
-

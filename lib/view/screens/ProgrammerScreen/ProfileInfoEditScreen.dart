@@ -134,7 +134,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
                       ),
                     ),
                   ),
-
                   Positioned(
                     bottom: SizeConfig.scaleHeight(12),
                     right: SizeConfig.scaleWidth(15),

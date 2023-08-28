@@ -174,12 +174,12 @@ class FirebaseFireStoreHelper {
     });
   }
 
-  Future<void> addToFavorites(String userId, String jobId) async {
+  Future<void> addToFavorites(String userId, String jobId, String comId) async {
     await firestore
         .collection(userCollection)
         .doc(userId)
         .collection(FavoriteJobsCollection)
-        .add({'jobId': jobId});
+        .add({'jobId': jobId, 'comId': comId});
   }
 
   Future<void> removeFromFavorites(String userId, String jobId) async {
@@ -341,5 +341,74 @@ class FirebaseFireStoreHelper {
         }
       }
     }
+  }
+
+  Future deleteProgData(String userId) async {
+    QuerySnapshot<Map<String, dynamic>> submittedJobsSnapshot = await firestore
+        .collectionGroup(SubmittedjobCollection)
+        .where('ProgId', isEqualTo: userId)
+        .get();
+
+    for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
+        in submittedJobsSnapshot.docs) {
+      await docSnapshot.reference.delete();
+    }
+
+    QuerySnapshot<Map<String, dynamic>> favoriteJobsSnapshot = await firestore
+        .collection(userCollection)
+        .doc(userId)
+        .collection(FavoriteJobsCollection)
+        .get();
+    for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
+        in favoriteJobsSnapshot.docs) {
+      await docSnapshot.reference.delete();
+    }
+    await firestore.collection(userCollection).doc(userId).delete();
+
+    print("Programmer data deleted successfully");
+  }
+
+  Future deleteComData(String comId) async {
+    QuerySnapshot<Map<String, dynamic>> favoriteJobsSnapshot = await firestore
+        .collectionGroup(FavoriteJobsCollection)
+        .where('comId', isEqualTo: comId)
+        .get();
+    for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
+        in favoriteJobsSnapshot.docs) {
+      await docSnapshot.reference.delete();
+    }
+
+    QuerySnapshot<Map<String, dynamic>> archiveJobsSnapshot = await firestore
+        .collection(companyCollection)
+        .doc(comId)
+        .collection(archiveCollection)
+        .get();
+    for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
+        in archiveJobsSnapshot.docs) {
+      await docSnapshot.reference.delete();
+    }
+
+    QuerySnapshot<Map<String, dynamic>> comJobsSnapshot = await firestore
+        .collection(companyCollection)
+        .doc(comId)
+        .collection(jobsCollection)
+        .get();
+
+    for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
+        in comJobsSnapshot.docs) {
+      QuerySnapshot<Map<String, dynamic>> subJobsSnapshot =
+          await docSnapshot.reference.collection(SubmittedjobCollection).get();
+
+      for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot2
+          in subJobsSnapshot.docs) {
+        await docSnapshot2.reference.delete();
+      }
+
+      await docSnapshot.reference.delete();
+    }
+
+    await firestore.collection(companyCollection).doc(comId).delete();
+
+    print("Company data deleted successfully");
   }
 }

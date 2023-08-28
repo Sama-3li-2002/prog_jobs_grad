@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:prog_jobs_grad/providers/ArchiveProvider.dart';
 import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
 import 'package:prog_jobs_grad/providers/CompaniesJobsProvider.dart';
@@ -48,7 +46,7 @@ void main() async {
   await Firebase.initializeApp();
 
   FirebaseFirestore.instance.settings = Settings(
-      persistenceEnabled: true,
+    persistenceEnabled: true,
   );
 
   runApp(MultiProvider(

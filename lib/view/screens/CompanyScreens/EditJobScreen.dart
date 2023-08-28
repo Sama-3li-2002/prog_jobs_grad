@@ -144,7 +144,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                         SizedBox(
                           height: SizeConfig.scaleHeight(65),
                         ),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -156,8 +155,8 @@ class _EditJobScreenState extends State<EditJobScreen> {
                             TextStyleWidget(
                                 comInfoProvider.comInfoList.isNotEmpty
                                     ? comInfoProvider
-                                    .comInfoList[0].companyName ??
-                                    ""
+                                            .comInfoList[0].companyName ??
+                                        ""
                                     : "No Company Name",
                                 Color(0xff4C5175),
                                 SizeConfig.scaleTextFont(15),
@@ -199,7 +198,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                       height: SizeConfig.scaleHeight(55),
                                       child: TextField(
                                         controller: _sarlary,
-                                          autofocus: true,
+                                        autofocus: true,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: r"$/months",
@@ -259,7 +258,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                           top: SizeConfig.scaleHeight(2),
                                           bottom: SizeConfig.scaleHeight(2),
                                         ),
-
                                         child: SizedBox(
                                           width: SizeConfig.scaleWidth(360),
                                           height: SizeConfig.scaleHeight(48),
@@ -270,11 +268,11 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                                 hintText: 'add the skill..',
                                                 hintStyle: TextStyle(
                                                   fontSize:
-                                                  SizeConfig.scaleTextFont(12),
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
                                                 )),
                                           ),
                                         ),
-
                                       ),
                                       Container(
                                         width: double.infinity,
@@ -287,7 +285,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                           top: SizeConfig.scaleHeight(2),
                                           bottom: SizeConfig.scaleHeight(2),
                                         ),
-
                                         child: SizedBox(
                                           width: SizeConfig.scaleWidth(360),
                                           height: SizeConfig.scaleHeight(48),
@@ -298,11 +295,11 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                                 hintText: 'add the skill..',
                                                 hintStyle: TextStyle(
                                                   fontSize:
-                                                  SizeConfig.scaleTextFont(12),
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
                                                 )),
                                           ),
                                         ),
-
                                       ),
                                       Container(
                                         width: double.infinity,
@@ -325,7 +322,8 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                                 hintText: 'add the skill..',
                                                 hintStyle: TextStyle(
                                                   fontSize:
-                                                  SizeConfig.scaleTextFont(12),
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
                                                 )),
                                           ),
                                         ),
@@ -341,7 +339,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                           bottom: SizeConfig.scaleHeight(2),
                                           top: SizeConfig.scaleHeight(2),
                                         ),
-
                                         child: SizedBox(
                                           width: SizeConfig.scaleWidth(360),
                                           height: SizeConfig.scaleHeight(48),
@@ -352,7 +349,8 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                                 hintText: 'add the skill..',
                                                 hintStyle: TextStyle(
                                                   fontSize:
-                                                  SizeConfig.scaleTextFont(12),
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
                                                 )),
                                           ),
                                         ),

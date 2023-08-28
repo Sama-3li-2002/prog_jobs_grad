@@ -56,13 +56,11 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   late String formattedDate;
   late String formattedTime;
 
-
-
   @override
   void initState() {
     super.initState();
 
-     Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
+    Provider.of<ComInfoProvider>(context, listen: false).comInfoList.first;
 
     _job_nameTextController = TextEditingController();
     _companynameTextController = TextEditingController();
@@ -122,11 +120,11 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
         ),
       ),
       body: Consumer<ComInfoProvider>(builder: (context, comInfoProvider, _) {
-
         if (comInfoProvider.comInfoList.isEmpty)
           return Center(child: CircularProgressIndicator());
         else {
-          _companynameTextController?.text = comInfoProvider.comInfoList[0].companyName!;
+          _companynameTextController?.text =
+              comInfoProvider.comInfoList[0].companyName!;
           return SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(15),

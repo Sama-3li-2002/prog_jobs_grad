@@ -22,7 +22,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-
   // Programmer Info
   TextEditingController? _usernameProg;
   TextEditingController? _emailProg;
@@ -47,7 +46,6 @@ class _SignupScreenState extends State<SignupScreen> {
   // visible pass
   bool _obscureText = true;
 
-
   @override
   void initState() {
     super.initState();
@@ -71,8 +69,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _InstagramAccountCom = TextEditingController();
     _aboutCom = TextEditingController();
     _managerCom = TextEditingController();
-
-
   }
 
   @override
@@ -171,17 +167,24 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
                     SizedBox(
                       width: SizeConfig.scaleWidth(321),
-                      height: SizeConfig.scaleHeight(48),
+                      height: SizeConfig.scaleHeight(86),
                       child: TextField(
                         controller: _passwordProg,
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
+                          helperText:
+                              'Password must contain letters(capital & small), numbers '
+                              '\nspecial characters and not less than 8',
+                          helperStyle: TextStyle(
+                            fontSize: SizeConfig.scaleTextFont(12),
+                            color: Colors.grey,
+                          ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
-                              BorderSide(color: Colors.white, width: 1)),
+                                  BorderSide(color: Colors.white, width: 1)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -223,7 +226,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-
                         child: TextFieldWidget.textfieldCon(
                           controller: _phoneProg,
                           inputType: TextInputType.phone,
@@ -306,17 +308,24 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
                     SizedBox(
                       width: SizeConfig.scaleWidth(321),
-                      height: SizeConfig.scaleHeight(48),
+                      height: SizeConfig.scaleHeight(86),
                       child: TextField(
                         controller: _passwordCom,
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
+                          helperText:
+                              'Password must contain letters(capital & small), numbers '
+                              '\nspecial characters and not less than 8',
+                          helperStyle: TextStyle(
+                            fontSize: SizeConfig.scaleTextFont(12),
+                            color: Colors.grey,
+                          ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
-                              BorderSide(color: Colors.white, width: 1)),
+                                  BorderSide(color: Colors.white, width: 1)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -346,7 +355,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                         width: SizeConfig.scaleWidth(321),
                         height: SizeConfig.scaleHeight(48),
-
                         child: TextFieldWidget.textfieldCon(
                           controller: _phoneCom,
                           inputType: TextInputType.phone,
@@ -471,7 +479,8 @@ class _SignupScreenState extends State<SignupScreen> {
         _aboutProg!.text.isNotEmpty) {
       // قيود على كلمة السر
       if (password.length >= 6 &&
-          password.contains(RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
+          password.contains(
+              RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
         // قيود على رقم الهاتف
         if (phoneNumber.length == 10 &&
             phoneNumber.startsWith('05') &&
@@ -516,7 +525,6 @@ class _SignupScreenState extends State<SignupScreen> {
           fontSize: 16.0,
         );
       }
-
     } else {
       Fluttertoast.showToast(
         msg: "Please Fill All Fields",
@@ -540,16 +548,15 @@ class _SignupScreenState extends State<SignupScreen> {
         _addressCom!.text.isNotEmpty &&
         _managerCom!.text.isNotEmpty &&
         _aboutCom!.text.isNotEmpty) {
-
       // قيود على كلمة السر
       if (password.length >= 6 &&
-          password.contains(RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
+          password.contains(
+              RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
         // قيود على رقم الهاتف
         if (phoneNumber.length == 10 &&
             phoneNumber.startsWith('05') &&
             int.tryParse(phoneNumber) != null &&
             !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-
           UserCredential? userCredential = await FirebaseAuthController
               .fireAuthHelper
               .createComAccount(Company.signUP(
@@ -563,7 +570,7 @@ class _SignupScreenState extends State<SignupScreen> {
             _twitterAccountCom!.text,
             _InstagramAccountCom!.text,
             _aboutCom!.text,
-            'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=98b7a6e2-b895-4254-bed0-598c5f10ec2b',
+            'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=c072186c-21be-41be-8ade-46812dad6f81',
             'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
           ));
           if (userCredential != null) {
@@ -593,7 +600,6 @@ class _SignupScreenState extends State<SignupScreen> {
           fontSize: 16.0,
         );
       }
-
     } else {
       Fluttertoast.showToast(
         msg: "Please Fill All Fields",
@@ -605,9 +611,4 @@ class _SignupScreenState extends State<SignupScreen> {
       );
     }
   }
-
-
 }
-
-
-

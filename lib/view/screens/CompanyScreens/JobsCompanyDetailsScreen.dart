@@ -168,7 +168,10 @@ class _JobsCompanyDetailsScreenState extends State<JobsCompanyDetailsScreen> {
                                   alignment: Alignment.centerRight,
                                   child: TextStyleWidget(
                                       widget.items.isNotEmpty
-                                          ? widget.items[0].salary! +""+r"$/month" ?? ""
+                                          ? widget.items[0].salary! +
+                                                  "" +
+                                                  r"$/month" ??
+                                              ""
                                           : "No Salary",
                                       Color(0xff000000),
                                       SizeConfig.scaleTextFont(15),

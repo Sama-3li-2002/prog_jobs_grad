@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
 import '../../../controller/FirebaseAuthController.dart';
+import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../model/UserSettings.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -159,19 +161,28 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (UserTypeScreen.type == 'programmer')
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: SizeConfig.scaleWidth(20),
+                                vertical: SizeConfig.scaleHeight(10)),
+                            child: buildPrivacyOptionRow(
+                                'Show Profile Picture',
+                                showProfPic,
+                                (value) => _handleSwitchChange(
+                                    value, '$userId-showProfPic')),
+                          ),
+                          Divider(
+                            height: 1,
+                          ),
+                        ],
+                      ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.scaleWidth(20)),
-                      child: buildPrivacyOptionRow(
-                          'Show Profile Picture',
-                          showProfPic,
-                          (value) => _handleSwitchChange(
-                              value, '$userId-showProfPic')),
-                    ),
-                    Divider(),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.scaleWidth(20)),
+                          horizontal: SizeConfig.scaleWidth(20),
+                          vertical: SizeConfig.scaleHeight(10)),
                       child: buildPrivacyOptionRow(
                           "Receive notifications",
                           recNot,
@@ -203,6 +214,34 @@ class _SettingScreenState extends State<SettingScreen> {
                           width: SizeConfig.scaleWidth(10),
                         ),
                         TextStyleWidget("Change Password", Color(0xff091A20),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  showDeleteDialog(context);
+                },
+                child: Card(
+                  elevation: 7,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.scaleWidth(20),
+                        vertical: SizeConfig.scaleHeight(15)),
+                    child: Row(
+                      children: [
+                        Icon(Icons.delete_forever,
+                            color: Color(0xffCBB523),
+                            size: SizeConfig.scaleWidth(22)),
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(10),
+                        ),
+                        TextStyleWidget("Delete My Account", Color(0xff091A20),
                             SizeConfig.scaleTextFont(12), FontWeight.w500),
                       ],
                     ),
@@ -593,4 +632,205 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
     return await FirebaseAuthController.fireAuthHelper
         .signInToChangePass(user.email!, enteredCurrentPassword);
   }
+}
+
+void showDeleteDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "Delete Account",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Divider(),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "Are you sure you want to delete your account?",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              ButtonBar(
+                alignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      _deleteAccount(context);
+                    },
+                    child: Text(
+                      "Yes",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Future<SignInResult> _showSignInScreen(BuildContext context) async {
+  // Delete Account
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  try {
+    SignInResult signInResult = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Sign In Again'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('For security reasons, please sign in again.'),
+              SizedBox(height: 10),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Email'),
+                controller: _emailController,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Password'),
+                controller: _passwordController,
+                obscureText: true,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                try {
+                  AuthCredential credential = EmailAuthProvider.credential(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
+                  await FirebaseAuth.instance.currentUser!
+                      .reauthenticateWithCredential(credential);
+                  Navigator.pop(context, SignInResult.success);
+                } catch (e) {
+                  print('Error re-authenticating user: $e');
+                  Navigator.pop(context, SignInResult.error);
+                }
+              },
+              child: Text('Sign In'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, SignInResult.cancelled);
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+
+    return signInResult;
+  } catch (e) {
+    print('Error showing sign-in screen: $e');
+    return SignInResult.error;
+  }
+}
+
+Future<void> _deleteAccount(BuildContext context) async {
+  try {
+    SignInResult signInResult = await _showSignInScreen(context);
+
+    if (signInResult == SignInResult.success) {
+      _performAccountDeletion(context);
+      Fluttertoast.showToast(
+        msg: "Account deleted successfully",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else if (signInResult == SignInResult.cancelled) {
+      Fluttertoast.showToast(
+        msg: "Sign-in cancelled by user",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else if (signInResult == SignInResult.error) {
+      print('Error re-authenticating user');
+
+      Fluttertoast.showToast(
+        msg: "The password is invalid",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  } catch (e) {
+    print('Error deleting account: $e');
+  }
+}
+
+Future _performAccountDeletion(BuildContext context) async {
+  try {
+    if (UserTypeScreen.type == 'programmer') {
+      await FirebaseFireStoreHelper.instance
+          .deleteProgData(FirebaseAuthController.fireAuthHelper.userId());
+    } else if (UserTypeScreen.type == 'company') {
+      await FirebaseFireStoreHelper.instance
+          .deleteComData(FirebaseAuthController.fireAuthHelper.userId());
+    }
+    await FirebaseAuth.instance.currentUser!.delete();
+    // Navigator.pop(context);
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+      return UserTypeScreen();
+    }));
+  } catch (e) {
+    print('Error deleting account: $e');
+  }
+}
+
+enum SignInResult {
+  success,
+  cancelled,
+  error,
 }
