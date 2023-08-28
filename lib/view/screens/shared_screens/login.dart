@@ -355,6 +355,9 @@ class _LoginScreenState extends State<LoginScreen> {
        }
 
     } else {
+      setState(() {
+        _isLoading = false;
+      });
       Fluttertoast.showToast(
         msg: "Email or Password can't be empty",
         toastLength: Toast.LENGTH_SHORT,
