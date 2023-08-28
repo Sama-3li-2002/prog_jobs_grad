@@ -1,45 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:prog_jobs_grad/model/UserSettings.dart';
-
-import '../../controller/FirebaseAuthController.dart';
 import '../../controller/FirebaseFireStoreHelper.dart';
 import '../../model/UsersModel.dart';
 
-class ProfWidget extends StatefulWidget {
+class ShowProfPicInCom extends StatefulWidget {
+  String ProgId;
+
+  ShowProfPicInCom({required this.ProgId});
+
   @override
-  State<ProfWidget> createState() => _ProfWidgetState();
+  State<ShowProfPicInCom> createState() => _ShowProfPicInComState();
 }
 
-class _ProfWidgetState extends State<ProfWidget> {
-  String id = FirebaseAuthController.fireAuthHelper.userId();
+class _ShowProfPicInComState extends State<ShowProfPicInCom> {
   FirebaseFireStoreHelper fireStoreHelper =
       FirebaseFireStoreHelper.fireStoreHelper;
   Users? users;
-  bool showProfPic = true;
 
   @override
   void initState() {
     super.initState();
     setState(() {
       getUser();
-      getSetProfPicSetting();
     });
   }
 
   Future<void> getUser() async {
-    final userResult = await fireStoreHelper.getUserData(id);
+    final userResult = await fireStoreHelper.getUserData(widget.ProgId);
     setState(() {
       users = userResult;
     });
   }
 
-  Future<void> getSetProfPicSetting() async {
-    showProfPic = await UserSettings.getSetting('$id-showProfPic');
-  }
-
   @override
   Widget build(BuildContext context) {
-    return showProfPic ? _buildProfileImage() : _buildDefaultImage();
+    return users!.showProfPic! ? _buildProfileImage() : _buildDefaultImage();
   }
 
   Widget _buildProfileImage() {

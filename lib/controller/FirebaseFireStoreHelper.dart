@@ -33,6 +33,7 @@ class FirebaseFireStoreHelper {
       "specialization": users.specialization,
       "about": users.about,
       "imageUrl": users.imageUrl,
+      "showProfPic":users.showProfPic,
     });
   }
 

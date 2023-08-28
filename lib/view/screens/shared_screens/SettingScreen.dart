@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
 import '../../../controller/FirebaseAuthController.dart';
 import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../model/UserSettings.dart';
+import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 
@@ -19,9 +21,12 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  bool showProfPic = false;
+  bool showProfPic = true;
   bool recNot = true;
   String userId = FirebaseAuthController.fireAuthHelper.userId();
+  FirebaseFireStoreHelper fireStoreHelper =
+      FirebaseFireStoreHelper.fireStoreHelper;
+  Users? users;
 
   // change pass
   late TextEditingController currentPasswordController;
@@ -32,12 +37,20 @@ class _SettingScreenState extends State<SettingScreen> {
   void initState() {
     super.initState();
     setState(() {
+      getUser();
       _loadSettings();
     });
     //change pass
     currentPasswordController = TextEditingController();
     newPasswordController = TextEditingController();
     confirmPasswordController = TextEditingController();
+  }
+
+  Future<void> getUser() async {
+    final userResult = await fireStoreHelper.getUserData(userId);
+    setState(() {
+      users = userResult;
+    });
   }
 
   @override
@@ -51,6 +64,12 @@ class _SettingScreenState extends State<SettingScreen> {
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
+              if (UserTypeScreen.type == 'programmer') {
+                Navigator.of(context)
+                    .pushReplacement(MaterialPageRoute(builder: (context) {
+                  return HomeScreen();
+                }));
+              }
             },
             icon: Icon(
               Icons.arrow_back_ios,
@@ -301,6 +320,8 @@ class _SettingScreenState extends State<SettingScreen> {
     setState(() {
       if (settingKey == '$userId-showProfPic') {
         showProfPic = value;
+        users!.showProfPic = value;
+        fireStoreHelper.SaveUserData(users!, userId);
       } else if (settingKey == '$userId-recNot') {
         recNot = value;
       }
@@ -315,7 +336,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Future _loadSettings() async {
     showProfPic = await UserSettings.getSetting('$userId-showProfPic');
-
+    users!.showProfPic = showProfPic;
     recNot = await UserSettings.getSetting('$userId-recNot');
 
     setState(() {

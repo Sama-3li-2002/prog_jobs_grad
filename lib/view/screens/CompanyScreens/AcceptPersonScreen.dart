@@ -5,6 +5,7 @@ import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.da
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/pdf_viewer_page.dart';
 
 import '../../../controller/FirebaseFireStoreHelper.dart';
+import '../../customWidget/ShowProfPicInCom.dart';
 import '../../customWidget/textStyleWidget.dart';
 
 class AcceptPerson extends StatefulWidget {
@@ -83,12 +84,8 @@ class _AcceptPersonState extends State<AcceptPerson> {
                 child: SizedBox(
                   width: SizeConfig.scaleWidth(150),
                   height: SizeConfig.scaleHeight(150),
-                  child: ClipOval(
-                    child: Image.network(
-                      users!.imageUrl,
-                      fit: BoxFit.cover,
-                      // fit: BoxFit.cover,
-                    ),
+                  child: ShowProfPicInCom(
+                    ProgId: widget.progId,
                   ),
                 ),
               ),

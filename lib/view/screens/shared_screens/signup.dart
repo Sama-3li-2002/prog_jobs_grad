@@ -490,14 +490,14 @@ class _SignupScreenState extends State<SignupScreen> {
           UserCredential? userCredential = await FirebaseAuthController
               .fireAuthHelper
               .createAccount(Users.signup(
-            _usernameProg!.text,
-            _emailProg!.text,
-            _passwordProg!.text,
-            _phoneProg!.text,
-            int.tryParse(_ageProg!.text),
-            _specializationProg!.text,
-            _aboutProg!.text,
-          ));
+                  _usernameProg!.text,
+                  _emailProg!.text,
+                  _passwordProg!.text,
+                  _phoneProg!.text,
+                  int.tryParse(_ageProg!.text),
+                  _specializationProg!.text,
+                  _aboutProg!.text,
+                  true));
 
           if (userCredential != null) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {

@@ -7,6 +7,7 @@ import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoEditScre
 import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../model/UsersModel.dart';
 import '../../../utils/size_config.dart';
+import 'home.dart';
 
 class ProfileInfo extends StatefulWidget {
   static const String id = "profile_info_screen";
@@ -45,6 +46,10 @@ class _ProfileInfoState extends State<ProfileInfo> {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
+              return HomeScreen();
+            }));
           },
           icon: Icon(
             Icons.arrow_back_ios,
