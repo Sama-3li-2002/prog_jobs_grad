@@ -33,7 +33,7 @@ class FirebaseFireStoreHelper {
       "specialization": users.specialization,
       "about": users.about,
       "imageUrl": users.imageUrl,
-      "showProfPic":users.showProfPic,
+      "showProfPic": users.showProfPic,
     });
   }
 
@@ -282,18 +282,6 @@ class FirebaseFireStoreHelper {
       return imageUrl;
     } else {
       return '';
-    }
-  }
-
-  Future<Users> getUserForAccept(String userId) async {
-    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
-        await firestore.collection(userCollection).doc(userId).get();
-
-    if (userSnapshot.exists) {
-      Users user = Users.fromJson(userSnapshot.data()!);
-      return user;
-    } else {
-      return Users();
     }
   }
 

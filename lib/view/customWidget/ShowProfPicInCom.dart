@@ -19,9 +19,7 @@ class _ShowProfPicInComState extends State<ShowProfPicInCom> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      getUser();
-    });
+    getUser();
   }
 
   Future<void> getUser() async {
@@ -33,7 +31,11 @@ class _ShowProfPicInComState extends State<ShowProfPicInCom> {
 
   @override
   Widget build(BuildContext context) {
-    return users!.showProfPic! ? _buildProfileImage() : _buildDefaultImage();
+    return users == null
+        ? CircularProgressIndicator()
+        : users!.showProfPic!
+            ? _buildProfileImage()
+            : _buildDefaultImage();
   }
 
   Widget _buildProfileImage() {
