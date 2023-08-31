@@ -213,7 +213,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                   Container(
                                                     height:
                                                         SizeConfig.scaleHeight(
-                                                            130),
+                                                            110),
                                                     clipBehavior:
                                                         Clip.antiAlias,
                                                     decoration: BoxDecoration(

@@ -156,7 +156,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      height: SizeConfig.scaleHeight(130),
+                                      height: SizeConfig.scaleHeight(110),
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.only(
@@ -459,7 +459,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                     child: Row(
                                       children: [
                                         Container(
-                                          height: SizeConfig.scaleHeight(130),
+                                          height: SizeConfig.scaleHeight(110),
                                           clipBehavior: Clip.antiAlias,
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(

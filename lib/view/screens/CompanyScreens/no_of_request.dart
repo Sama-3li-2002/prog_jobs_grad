@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xffF5F5F5),
         appBar: AppBar(
           backgroundColor: Color(0xfffafafa),
           elevation: 0,
@@ -57,7 +59,7 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
             ),
           ],
         ),
-        backgroundColor: Color(0xfffafafa),
+
         body: Consumer<NumberOfRequestsProvider>(
             builder: (context, NoOfRequestsProvider, _) {
           return NoOfRequestsProvider.isLoading
@@ -87,6 +89,22 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, int index) {
+
+                                // لازالة الثواني من الوقت
+                                late String formattedTime;
+                                String timeString =  NoOfRequestsProvider.submittedRequests
+                                    [index].current_time ??
+                                    "";
+                                try {
+                                  formattedTime = DateFormat('hh:mm a').format(
+                                      DateFormat('hh:mm:ss a').parse(timeString));
+                                } catch (e) {
+                                  print("Invalid data format: $timeString");
+                                  formattedTime = "Invalid time format";
+                                }
+
+
+
                                 return Column(children: [
                                   SizedBox(
                                     height: 10,
@@ -130,7 +148,7 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(5),
-                                                  color: Colors.white),
+                                                  ),
                                               margin: EdgeInsets.only(
                                                 left: SizeConfig.scaleWidth(15),
                                                 right:
@@ -179,17 +197,18 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                                                 FontWeight.w500,
                                                               ),
                                                               Spacer(),
-                                                              TextStyleWidget(
-                                                                NoOfRequestsProvider
-                                                                    .submittedRequests[
-                                                                        index]
-                                                                    .current_time!,
-                                                                Color(
-                                                                    0xff4C5175),
-                                                                SizeConfig
-                                                                    .scaleTextFont(
-                                                                        10),
-                                                                FontWeight.w500,
+                                                              Padding(
+                                                                padding:  EdgeInsets.only(right: 5.0),
+                                                                child: TextStyleWidget(
+                                                                  formattedTime
+                                                                  ,
+                                                                  Color(
+                                                                      0xff4C5175),
+                                                                  SizeConfig
+                                                                      .scaleTextFont(
+                                                                          10),
+                                                                  FontWeight.w500,
+                                                                ),
                                                               )
                                                             ],
                                                           ),

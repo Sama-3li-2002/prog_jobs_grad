@@ -94,6 +94,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
           ),
         ],
         title: PreferredSize(
+
           preferredSize: Size.fromHeight(30),
           child: TextField(
             controller: _searchController,
@@ -203,7 +204,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                 Container(
                                                   height:
                                                       SizeConfig.scaleHeight(
-                                                          130),
+                                                          110),
                                                   clipBehavior: Clip.antiAlias,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
@@ -492,7 +493,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                 Container(
                                                   height:
                                                       SizeConfig.scaleHeight(
-                                                          130),
+                                                          110),
                                                   clipBehavior: Clip.antiAlias,
                                                   decoration: BoxDecoration(
                                                       borderRadius:

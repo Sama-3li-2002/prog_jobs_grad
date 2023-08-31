@@ -1,5 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
+import 'package:prog_jobs_grad/model/UsersModel.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
+
 
 import '../../../model/CompanyModel.dart';
 import '../../../utils/size_config.dart';
@@ -15,6 +21,8 @@ class CompanyInfoScreenProg extends StatefulWidget {
 }
 
 class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,6 +54,27 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                               Icons.arrow_back_ios,
                               color: Colors.white,
                               size: SizeConfig.scaleWidth(14),
+                            ),
+                          )),
+                      Spacer(),
+                      Padding(
+                          padding: EdgeInsetsDirectional.only(
+                              end: SizeConfig.scaleWidth(20),
+                              top: SizeConfig.scaleHeight(50)),
+                          child: InkWell(
+                            onTap: () async {
+                              // to get current user name
+                              Users? user= await FirebaseFireStoreHelper.fireStoreHelper.getUserData(FirebaseAuthController.fireAuthHelper.userId());
+                              ConversationScreen.companyId =widget.itemsComInfo[0].id!;
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) {
+                                    return ConversationScreen(progUsername: user!.username,widget.itemsComInfo.first.companyName!);
+                                  }));
+                            },
+                            child: Icon(
+                              Icons.chat,
+                              color: Colors.white,
+                              size: SizeConfig.scaleWidth(20),
                             ),
                           )),
                     ],
@@ -236,9 +265,9 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                   margin: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
-                  )),
+                        topRight: Radius.circular(20),
+                        topLeft: Radius.circular(20),
+                      )),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -345,8 +374,8 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                                       backgroundImage: NetworkImage(
                                         widget.itemsComInfo.isNotEmpty
                                             ? widget.itemsComInfo[0]
-                                                    .managerImage ??
-                                                ""
+                                            .managerImage ??
+                                            ""
                                             : "No  Manger Image",
                                       ),
                                     ),
@@ -358,13 +387,13 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                                           top: SizeConfig.scaleHeight(8)),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           TextStyleWidget(
                                               widget.itemsComInfo.isNotEmpty
                                                   ? widget.itemsComInfo[0]
-                                                          .managerName ??
-                                                      ""
+                                                  .managerName ??
+                                                  ""
                                                   : "No Manger Name ",
                                               Colors.black,
                                               SizeConfig.scaleTextFont(18),

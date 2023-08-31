@@ -390,6 +390,7 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
                           ),
                         ),
                         onPressed: () async {
+                          FocusScope.of(context).unfocus();
                           await performUpdate();
                           Fluttertoast.showToast(
                             msg: "Updated successfully",
@@ -448,9 +449,6 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
       address: _address!.text,
       managerName: _company_manger!.text,
       about: _about!.text,
-      facebookAccount: company.facebookAccount,
-      twitterAccount: company.twitterAccount,
-      InstagramAccount: company.InstagramAccount,
       image: company.image!,
       managerImage: company.managerImage,
       email: company.email,

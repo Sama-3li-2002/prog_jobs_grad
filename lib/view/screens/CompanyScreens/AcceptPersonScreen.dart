@@ -58,20 +58,6 @@ class _AcceptPersonState extends State<AcceptPerson> {
           ),
           color: Color(0xff4C5175),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return ConversationScreen();
-              }));
-            },
-            icon: Icon(
-              Icons.message,
-              size: SizeConfig.scaleWidth(30),
-            ),
-            color: Color(0xff4C5175),
-          ),
-        ],
         elevation: 0,
       ),
       body: users == null

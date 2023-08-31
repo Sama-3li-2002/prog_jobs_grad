@@ -368,6 +368,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                     height: SizeConfig.scaleHeight(48),
                                     child: ElevatedButton(
                                         onPressed: () async {
+                                          FocusScope.of(context).unfocus();
                                           Fluttertoast.showToast(
                                             msg: "Updated successfully",
                                             toastLength: Toast.LENGTH_SHORT,

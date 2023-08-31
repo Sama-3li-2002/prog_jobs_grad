@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:provider/provider.dart';
@@ -106,6 +107,17 @@ class _FavoriteState extends State<Favorite> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: favoriteProvider.favoriteJobsList.length,
                         itemBuilder: (BuildContext context, int index) {
+                          // لازالة الثواني من الوقت
+                          late String formattedTime;
+                          String timeString =  favoriteProvider.favoriteJobsList[index].current_time ?? "";
+                          try {
+                            formattedTime = DateFormat('hh:mm a').format(DateFormat('hh:mm:ss a').parse(timeString));
+                          } catch (e) {
+                            print("Invalid data format: $timeString");
+                            formattedTime = "Invalid time format";
+                          }
+
+
                           return Container(
                               margin: EdgeInsets.all(
                                 SizeConfig.scaleWidth(15),
@@ -140,7 +152,7 @@ class _FavoriteState extends State<Favorite> {
                                           children: [
                                             Container(
                                               height:
-                                                  SizeConfig.scaleHeight(130),
+                                                  SizeConfig.scaleHeight(110),
                                               padding: EdgeInsets.zero,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: BoxDecoration(
@@ -254,17 +266,24 @@ class _FavoriteState extends State<Favorite> {
                                                                           .w500),
                                                                 ],
                                                               ),
-                                                              TextStyleWidget(
-                                                                  favoriteProvider
-                                                                      .favoriteJobsList[
-                                                                          index]
-                                                                      .current_time!,
-                                                                  Colors.black,
-                                                                  SizeConfig
-                                                                      .scaleTextFont(
-                                                                          10),
-                                                                  FontWeight
-                                                                      .w500),
+                                                              Padding(
+                                                                padding:  EdgeInsets.only(left:16),
+                                                                child: TextStyleWidget(
+
+                                                                    favoriteProvider
+                                                                        .favoriteJobsList
+                                                                        .isNotEmpty
+                                                                        ? formattedTime??
+                                                                        ""
+                                                                        : "No Current Time",
+
+                                                                    Colors.black,
+                                                                    SizeConfig
+                                                                        .scaleTextFont(
+                                                                            10),
+                                                                    FontWeight
+                                                                        .w500),
+                                                              ),
                                                             ],
                                                           ),
                                                         )

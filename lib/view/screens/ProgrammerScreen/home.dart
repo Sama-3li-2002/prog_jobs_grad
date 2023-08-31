@@ -85,12 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xfffafafa),
       body: Consumer<CompaniesJobsProvider>(
           builder: (context, companiesJobsProvider, _) {
-        companiesJobsProvider.JobsList.sort(
-            (a, b) => b.current_time!.compareTo(a.current_time!));
-
-        List<Jobs> newJobs = companiesJobsProvider.JobsList.length >= 2
-            ? companiesJobsProvider.JobsList.sublist(0, 2)
-            : companiesJobsProvider.JobsList;
+            companiesJobsProvider.JobsList.sort(
+                    (a, b) => b.current_time!.compareTo(a.current_time!));
+            List<Jobs> newJobs = companiesJobsProvider.JobsList.length >= 2
+                ? companiesJobsProvider.JobsList.sublist(0, 2)
+                : companiesJobsProvider.JobsList;
 
         print("the job list $companiesJobsProvider.JobsList");
         return companiesJobsProvider.isLoading
@@ -197,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Container(
                                                 clipBehavior: Clip.antiAlias,
                                                 height:
-                                                    SizeConfig.scaleHeight(130),
+                                                    SizeConfig.scaleHeight(110),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.only(
@@ -206,10 +205,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Radius.circular(5),
                                                 )),
                                                 child: Image.network(
-                                                  companiesJobsProvider
-                                                          .JobsList.isNotEmpty
-                                                      ? companiesJobsProvider
-                                                              .JobsList[index]
+                                                  newJobs.isNotEmpty
+                                                      ? newJobs[index]
                                                               .job_image ??
                                                           ""
                                                       : "No Image",
@@ -236,12 +233,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Row(
                                                         children: [
                                                           TextStyleWidget(
-                                                              companiesJobsProvider
-                                                                      .JobsList
-                                                                      .isNotEmpty
-                                                                  ? companiesJobsProvider
-                                                                          .JobsList[
-                                                                              index]
+                                                              newJobs.isNotEmpty
+                                                                  ? newJobs[index]
                                                                           .job_name ??
                                                                       ""
                                                                   : "No Job Name",
@@ -265,11 +258,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     0xffcbb523),
                                                               ),
                                                               TextStyleWidget(
-                                                                  companiesJobsProvider
-                                                                          .JobsList
+                                                                  newJobs
                                                                           .isNotEmpty
-                                                                      ? companiesJobsProvider
-                                                                              .JobsList[
+                                                                      ? newJobs[
                                                                                   index]
                                                                               .company_name ??
                                                                           ""
@@ -306,10 +297,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               3),
                                                                     ),
                                                                     TextStyleWidget(
-                                                                      companiesJobsProvider
-                                                                              .JobsList
+                                                                      newJobs
                                                                               .isNotEmpty
-                                                                          ? companiesJobsProvider.JobsList[index].current_date ??
+                                                                          ? newJobs[index].current_date ??
                                                                               ""
                                                                           : "No Current Date",
                                                                       Colors
@@ -329,8 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               15),
                                                                   child:
                                                                       TextStyleWidget(
-                                                                    companiesJobsProvider
-                                                                            .JobsList
+                                                                        newJobs
                                                                             .isNotEmpty
                                                                         ? formattedTime ??
                                                                             ""
@@ -596,7 +585,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Container(
                                                 height:
-                                                    SizeConfig.scaleHeight(130),
+                                                    SizeConfig.scaleHeight(110),
                                                 clipBehavior: Clip.antiAlias,
                                                 decoration: BoxDecoration(
                                                     borderRadius:

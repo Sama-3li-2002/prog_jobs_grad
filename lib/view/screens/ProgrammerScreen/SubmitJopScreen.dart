@@ -170,37 +170,6 @@ class _SubmitJopScreenState extends State<SubmitJopScreen> {
                     SizedBox(
                       height: SizeConfig.scaleHeight(10),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () async {},
-                          child: Image.asset(
-                            "assets/images/facebook.png",
-                            width: SizeConfig.scaleWidth(30),
-                            height: SizeConfig.scaleHeight(30),
-                          ),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.scaleWidth(15),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Image.asset("assets/images/twitter.png",
-                              width: SizeConfig.scaleWidth(30),
-                              height: SizeConfig.scaleHeight(30)),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.scaleWidth(15),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Image.asset("assets/images/instagram.png",
-                              width: SizeConfig.scaleWidth(30),
-                              height: SizeConfig.scaleHeight(30)),
-                        ),
-                      ],
-                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.all(25),
                       child: Column(

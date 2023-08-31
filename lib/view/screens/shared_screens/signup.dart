@@ -38,9 +38,6 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? _companyNameCom;
   TextEditingController? _phoneCom;
   TextEditingController? _addressCom;
-  TextEditingController? _facebookAccountCom;
-  TextEditingController? _twitterAccountCom;
-  TextEditingController? _InstagramAccountCom;
   TextEditingController? _aboutCom;
   TextEditingController? _managerCom;
 
@@ -65,9 +62,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _companyNameCom = TextEditingController();
     _phoneCom = TextEditingController();
     _addressCom = TextEditingController();
-    _facebookAccountCom = TextEditingController();
-    _twitterAccountCom = TextEditingController();
-    _InstagramAccountCom = TextEditingController();
     _aboutCom = TextEditingController();
     _managerCom = TextEditingController();
   }
@@ -90,9 +84,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _companyNameCom?.dispose();
     _phoneCom?.dispose();
     _addressCom?.dispose();
-    _facebookAccountCom?.dispose();
-    _twitterAccountCom?.dispose();
-    _InstagramAccountCom?.dispose();
     _aboutCom?.dispose();
   }
 
@@ -248,13 +239,34 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     TextStyleWidget('about', Color(0xff4C5175),
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
+
                     SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _aboutProg,
-                          inputType: TextInputType.multiline,
-                        )),
+                      width: SizeConfig.scaleWidth(321),
+                      height: SizeConfig.scaleHeight(90),
+                      child: TextField(
+                        controller: _aboutProg,
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: InputBorder.none,
+                            hintText: 'write...',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: SizeConfig.scaleTextFont(13),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide:
+                              BorderSide(color: Colors.white, width: 1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            )),
+                      ),
+                    ),
+
+
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
@@ -265,6 +277,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: TextStyleWidget('OK', Colors.white,
                             SizeConfig.scaleTextFont(22), FontWeight.bold),
                         onPressed: () async {
+                          FocusScope.of(context).unfocus();
                           await createProgAccount();
                         },
                         style: ElevatedButton.styleFrom(
@@ -384,57 +397,41 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: _managerCom,
                           inputType: TextInputType.text,
                         )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('facebook account:', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _facebookAccountCom,
-                          inputType: TextInputType.text,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('twitter account:', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _twitterAccountCom,
-                          inputType: TextInputType.text,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('Instagram account:', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _InstagramAccountCom,
-                          inputType: TextInputType.text,
-                        )),
+
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
                     TextStyleWidget('about', Color(0xff4C5175),
                         SizeConfig.scaleTextFont(12), FontWeight.w500),
+
                     SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _aboutCom,
-                          inputType: TextInputType.multiline,
-                        )),
+                      width: SizeConfig.scaleWidth(321),
+                      height: SizeConfig.scaleHeight(90),
+                      child: TextField(
+                        controller: _aboutCom,
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: InputBorder.none,
+                            hintText: 'write...',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: SizeConfig.scaleTextFont(13),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide:
+                              BorderSide(color: Colors.white, width: 1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            )),
+                      ),
+                    ),
+
+
+
                     SizedBox(
                       height: SizeConfig.scaleHeight(20),
                     ),
@@ -445,6 +442,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: TextStyleWidget('OK', Colors.white,
                             SizeConfig.scaleTextFont(22), FontWeight.bold),
                         onPressed: () async {
+                          FocusScope.of(context).unfocus();
                           await createComAccount();
                         },
                         style: ElevatedButton.styleFrom(
@@ -567,9 +565,6 @@ class _SignupScreenState extends State<SignupScreen> {
             _phoneCom!.text,
             _addressCom!.text,
             _managerCom!.text,
-            _facebookAccountCom!.text,
-            _twitterAccountCom!.text,
-            _InstagramAccountCom!.text,
             _aboutCom!.text,
             'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=c072186c-21be-41be-8ade-46812dad6f81',
             'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
@@ -580,7 +575,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 comName: _companyNameCom!.text,
               );
             }));
-            AddNewJobScreen.companyName = _companyNameCom!.text;
           }
         } else {
           Fluttertoast.showToast(

@@ -86,87 +86,20 @@ class _SettingScreenState extends State<SettingScreen> {
               TextStyleWidget("Settings", Color(0xffCBB523),
                   SizeConfig.scaleTextFont(15), FontWeight.w500),
               SizedBox(
-                height: SizeConfig.scaleHeight(30),
+                height: SizeConfig.scaleHeight(50),
               ),
               Center(
                 child: Image.asset(
                   "assets/images/setting_image.png",
-                  width: SizeConfig.scaleWidth(160),
-                  height: SizeConfig.scaleHeight(180),
+                  width: SizeConfig.scaleWidth(200),
+                  height: SizeConfig.scaleHeight(200),
                   fit: BoxFit.cover,
                 ),
               ),
               SizedBox(
-                height: SizeConfig.scaleHeight(10),
+                height: SizeConfig.scaleHeight(70),
               ),
-              TextStyleWidget("Language", Color(0xffCBB523),
-                  SizeConfig.scaleTextFont(15), FontWeight.w500),
-              SizedBox(
-                height: SizeConfig.scaleHeight(7),
-              ),
-              Card(
-                elevation: 7,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: SizeConfig.scaleWidth(20),
-                        top: SizeConfig.scaleHeight(15),
-                        right: SizeConfig.scaleWidth(20),
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset("assets/images/UK.png"),
-                          SizedBox(
-                            width: SizeConfig.scaleWidth(50),
-                          ),
-                          TextStyleWidget(
-                              "English(United kingdom)",
-                              Color(0xff091A20),
-                              SizeConfig.scaleTextFont(10),
-                              FontWeight.w500),
-                          Spacer(),
-                          InkWell(
-                            child: Icon(
-                              Icons.verified_rounded,
-                              color: Color(0xffCBB523),
-                              size: SizeConfig.scaleWidth(18),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Divider(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: SizeConfig.scaleWidth(20),
-                          bottom: SizeConfig.scaleHeight(15)),
-                      child: Row(
-                        children: [
-                          Image.asset("assets/images/SA.png"),
-                          SizedBox(
-                            width: SizeConfig.scaleWidth(50),
-                          ),
-                          TextStyleWidget(
-                              "Arabic (Saudi Arabia)",
-                              Color(0xff091A20),
-                              SizeConfig.scaleTextFont(10),
-                              FontWeight.w500),
-                          SizedBox(
-                            width: SizeConfig.scaleWidth(100),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(5),
-              ),
+
               TextStyleWidget("privacy & security", Color(0xffCBB523),
                   SizeConfig.scaleTextFont(15), FontWeight.w500),
               SizedBox(
@@ -802,6 +735,7 @@ Future<SignInResult> _showSignInScreen(BuildContext context) async {
                   );
                   await FirebaseAuth.instance.currentUser!
                       .reauthenticateWithCredential(credential);
+
                   Navigator.pop(context, SignInResult.success);
                 } catch (e) {
                   print('Error re-authenticating user: $e');

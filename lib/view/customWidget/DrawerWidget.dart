@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/CompanyInfoScreen.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/MessagesCom.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ArchiveScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_all_jobs.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
@@ -15,6 +14,7 @@ import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/request_status.dart
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
 import '../../utils/size_config.dart';
+import '../screens/CompanyScreens/ShowMessagesCom.dart';
 import '../screens/ProgrammerScreen/ProfileInfoScreen.dart';
 import '../screens/shared_screens/login.dart';
 
@@ -141,7 +141,7 @@ Widget BuildMenuItems(BuildContext context) {
               }));
             } else if (UserTypeScreen.type == 'company') {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return MessageCom();
+                return ShowMessagesCom();
               }));
             }
           },

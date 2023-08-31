@@ -30,7 +30,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
       child: Scaffold(
         body: Consumer<ComInfoProvider>(
           builder: (context, comInfoProvider, _) => comInfoProvider.comInfoList.isEmpty
-              ? Center(child: CircularProgressIndicator())
+              ? Center(child:CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(
                     children: [

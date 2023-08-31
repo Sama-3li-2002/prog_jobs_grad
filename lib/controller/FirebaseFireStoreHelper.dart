@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
+import 'package:prog_jobs_grad/model/Message.dart';
 
 import '../model/CompanyModel.dart';
 import '../model/Request.dart';
@@ -12,7 +13,7 @@ class FirebaseFireStoreHelper {
   static FirebaseFireStoreHelper fireStoreHelper = FirebaseFireStoreHelper._();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final String userCollection = "Programmers";
-  static final String companyCollection = "Company";
+  static final  String companyCollection = "Company";
   final String jobsCollection = "jobs";
   final String SubmittedjobCollection = "Submitted Job";
   final String FavoriteJobsCollection = "Favorite Jobs";
@@ -46,9 +47,6 @@ class FirebaseFireStoreHelper {
       "phone": company.phone,
       "address": company.address,
       "managerName": company.managerName,
-      "facebookAccount": company.facebookAccount,
-      "twitterAccount": company.twitterAccount,
-      "instagramAccount": company.InstagramAccount,
       "about": company.about,
       "image": company.image,
       "managerImage": company.managerImage,
@@ -145,11 +143,7 @@ class FirebaseFireStoreHelper {
     }
   }
 
-  Future SaveProgInfoForSubmittedJob(
-    Request request,
-    String ProgId,
-    String fileUrl,
-  ) async {
+  Future SaveProgInfoForSubmittedJob(Request request, String ProgId, String fileUrl,) async {
     firestore
         .collection(companyCollection)
         .doc(request.ComId)
@@ -233,7 +227,7 @@ class FirebaseFireStoreHelper {
     }
     return documentReference!;
   }
-
+  // لحدذ حساب المبمرج او الشركة
   void deleteDocument(String jobsId) {
     FirebaseFirestore.instance
         .collection(companyCollection)
@@ -400,4 +394,28 @@ class FirebaseFireStoreHelper {
 
     print("Company data deleted successfully");
   }
+
+
+
+  // For converstation---------------------------------------------------------------------------------------
+
+
+// لارسال الرسائل من المبرمج
+  Future<void> sendMessageToCompany(String companyId, Message message) async {
+    CollectionReference collection = FirebaseFirestore.instance.collection(companyCollection);
+    String programmerId = FirebaseAuthController.fireAuthHelper.userId();
+
+    await collection
+        .doc(companyId)
+        .collection('programmers')
+        .doc(programmerId)
+        .collection('messages')
+        .add({
+      "messageContent": message.content,
+    });
+  }
+
+
+//-------------------------------------------------------------------------------
+
 }

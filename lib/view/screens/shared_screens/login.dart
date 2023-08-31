@@ -260,10 +260,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizeConfig.scaleTextFont(22), FontWeight.bold),
                         onPressed: () async {
                           if (UserTypeScreen.type == 'programmer') {
+                            FocusScope.of(context).unfocus();
                             await performLoginProg();
                           } else if (UserTypeScreen.type == 'company') {
-                            await performLoginCom();
                             FocusScope.of(context).unfocus(); // عشان الكيبورد يروح لما نضغط عالزر
+                            await performLoginCom();
+
                           }
 
                         },

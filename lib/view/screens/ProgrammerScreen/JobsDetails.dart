@@ -123,37 +123,6 @@ class _JobsDetailsState extends State<JobsDetails> {
             SizedBox(
               height: SizeConfig.scaleHeight(10),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: Image.asset(
-                    "assets/images/facebook.png",
-                    width: SizeConfig.scaleWidth(30),
-                    height: SizeConfig.scaleHeight(30),
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.scaleWidth(15),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Image.asset("assets/images/twitter.png",
-                      width: SizeConfig.scaleWidth(30),
-                      height: SizeConfig.scaleHeight(30)),
-                ),
-                SizedBox(
-                  width: SizeConfig.scaleWidth(15),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Image.asset("assets/images/instagram.png",
-                      width: SizeConfig.scaleWidth(30),
-                      height: SizeConfig.scaleHeight(30)),
-                ),
-              ],
-            ),
             Padding(
               padding: EdgeInsets.all(10),
               child: Column(
@@ -327,7 +296,7 @@ class _JobsDetailsState extends State<JobsDetails> {
                           margin: EdgeInsets.only(
                               left: SizeConfig.scaleWidth(15),
                               top: SizeConfig.scaleHeight(15)),
-                          width: SizeConfig.scaleWidth(130),
+                          width: SizeConfig.scaleWidth(250),
                           height: SizeConfig.scaleHeight(35),
                           child: ElevatedButton(
                             onPressed: () async {

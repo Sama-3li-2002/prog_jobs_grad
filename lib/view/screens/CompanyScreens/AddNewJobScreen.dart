@@ -20,8 +20,6 @@ import 'com_home.dart';
 
 class AddNewJobScreen extends StatefulWidget {
   static const String id = "add_new_job_screen";
-
-  // For company name
   static String? companyName;
 
   @override
@@ -62,14 +60,15 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
 
 
 
+
   @override
   void initState() {
     super.initState();
 
-
+    getComName();
 
     _job_nameTextController = TextEditingController();
-    _companynameTextController = TextEditingController(text: AddNewJobScreen.companyName!);
+    _companynameTextController = TextEditingController(text: AddNewJobScreen.companyName);
     _salaryTextController = TextEditingController();
     _job_descriptionTextController = TextEditingController();
 
@@ -133,6 +132,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                 children: [
                   TextStyleWidget("Add new job:", Color(0xffCBB523),
                       SizeConfig.scaleTextFont(18), FontWeight.w500),
+                  SizedBox(height: SizeConfig.scaleHeight(10)),
                   Center(
                     child: Stack(
                       children: [
@@ -147,8 +147,8 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                             child: jobImage != null
                                 ? Image.network(
                                     jobImage!,
-                                    width: SizeConfig.scaleWidth(150),
-                                    height: SizeConfig.scaleHeight(145),
+                                    width: SizeConfig.scaleWidth(140),
+                                    height: SizeConfig.scaleHeight(135),
                                     fit: BoxFit.cover,
                                   )
                                 : Image.asset('assets/images/addJob.png'),
@@ -183,6 +183,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: SizeConfig.scaleHeight(15)),
                   TextStyleWidget("job name:", Color(0xff4C5175),
                       SizeConfig.scaleTextFont(12), FontWeight.w500),
                   TextFieldWidget.textfieldCon(
@@ -352,6 +353,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                       height: SizeConfig.scaleHeight(48),
                       child: ElevatedButton(
                           onPressed: () async {
+                            FocusScope.of(context).unfocus();
                             await performStore();
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -461,5 +463,10 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
         print('No Image Selected');
       }
     });
+  }
+
+   void getComName() async {
+   List<Company> comInfo = await FirebaseFireStoreHelper.fireStoreHelper.getComInfoById(FirebaseAuthController.fireAuthHelper.userId());
+   AddNewJobScreen.companyName = comInfo.elementAt(0).companyName!;
   }
 }

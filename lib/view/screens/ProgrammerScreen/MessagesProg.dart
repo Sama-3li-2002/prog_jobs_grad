@@ -69,10 +69,10 @@ class _MessagesProgState extends State<MessagesProg> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return ConversationScreen();
-                          }));
+                          // Navigator.of(context)
+                          //     .push(MaterialPageRoute(builder: (context) {
+                          //   return ConversationScreen();
+                          // }));
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(
