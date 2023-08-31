@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/view/customWidget/DrawerWidget.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/JobsCompanyDetailsScreen.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/ShowMessagesCom.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/no_of_request.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/FirebaseFireStoreHelper.dart';
@@ -56,10 +57,28 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
           ),
         ),
         actions: [
+               Padding(
+                 padding: EdgeInsetsDirectional.only(
+                   top: 5
+                 ),
+                 child: InkWell(
+                 onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                      return ShowMessagesCom();
+                  }));
+                     },
+                     child: Icon(Icons.chat ,
+                       color: Color(0xff4C5175),
+                       size: SizeConfig.scaleWidth(28) ,
+                 ),
+
+                 ),
+               ),
+
           IconButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return AddNewJobScreen();
+                  return AddNewJobScreen();
               }));
             },
             icon: Icon(
@@ -68,7 +87,8 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
             ),
             color: Color(0xff4C5175),
           ),
-        ],
+
+               ],
       ),
 
     body: Consumer<CompanyJobsProvider>(
@@ -256,12 +276,9 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                             companyJobsProvider
                                                                 .JobsList
                                                                 .isNotEmpty
-                                                                ? companyJobsProvider
-                                                                .JobsList[
-                                                            index]
-                                                                .current_date ??
+                                                                ? formattedTime ??
                                                                 ""
-                                                                : "No Current Date",
+                                                                : "No Current Time",
                                                             Colors.black,
                                                             SizeConfig
                                                                 .scaleTextFont(
@@ -276,9 +293,12 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                           companyJobsProvider
                                                               .JobsList
                                                               .isNotEmpty
-                                                              ? formattedTime ??
+                                                              ? companyJobsProvider
+                                                              .JobsList[
+                                                          index]
+                                                              .current_date ??
                                                               ""
-                                                              : "No Current Time",
+                                                              : "No Current Date",
                                                           Colors.black,
                                                           SizeConfig
                                                               .scaleTextFont(
@@ -565,11 +585,9 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                                 companyJobsProvider
                                                                     .JobsList
                                                                     .isNotEmpty
-                                                                    ? companyJobsProvider
-                                                                    .JobsList[index]
-                                                                    .current_date ??
+                                                                    ? formattedTime??
                                                                     ""
-                                                                    : "No Current Date",
+                                                                    : "No Current Time",
                                                                 Colors.black,
                                                                 SizeConfig
                                                                     .scaleTextFont(
@@ -585,9 +603,11 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                               companyJobsProvider
                                                                   .JobsList
                                                                   .isNotEmpty
-                                                                  ? formattedTime??
+                                                                  ? companyJobsProvider
+                                                                  .JobsList[index]
+                                                                  .current_date ??
                                                                   ""
-                                                                  : "No Current Time",
+                                                                  : "No Current Date",
                                                               Colors.black,
                                                               SizeConfig
                                                                   .scaleTextFont(

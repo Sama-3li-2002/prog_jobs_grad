@@ -5,6 +5,7 @@ import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/splash_screen.dart';
 
 
 import '../../../model/CompanyModel.dart';
@@ -68,7 +69,7 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                               ConversationScreen.companyId =widget.itemsComInfo[0].id!;
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(builder: (context) {
-                                    return ConversationScreen(progUsername: user!.username,widget.itemsComInfo.first.companyName!);
+                                    return ConversationScreen(progUsername: user!.username,widget.itemsComInfo.first.companyName!,progImage: user!.imageUrl,);
                                   }));
                             },
                             child: Icon(

@@ -6,6 +6,7 @@ import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
 import 'package:prog_jobs_grad/providers/CompaniesJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/CompanyJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/FavoriteProvider.dart';
+import 'package:prog_jobs_grad/providers/MessagesComProvider.dart';
 import 'package:prog_jobs_grad/providers/NumberOfRequestsProvider.dart';
 import 'package:prog_jobs_grad/providers/RequestStatusProvider.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
@@ -72,6 +73,9 @@ void main() async {
       ChangeNotifierProvider<RequestStatusProvider>(create: (context) {
         return RequestStatusProvider();
       }),
+      ChangeNotifierProvider<MessagesComProvider>(create: (context) {
+        return MessagesComProvider();
+      }),
     ],
     child: MyApp(),
   ));
@@ -117,7 +121,7 @@ class MyApp extends StatelessWidget {
         MessagesProg.id: (context) => MessagesProg(),
         EditJobScreen.id: (context) => EditJobScreen(jobInfo: []),
         NotificationDetailsScreen.id: (context) => NotificationDetailsScreen(),
-        ConversationScreen.id: (context) => ConversationScreen(progUsername: "",""),
+        ConversationScreen.id: (context) => ConversationScreen(progUsername: "","",progImage: ""),
         AcceptPerson.id: (context) => AcceptPerson(
               progId: '',
               uploadedFileName: '',

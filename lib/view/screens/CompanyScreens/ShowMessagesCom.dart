@@ -1,6 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/providers/MessagesComProvider.dart';
+import 'package:provider/provider.dart';
+
+import '../../../utils/size_config.dart';
+import '../../customWidget/textStyleWidget.dart';
+
 class ShowMessagesCom extends StatefulWidget {
   static const String id = "show_messages_Com";
   const ShowMessagesCom({Key? key}) : super(key: key);
@@ -15,76 +22,166 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
   @override
   void initState() {
     super.initState();
-    programmersStream = getCompanyProgrammersMessagesStream(FirebaseAuthController.fireAuthHelper.userId());
+    Provider.of<MessagesComProvider>(context, listen: false)
+        .getAllMessagesComObjects();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Programmers Conversations'),
-      ),
-      body: StreamBuilder<List<DocumentSnapshot<Map<String, dynamic>>>>(
-        stream: programmersStream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (!snapshot.hasData || snapshot.data == null || snapshot.data!.isEmpty) {
-            return Center(
-              child: Text('No programmers available.'),
-            );
-          }
-
-          List<DocumentSnapshot<Map<String, dynamic>>> programmers = snapshot.data!;
-
-          return ListView.builder(
-            itemCount: programmers.length,
-            itemBuilder: (context, index) {
-              DocumentSnapshot<Map<String, dynamic>> programmer = programmers[index];
-              String programmerId = programmer.id;
-              String lastMessage = "No messages yet";
-              // Get the last message from the programmer
-              return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: FirebaseFirestore.instance
-                    .collection('Company')
-                    .doc(FirebaseAuthController.fireAuthHelper.userId())
-                    .collection('programmers')
-                    .doc(programmerId)
-                    .collection('messages')
-                    .limit(1)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  }
-                  if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
-                    lastMessage = snapshot.data!.docs[0]['messageContent'];
-                  }
-
-                  return ListTile(
-                    title: Text('Programmer ID: $programmerId'),
-                    subtitle: Text(lastMessage),
-                  );
+        backgroundColor: Color(0xff4C5175),
+        elevation: 0,
+        leading: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: SizeConfig.scaleWidth(15)),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
                 },
-              );
-            },
-          );
-        },
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: SizeConfig.scaleWidth(20),
+                  color: Color(0xffF5F5F5),
+                ),
+              ),
+            ),
+
+          ],
+        ),
+        title: TextStyleWidget("Chats", Colors.white,
+            SizeConfig.scaleTextFont(20), FontWeight.w500),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.search,
+              size: SizeConfig.scaleWidth(25),
+            ),
+            color:  Color(0xffF5F5F5),
+          ),
+        ],
+      ),      body: Consumer<MessagesComProvider>(
+        builder: (context, messagesComProvider, _) => messagesComProvider
+            .messagesList.isEmpty
+            ? Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: messagesComProvider.messagesList.length,
+                      itemBuilder: (BuildContext context, int index) {
+
+                        // لازالة الثواني من الوقت
+                        late String formattedTime;
+                        String timeString =  messagesComProvider.messagesList[index].current_time ?? "";
+                        try {
+                          formattedTime = DateFormat('hh:mm a').format(DateFormat('hh:mm:ss a').parse(timeString));
+                        } catch (e) {
+                          print("Invalid data format: $timeString");
+                          formattedTime = "Invalid time format";
+                        }
+
+                        return Padding(
+                          padding: EdgeInsetsDirectional.only(
+                            bottom: 2
+                          ),
+
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 2,
+                                  offset: Offset(0, 1), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage: AssetImage(
+                                    messagesComProvider.messagesList.isNotEmpty
+                                        ? messagesComProvider.messagesList[index].progImage ?? ""
+                                        : "No Prog Image",
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.only(
+                                          top: 15
+                                        ),
+                                        child: Text(
+                                          messagesComProvider.messagesList.isNotEmpty
+                                              ? messagesComProvider.messagesList[index].senderMessage ?? ""
+                                              : "No Sender Name",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 5),
+
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding:EdgeInsetsDirectional.only(
+                                    top: 10
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        messagesComProvider.messagesList.isNotEmpty
+                                            ? formattedTime ?? ""
+                                            : "No Current Time",
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                      SizedBox(height: SizeConfig.scaleHeight(5),),
+                                      Text(
+                                        messagesComProvider.messagesList.isNotEmpty
+                                            ? messagesComProvider.messagesList[index].current_date?? ""
+                                            : "No Current Date",
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
       ),
     );
   }
 }
-Stream<List<DocumentSnapshot<Map<String, dynamic>>>> getCompanyProgrammersMessagesStream(String companyId) {
-  CollectionReference programmersCollection = FirebaseFirestore.instance.collection('Company')
-      .doc(companyId)
-      .collection('programmers');
-  return programmersCollection.snapshots().map((querySnapshot) {
-    return querySnapshot.docs.map((queryDocumentSnapshot) =>
-    queryDocumentSnapshot as DocumentSnapshot<Map<String, dynamic>>
-    ).toList();
-  });
 
-}
+
+
+

@@ -308,10 +308,14 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                             .scaleWidth(3),
                                                                       ),
                                                                       TextStyleWidget(
-                                                                        allJobsList.isNotEmpty
-                                                                            ? allJobsList[index].current_date ??
-                                                                                ""
-                                                                            : "No Current Date",
+
+                                                                        allJobsList
+                                                                            .isNotEmpty
+                                                                            ? formattedTime ??
+                                                                            ""
+                                                                            : "No Current Time",
+
+
                                                                         Colors
                                                                             .black,
                                                                         SizeConfig.scaleTextFont(
@@ -328,11 +332,10 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                                 20),
                                                                     child:
                                                                         TextStyleWidget(
-                                                                      allJobsList
-                                                                              .isNotEmpty
-                                                                          ? formattedTime ??
+                                                                          allJobsList.isNotEmpty
+                                                                              ? allJobsList[index].current_date ??
                                                                               ""
-                                                                          : "No Current Time",
+                                                                              : "No Current Date",
                                                                       Colors
                                                                           .black,
                                                                       SizeConfig
@@ -596,10 +599,12 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                             .scaleWidth(3),
                                                                       ),
                                                                       TextStyleWidget(
-                                                                        _filteredJobs.isNotEmpty
-                                                                            ? _filteredJobs[index].current_date ??
-                                                                                ""
-                                                                            : "No Current Date",
+                                                                        _filteredJobs
+                                                                            .isNotEmpty
+                                                                            ? formattedTime ??
+                                                                            ""
+                                                                            : "No Current Time",
+
                                                                         Colors
                                                                             .black,
                                                                         SizeConfig.scaleTextFont(
@@ -616,11 +621,10 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                                 20),
                                                                     child:
                                                                         TextStyleWidget(
-                                                                      _filteredJobs
-                                                                              .isNotEmpty
-                                                                          ? formattedTime ??
+                                                                          _filteredJobs.isNotEmpty
+                                                                              ? _filteredJobs[index].current_date ??
                                                                               ""
-                                                                          : "No Current Time",
+                                                                              : "No Current Date",
                                                                       Colors
                                                                           .black,
                                                                       SizeConfig

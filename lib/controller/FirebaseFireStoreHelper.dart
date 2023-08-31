@@ -227,7 +227,7 @@ class FirebaseFireStoreHelper {
     }
     return documentReference!;
   }
-  // لحدذ حساب المبمرج او الشركة
+  // لحذف حساب المبرمج او الشركة
   void deleteDocument(String jobsId) {
     FirebaseFirestore.instance
         .collection(companyCollection)
@@ -401,13 +401,33 @@ class FirebaseFireStoreHelper {
 
 
 // لارسال الرسائل من المبرمج
-  Future<void> sendMessageToCompany(String companyId, Message message) async {
+  Future<void> sendMessageToCompany(String companyId, Message message ) async {
     CollectionReference collection = FirebaseFirestore.instance.collection(companyCollection);
     String programmerId = FirebaseAuthController.fireAuthHelper.userId();
 
+    DocumentSnapshot<Map<String, dynamic>> programmerDoc = await FirebaseFirestore.instance
+        .collection(companyCollection)
+        .doc(companyId)
+        .collection('programmersMessages')
+        .doc(programmerId)
+        .get();
+
+    if (!programmerDoc.exists) {
+      await FirebaseFirestore.instance
+          .collection(companyCollection)
+          .doc(companyId)
+          .collection('programmersMessages')
+          .doc(programmerId)
+          .set({
+        "senderName": message.senderMessage,
+        "current_date":message.current_date,
+        "current_time":message.current_time,
+      });
+    }
+
     await collection
         .doc(companyId)
-        .collection('programmers')
+        .collection('programmersMessages')
         .doc(programmerId)
         .collection('messages')
         .add({
@@ -415,6 +435,15 @@ class FirebaseFireStoreHelper {
     });
   }
 
+// استرجاع كل رسائل المبرمجين اللي بعتو للشركة بناء على ID
+  Future<QuerySnapshot> getAllMessagesCom(String id) async {
+    final QuerySnapshot<Map<String, dynamic>> allMessages = await firestore
+        .collection(companyCollection)
+        .doc(id)
+        .collection('programmersMessages')
+        .get();
+    return allMessages;
+  }
 
 //-------------------------------------------------------------------------------
 
