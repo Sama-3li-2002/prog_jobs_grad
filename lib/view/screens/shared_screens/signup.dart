@@ -44,6 +44,10 @@ class _SignupScreenState extends State<SignupScreen> {
   // visible pass
   bool _obscureText = true;
 
+
+  // circular
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -106,366 +110,378 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
       backgroundColor: Color(0xfffafafa),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                  child: Image(
-                      width: SizeConfig.scaleWidth(390),
-                      height: SizeConfig.scaleHeight(218),
-                      image: AssetImage('assets/images/signup.png'))),
-              TextStyleWidget('SIGN UP', Color(0xffcbb523),
-                  SizeConfig.scaleTextFont(22), FontWeight.bold),
-              TextStyleWidget(
-                  'Please, enter the required data',
-                  Color(0xffBBBDD0),
-                  SizeConfig.scaleTextFont(12),
-                  FontWeight.normal),
-              SizedBox(
-                height: SizeConfig.scaleHeight(20),
-              ),
-              if (widget.userType == 'programmer')
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextStyleWidget('username', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _usernameProg,
-                          inputType: TextInputType.text,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('E_mail', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          inputType: TextInputType.emailAddress,
-                          controller: _emailProg,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('password', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(321),
-                      height: SizeConfig.scaleHeight(86),
-                      child: TextField(
-                        controller: _passwordProg,
-                        obscureText: _obscureText,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          helperText:
-                              'Password must contain letters(capital & small), numbers '
-                              '\nspecial characters and not less than 8',
-                          helperStyle: TextStyle(
-                            fontSize: SizeConfig.scaleTextFont(12),
-                            color: Colors.grey,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(
-                              _obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: _obscureText
-                                  ? Color(0xffcbb523)
-                                  : Color(0xffcbb523),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('age', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _ageProg,
-                          inputType: TextInputType.number,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('phone', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _phoneProg,
-                          inputType: TextInputType.phone,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('specialization', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _specializationProg,
-                          inputType: TextInputType.text,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('about', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(321),
-                      height: SizeConfig.scaleHeight(90),
-                      child: TextField(
-                        controller: _aboutProg,
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            border: InputBorder.none,
-                            hintText: 'write...',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: SizeConfig.scaleTextFont(13),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                              borderSide:
-                              BorderSide(color: Colors.white, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                      child: Image(
+                          width: SizeConfig.scaleWidth(390),
+                          height: SizeConfig.scaleHeight(218),
+                          image: AssetImage('assets/images/signup.png'))),
+                  TextStyleWidget('SIGN UP', Color(0xffcbb523),
+                      SizeConfig.scaleTextFont(22), FontWeight.bold),
+                  TextStyleWidget(
+                      'Please, enter the required data',
+                      Color(0xffBBBDD0),
+                      SizeConfig.scaleTextFont(12),
+                      FontWeight.normal),
+                  SizedBox(
+                    height: SizeConfig.scaleHeight(20),
+                  ),
+                  if (widget.userType == 'programmer')
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextStyleWidget('username', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _usernameProg,
+                              inputType: TextInputType.text,
                             )),
-                      ),
-                    ),
-
-
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(321),
-                      height: SizeConfig.scaleHeight(48),
-                      child: ElevatedButton(
-                        child: TextStyleWidget('OK', Colors.white,
-                            SizeConfig.scaleTextFont(22), FontWeight.bold),
-                        onPressed: () async {
-                          FocusScope.of(context).unfocus();
-                          await createProgAccount();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff3b3f5b),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
                         ),
-                      ),
-                    ),
-                  ],
-                )
-              else if (widget.userType == 'company')
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextStyleWidget('Company Name:', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _companyNameCom,
-                          inputType: TextInputType.text,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('E_mail', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _emailCom,
-                          inputType: TextInputType.emailAddress,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('password', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(321),
-                      height: SizeConfig.scaleHeight(86),
-                      child: TextField(
-                        controller: _passwordCom,
-                        obscureText: _obscureText,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          helperText:
-                              'Password must contain letters(capital & small), numbers '
-                              '\nspecial characters and not less than 8',
-                          helperStyle: TextStyle(
-                            fontSize: SizeConfig.scaleTextFont(12),
-                            color: Colors.grey,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(
-                              _obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: _obscureText
-                                  ? Color(0xffcbb523)
-                                  : Color(0xffcbb523),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('phone', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _phoneCom,
-                          inputType: TextInputType.phone,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('Address', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _addressCom,
-                          inputType: TextInputType.text,
-                        )),
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('manager name', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-                    SizedBox(
-                        width: SizeConfig.scaleWidth(321),
-                        height: SizeConfig.scaleHeight(48),
-                        child: TextFieldWidget.textfieldCon(
-                          controller: _managerCom,
-                          inputType: TextInputType.text,
-                        )),
-
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    TextStyleWidget('about', Color(0xff4C5175),
-                        SizeConfig.scaleTextFont(12), FontWeight.w500),
-
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(321),
-                      height: SizeConfig.scaleHeight(90),
-                      child: TextField(
-                        controller: _aboutCom,
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            border: InputBorder.none,
-                            hintText: 'write...',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: SizeConfig.scaleTextFont(13),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                              borderSide:
-                              BorderSide(color: Colors.white, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+                        TextStyleWidget('E_mail', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              inputType: TextInputType.emailAddress,
+                              controller: _emailProg,
                             )),
-                      ),
-                    ),
-
-
-
-                    SizedBox(
-                      height: SizeConfig.scaleHeight(20),
-                    ),
-                    SizedBox(
-                      width: SizeConfig.scaleWidth(321),
-                      height: SizeConfig.scaleHeight(48),
-                      child: ElevatedButton(
-                        child: TextStyleWidget('OK', Colors.white,
-                            SizeConfig.scaleTextFont(22), FontWeight.bold),
-                        onPressed: () async {
-                          FocusScope.of(context).unfocus();
-                          await createComAccount();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff3b3f5b),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('password', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(321),
+                          height: SizeConfig.scaleHeight(86),
+                          child: TextField(
+                            controller: _passwordProg,
+                            obscureText: _obscureText,
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
+                              helperText:
+                                  'Password must contain letters(capital & small), numbers '
+                                  '\nspecial characters and not less than 8',
+                              helperStyle: TextStyle(
+                                fontSize: SizeConfig.scaleTextFont(12),
+                                color: Colors.grey,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide:
+                                      BorderSide(color: Colors.white, width: 1)),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureText
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: _obscureText
+                                      ? Color(0xffcbb523)
+                                      : Color(0xffcbb523),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('age', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _ageProg,
+                              inputType: TextInputType.number,
+                            )),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('phone', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _phoneProg,
+                              inputType: TextInputType.phone,
+                            )),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('specialization', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _specializationProg,
+                              inputType: TextInputType.text,
+                            )),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('about', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(321),
+                          height: SizeConfig.scaleHeight(90),
+                          child: TextField(
+                            controller: _aboutProg,
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                border: InputBorder.none,
+                                hintText: 'write...',
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: SizeConfig.scaleTextFont(13),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide:
+                                  BorderSide(color: Colors.white, width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                )),
+                          ),
+                        ),
+
+
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(321),
+                          height: SizeConfig.scaleHeight(48),
+                          child: ElevatedButton(
+                            child: TextStyleWidget('OK', Colors.white,
+                                SizeConfig.scaleTextFont(22), FontWeight.bold),
+                            onPressed: () async {
+                              FocusScope.of(context).unfocus();
+                              await createProgAccount();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff3b3f5b),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  else if (widget.userType == 'company')
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextStyleWidget('Company Name:', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _companyNameCom,
+                              inputType: TextInputType.text,
+                            )),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('E_mail', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _emailCom,
+                              inputType: TextInputType.emailAddress,
+                            )),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('password', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(321),
+                          height: SizeConfig.scaleHeight(86),
+                          child: TextField(
+                            controller: _passwordCom,
+                            obscureText: _obscureText,
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
+                              helperText:
+                                  'Password must contain letters(capital & small), numbers '
+                                  '\nspecial characters and not less than 8',
+                              helperStyle: TextStyle(
+                                fontSize: SizeConfig.scaleTextFont(12),
+                                color: Colors.grey,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide:
+                                      BorderSide(color: Colors.white, width: 1)),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureText
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: _obscureText
+                                      ? Color(0xffcbb523)
+                                      : Color(0xffcbb523),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('phone', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _phoneCom,
+                              inputType: TextInputType.phone,
+                            )),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('Address', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _addressCom,
+                              inputType: TextInputType.text,
+                            )),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('manager name', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+                        SizedBox(
+                            width: SizeConfig.scaleWidth(321),
+                            height: SizeConfig.scaleHeight(48),
+                            child: TextFieldWidget.textfieldCon(
+                              controller: _managerCom,
+                              inputType: TextInputType.text,
+                            )),
+
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('about', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(321),
+                          height: SizeConfig.scaleHeight(90),
+                          child: TextField(
+                            controller: _aboutCom,
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                border: InputBorder.none,
+                                hintText: 'write...',
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: SizeConfig.scaleTextFont(13),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide:
+                                  BorderSide(color: Colors.white, width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                )),
+                          ),
+                        ),
+
+
+
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(321),
+                          height: SizeConfig.scaleHeight(48),
+                          child: ElevatedButton(
+                            child: TextStyleWidget('OK', Colors.white,
+                                SizeConfig.scaleTextFont(22), FontWeight.bold),
+                            onPressed: () async {
+                              FocusScope.of(context).unfocus();
+                              await createComAccount();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff3b3f5b),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(20),
+                  SizedBox(
+                    height: SizeConfig.scaleHeight(20),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          if (_isLoading)
+            Center(
+              child: CircularProgressIndicator(),
+            ),
+        ],
       ),
     );
   }
 
   Future createProgAccount() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     String phoneNumber = _phoneProg!.text;
     String password = _passwordProg!.text;
 
@@ -505,6 +521,9 @@ class _SignupScreenState extends State<SignupScreen> {
             }));
           }
         } else {
+          setState(() {
+            _isLoading = false;
+          });
           Fluttertoast.showToast(
             msg: "Please enter a valid phone number",
             toastLength: Toast.LENGTH_SHORT,
@@ -515,6 +534,9 @@ class _SignupScreenState extends State<SignupScreen> {
           );
         }
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         Fluttertoast.showToast(
           msg: "Please enter a strong password",
           toastLength: Toast.LENGTH_SHORT,
@@ -525,6 +547,9 @@ class _SignupScreenState extends State<SignupScreen> {
         );
       }
     } else {
+      setState(() {
+        _isLoading = false;
+      });
       Fluttertoast.showToast(
         msg: "Please Fill All Fields",
         toastLength: Toast.LENGTH_SHORT,
@@ -537,6 +562,10 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future createComAccount() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     String phoneNumber = _phoneCom!.text;
     String password = _passwordCom!.text;
 
@@ -577,6 +606,9 @@ class _SignupScreenState extends State<SignupScreen> {
             }));
           }
         } else {
+          setState(() {
+            _isLoading = false;
+          });
           Fluttertoast.showToast(
             msg: "Please enter a valid phone number",
             toastLength: Toast.LENGTH_SHORT,
@@ -587,6 +619,9 @@ class _SignupScreenState extends State<SignupScreen> {
           );
         }
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         Fluttertoast.showToast(
           msg: "Please enter a strong password",
           toastLength: Toast.LENGTH_SHORT,
@@ -597,6 +632,9 @@ class _SignupScreenState extends State<SignupScreen> {
         );
       }
     } else {
+      setState(() {
+        _isLoading = false;
+      });
       Fluttertoast.showToast(
         msg: "Please Fill All Fields",
         toastLength: Toast.LENGTH_SHORT,

@@ -50,7 +50,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
+        backgroundColor: Color(0xffF5F5F5),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -77,7 +79,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 size: SizeConfig.scaleWidth(30),
               ))
         ],
-        backgroundColor: Color(0xfffafafa),
+
         elevation: 0,
       ),
       body: Center(
