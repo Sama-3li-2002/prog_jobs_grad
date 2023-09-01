@@ -152,7 +152,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       }
                       if (!snapshot.hasData || snapshot.data == null) {
                         return Center(
-                          child: Text("No messages available."),
+                          child: Text("No message available."),
                         );
                       }
                       final messagesQuery = snapshot.data!;
