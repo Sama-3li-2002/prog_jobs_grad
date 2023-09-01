@@ -403,21 +403,21 @@ class FirebaseFireStoreHelper {
 // لارسال الرسائل من المبرمج
   Future<void> sendMessageToCompany(String companyId, Message message ) async {
     CollectionReference collection = FirebaseFirestore.instance.collection(companyCollection);
-    String programmerId = FirebaseAuthController.fireAuthHelper.userId();
+
 
     DocumentSnapshot<Map<String, dynamic>> programmerDoc = await FirebaseFirestore.instance
         .collection(companyCollection)
         .doc(companyId)
         .collection('programmersMessages')
-        .doc(programmerId)
+        .doc(message.progId)
         .get();
 
-    if (!programmerDoc.exists) {
+    if (!programmerDoc.exists ) {
       await FirebaseFirestore.instance
           .collection(companyCollection)
           .doc(companyId)
           .collection('programmersMessages')
-          .doc(programmerId)
+          .doc(message.progId)
           .set({
         "senderName": message.senderMessage,
         "current_date":message.current_date,
@@ -430,12 +430,13 @@ class FirebaseFireStoreHelper {
     await collection
         .doc(companyId)
         .collection('programmersMessages')
-        .doc(programmerId)
+        .doc(message.progId)
         .collection('messages')
         .add({
       "messageContent": message.content,
       "current_time":message.current_time,
       "progId":message.progId,
+      "type":message.type
     });
   }
 

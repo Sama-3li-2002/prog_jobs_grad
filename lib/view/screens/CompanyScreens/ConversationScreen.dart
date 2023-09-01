@@ -170,6 +170,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                           final message = messages[index];
                           final content = message.content;
                           final time = message.current_time;
+                          final type = message.type;
 
 
                           // لازالة الثواني من الوقت
@@ -187,7 +188,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                           print("Content $content");
 
 
-                          final isMe = widget.programmerId == FirebaseAuthController.fireAuthHelper.userId();
+                          final isMe = UserTypeScreen.type == type ;
                           return Padding(
                             padding: EdgeInsetsDirectional.only(
                               top: SizeConfig.scaleHeight(10),
@@ -261,6 +262,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 ),
               ),
             ),
+
 
             Positioned(
               bottom: 0,
@@ -383,7 +385,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
             progImage: widget.progImage,
             current_time: formattedTime,
             current_date: formattedDate,
-            progId: FirebaseAuthController.fireAuthHelper.userId()
+            progId: widget.programmerId,
+            type: UserTypeScreen.type
+
         ));
   }
 }

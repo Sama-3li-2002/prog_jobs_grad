@@ -95,9 +95,9 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
                                 MaterialPageRoute(builder: (context) {
                                   return ConversationScreen(companyId: FirebaseAuthController.fireAuthHelper.userId()
                                     ,programmerId:messagesComProvider.messagesList[index].progId! ,
-                                    progUsername: messagesComProvider.messagesList[index].senderMessage! ,
+                                     progUsername: messagesComProvider.messagesList[index].senderMessage! ,
                                     companyUsername:"" ,
-                                  progImage:messagesComProvider.messagesList[index].progImage! ,);
+                                    progImage:messagesComProvider.messagesList[index].progImage!,);
                                 }));
 
                           },
