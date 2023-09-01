@@ -13,18 +13,23 @@ import '../../../utils/size_config.dart';
 class ConversationScreen extends StatefulWidget {
   static const String id = "conversation_screen";
   //للمبرمج
-  final String? progUsername;
-  final String? progImage;
-  static late String companyId;
-  String programmerIdLogin = FirebaseAuthController.fireAuthHelper.userId();
-  //-------------------------------
-  // للشركة
-  String companyUsername;
-  static late String programmerId;
-  String CompanyIdLogin = FirebaseAuthController.fireAuthHelper.userId();
+   String? progUsername;
+   String? progImage;
+  String? programmerId;
 
-  ConversationScreen(this.companyUsername,
-      {required this.progUsername, required this.progImage});
+  // للشركة
+  String? companyUsername;
+   String? comImage;
+  String? companyId;
+
+
+  ConversationScreen({
+      this.progUsername,
+      this.progImage,
+      this.programmerId,
+      this.companyUsername,
+      this.comImage,
+      this.companyId});
 
   @override
   State<ConversationScreen> createState() => _ConversationScreenState();
@@ -90,8 +95,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   width: 30,
                   height: 30,
                   child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/prof1.png',
+                    child: Image.network(
+                      UserTypeScreen.type == 'programmer'? widget.comImage!: widget.progImage!,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -99,19 +104,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
               ),
             ],
           ),
-          title: TextStyleWidget(widget.companyUsername!, Colors.white,
+          title: TextStyleWidget(UserTypeScreen.type == 'programmer'?widget.companyUsername!:widget.progUsername!, Colors.white,
               SizeConfig.scaleTextFont(15), FontWeight.w500),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                size: SizeConfig.scaleWidth(25),
-              ),
-              color: Color(0xffF5F5F5),
-            ),
-          ],
+
         ),
+
         body: Stack(
           children: [
             Container(
@@ -123,15 +120,16 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   fit: BoxFit.cover,
                 ),
               ),
+
               child: SingleChildScrollView(
                 child: Container(
                   height: SizeConfig.scaleHeight(650),
                   child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                     stream: FirebaseFirestore.instance
                         .collection("Company")
-                        .doc(ConversationScreen.companyId)
+                        .doc(widget.companyId)
                         .collection('programmersMessages')
-                        .doc(widget.programmerIdLogin)
+                        .doc(widget.programmerId)
                         .collection('messages')
                         .snapshots(),
                     builder: (context, snapshot) {
@@ -174,12 +172,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             print("Invalid data format: $timeString");
                             formattedTime = "Invalid time format";
                           }
-
-
+                          //---------------------------------------------------
                           print("Content $content");
-                          final isMe = widget.programmerIdLogin ==
-                              FirebaseAuthController.fireAuthHelper
-                                  .userId();
+
+
+                          final isMe = widget.programmerId == FirebaseAuthController.fireAuthHelper.userId();
                           return Padding(
                             padding: EdgeInsetsDirectional.only(
                               top: SizeConfig.scaleHeight(10),
@@ -334,7 +331,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                     if (messageContent!.isNotEmpty) {
                                       FocusScope.of(context).unfocus();
                                       await storeMessages(
-                                          ConversationScreen.companyId);
+                                          widget.companyId!);
                                       MessagesController?.clear();
                                       setState(() {
                                         messageContent = '';
@@ -374,6 +371,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
             senderMessage: usernameSender,
             progImage: widget.progImage,
             current_time: formattedTime,
-            current_date: formattedDate));
+            current_date: formattedDate,
+            progId: FirebaseAuthController.fireAuthHelper.userId()
+        ));
   }
 }

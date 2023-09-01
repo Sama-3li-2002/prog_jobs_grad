@@ -2,10 +2,11 @@ class Message {
   final String content;
   final String? senderMessage;
   String? progImage;
+  String? progId;
   String? current_time;
   String? current_date;
 
-  Message({required this.content, required this.senderMessage,required this.progImage,required this.current_time,required this.current_date});
+  Message({required this.content, required this.senderMessage,required this.progImage,required this.current_time,required this.current_date,required this.progId});
 
   factory Message.fromMap(Map<String, dynamic> map) {
     return Message(
@@ -13,7 +14,8 @@ class Message {
       senderMessage: map['senderName']??"",
       progImage: map['progImage']??"",
       current_time: map['current_time']??"",
-        current_date: map['current_date']??""
+        current_date: map['current_date']??"",
+        progId: map['progId']??""
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/providers/MessagesComProvider.dart';
+import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/size_config.dart';
@@ -62,7 +63,8 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
             color:  Color(0xffF5F5F5),
           ),
         ],
-      ),      body: Consumer<MessagesComProvider>(
+      ),
+      body: Consumer<MessagesComProvider>(
         builder: (context, messagesComProvider, _) => messagesComProvider
             .messagesList.isEmpty
             ? Center(child: CircularProgressIndicator())
@@ -86,89 +88,113 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
                           formattedTime = "Invalid time format";
                         }
 
-                        return Padding(
-                          padding: EdgeInsetsDirectional.only(
-                            bottom: 2
-                          ),
+                        return InkWell(
+                          onTap: (){
 
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 2,
-                                  offset: Offset(0, 1), // changes position of shadow
-                                ),
-                              ],
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) {
+                                  return ConversationScreen(companyId: FirebaseAuthController.fireAuthHelper.userId()
+                                    ,programmerId:messagesComProvider.messagesList[index].progId! ,
+                                    progUsername: messagesComProvider.messagesList[index].senderMessage! ,
+                                    companyUsername:"" ,
+                                  progImage:messagesComProvider.messagesList[index].progImage! ,);
+                                }));
+
+                          },
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.only(
+                              bottom: 2
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage: AssetImage(
-                                    messagesComProvider.messagesList.isNotEmpty
-                                        ? messagesComProvider.messagesList[index].progImage ?? ""
-                                        : "No Prog Image",
+
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 2,
+                                    offset: Offset(0, 1), // changes position of shadow
                                   ),
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.only(
-                                          top: 15
-                                        ),
-                                        child: Text(
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Card(
+                                    clipBehavior: Clip.antiAlias,
+                                    shape: CircleBorder(),
+                                    color: Color(0xffcbb523),
+                                    child: SizedBox(
+                                      width: 45,
+                                      height: 45,
+                                      child: ClipOval(
+                                        child: Image.network(
                                           messagesComProvider.messagesList.isNotEmpty
-                                              ? messagesComProvider.messagesList[index].senderMessage ?? ""
-                                              : "No Sender Name",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
+                                              ? messagesComProvider.messagesList[index].progImage ?? ""
+                                              : "No Prog Image",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.only(
+                                            top: 15
+                                          ),
+                                          child: Text(
+                                            messagesComProvider.messagesList.isNotEmpty
+                                                ? messagesComProvider.messagesList[index].senderMessage ?? ""
+                                                : "No Sender Name",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
+                                        SizedBox(height: 5),
 
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding:EdgeInsetsDirectional.only(
-                                    top: 10
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        messagesComProvider.messagesList.isNotEmpty
-                                            ? formattedTime ?? ""
-                                            : "No Current Time",
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 10,
+                                  Padding(
+                                    padding:EdgeInsetsDirectional.only(
+                                      top: 10
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          messagesComProvider.messagesList.isNotEmpty
+                                              ? formattedTime ?? ""
+                                              : "No Current Time",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 10,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: SizeConfig.scaleHeight(5),),
-                                      Text(
-                                        messagesComProvider.messagesList.isNotEmpty
-                                            ? messagesComProvider.messagesList[index].current_date?? ""
-                                            : "No Current Date",
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 10,
+                                        SizedBox(height: SizeConfig.scaleHeight(5),),
+                                        Text(
+                                          messagesComProvider.messagesList.isNotEmpty
+                                              ? messagesComProvider.messagesList[index].current_date?? ""
+                                              : "No Current Date",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 10,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         );

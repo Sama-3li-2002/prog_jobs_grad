@@ -121,7 +121,7 @@ class MyApp extends StatelessWidget {
         MessagesProg.id: (context) => MessagesProg(),
         EditJobScreen.id: (context) => EditJobScreen(jobInfo: []),
         NotificationDetailsScreen.id: (context) => NotificationDetailsScreen(),
-        ConversationScreen.id: (context) => ConversationScreen(progUsername: "","",progImage: ""),
+        ConversationScreen.id: (context) => ConversationScreen(progUsername: "",progImage: ""),
         AcceptPerson.id: (context) => AcceptPerson(
               progId: '',
               uploadedFileName: '',

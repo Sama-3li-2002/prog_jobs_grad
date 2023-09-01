@@ -422,6 +422,8 @@ class FirebaseFireStoreHelper {
         "senderName": message.senderMessage,
         "current_date":message.current_date,
         "current_time":message.current_time,
+        "progImage":message.progImage,
+        "progId":message.progId,
       });
     }
 
@@ -433,6 +435,7 @@ class FirebaseFireStoreHelper {
         .add({
       "messageContent": message.content,
       "current_time":message.current_time,
+      "progId":message.progId,
     });
   }
 

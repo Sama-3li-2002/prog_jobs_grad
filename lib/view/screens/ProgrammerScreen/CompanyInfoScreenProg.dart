@@ -66,10 +66,15 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                             onTap: () async {
                               // to get current user name
                               Users? user= await FirebaseFireStoreHelper.fireStoreHelper.getUserData(FirebaseAuthController.fireAuthHelper.userId());
-                              ConversationScreen.companyId =widget.itemsComInfo[0].id!;
+
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(builder: (context) {
-                                    return ConversationScreen(progUsername: user!.username,widget.itemsComInfo.first.companyName!,progImage: user!.imageUrl,);
+                                    return ConversationScreen(progUsername: user!.username,
+                                      companyUsername: widget.itemsComInfo[0].companyName! ,
+                                      companyId:  widget.itemsComInfo[0].id!,
+                                      programmerId: FirebaseAuthController.fireAuthHelper.userId(),
+                                      comImage: widget.itemsComInfo[0].image! ,
+                                      progImage:user!.imageUrl ,);
                                   }));
                             },
                             child: Icon(
