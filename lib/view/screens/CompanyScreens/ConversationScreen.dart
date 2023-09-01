@@ -134,7 +134,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
               child: SingleChildScrollView(
                 child: Container(
-                  height: SizeConfig.scaleHeight(650),
+                  height: SizeConfig.scaleHeight(630),
                   child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                     stream: FirebaseFirestore.instance
                         .collection("Company")
