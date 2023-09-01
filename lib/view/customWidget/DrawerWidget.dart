@@ -102,7 +102,7 @@ Widget BuildMenuItems(BuildContext context) {
               if (UserTypeScreen.type == 'programmer') {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return ProfileInfo();
+                  return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
                 }));
               } else if (UserTypeScreen.type == 'company') {
                 Navigator.of(context)

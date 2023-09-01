@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoEditScreen.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 
 import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../model/UsersModel.dart';
@@ -11,13 +12,20 @@ import 'home.dart';
 
 class ProfileInfo extends StatefulWidget {
   static const String id = "profile_info_screen";
+  String? idProg;
+
+
+  ProfileInfo(this.idProg);
 
   @override
   State<ProfileInfo> createState() => _ProfileInfoState();
 }
 
 class _ProfileInfoState extends State<ProfileInfo> {
-  String id = FirebaseAuthController.fireAuthHelper.userId();
+  // String id = FirebaseAuthController.fireAuthHelper.userId();
+
+
+
 
   FirebaseFireStoreHelper fireStoreHelper =
       FirebaseFireStoreHelper.fireStoreHelper;
@@ -25,7 +33,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
   Users? users;
 
   Future getUser() async {
-    final userResult = await fireStoreHelper.getUserData(id);
+    final userResult = await fireStoreHelper.getUserData(widget.idProg!);
     setState(() {
       users = userResult;
     });
@@ -46,10 +54,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
-            Navigator.of(context)
-                .pushReplacement(MaterialPageRoute(builder: (context) {
-              return HomeScreen();
-            }));
           },
           icon: Icon(
             Icons.arrow_back_ios,
@@ -305,6 +309,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                         ),
                       ],
                     ),
+                    if(UserTypeScreen.type =='programmer')
                     Align(
                       alignment: Alignment.topCenter,
                       child: SizedBox(

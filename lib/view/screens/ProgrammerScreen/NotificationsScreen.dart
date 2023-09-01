@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/ProfWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -42,7 +43,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return ProfileInfo();
+                return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
               }));
             },
             child: Card(

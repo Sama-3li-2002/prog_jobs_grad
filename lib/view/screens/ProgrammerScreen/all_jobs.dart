@@ -88,7 +88,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
           InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return ProfileInfo();
+                return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
               }));
             },
             child: Card(

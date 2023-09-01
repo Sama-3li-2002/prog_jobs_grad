@@ -7,6 +7,7 @@ import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/model/Message.dart';
 import 'package:prog_jobs_grad/view/customWidget/textStyleWidget.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 import '../../../utils/size_config.dart';
 
@@ -95,16 +96,26 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   width: 30,
                   height: 30,
                   child: ClipOval(
-                    child: Image.network(
-                      UserTypeScreen.type == 'programmer'? widget.comImage!: widget.progImage!,
-                      fit: BoxFit.cover,
+                    child: InkWell(
+                      onTap: (){
+                        if( UserTypeScreen.type == 'company'){
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return ProfileInfo(widget.programmerId);
+                              }));
+                        }
+                      },
+                      child: Image.network(
+                        UserTypeScreen.type == 'programmer'? widget.comImage! : widget.progImage!,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          title: TextStyleWidget(UserTypeScreen.type == 'programmer'?widget.companyUsername!:widget.progUsername!, Colors.white,
+          title: TextStyleWidget(UserTypeScreen.type == 'programmer'?widget.companyUsername! : widget.progUsername!, Colors.white,
               SizeConfig.scaleTextFont(15), FontWeight.w500),
 
         ),

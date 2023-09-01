@@ -506,7 +506,7 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
       await fireStoreHelper.SaveUserData(users!, id);
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
-        return ProfileInfo();
+        return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
       }));
     } catch (error) {
       print("Error updating user profile: $error");

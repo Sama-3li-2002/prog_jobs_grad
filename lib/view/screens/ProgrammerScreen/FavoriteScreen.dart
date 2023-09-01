@@ -58,7 +58,7 @@ class _FavoriteState extends State<Favorite> {
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return ProfileInfo();
+                    return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
                   }));
                 },
                 child: Card(
