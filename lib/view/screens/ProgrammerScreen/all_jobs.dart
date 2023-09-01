@@ -323,8 +323,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                         ),
                                                                         TextStyleWidget(
                                                                           allJobsList.isNotEmpty
-                                                                              ? allJobsList[index].current_date ?? ""
-                                                                              : "No Current Date",
+                                                                              ? formattedTime ??
+                                                                              ""
+                                                                              : "No Current Time",
                                                                           Colors
                                                                               .black,
                                                                           SizeConfig.scaleTextFont(
@@ -340,10 +341,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                               15),
                                                                       child:
                                                                           TextStyleWidget(
-                                                                        allJobsList.isNotEmpty
-                                                                            ? formattedTime ??
-                                                                                ""
-                                                                            : "No Current Time",
+                                                                            allJobsList.isNotEmpty
+                                                                                ? allJobsList[index].current_date ?? ""
+                                                                                : "No Current Date",
                                                                         Colors
                                                                             .black,
                                                                         SizeConfig.scaleTextFont(
@@ -671,8 +671,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                         ),
                                                                         TextStyleWidget(
                                                                           _filteredJobs.isNotEmpty
-                                                                              ? _filteredJobs[index].current_date ?? ""
-                                                                              : "No Current Date",
+                                                                              ? formattedTime ??
+                                                                              ""
+                                                                              : "No Current Time",
                                                                           Colors
                                                                               .black,
                                                                           SizeConfig.scaleTextFont(
@@ -688,10 +689,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                               15),
                                                                       child:
                                                                           TextStyleWidget(
-                                                                        _filteredJobs.isNotEmpty
-                                                                            ? formattedTime ??
-                                                                                ""
-                                                                            : "No Current Time",
+                                                                            _filteredJobs.isNotEmpty
+                                                                                ? _filteredJobs[index].current_date ?? ""
+                                                                                : "No Current Date",
                                                                         Colors
                                                                             .black,
                                                                         SizeConfig.scaleTextFont(

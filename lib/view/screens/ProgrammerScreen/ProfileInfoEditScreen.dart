@@ -496,7 +496,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
   Future updateUserProfile() async {
     try {
       users!.id = id;
-
       users!.username = _usernameController!.text;
       users!.email = _emailController!.text;
       users!.age = int.tryParse(_ageController!.text);

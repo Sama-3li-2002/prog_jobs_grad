@@ -452,6 +452,8 @@ class _CompanyInfoEditState extends State<CompanyInfoEdit> {
       image: company.image!,
       managerImage: company.managerImage,
       email: company.email,
+      id: company.id,
+
     );
   }
 

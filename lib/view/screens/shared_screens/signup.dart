@@ -498,7 +498,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   true));
 
           if (userCredential != null) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
               return LoginScreen(
                 userType: widget.userType,
               );
@@ -570,7 +570,7 @@ class _SignupScreenState extends State<SignupScreen> {
             'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
           ));
           if (userCredential != null) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
               return ComLogoScreen(
                 comName: _companyNameCom!.text,
               );

@@ -338,7 +338,7 @@ class _LoginScreenState extends State<LoginScreen> {
              FirebaseAuthController.fireAuthHelper.userId());
 
          if (isUserInUserCollection)
-             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
                return HomeScreen();
              }));
         else {
@@ -392,7 +392,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (isUserInCompanyCollection) {
         if (userCredential != null) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
             return ComHomeScreen();
           }));
         }

@@ -298,10 +298,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     ),
                                                                     TextStyleWidget(
                                                                       newJobs
-                                                                              .isNotEmpty
-                                                                          ? newJobs[index].current_date ??
-                                                                              ""
-                                                                          : "No Current Date",
+                                                                          .isNotEmpty
+                                                                          ? formattedTime ??
+                                                                          ""
+                                                                          : "No Current Time",
                                                                       Colors
                                                                           .black,
                                                                       SizeConfig
@@ -319,11 +319,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               15),
                                                                   child:
                                                                       TextStyleWidget(
+
                                                                         newJobs
                                                                             .isNotEmpty
-                                                                        ? formattedTime ??
+                                                                            ? newJobs[index].current_date ??
                                                                             ""
-                                                                        : "No Current Time",
+                                                                            : "No Current Date",
+
+
                                                                     Colors
                                                                         .black,
                                                                     SizeConfig
@@ -696,11 +699,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     ),
                                                                     TextStyleWidget(
                                                                       companiesJobsProvider
-                                                                              .JobsList
-                                                                              .isNotEmpty
-                                                                          ? companiesJobsProvider.JobsList[index].current_date ??
-                                                                              ""
-                                                                          : "No Current Date",
+                                                                          .JobsList
+                                                                          .isNotEmpty
+                                                                          ? formattedTime ??
+                                                                          ""
+                                                                          : "No Current Time",
                                                                       Colors
                                                                           .black,
                                                                       SizeConfig
@@ -718,12 +721,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               15),
                                                                   child:
                                                                       TextStyleWidget(
-                                                                    companiesJobsProvider
+                                                                        companiesJobsProvider
                                                                             .JobsList
                                                                             .isNotEmpty
-                                                                        ? formattedTime ??
+                                                                            ? companiesJobsProvider.JobsList[index].current_date ??
                                                                             ""
-                                                                        : "No Current Time",
+                                                                            : "No Current Date",
+
                                                                     Colors
                                                                         .black,
                                                                     SizeConfig

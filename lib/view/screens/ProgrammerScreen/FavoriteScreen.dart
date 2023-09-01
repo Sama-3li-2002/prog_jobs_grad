@@ -52,14 +52,6 @@ class _FavoriteState extends State<Favorite> {
             color: Color(0xff4C5175),
           ),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                size: SizeConfig.scaleWidth(30),
-              ),
-              color: Color(0xff4C5175),
-            ),
             Padding(
               padding: EdgeInsets.only(right: 8),
               child: InkWell(
@@ -253,10 +245,14 @@ class _FavoriteState extends State<Favorite> {
                                                                             3),
                                                                   ),
                                                                   TextStyleWidget(
+
                                                                       favoriteProvider
-                                                                          .favoriteJobsList[
-                                                                              index]
-                                                                          .current_date!,
+                                                                          .favoriteJobsList
+                                                                          .isNotEmpty
+                                                                          ? formattedTime??
+                                                                          ""
+                                                                          : "No Current Time",
+
                                                                       Colors
                                                                           .black,
                                                                       SizeConfig
@@ -269,13 +265,10 @@ class _FavoriteState extends State<Favorite> {
                                                               Padding(
                                                                 padding:  EdgeInsets.only(left:16),
                                                                 child: TextStyleWidget(
-
                                                                     favoriteProvider
-                                                                        .favoriteJobsList
-                                                                        .isNotEmpty
-                                                                        ? formattedTime??
-                                                                        ""
-                                                                        : "No Current Time",
+                                                                        .favoriteJobsList[
+                                                                    index]
+                                                                        .current_date!,
 
                                                                     Colors.black,
                                                                     SizeConfig

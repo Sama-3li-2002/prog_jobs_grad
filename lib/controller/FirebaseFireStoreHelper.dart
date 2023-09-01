@@ -432,6 +432,7 @@ class FirebaseFireStoreHelper {
         .collection('messages')
         .add({
       "messageContent": message.content,
+      "current_time":message.current_time,
     });
   }
 

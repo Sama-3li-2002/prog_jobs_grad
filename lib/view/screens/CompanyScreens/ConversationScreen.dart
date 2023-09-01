@@ -62,7 +62,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           backgroundColor: Color(0xff4C5175),
           elevation: 0,
@@ -114,131 +114,154 @@ class _ConversationScreenState extends State<ConversationScreen> {
         ),
         body: Stack(
           children: [
-            Image.asset("assets/images/chatBackground.jpg",fit: BoxFit.cover,),
-            Column(
-              children: [
-                Container(
-                  height: SizeConfig.scaleHeight(620),
-                  width: double.infinity,
-                  // decoration: BoxDecoration(
-                  //   image: DecorationImage(
-                  //     image: AssetImage("assets/images/chatBackground.jpg"),
-                  //     fit: BoxFit.cover,
-                  //   ),
-                  // ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Container(
-                            height: SizeConfig.scaleHeight(650),
-                            child: Expanded(
-                              child: StreamBuilder<
-                                  QuerySnapshot<Map<String, dynamic>>>(
-                                stream: FirebaseFirestore.instance
-                                    .collection("Company")
-                                    .doc(ConversationScreen.companyId)
-                                    .collection('programmersMessages')
-                                    .doc(widget.programmerIdLogin)
-                                    .collection('messages')
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                  if (!snapshot.hasData || snapshot.data == null) {
-                                    return Center(
-                                      child: Text("No messages available."),
-                                    );
-                                  }
-                                  final messagesQuery = snapshot.data!;
-                                  final messagesDocs = messagesQuery.docs;
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/chatBackground.jpg"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: Container(
+                  height: SizeConfig.scaleHeight(650),
+                  child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: FirebaseFirestore.instance
+                        .collection("Company")
+                        .doc(ConversationScreen.companyId)
+                        .collection('programmersMessages')
+                        .doc(widget.programmerIdLogin)
+                        .collection('messages')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (!snapshot.hasData || snapshot.data == null) {
+                        return Center(
+                          child: Text("No messages available."),
+                        );
+                      }
+                      final messagesQuery = snapshot.data!;
+                      final messagesDocs = messagesQuery.docs;
 
-                                  final messages = messagesDocs
-                                      .map((doc) => Message.fromMap(doc.data()))
-                                      .toList();
+                      final messages = messagesDocs
+                          .map((doc) => Message.fromMap(doc.data()))
+                          .toList();
+                      return ListView.builder(
+                        reverse: true,
+                        // shrinkWrap: true,
+                        itemCount: messages.length,
+                        itemBuilder: (context, index) {
 
-                                  return ListView.builder(
-                                    reverse: true,
-                                    itemCount: messages.length,
-                                    itemBuilder: (context, index) {
-                                      final message = messages[index];
-                                      final content = message.content;
-                                      print("Content $content");
-                                      final isMe = widget.programmerIdLogin ==
-                                          FirebaseAuthController.fireAuthHelper
-                                              .userId();
-                                      return Padding(
-                                        padding: EdgeInsetsDirectional.only(
-                                          top: SizeConfig.scaleHeight(10),
-                                          end: isMe
-                                              ? SizeConfig.scaleWidth(10)
-                                              : SizeConfig.scaleWidth(220),
-                                          start: isMe
-                                              ? SizeConfig.scaleWidth(220)
-                                              : SizeConfig.scaleWidth(10),
-                                        ),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: isMe
-                                                ? Color.fromRGBO(76, 81, 117, 0.3)
-                                                : Colors.grey.shade200,
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
-                                              bottomLeft: isMe
-                                                  ? Radius.circular(10)
-                                                  : Radius.circular(0),
-                                              bottomRight: isMe
-                                                  ? Radius.circular(0)
-                                                  : Radius.circular(10),
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              vertical: SizeConfig.scaleHeight(10),
-                                              horizontal: SizeConfig.scaleWidth(10),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment: isMe
-                                                  ? CrossAxisAlignment.start
-                                                  : CrossAxisAlignment.end,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(content,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 11,
-                                                        fontWeight:
-                                                        FontWeight.w500)),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
+                          final message = messages[index];
+                          final content = message.content;
+                          final time = message.current_time;
+
+
+                          // لازالة الثواني من الوقت
+                          late String formattedTime;
+                          String timeString =
+                              time ?? "";
+                          try {
+                            formattedTime = DateFormat('hh:mm a').format(
+                                DateFormat('hh:mm:ss a').parse(timeString));
+                          } catch (e) {
+                            print("Invalid data format: $timeString");
+                            formattedTime = "Invalid time format";
+                          }
+
+
+                          print("Content $content");
+                          final isMe = widget.programmerIdLogin ==
+                              FirebaseAuthController.fireAuthHelper
+                                  .userId();
+                          return Padding(
+                            padding: EdgeInsetsDirectional.only(
+                              top: SizeConfig.scaleHeight(10),
+                              end: isMe
+                                  ? SizeConfig.scaleWidth(10)
+                                  : SizeConfig.scaleWidth(220),
+                              start: isMe
+                                  ? SizeConfig.scaleWidth(220)
+                                  : SizeConfig.scaleWidth(10),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: isMe
+                                    ? Color.fromRGBO(76, 81, 117, 0.3)
+                                    : Colors.grey.shade200,
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: isMe
+                                      ? Radius.circular(10)
+                                      : Radius.circular(0),
+                                  bottomRight: isMe
+                                      ? Radius.circular(0)
+                                      : Radius.circular(10),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: SizeConfig.scaleHeight(10),
+                                  horizontal: SizeConfig.scaleWidth(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: isMe
+                                      ? CrossAxisAlignment.start
+                                      : CrossAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(content,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontWeight:
+                                            FontWeight.w500)),
+                                    SizedBox(
+                                      height: 0.5,
+                                    ),
+
+                                    Row(
+                                      children: [
+                                        Spacer(),
+                                        Text(formattedTime!,
+                                            style: TextStyle(
+                                                color: Color(0xff383737FF),
+                                                fontSize: 11,
+                                                fontWeight:
+                                                FontWeight.w500)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
+              ),
+            ),
+
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:  EdgeInsets.only(bottom:1.0),
+                  child: Expanded(
                     child: Row(
                       children: [
                         Padding(
@@ -262,7 +285,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: SizeConfig.scaleHeight(48),
+                                    height: SizeConfig.scaleHeight(40),
                                     width: SizeConfig.scaleWidth(270),
                                     child: TextField(
                                         controller: MessagesController,
@@ -309,6 +332,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                 child: IconButton(
                                   onPressed: () async {
                                     if (messageContent!.isNotEmpty) {
+                                      FocusScope.of(context).unfocus();
                                       await storeMessages(
                                           ConversationScreen.companyId);
                                       MessagesController?.clear();
@@ -332,10 +356,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
+
           ],
-        ));
+        )
+
+
+       );
   }
 
   Future storeMessages(String comId) async {
