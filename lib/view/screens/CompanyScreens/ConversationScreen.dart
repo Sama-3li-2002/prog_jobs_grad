@@ -141,7 +141,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         .doc(widget.companyId)
                         .collection('programmersMessages')
                         .doc(widget.programmerId)
-                        .collection('messages')
+                        .collection('messages').orderBy("current_time",descending: true)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState ==
