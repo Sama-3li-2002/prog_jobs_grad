@@ -433,23 +433,24 @@ class FirebaseFireStoreHelper {
         .doc(message.progId)
         .collection('messages')
         .add({
+      "senderName": message.senderMessage,
       "messageContent": message.content,
       "current_time":message.current_time,
+      "current_date":message.current_date,
       "progId":message.progId,
+      "progImage":message.progImage,
       "type":message.type
     });
   }
 
-// استرجاع كل رسائل المبرمجين اللي بعتو للشركة بناء على ID
-  Future<QuerySnapshot> getAllMessagesCom(String id) async {
-    final QuerySnapshot<Map<String, dynamic>> allMessages = await firestore
-        .collection(companyCollection)
-        .doc(id)
-        .collection('programmersMessages')
-        .get();
-    return allMessages;
-  }
 
-//-------------------------------------------------------------------------------
+Stream<List<DocumentSnapshot<Map<String, dynamic>>>> getCompanyProgrammersMessagesStream(String companyId) {
+  CollectionReference companyCollection = FirebaseFirestore.instance.collection("Company");
 
+  return companyCollection
+      .doc(companyId)
+      .collection('programmersMessages')
+      .snapshots()
+      .map((programmersSnapshot) => programmersSnapshot.docs);
+}
 }

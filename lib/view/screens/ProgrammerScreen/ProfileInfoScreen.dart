@@ -62,6 +62,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
           color: Color(0xff4C5175),
         ),
         actions: [
+          if(UserTypeScreen.type=='programmer')
           IconButton(
               onPressed: () {
                 Navigator.of(context)
@@ -69,6 +70,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   return NotificationScreen();
                 }));
               },
+
               icon: Icon(
                 Icons.notifications_active,
                 color: Color(0xff4C5175),
