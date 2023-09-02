@@ -3,6 +3,8 @@ class Message {
   final String? senderMessage;
   String? progImage;
   String? progId;
+  String? comImage;
+  String? comName;
   String? current_time;
   String? current_date;
   String? type;
@@ -13,6 +15,8 @@ class Message {
     required this.current_time,
     required this.current_date,
     required this.progId,
+    required this.comImage,
+    required this.comName,
     required this.type
   });
 
@@ -24,6 +28,8 @@ class Message {
       current_time: map['current_time']??"",
         current_date: map['current_date']??"",
         progId: map['progId']??"",
+        comImage: map['comImage']??"",
+        comName: map['comName']??"",
         type: map['type']??""
     );
   }

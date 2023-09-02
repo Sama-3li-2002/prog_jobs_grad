@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/model/Message.dart';
@@ -438,6 +440,8 @@ class FirebaseFireStoreHelper {
       "current_time":message.current_time,
       "current_date":message.current_date,
       "progId":message.progId,
+      "comImage":message.comImage,
+      "comName":message.comName,
       "progImage":message.progImage,
       "type":message.type
     });
@@ -453,4 +457,49 @@ class FirebaseFireStoreHelper {
         .snapshots()
         .map((programmersSnapshot) => programmersSnapshot.docs);
   }
+
+// استرجاع كل رسائل المبرمج من كل الشركات الي بعتلها مسج
+  Stream<List<DocumentSnapshot<Map<String, dynamic>>>> getAllMessagesFromAllCompaniesStream(String progId) async* {
+    final controller = StreamController<List<DocumentSnapshot<Map<String, dynamic>>>>();
+
+    try {
+      QuerySnapshot allCompanies = await FirebaseFirestore.instance.collection(companyCollection).get();
+
+      List<DocumentSnapshot<Map<String, dynamic>>> allMessagesFromAllCompanies = [];
+
+      for (QueryDocumentSnapshot<Object?> companyDoc in allCompanies.docs) {
+        // البحث داخل مجموعة "programmersMessages" للعثور على الوثائق التي تحتوي على `progId`
+        QuerySnapshot programmerMessages = await companyDoc.reference.collection("programmersMessages").get();
+
+        for (QueryDocumentSnapshot<Object?> programmerMessageDoc in programmerMessages.docs) {
+          if (programmerMessageDoc.id == progId) {
+            // البحث داخل مجموعة "messages" في هذه الوثيقة
+            QuerySnapshot messages = await programmerMessageDoc.reference.collection("messages").get();
+            allMessagesFromAllCompanies.addAll(messages.docs.cast<DocumentSnapshot<Map<String, dynamic>>>());
+          }
+        }
+      }
+
+      // إرسال البيانات عبر الـ Stream
+      controller.sink.add(allMessagesFromAllCompanies);
+    } catch (e) {
+      print("Firestore Error: $e");
+      controller.sink.addError(e);
+    }
+
+    // إغلاق الـ StreamController عند الانتهاء
+    controller.close();
+  }
+
+
+
+
+
+
+
+
+
+
+
 }
+

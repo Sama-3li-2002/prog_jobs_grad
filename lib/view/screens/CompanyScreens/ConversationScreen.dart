@@ -68,7 +68,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-
+       backgroundColor:  Color(0xff4C5175),
       body: SafeArea(
         child: Stack(
           children: [
@@ -314,11 +314,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         ),
                         onChanged: (value) {
                           messageContent = value;
-                          setState(() {
-                            color = value.isEmpty
-                                ? Colors.grey
-                                : Colors.white;
-                          });
+                          // setState(() {
+                          //   color = value.isEmpty
+                          //       ? Colors.grey
+                          //       : Colors.white;
+                          // });
                         }),
                   ),
                 ),
@@ -379,6 +379,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
         current_time: formattedTime,
         current_date: formattedDate,
         progId: widget.programmerId,
+        comName: widget.companyUsername,
+        comImage: widget.comImage,
         type: UserTypeScreen.type,
       ),
     );
@@ -386,63 +388,4 @@ class _ConversationScreenState extends State<ConversationScreen> {
 }
 
 
-//
-//
-// appBar:
-// AppBar(
-// backgroundColor: Color(0xff4C5175),
-// elevation: 0,
-// leading: Row(
-// children: [
-// Padding(
-// padding: EdgeInsets.only(left: 3),
-// child: InkWell(
-// onTap: () {
-// Navigator.pop(context);
-// },
-// child: Icon(
-// Icons.arrow_back_ios,
-// size: 15,
-// color: Color(0xffF5F5F5),
-// ),
-// ),
-// ),
-// Card(
-// clipBehavior: Clip.antiAlias,
-// shape: CircleBorder(),
-// elevation: 4,
-// color: Color(0xffcbb523),
-// child: SizedBox(
-// width: 30,
-// height: 30,
-// child: ClipOval(
-// child: InkWell(
-// onTap: () {
-// if (UserTypeScreen.type == 'company') {
-// Navigator.of(context).push(
-// MaterialPageRoute(builder: (context) {
-// return ProfileInfo(widget.programmerId);
-// }),
-// );
-// }
-// },
-// child: Image.network(
-// UserTypeScreen.type == 'programmer'
-// ? widget.comImage!
-// : widget.progImage!,
-// fit: BoxFit.cover,
-// ),
-// ),
-// ),
-// ),
-// ),
-// ],
-// ),
-// title: TextStyleWidget(
-// UserTypeScreen.type == 'programmer'
-// ? widget.companyUsername!
-// : widget.progUsername!,
-// Colors.white,
-// SizeConfig.scaleTextFont(15),
-// FontWeight.w500),
-// ),
+

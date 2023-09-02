@@ -22,12 +22,11 @@ import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_logo.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/no_of_request.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/FavoriteScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/JobsCompanyDetailsScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/MessagesProg.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationDetialsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoEditScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/ShowMessagesCom.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ShowMessagesProg.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/SettingScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
@@ -115,7 +114,7 @@ class MyApp extends StatelessWidget {
         ComHomeScreen.id: (context) => ComHomeScreen(),
         AddNewJobScreen.id: (context) => AddNewJobScreen(),
         ShowMessagesCom.id: (context) => ShowMessagesCom(),
-        MessagesProg.id: (context) => MessagesProg(),
+        ShowMessagesProg.id: (context) => ShowMessagesProg(),
         EditJobScreen.id: (context) => EditJobScreen(jobInfo: []),
         NotificationDetailsScreen.id: (context) => NotificationDetailsScreen(),
         ConversationScreen.id: (context) => ConversationScreen(progUsername: "",progImage: ""),

@@ -5,8 +5,8 @@ import 'package:prog_jobs_grad/view/screens/CompanyScreens/ArchiveScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_all_jobs.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/FavoriteScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/MessagesProg.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationsScreen.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ShowMessagesProg.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/SettingScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
@@ -137,7 +137,7 @@ Widget BuildMenuItems(BuildContext context) {
           onTap: () {
             if (UserTypeScreen.type == 'programmer') {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return MessagesProg();
+                return ShowMessagesProg();
               }));
             } else if (UserTypeScreen.type == 'company') {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {

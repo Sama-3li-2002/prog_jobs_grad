@@ -56,7 +56,7 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
           ),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
             if (!snapshot.hasData) {
               return Text('No programmers available.');
@@ -68,7 +68,8 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
               future: getLastMessages(programmers),
               builder: (context, messageSnapshot) {
                 if (messageSnapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return Center(
+                      child: CircularProgressIndicator());
                 }
                 if (!messageSnapshot.hasData) {
                   return Text('Error fetching messages.');
