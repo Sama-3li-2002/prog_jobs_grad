@@ -40,8 +40,8 @@ class _SplashScreenState extends State<SplashScreen> {
             Positioned(
                 top: SizeConfig.scaleHeight(200),
                 left: SizeConfig.scaleWidth(130),
-                child: TextStyleWidget(
-                    'Prog Jobs', Colors.white, 30, FontWeight.bold))
+                child: TextStyleWidget('Prog Jobs', Colors.white,
+                    SizeConfig.scaleTextFont(30), FontWeight.bold))
           ],
         ),
       ),

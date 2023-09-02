@@ -6,7 +6,6 @@ class NumberOfRequestsProvider extends ChangeNotifier {
   List<Request> submittedRequests = [];
   bool isLoading = false;
 
-
   Future<List<Request>> getSubmittedRequests(String jobId) async {
     isLoading = true;
     notifyListeners();

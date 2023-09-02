@@ -60,16 +60,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             SizedBox(
               height: SizeConfig.scaleHeight(20),
             ),
-            RichTextWidget(
-              'email ',
-              Color(0xff4C5175),
-              SizeConfig.scaleTextFont(12),
-              FontWeight.w500,
-              'or',
-              Color(0xFFB8852F),
-              SizeConfig.scaleTextFont(12),
-              FontWeight.w500,
-              ' phone',
+            TextStyleWidget(
+              'Enter Your Email',
               Color(0xff4C5175),
               SizeConfig.scaleTextFont(12),
               FontWeight.w500,

@@ -34,8 +34,8 @@ class _ShowProfPicInComState extends State<ShowProfPicInCom> {
     return users == null
         ? CircularProgressIndicator()
         : users!.showProfPic!
-            ? _buildProfileImage()
-            : _buildDefaultImage();
+        ? _buildProfileImage()
+        : _buildDefaultImage();
   }
 
   Widget _buildProfileImage() {

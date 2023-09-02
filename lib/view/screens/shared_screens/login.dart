@@ -17,9 +17,8 @@ class LoginScreen extends StatefulWidget {
   static const String id = "login_screen";
   final String userType;
 
-
   // For circular validation
-  static bool? isSignInComplete ;
+  static bool? isSignInComplete;
 
   LoginScreen({required this.userType});
 
@@ -66,8 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordCom?.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -92,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SingleChildScrollView(
               child: Padding(
                 padding:
-                EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
+                    EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -101,7 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Image(
                               width: SizeConfig.scaleWidth(390),
                               height: SizeConfig.scaleHeight(259),
-                              image: AssetImage('assets/images/Login_pana.png'))),
+                              image:
+                                  AssetImage('assets/images/Login_pana.png'))),
                     ),
                     TextStyleWidget(
                       'LOGIN',
@@ -151,8 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 filled: true,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
-                                    borderSide:
-                                    BorderSide(color: Colors.white, width: 1)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 1)),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),
@@ -209,8 +207,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 filled: true,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
-                                    borderSide:
-                                    BorderSide(color: Colors.white, width: 1)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 1)),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),
@@ -263,11 +261,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             FocusScope.of(context).unfocus();
                             await performLoginProg();
                           } else if (UserTypeScreen.type == 'company') {
-                            FocusScope.of(context).unfocus(); // عشان الكيبورد يروح لما نضغط عالزر
+                            FocusScope.of(context)
+                                .unfocus(); // عشان الكيبورد يروح لما نضغط عالزر
                             await performLoginCom();
-
                           }
-
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff3b3f5b),
@@ -292,13 +289,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 FontWeight.normal),
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(builder: (context) {
-                                      return SignupScreen(userType: widget.userType);
-                                    }));
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (context) {
+                                  return SignupScreen(
+                                      userType: widget.userType);
+                                }));
                               },
-                              child: TextStyleWidget("Sign up", Color(0xFFB8852F),
-                                  SizeConfig.scaleTextFont(12), FontWeight.normal),
+                              child: TextStyleWidget(
+                                  "Sign up",
+                                  Color(0xFFB8852F),
+                                  SizeConfig.scaleTextFont(12),
+                                  FontWeight.normal),
                             ),
                           ],
                         )),
@@ -312,7 +313,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
           ],
         ),
-
       ),
     );
   }
@@ -325,37 +325,37 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (_emailProg!.text.isNotEmpty && _passwordProg!.text.isNotEmpty) {
-       await FirebaseAuthController.fireAuthHelper.signIn(
+      await FirebaseAuthController.fireAuthHelper.signIn(
         _emailProg!.text.trim(),
         _passwordProg!.text.trim(),
       );
-       if(LoginScreen.isSignInComplete== false){
-         setState(() {
-           _isLoading = false;
-         });
-       }else{
-         bool isUserInUserCollection = await checkIfUserInUserCollection(
-             FirebaseAuthController.fireAuthHelper.userId());
+      if (LoginScreen.isSignInComplete == false) {
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        bool isUserInUserCollection = await checkIfUserInUserCollection(
+            FirebaseAuthController.fireAuthHelper.userId());
 
-         if (isUserInUserCollection)
-             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-               return HomeScreen();
-             }));
+        if (isUserInUserCollection)
+          Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) {
+            return HomeScreen();
+          }));
         else {
-           setState(() {
-             _isLoading = false;
-           });
-           Fluttertoast.showToast(
-             msg: "You cannot log in with a company account here.",
-             toastLength: Toast.LENGTH_SHORT,
-             timeInSecForIosWeb: 1,
-             backgroundColor: Colors.black,
-             textColor: Colors.white,
-             fontSize: 16.0,
-           );
-         }
-       }
-
+          setState(() {
+            _isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "You cannot log in with a company account here.",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
+      }
     } else {
       setState(() {
         _isLoading = false;
@@ -378,38 +378,39 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (checkData()) {
       UserCredential? userCredential =
-      await FirebaseAuthController.fireAuthHelper.signIn(
+          await FirebaseAuthController.fireAuthHelper.signIn(
         _emailCom!.text.trim(),
         _passwordCom!.text.trim(),
       );
-      if(LoginScreen.isSignInComplete== false){
+      if (LoginScreen.isSignInComplete == false) {
         setState(() {
           _isLoading = false;
         });
-      }else{
-      bool isUserInCompanyCollection = await checkIfUserInCompanyCollection(
-          FirebaseAuthController.fireAuthHelper.userId());
-
-      if (isUserInCompanyCollection) {
-        if (userCredential != null) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-            return ComHomeScreen();
-          }));
-        }
       } else {
-        setState(() {
-          _isLoading = false;
-        });
-        Fluttertoast.showToast(
-          msg: "You cannot log in with a programmer account here.",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        bool isUserInCompanyCollection = await checkIfUserInCompanyCollection(
+            FirebaseAuthController.fireAuthHelper.userId());
+
+        if (isUserInCompanyCollection) {
+          if (userCredential != null) {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (context) {
+              return ComHomeScreen();
+            }));
+          }
+        } else {
+          setState(() {
+            _isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "You cannot log in with a programmer account here.",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
       }
-    }
     }
   }
 

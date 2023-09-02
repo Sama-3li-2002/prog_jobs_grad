@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
+import 'package:prog_jobs_grad/model/CompanyModel.dart';
+import 'package:prog_jobs_grad/providers/NotificationProvider.dart';
+import 'package:provider/provider.dart';
+import '../../../controller/FirebaseAuthController.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/ProfWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -14,167 +18,287 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  List<Company> comInfoList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<NotificationProvider>(context, listen: false)
+        .getNotificationList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF5F5F5),
-      appBar: AppBar(
         backgroundColor: Color(0xffF5F5F5),
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: SizeConfig.scaleWidth(20),
-          ),
-          color: Color(0xff4C5175),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
+        appBar: AppBar(
+          backgroundColor: Color(0xffF5F5F5),
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: Icon(
-              Icons.search,
-              size: SizeConfig.scaleWidth(30),
+              Icons.arrow_back_ios,
+              size: SizeConfig.scaleWidth(20),
             ),
             color: Color(0xff4C5175),
           ),
-          InkWell(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
-              }));
-            },
-            child: Card(
-              clipBehavior: Clip.antiAlias,
-              shape: CircleBorder(),
-              elevation: 4,
-              color: Color(0xffcbb523),
-              child: SizedBox(
-                width: SizeConfig.scaleWidth(30),
-                height: SizeConfig.scaleHeight(30),
-                child: ProfWidget(),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.search,
+                size: SizeConfig.scaleWidth(30),
               ),
+              color: Color(0xff4C5175),
             ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextStyleWidget("Notifications", Color(0xffCBB523),
-                SizeConfig.scaleTextFont(20), FontWeight.w600),
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 6,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextStyleWidget(
-                            "Today 11:30 AM",
-                            Color(0xff4C5175),
-                            SizeConfig.scaleTextFont(11),
-                            FontWeight.w500),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return NotificationDetailsScreen();
-                          }));
-                        },
-                        child: Card(
-                          elevation: 7,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            children: [
-                              Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8),
-                                        bottomRight: Radius.circular(8)),
-                                    child: ColorFiltered(
-                                      colorFilter: ColorFilter.mode(
-                                          Colors.black.withOpacity(0.5),
-                                          BlendMode.darken),
-                                      child: Image.asset(
-                                        "assets/images/computer.png",
-                                        width: SizeConfig.scaleWidth(85),
-                                        height: SizeConfig.scaleHeight(97),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: SizeConfig.scaleHeight(0),
-                                    left: SizeConfig.scaleWidth(0),
-                                    bottom: SizeConfig.scaleHeight(120),
-                                    right: SizeConfig.scaleWidth(120),
-                                    child: IconButton(
-                                      icon: Icon(
-                                          Icons.notifications_active_rounded),
-                                      onPressed: () {},
-                                      color: Colors.white,
-                                      iconSize: SizeConfig.scaleWidth(22),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: SizeConfig.scaleWidth(2),
-                              ),
-                              Container(
-                                width: SizeConfig.scaleWidth(0.5),
-                                height: SizeConfig.scaleHeight(90),
-                                color: Color(0xff4C5175),
-                              ),
-                              SizedBox(
-                                width: SizeConfig.scaleWidth(5),
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextStyleWidget(
-                                      "Magic Company",
-                                      Color(0xff4C5175),
-                                      SizeConfig.scaleTextFont(16),
-                                      FontWeight.w600),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(5),
-                                  ),
-                                  TextStyleWidget(
-                                      "Your application has been\n"
-                                      "accepted at ...",
-                                      Color(0xff000000),
-                                      SizeConfig.scaleTextFont(15),
-                                      FontWeight.normal),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+            InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return ProfileInfo(
+                      FirebaseAuthController.fireAuthHelper.userId());
+                }));
               },
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                shape: CircleBorder(),
+                elevation: 4,
+                color: Color(0xffcbb523),
+                child: SizedBox(
+                  width: SizeConfig.scaleWidth(30),
+                  height: SizeConfig.scaleHeight(30),
+                  child: ProfWidget(),
+                ),
+              ),
             ),
           ],
         ),
-      ),
-    );
+        body: Consumer<NotificationProvider>(
+            builder: (context, notificationProvider, _) {
+          return notificationProvider.isLoading
+              ? Center(child: CircularProgressIndicator())
+              : (notificationProvider.notificationList.isEmpty)
+                  ? Center(child: Text("No available notifications"))
+                  : SingleChildScrollView(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextStyleWidget("Notifications", Color(0xffCBB523),
+                              SizeConfig.scaleTextFont(20), FontWeight.w600),
+                          ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount:
+                                  notificationProvider.notificationList.length,
+                              itemBuilder: (context, index) {
+                                String year = notificationProvider
+                                    .notificationList[index].timestamp.year
+                                    .toString();
+                                String month = notificationProvider
+                                    .notificationList[index].timestamp.month
+                                    .toString();
+                                String day = notificationProvider
+                                    .notificationList[index].timestamp.day
+                                    .toString();
+
+                                String date = "$year-$month-$day";
+                                String amPm = notificationProvider
+                                            .notificationList[index]
+                                            .timestamp
+                                            .hour >=
+                                        12
+                                    ? 'PM'
+                                    : 'AM';
+                                String time =
+                                    "${notificationProvider.notificationList[index].timestamp.hour + 1}:"
+                                            "${notificationProvider.notificationList[index].timestamp.minute}" +
+                                        " " +
+                                        amPm;
+
+                                return FutureBuilder(
+                                    future: getComInfo(notificationProvider
+                                        .notificationList[index].comId!),
+                                    builder: (BuildContext context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Center();
+                                      } else if (snapshot.hasError) {
+                                        return Text('Error: ${snapshot.error}');
+                                      }
+                                      return Padding(
+                                        padding: EdgeInsets.only(
+                                            top: SizeConfig.scaleHeight(10)),
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 8),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: TextStyleWidget(
+                                                    time,
+                                                    // + "\n" + date,
+                                                    Color(0xff4C5175),
+                                                    SizeConfig.scaleTextFont(
+                                                        11),
+                                                    FontWeight.w500),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return NotificationDetailsScreen(
+                                                    comInfo: comInfoList[0],
+                                                    notiContent:
+                                                        notificationProvider
+                                                            .notificationList[
+                                                                index]
+                                                            .notification_content!,
+                                                    time: time,
+                                                    date: date,
+                                                  );
+                                                }));
+                                              },
+                                              child: Card(
+                                                elevation: 7,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Stack(
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          8),
+                                                                  bottomRight: Radius
+                                                                      .circular(
+                                                                          8)),
+                                                          child: ColorFiltered(
+                                                            colorFilter:
+                                                                ColorFilter.mode(
+                                                                    Colors
+                                                                        .black
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    BlendMode
+                                                                        .darken),
+                                                            child:
+                                                                Image.network(
+                                                              comInfoList[0]
+                                                                  .image!,
+                                                              width: SizeConfig
+                                                                  .scaleWidth(
+                                                                      85),
+                                                              height: SizeConfig
+                                                                  .scaleHeight(
+                                                                      97),
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                          top: SizeConfig
+                                                              .scaleHeight(0),
+                                                          left: SizeConfig
+                                                              .scaleWidth(0),
+                                                          bottom: SizeConfig
+                                                              .scaleHeight(120),
+                                                          right: SizeConfig
+                                                              .scaleWidth(120),
+                                                          child: IconButton(
+                                                            icon: Icon(Icons
+                                                                .notifications_active_rounded),
+                                                            onPressed: () {},
+                                                            color: Colors.white,
+                                                            iconSize: SizeConfig
+                                                                .scaleWidth(22),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      width:
+                                                          SizeConfig.scaleWidth(
+                                                              2),
+                                                    ),
+                                                    Container(
+                                                      width:
+                                                          SizeConfig.scaleWidth(
+                                                              0.5),
+                                                      height: SizeConfig
+                                                          .scaleHeight(90),
+                                                      color: Color(0xff4C5175),
+                                                    ),
+                                                    SizedBox(
+                                                      width:
+                                                          SizeConfig.scaleWidth(
+                                                              5),
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        TextStyleWidget(
+                                                            comInfoList[0]
+                                                                .companyName!,
+                                                            Color(0xff4C5175),
+                                                            SizeConfig
+                                                                .scaleTextFont(
+                                                                    16),
+                                                            FontWeight.w600),
+                                                        SizedBox(
+                                                          height: SizeConfig
+                                                              .scaleHeight(5),
+                                                        ),
+                                                        TextStyleWidget(
+                                                            notificationProvider
+                                                                    .notificationList[
+                                                                        index]
+                                                                    .notification_content!
+                                                                    .substring(
+                                                                        0, 35) +
+                                                                "...",
+                                                            Color(0xff000000),
+                                                            SizeConfig
+                                                                .scaleTextFont(
+                                                                    15),
+                                                            FontWeight.normal),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              })
+                        ],
+                      ),
+                    );
+        }));
+  }
+
+  Future<List<Company>> getComInfo(String comId) async {
+    comInfoList = await FirebaseFireStoreHelper.instance.getComInfoById(comId);
+    return comInfoList;
   }
 }

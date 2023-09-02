@@ -8,7 +8,6 @@ class Company {
   String? managerName;
   String? about;
   String? image;
-
   String? managerImage;
 
   Company({
@@ -23,6 +22,12 @@ class Company {
     this.image,
     this.managerImage,
   });
+
+  Company.notification(
+    this.companyName,
+    this.image,
+    this.address,
+  );
 
   Company.signUP(
       this.companyName,
@@ -54,7 +59,7 @@ class Company {
     map['email'] = this.email;
     map['phone'] = this.phone;
     map['address'] = this.address;
-    map['managerName'] = this.managerName;;
+    map['managerName'] = this.managerName;
     map['about'] = this.about;
     map['image'] = this.image;
     map['managerImage'] = this.managerImage;

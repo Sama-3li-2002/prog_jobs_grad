@@ -29,8 +29,9 @@ class _CompanyInfoState extends State<CompanyInfo> {
     return SafeArea(
       child: Scaffold(
         body: Consumer<ComInfoProvider>(
-          builder: (context, comInfoProvider, _) => comInfoProvider.comInfoList.isEmpty
-              ? Center(child:CircularProgressIndicator())
+          builder: (context, comInfoProvider, _) => comInfoProvider
+                  .comInfoList.isEmpty
+              ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(
                     children: [

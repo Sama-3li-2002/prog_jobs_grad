@@ -11,9 +11,7 @@ import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/model/CompanyModel.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
-import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
-import 'package:provider/provider.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'com_home.dart';
@@ -27,7 +25,6 @@ class AddNewJobScreen extends StatefulWidget {
 }
 
 class _AddNewJobScreenState extends State<AddNewJobScreen> {
-
   // عدد النقرات على زر add skills
   int _clickCount = 0;
 
@@ -58,9 +55,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   late String formattedDate;
   late String formattedTime;
 
-
-
-
   @override
   void initState() {
     super.initState();
@@ -68,7 +62,8 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     getComName();
 
     _job_nameTextController = TextEditingController();
-    _companynameTextController = TextEditingController(text: AddNewJobScreen.companyName);
+    _companynameTextController =
+        TextEditingController(text: AddNewJobScreen.companyName);
     _salaryTextController = TextEditingController();
     _job_descriptionTextController = TextEditingController();
 
@@ -124,259 +119,251 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
           color: Color(0xff4C5175),
         ),
       ),
-      body:SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextStyleWidget("Add new job:", Color(0xffCBB523),
-                      SizeConfig.scaleTextFont(18), FontWeight.w500),
-                  SizedBox(height: SizeConfig.scaleHeight(10)),
-                  Center(
-                    child: Stack(
-                      children: [
-                        Container(
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            color: Colors.white,
-                            elevation: 7,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: jobImage != null
-                                ? Image.network(
-                                    jobImage!,
-                                    width: SizeConfig.scaleWidth(140),
-                                    height: SizeConfig.scaleHeight(135),
-                                    fit: BoxFit.cover,
-                                  )
-                                : Image.asset('assets/images/addJob.png'),
-                          ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextStyleWidget("Add new job:", Color(0xffCBB523),
+                  SizeConfig.scaleTextFont(18), FontWeight.w500),
+              SizedBox(height: SizeConfig.scaleHeight(10)),
+              Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        color: Colors.white,
+                        elevation: 7,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        Positioned(
-                          bottom: SizeConfig.scaleHeight(0),
-                          right: SizeConfig.scaleWidth(0),
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.grey[400]!,
-                                width: 1.5, // Border width
-                              ),
-                            ),
-                            child: FloatingActionButton(
-                                backgroundColor: Colors.grey.shade200,
-                                foregroundColor: Colors.grey,
-                                onPressed: () {
-                                  _pickImage();
-                                },
-                                child: Icon(
-                                  Icons.camera_alt_outlined,
-                                  color: Color(0xff4C5175),
-                                  size: SizeConfig.scaleWidth(16),
-                                )),
-                          ),
-                        ),
-                      ],
+                        child: jobImage != null
+                            ? Image.network(
+                                jobImage!,
+                                width: SizeConfig.scaleWidth(140),
+                                height: SizeConfig.scaleHeight(135),
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset('assets/images/addJob.png'),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: SizeConfig.scaleHeight(15)),
-                  TextStyleWidget("job name:", Color(0xff4C5175),
-                      SizeConfig.scaleTextFont(12), FontWeight.w500),
-                  TextFieldWidget.textfieldCon(
-                    controller: _job_nameTextController,
-                  ),
-                  SizedBox(height: SizeConfig.scaleHeight(12)),
-                  TextStyleWidget("Company Name:", Color(0xff4C5175),
-                      SizeConfig.scaleTextFont(12), FontWeight.w500),
-
-                Container(
-                  height: SizeConfig.scaleHeight(48),
-                  child: TextField(
-                  enabled: false,
-                    controller: _companynameTextController,
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: Colors.white, width: 1),
+                    Positioned(
+                      bottom: SizeConfig.scaleHeight(0),
+                      right: SizeConfig.scaleWidth(0),
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.grey[400]!,
+                            width: 1.5, // Border width
+                          ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        )),
-                  ),
+                        child: FloatingActionButton(
+                            backgroundColor: Colors.grey.shade200,
+                            foregroundColor: Colors.grey,
+                            onPressed: () {
+                              _pickImage();
+                            },
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Color(0xff4C5175),
+                              size: SizeConfig.scaleWidth(16),
+                            )),
+                      ),
+                    ),
+                  ],
                 ),
-                  SizedBox(height: SizeConfig.scaleHeight(12)),
-                  TextStyleWidget("Salary:", Color(0xff4C5175),
-                      SizeConfig.scaleTextFont(12), FontWeight.w500),
-                  TextFieldWidget.textfieldCon(
-                    controller: _salaryTextController,
-                    hint_Text: r"$/months",
-                  ),
-                  SizedBox(height: SizeConfig.scaleHeight(12)),
-                  TextStyleWidget("Job description:", Color(0xff4C5175),
-                      SizeConfig.scaleTextFont(12), FontWeight.w500),
-                  SizedBox(
-                    height: SizeConfig.scaleHeight(90),
-                    child: TextField(
-                      controller: _job_descriptionTextController,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: InputBorder.none,
-                          hintText: 'write...',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: SizeConfig.scaleTextFont(13),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          )),
-                    ),
-                  ),
-                  SizedBox(height: SizeConfig.scaleHeight(12)),
-                  Row(
-                    children: [
-                      TextStyleWidget("required skills:", Color(0xff4C5175),
-                          SizeConfig.scaleTextFont(12), FontWeight.w500),
-                      Spacer(),
-                      Container(
-                        width: SizeConfig.scaleWidth(90),
-                        height: SizeConfig.scaleHeight(40),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_clickCount < 4) {
-                              setState(() {
-                                _clickCount++;
-                                textFields.add(
-                                  TextField(
-                                    controller: controllers[index],
-                                    // enabled: _clickCount <= 3,
-                                    keyboardType: TextInputType.text,
-                                    decoration: InputDecoration(
-                                        hintText: 'write...',
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize:
-                                              SizeConfig.scaleTextFont(13),
-                                        ),
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          borderSide: BorderSide(
-                                              color: Colors.white, width: 1),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        )),
-                                  ),
-                                );
-                                index++;
-                              });
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: _clickCount == 3
-                                  ? Colors.grey
-                                  : Color(0xff4C5175)),
-                          child: Row(children: [
-                            // Icon(Icons.add),
-                            Image.asset("assets/images/add.png"),
-                            SizedBox(
-                              width: SizeConfig.scaleWidth(7),
-                            ),
-                            TextStyleWidget("Add Skils", Color(0xffFAFAFA),
-                                SizeConfig.scaleTextFont(9), FontWeight.w500)
-                          ]),
-                        ),
+              ),
+              SizedBox(height: SizeConfig.scaleHeight(15)),
+              TextStyleWidget("job name:", Color(0xff4C5175),
+                  SizeConfig.scaleTextFont(12), FontWeight.w500),
+              TextFieldWidget.textfieldCon(
+                controller: _job_nameTextController,
+              ),
+              SizedBox(height: SizeConfig.scaleHeight(12)),
+              TextStyleWidget("Company Name:", Color(0xff4C5175),
+                  SizeConfig.scaleTextFont(12), FontWeight.w500),
+              Container(
+                height: SizeConfig.scaleHeight(48),
+                child: TextField(
+                  enabled: false,
+                  controller: _companynameTextController,
+                  decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(color: Colors.white, width: 1),
                       ),
-                      SizedBox(
-                        height: 10,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                ),
+              ),
+              SizedBox(height: SizeConfig.scaleHeight(12)),
+              TextStyleWidget("Salary:", Color(0xff4C5175),
+                  SizeConfig.scaleTextFont(12), FontWeight.w500),
+              TextFieldWidget.textfieldCon(
+                controller: _salaryTextController,
+                hint_Text: r"$/months",
+              ),
+              SizedBox(height: SizeConfig.scaleHeight(12)),
+              TextStyleWidget("Job description:", Color(0xff4C5175),
+                  SizeConfig.scaleTextFont(12), FontWeight.w500),
+              SizedBox(
+                height: SizeConfig.scaleHeight(90),
+                child: TextField(
+                  controller: _job_descriptionTextController,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: InputBorder.none,
+                      hintText: 'write...',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: SizeConfig.scaleTextFont(13),
                       ),
-                    ],
-                  ),
-                  SizedBox(height: SizeConfig.scaleHeight(17)),
-                  SizedBox(
-                    height: SizeConfig.scaleHeight(48),
-                    child: TextField(
-                      style: TextStyle(color: Colors.black),
-                      controller: _controllerOneSkills,
-                      decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: InputBorder.none,
-                          hintText: 'write...',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: SizeConfig.scaleTextFont(13),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          )),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      for (TextField textField in textFields)
-                        Padding(
-                          padding:
-                              EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
-                          child: SizedBox(
-                            height: SizeConfig.scaleHeight(48),
-                            child: textField,
-                          ),
-                        ),
-                    ],
-                  ),
-                  SizedBox(height: SizeConfig.scaleHeight(15)),
-                  Center(
-                    child: Container(
-                      width: SizeConfig.scaleWidth(350),
-                      height: SizeConfig.scaleHeight(48),
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            FocusScope.of(context).unfocus();
-                            await performStore();
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return ComHomeScreen();
-                                },
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(color: Colors.white, width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                ),
+              ),
+              SizedBox(height: SizeConfig.scaleHeight(12)),
+              Row(
+                children: [
+                  TextStyleWidget("required skills:", Color(0xff4C5175),
+                      SizeConfig.scaleTextFont(12), FontWeight.w500),
+                  Spacer(),
+                  Container(
+                    width: SizeConfig.scaleWidth(90),
+                    height: SizeConfig.scaleHeight(40),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_clickCount < 4) {
+                          setState(() {
+                            _clickCount++;
+                            textFields.add(
+                              TextField(
+                                controller: controllers[index],
+                                // enabled: _clickCount <= 3,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    hintText: 'write...',
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: SizeConfig.scaleTextFont(13),
+                                    ),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                          color: Colors.white, width: 1),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    )),
                               ),
                             );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff4C5175),
-                          ),
-                          child: TextStyleWidget("sharing", Color(0xffFAFAFA),
-                              SizeConfig.scaleTextFont(17), FontWeight.w700)),
+                            index++;
+                          });
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: _clickCount == 3
+                              ? Colors.grey
+                              : Color(0xff4C5175)),
+                      child: Row(children: [
+                        // Icon(Icons.add),
+                        Image.asset("assets/images/add.png"),
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(7),
+                        ),
+                        TextStyleWidget("Add Skils", Color(0xffFAFAFA),
+                            SizeConfig.scaleTextFont(9), FontWeight.w500)
+                      ]),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
-            ),
+              SizedBox(height: SizeConfig.scaleHeight(17)),
+              SizedBox(
+                height: SizeConfig.scaleHeight(48),
+                child: TextField(
+                  style: TextStyle(color: Colors.black),
+                  controller: _controllerOneSkills,
+                  decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: InputBorder.none,
+                      hintText: 'write...',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: SizeConfig.scaleTextFont(13),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(color: Colors.white, width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                ),
+              ),
+              Column(
+                children: [
+                  for (TextField textField in textFields)
+                    Padding(
+                      padding: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
+                      child: SizedBox(
+                        height: SizeConfig.scaleHeight(48),
+                        child: textField,
+                      ),
+                    ),
+                ],
+              ),
+              SizedBox(height: SizeConfig.scaleHeight(15)),
+              Center(
+                child: Container(
+                  width: SizeConfig.scaleWidth(350),
+                  height: SizeConfig.scaleHeight(48),
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        FocusScope.of(context).unfocus();
+                        await performStore();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ComHomeScreen();
+                            },
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff4C5175),
+                      ),
+                      child: TextStyleWidget("sharing", Color(0xffFAFAFA),
+                          SizeConfig.scaleTextFont(17), FontWeight.w700)),
+                ),
+              ),
+            ],
           ),
+        ),
+      ),
     );
-        }
-
+  }
 
   Future performStore() async {
     if (checkData()) await store();
@@ -465,8 +452,9 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     });
   }
 
-   void getComName() async {
-   List<Company> comInfo = await FirebaseFireStoreHelper.fireStoreHelper.getComInfoById(FirebaseAuthController.fireAuthHelper.userId());
-   AddNewJobScreen.companyName = comInfo.elementAt(0).companyName!;
+  void getComName() async {
+    List<Company> comInfo = await FirebaseFireStoreHelper.fireStoreHelper
+        .getComInfoById(FirebaseAuthController.fireAuthHelper.userId());
+    AddNewJobScreen.companyName = comInfo.elementAt(0).companyName!;
   }
 }

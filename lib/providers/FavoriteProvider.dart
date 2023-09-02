@@ -14,8 +14,6 @@ class FavoriteProvider with ChangeNotifier {
   List<Jobs> favoriteJobsList = [];
   List favoriteJobIds = [];
 
-
-
   Future getFavoriteJobsForUser(String userId) async {
     isLoading = true;
     notifyListeners();
@@ -47,7 +45,6 @@ class FavoriteProvider with ChangeNotifier {
     await FirebaseFireStoreHelper.instance.removeFromFavorites(
         FirebaseAuthController.fireAuthHelper.userId(), jobId);
     favoriteJobIds.remove(jobId);
-
 
     notifyListeners();
   }

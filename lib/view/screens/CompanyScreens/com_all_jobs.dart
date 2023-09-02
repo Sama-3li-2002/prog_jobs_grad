@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
-import 'package:prog_jobs_grad/model/CompanyModel.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +93,6 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
           ),
         ],
         title: PreferredSize(
-
           preferredSize: Size.fromHeight(30),
           child: TextField(
             controller: _searchController,
@@ -204,7 +202,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                 Container(
                                                   height:
                                                       SizeConfig.scaleHeight(
-                                                          110),
+                                                          120),
                                                   clipBehavior: Clip.antiAlias,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
@@ -308,14 +306,10 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                             .scaleWidth(3),
                                                                       ),
                                                                       TextStyleWidget(
-
-                                                                        allJobsList
-                                                                            .isNotEmpty
+                                                                        allJobsList.isNotEmpty
                                                                             ? formattedTime ??
-                                                                            ""
+                                                                                ""
                                                                             : "No Current Time",
-
-
                                                                         Colors
                                                                             .black,
                                                                         SizeConfig.scaleTextFont(
@@ -332,10 +326,11 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                                 20),
                                                                     child:
                                                                         TextStyleWidget(
-                                                                          allJobsList.isNotEmpty
-                                                                              ? allJobsList[index].current_date ??
+                                                                      allJobsList
+                                                                              .isNotEmpty
+                                                                          ? allJobsList[index].current_date ??
                                                                               ""
-                                                                              : "No Current Date",
+                                                                          : "No Current Date",
                                                                       Colors
                                                                           .black,
                                                                       SizeConfig
@@ -377,6 +372,10 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                     return NumberOfRequestsScreen(
                                                                       jobs: allJobsList[
                                                                           index],
+                                                                      com_name: companyJobsProvider
+                                                                          .JobsList[
+                                                                              index]
+                                                                          .company_name!,
                                                                     );
                                                                   }));
                                                                 },
@@ -496,7 +495,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                 Container(
                                                   height:
                                                       SizeConfig.scaleHeight(
-                                                          110),
+                                                          120),
                                                   clipBehavior: Clip.antiAlias,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
@@ -599,12 +598,10 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                             .scaleWidth(3),
                                                                       ),
                                                                       TextStyleWidget(
-                                                                        _filteredJobs
-                                                                            .isNotEmpty
+                                                                        _filteredJobs.isNotEmpty
                                                                             ? formattedTime ??
-                                                                            ""
+                                                                                ""
                                                                             : "No Current Time",
-
                                                                         Colors
                                                                             .black,
                                                                         SizeConfig.scaleTextFont(
@@ -621,10 +618,11 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                                 20),
                                                                     child:
                                                                         TextStyleWidget(
-                                                                          _filteredJobs.isNotEmpty
-                                                                              ? _filteredJobs[index].current_date ??
+                                                                      _filteredJobs
+                                                                              .isNotEmpty
+                                                                          ? _filteredJobs[index].current_date ??
                                                                               ""
-                                                                              : "No Current Date",
+                                                                          : "No Current Date",
                                                                       Colors
                                                                           .black,
                                                                       SizeConfig
@@ -666,6 +664,10 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                                     return NumberOfRequestsScreen(
                                                                       jobs: _filteredJobs[
                                                                           index],
+                                                                      com_name: companyJobsProvider
+                                                                          .JobsList[
+                                                                              index]
+                                                                          .company_name!,
                                                                     );
                                                                   }));
                                                                 },

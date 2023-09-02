@@ -88,7 +88,8 @@ class _AllJobScreenState extends State<AllJobScreen> {
           InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
+                return ProfileInfo(
+                    FirebaseAuthController.fireAuthHelper.userId());
               }));
             },
             child: Card(
@@ -213,7 +214,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                   Container(
                                                     height:
                                                         SizeConfig.scaleHeight(
-                                                            110),
+                                                            120),
                                                     clipBehavior:
                                                         Clip.antiAlias,
                                                     decoration: BoxDecoration(
@@ -323,8 +324,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                         ),
                                                                         TextStyleWidget(
                                                                           allJobsList.isNotEmpty
-                                                                              ? formattedTime ??
-                                                                              ""
+                                                                              ? formattedTime ?? ""
                                                                               : "No Current Time",
                                                                           Colors
                                                                               .black,
@@ -341,9 +341,10 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                               15),
                                                                       child:
                                                                           TextStyleWidget(
-                                                                            allJobsList.isNotEmpty
-                                                                                ? allJobsList[index].current_date ?? ""
-                                                                                : "No Current Date",
+                                                                        allJobsList.isNotEmpty
+                                                                            ? allJobsList[index].current_date ??
+                                                                                ""
+                                                                            : "No Current Date",
                                                                         Colors
                                                                             .black,
                                                                         SizeConfig.scaleTextFont(
@@ -562,6 +563,9 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                               child: Row(
                                                 children: [
                                                   Container(
+                                                    height:
+                                                        SizeConfig.scaleHeight(
+                                                            120),
                                                     clipBehavior:
                                                         Clip.antiAlias,
                                                     decoration: BoxDecoration(
@@ -671,8 +675,7 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                         ),
                                                                         TextStyleWidget(
                                                                           _filteredJobs.isNotEmpty
-                                                                              ? formattedTime ??
-                                                                              ""
+                                                                              ? formattedTime ?? ""
                                                                               : "No Current Time",
                                                                           Colors
                                                                               .black,
@@ -689,9 +692,10 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                                               15),
                                                                       child:
                                                                           TextStyleWidget(
-                                                                            _filteredJobs.isNotEmpty
-                                                                                ? _filteredJobs[index].current_date ?? ""
-                                                                                : "No Current Date",
+                                                                        _filteredJobs.isNotEmpty
+                                                                            ? _filteredJobs[index].current_date ??
+                                                                                ""
+                                                                            : "No Current Date",
                                                                         Colors
                                                                             .black,
                                                                         SizeConfig.scaleTextFont(

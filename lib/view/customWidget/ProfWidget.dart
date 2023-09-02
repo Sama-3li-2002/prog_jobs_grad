@@ -39,7 +39,11 @@ class _ProfWidgetState extends State<ProfWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return showProfPic ? _buildProfileImage() : _buildDefaultImage();
+    return users == null
+        ? CircularProgressIndicator()
+        : users!.showProfPic!
+            ? _buildProfileImage()
+            : _buildDefaultImage();
   }
 
   Widget _buildProfileImage() {

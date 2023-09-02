@@ -101,7 +101,8 @@ Widget BuildMenuItems(BuildContext context) {
               if (UserTypeScreen.type == 'programmer') {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
+                  return ProfileInfo(
+                      FirebaseAuthController.fireAuthHelper.userId());
                 }));
               } else if (UserTypeScreen.type == 'company') {
                 Navigator.of(context)
@@ -200,7 +201,7 @@ Widget BuildMenuItems(BuildContext context) {
             enabled: UserTypeScreen.type == "programmer",
             title: Row(
               children: [
-                Icon(Icons.favorite_border_outlined, color: Color(0xffCBB523)),
+                Icon(Icons.favorite, color: Color(0xffCBB523)),
                 SizedBox(width: SizeConfig.scaleWidth(10)),
                 Text("Favorites"),
               ],

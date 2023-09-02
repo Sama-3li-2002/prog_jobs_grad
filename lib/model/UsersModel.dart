@@ -8,14 +8,23 @@ class Users {
   String? specialization;
   String? about;
   bool? showProfPic;
+  String? deviceToken;
 
   String imageUrl =
       'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/profile_images%2FwithoutImagePerson.jpg?alt=media&token=f3437ef3-c44d-41d4-bdbb-9d4619d77071';
 
   Users();
 
-  Users.signup(this.username, this.email, this.password, this.phone, this.age,
-      this.specialization, this.about, this.showProfPic);
+  Users.signup(
+    this.username,
+    this.email,
+    this.password,
+    this.phone,
+    this.age,
+    this.specialization,
+    this.about,
+    this.showProfPic,
+  );
 
   Users.fromJson(Map<String, dynamic> data) {
     id = data['id'];
@@ -27,5 +36,6 @@ class Users {
     about = data['about'];
     imageUrl = data['imageUrl'];
     showProfPic = data['showProfPic'];
+    deviceToken = data['deviceToken'];
   }
 }

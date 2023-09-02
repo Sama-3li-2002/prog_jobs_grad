@@ -47,7 +47,6 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
     _specializationController = TextEditingController();
     _aboutController = TextEditingController();
 
-    users = Users();
     getUser();
   }
 
@@ -111,385 +110,396 @@ class _ProfileInfoEditState extends State<ProfileInfoEdit> {
         ),
         elevation: 0,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    shape: CircleBorder(),
-                    color: Color(0xffcbb523),
-                    child: SizedBox(
-                      width: SizeConfig.scaleWidth(150),
-                      height: SizeConfig.scaleHeight(150),
-                      child: ClipOval(
-                        child: CircleAvatar(
-                          backgroundImage: users!.imageUrl != null
-                              ? NetworkImage(users!.imageUrl!)
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: SizeConfig.scaleHeight(12),
-                    right: SizeConfig.scaleWidth(15),
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.grey[400]!,
-                          width: 1.5,
-                        ),
-                      ),
-                      child: FloatingActionButton(
-                          backgroundColor: Colors.grey.shade200,
-                          foregroundColor: Colors.grey,
-                          onPressed: () {
-                            _pickImage();
-                          },
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            color: Color(0xff4C5175),
-                            size: SizeConfig.scaleWidth(16),
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: SizeConfig.scaleHeight(10),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: SizeConfig.scaleHeight(15),
-                ),
-                child: Stack(
+      body: users == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Center(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
                   children: [
-                    Column(
+                    Stack(
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          height: SizeConfig.scaleHeight(30),
-                        ),
                         Card(
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(50),
-                                topRight: Radius.circular(50)),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: SizeConfig.scaleHeight(60),
-                              left: SizeConfig.scaleWidth(20),
-                              right: SizeConfig.scaleWidth(20),
-                            ),
-                            child: Container(
-                              width: double.infinity,
-                              child: Column(
-                                children: [
-                                  Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        "Username:",
-                                        style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.scaleTextFont(12),
-                                            color: Color(0xff4C5175),
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                    child: TextField(
-                                      controller: _usernameController,
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Color(0xffFAFAFA),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 0,
-                                            color: Colors.grey.shade600,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 1.5,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(15),
-                                  ),
-                                  Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        "E_mail:",
-                                        style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.scaleTextFont(12),
-                                            color: Color(0xff4C5175),
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                    child: TextField(
-                                      controller: _emailController,
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Color(0xffFAFAFA),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 0,
-                                            color: Colors.grey.shade600,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 1.5,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(15),
-                                  ),
-                                  Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        "Age:",
-                                        style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.scaleTextFont(12),
-                                            color: Color(0xff4C5175),
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(50),
-                                    child: TextField(
-                                      controller: _ageController,
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Color(0xffFAFAFA),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 0,
-                                            color: Colors.grey.shade500,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 1.5,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(15),
-                                  ),
-                                  Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        "Phone:",
-                                        style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.scaleTextFont(12),
-                                            color: Color(0xff4C5175),
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(50),
-                                    child: TextField(
-                                      controller: _phoneController,
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Color(0xffFAFAFA),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 0,
-                                            color: Colors.grey.shade500,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 1.5,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(15),
-                                  ),
-                                  Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        "Specialization:",
-                                        style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.scaleTextFont(12),
-                                            color: Color(0xff4C5175),
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(50),
-                                    child: TextField(
-                                      controller: _specializationController,
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Color(0xffFAFAFA),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 0,
-                                            color: Colors.grey.shade500,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 1.5,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(15),
-                                  ),
-                                  Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        "About:",
-                                        style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.scaleTextFont(12),
-                                            color: Color(0xff4C5175),
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                  SizedBox(
-                                    child: TextField(
-                                      controller: _aboutController,
-                                      keyboardType: TextInputType.text,
-                                      minLines: 2,
-                                      maxLines: 8,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Color(0xffFAFAFA),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 0,
-                                            color: Colors.grey.shade500,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            width: 1.5,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.scaleHeight(10),
-                                  ),
-                                ],
+                          clipBehavior: Clip.antiAlias,
+                          shape: CircleBorder(),
+                          color: Color(0xffcbb523),
+                          child: SizedBox(
+                            width: SizeConfig.scaleWidth(150),
+                            height: SizeConfig.scaleHeight(150),
+                            child: ClipOval(
+                              child: CircleAvatar(
+                                backgroundImage: users!.imageUrl != null
+                                    ? NetworkImage(users!.imageUrl!)
+                                    : null,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: SizedBox(
-                        width: SizeConfig.scaleWidth(65),
-                        height: SizeConfig.scaleHeight(65),
-                        child: CircleAvatar(
-                          backgroundColor: Color(0xff4C5175),
-                          radius: 50,
-                          child: IconButton(
-                            onPressed: () {
-                              updateUserProfile();
-                            },
-                            icon: Icon(
-                              Icons.check_rounded,
-                              size: SizeConfig.scaleWidth(30),
+                        Positioned(
+                          bottom: SizeConfig.scaleHeight(12),
+                          right: SizeConfig.scaleWidth(15),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.grey[400]!,
+                                width: 1.5,
+                              ),
                             ),
+                            child: FloatingActionButton(
+                                backgroundColor: Colors.grey.shade200,
+                                foregroundColor: Colors.grey,
+                                onPressed: () {
+                                  _pickImage();
+                                },
+                                child: Icon(
+                                  Icons.camera_alt_outlined,
+                                  color: Color(0xff4C5175),
+                                  size: SizeConfig.scaleWidth(16),
+                                )),
                           ),
                         ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: SizeConfig.scaleHeight(10),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: SizeConfig.scaleHeight(15),
+                      ),
+                      child: Stack(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                height: SizeConfig.scaleHeight(30),
+                              ),
+                              Card(
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(50),
+                                      topRight: Radius.circular(50)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: SizeConfig.scaleHeight(60),
+                                    left: SizeConfig.scaleWidth(20),
+                                    right: SizeConfig.scaleWidth(20),
+                                  ),
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text(
+                                              "Username:",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
+                                                  color: Color(0xff4C5175),
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(10),
+                                        ),
+                                        SizedBox(
+                                          height: 50,
+                                          child: TextField(
+                                            controller: _usernameController,
+                                            keyboardType: TextInputType.text,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Color(0xffFAFAFA),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 0,
+                                                  color: Colors.grey.shade600,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 1.5,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(15),
+                                        ),
+                                        Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Text(
+                                              "E_mail:",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
+                                                  color: Color(0xff4C5175),
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(10),
+                                        ),
+                                        SizedBox(
+                                          height: 50,
+                                          child: TextField(
+                                            controller: _emailController,
+                                            keyboardType: TextInputType.text,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Color(0xffFAFAFA),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 0,
+                                                  color: Colors.grey.shade600,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 1.5,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(10),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(15),
+                                        ),
+                                        Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Text(
+                                              "Age:",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
+                                                  color: Color(0xff4C5175),
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(10),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(50),
+                                          child: TextField(
+                                            controller: _ageController,
+                                            keyboardType: TextInputType.text,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Color(0xffFAFAFA),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 0,
+                                                  color: Colors.grey.shade500,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 1.5,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(15),
+                                        ),
+                                        Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Text(
+                                              "Phone:",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
+                                                  color: Color(0xff4C5175),
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(10),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(50),
+                                          child: TextField(
+                                            controller: _phoneController,
+                                            keyboardType: TextInputType.text,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Color(0xffFAFAFA),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 0,
+                                                  color: Colors.grey.shade500,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 1.5,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(15),
+                                        ),
+                                        Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Text(
+                                              "Specialization:",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
+                                                  color: Color(0xff4C5175),
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(10),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(50),
+                                          child: TextField(
+                                            controller:
+                                                _specializationController,
+                                            keyboardType: TextInputType.text,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Color(0xffFAFAFA),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 0,
+                                                  color: Colors.grey.shade500,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 1.5,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(15),
+                                        ),
+                                        Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Text(
+                                              "About:",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      SizeConfig.scaleTextFont(
+                                                          12),
+                                                  color: Color(0xff4C5175),
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(10),
+                                        ),
+                                        SizedBox(
+                                          child: TextField(
+                                            controller: _aboutController,
+                                            keyboardType: TextInputType.text,
+                                            minLines: 2,
+                                            maxLines: 8,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Color(0xffFAFAFA),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 0,
+                                                  color: Colors.grey.shade500,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: BorderSide(
+                                                  width: 1.5,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: SizeConfig.scaleHeight(10),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: SizedBox(
+                              width: SizeConfig.scaleWidth(65),
+                              height: SizeConfig.scaleHeight(65),
+                              child: CircleAvatar(
+                                backgroundColor: Color(0xff4C5175),
+                                radius: 50,
+                                child: IconButton(
+                                  onPressed: () {
+                                    updateUserProfile();
+                                  },
+                                  icon: Icon(
+                                    Icons.check_rounded,
+                                    size: SizeConfig.scaleWidth(30),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 

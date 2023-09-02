@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/model/Message.dart';
 import 'package:prog_jobs_grad/view/customWidget/textStyleWidget.dart';
@@ -13,6 +11,7 @@ import '../../../utils/size_config.dart';
 
 class ConversationScreen extends StatefulWidget {
   static const String id = "conversation_screen";
+
   //للمبرمج
   String? progUsername;
   String? progImage;
@@ -68,7 +67,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-       backgroundColor:  Color(0xff4C5175),
+      backgroundColor: Color(0xff4C5175),
       body: SafeArea(
         child: Stack(
           children: [
@@ -85,8 +84,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 children: [
                   Container(
                     height: SizeConfig.scaleHeight(73),
-                    color:  Color(0xff4C5175),
-                    child:  Row(
+                    color: Color(0xff4C5175),
+                    child: Row(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 15),
@@ -130,7 +129,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         TextStyleWidget(
                             UserTypeScreen.type == 'programmer'
                                 ? widget.companyUsername!
@@ -138,7 +139,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             Colors.white,
                             SizeConfig.scaleTextFont(15),
                             FontWeight.w500),
-
                       ],
                     ),
                   ),
@@ -187,7 +187,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                 String timeString = time ?? "";
                                 try {
                                   formattedTime = DateFormat('hh:mm a').format(
-                                      DateFormat('hh:mm:ss a').parse(timeString));
+                                      DateFormat('hh:mm:ss a')
+                                          .parse(timeString));
                                 } catch (e) {
                                   print("Invalid data format: $timeString");
                                   formattedTime = "Invalid time format";
@@ -248,9 +249,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                               Text(
                                                 formattedTime!,
                                                 style: TextStyle(
-                                                    color:Colors.grey,
+                                                    color: Colors.grey,
                                                     fontSize: 9,
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                             ],
                                           ),
@@ -266,104 +268,102 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       ],
                     ),
                   ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Row(
-              children: [
-          SizedBox(
-          width: SizeConfig.scaleWidth(335),
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20)),
-            elevation: 5,
-            child: Row(
-              children: [
-
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 2,
-                    left: 7,
-                    bottom: 2
-                  ),
-                  child: SizedBox(
-                    height: SizeConfig.scaleHeight(50),
-                    width: SizeConfig.scaleWidth(270),
-                    child: TextField(
-
-                        expands: true,
-                        minLines: null,
-                        maxLines: null,
-                        controller: MessagesController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: InputBorder.none,
-                          hintText: 'Messages...',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: SizeConfig.scaleTextFont(13),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide(
-                                color: Colors.white, width: 1),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(335),
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            elevation: 5,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 2, left: 7, bottom: 2),
+                                  child: SizedBox(
+                                    height: SizeConfig.scaleHeight(50),
+                                    width: SizeConfig.scaleWidth(270),
+                                    child: TextField(
+                                        expands: true,
+                                        minLines: null,
+                                        maxLines: null,
+                                        controller: MessagesController,
+                                        decoration: InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          border: InputBorder.none,
+                                          hintText: 'Messages...',
+                                          hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize:
+                                                SizeConfig.scaleTextFont(13),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            borderSide: BorderSide(
+                                                color: Colors.white, width: 1),
+                                          ),
+                                        ),
+                                        onChanged: (value) {
+                                          messageContent = value;
+                                          // setState(() {
+                                          //   color = value.isEmpty
+                                          //       ? Colors.grey
+                                          //       : Colors.white;
+                                          // });
+                                        }),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        onChanged: (value) {
-                          messageContent = value;
-                          // setState(() {
-                          //   color = value.isEmpty
-                          //       ? Colors.grey
-                          //       : Colors.white;
-                          // });
-                        }),
+                        Padding(
+                          padding: EdgeInsets.only(right: 3),
+                          child: SizedBox(
+                            width: SizeConfig.scaleWidth(50),
+                            height: SizeConfig.scaleHeight(100),
+                            child: Card(
+                              shape: CircleBorder(),
+                              elevation: 4,
+                              color: Color(0xff4C5175),
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () async {
+                                    if (messageContent!.isNotEmpty) {
+                                      FocusScope.of(context).unfocus();
+                                      await storeMessages(widget.companyId!);
+                                      MessagesController?.clear();
+                                      setState(() {
+                                        messageContent = '';
+                                        color = Colors.grey;
+                                      });
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.send,
+                                    color: color,
+                                    size: SizeConfig.scaleWidth(20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 3),
-          child: SizedBox(
-            width: SizeConfig.scaleWidth(50),
-            height: SizeConfig.scaleHeight(100),
-            child: Card(
-              shape: CircleBorder(),
-              elevation: 4,
-              color: Color(0xff4C5175),
-              child: Center(
-                child: IconButton(
-                  onPressed: () async {
-                    if (messageContent!.isNotEmpty) {
-                      FocusScope.of(context).unfocus();
-                      await storeMessages(
-                          widget.companyId!);
-                      MessagesController?.clear();
-                      setState(() {
-                        messageContent = '';
-                        color = Colors.grey;
-                      });
-                    }
-                  },
-                  icon: Icon(
-                    Icons.send,
-                    color: color,
-                    size: SizeConfig.scaleWidth(20),
-                  ),
-                ),
+                ],
               ),
             ),
-          ),),
-         ],
-          ),),
           ],
-              ),
-            ),
-    ],
         ),
       ),
     );
@@ -386,6 +386,3 @@ class _ConversationScreenState extends State<ConversationScreen> {
     );
   }
 }
-
-
-

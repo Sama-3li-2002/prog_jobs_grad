@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/providers/ArchiveProvider.dart';
 import 'package:prog_jobs_grad/providers/ComInfoProvider.dart';
 import 'package:prog_jobs_grad/providers/CompaniesJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/CompanyJobsProvider.dart';
 import 'package:prog_jobs_grad/providers/FavoriteProvider.dart';
+import 'package:prog_jobs_grad/providers/NotificationProvider.dart';
 import 'package:prog_jobs_grad/providers/NumberOfRequestsProvider.dart';
 import 'package:prog_jobs_grad/providers/RequestStatusProvider.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
@@ -38,42 +40,56 @@ import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 import 'package:provider/provider.dart';
 
+import 'model/CompanyModel.dart';
 import 'model/JobsModel.dart';
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true, badge: true, sound: true);
 
   FirebaseFirestore.instance.settings = Settings(
     persistenceEnabled: true,
   );
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<CompanyJobsProvider>(create: (context) {
-        return CompanyJobsProvider();
-      }),
-      ChangeNotifierProvider<ComInfoProvider>(create: (context) {
-        return ComInfoProvider();
-      }),
-      ChangeNotifierProvider<CompaniesJobsProvider>(create: (context) {
-        return CompaniesJobsProvider();
-      }),
-      ChangeNotifierProvider<FavoriteProvider>(create: (context) {
-        return FavoriteProvider();
-      }),
-      ChangeNotifierProvider<ArchiveProvider>(create: (context) {
-        return ArchiveProvider();
-      }),
-      ChangeNotifierProvider<NumberOfRequestsProvider>(create: (context) {
-        return NumberOfRequestsProvider();
-      }),
-      ChangeNotifierProvider<RequestStatusProvider>(create: (context) {
-        return RequestStatusProvider();
-      }),
-    ],
-    child: MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CompanyJobsProvider>(create: (context) {
+          return CompanyJobsProvider();
+        }),
+        ChangeNotifierProvider<ComInfoProvider>(create: (context) {
+          return ComInfoProvider();
+        }),
+        ChangeNotifierProvider<CompaniesJobsProvider>(create: (context) {
+          return CompaniesJobsProvider();
+        }),
+        ChangeNotifierProvider<FavoriteProvider>(create: (context) {
+          return FavoriteProvider();
+        }),
+        ChangeNotifierProvider<ArchiveProvider>(create: (context) {
+          return ArchiveProvider();
+        }),
+        ChangeNotifierProvider<NumberOfRequestsProvider>(create: (context) {
+          return NumberOfRequestsProvider();
+        }),
+        ChangeNotifierProvider<RequestStatusProvider>(create: (context) {
+          return RequestStatusProvider();
+        }),
+        ChangeNotifierProvider<NotificationProvider>(create: (context) {
+          return NotificationProvider();
+        }),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -108,27 +124,37 @@ class MyApp extends StatelessWidget {
         ComLogoScreen.id: (context) => ComLogoScreen(comName: ""),
         NumberOfRequestsScreen.id: (context) => NumberOfRequestsScreen(
               jobs: Jobs.main(),
+              com_name: '',
             ),
         ComAllJobScreen.id: (context) => ComAllJobScreen(),
         ComHomeScreen.id: (context) => ComHomeScreen(),
         AddNewJobScreen.id: (context) => AddNewJobScreen(),
         ShowMessagesCom.id: (context) => ShowMessagesCom(),
         EditJobScreen.id: (context) => EditJobScreen(jobInfo: []),
-        NotificationDetailsScreen.id: (context) => NotificationDetailsScreen(),
-        ConversationScreen.id: (context) => ConversationScreen(progUsername: "",progImage: ""),
+        NotificationDetailsScreen.id: (context) => NotificationDetailsScreen(
+              comInfo: Company(),
+              notiContent: '',
+              time: '',
+              date: '',
+            ),
+        ConversationScreen.id: (context) =>
+            ConversationScreen(progUsername: "", progImage: ""),
         AcceptPerson.id: (context) => AcceptPerson(
               progId: '',
               uploadedFileName: '',
               fileUrl: '',
               request_status: '',
               jobId: '',
+              comName: '',
+              comId: '',
+              jobs: Jobs.main(),
             ),
         Archive.id: (context) => Archive(),
         Favorite.id: (context) => Favorite(),
         CompanyInfoEdit.id: (context) => CompanyInfoEdit(),
         CompanyInfo.id: (context) => CompanyInfo(),
         ProfileInfoEdit.id: (context) => ProfileInfoEdit(),
-        ProfileInfo.id: (context) => CompanyInfo(),
+        ProfileInfo.id: (context) => ProfileInfo(''),
       },
     );
   }

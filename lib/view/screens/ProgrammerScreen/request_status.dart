@@ -56,7 +56,8 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
           InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
+                return ProfileInfo(
+                    FirebaseAuthController.fireAuthHelper.userId());
               }));
             },
             child: Card(

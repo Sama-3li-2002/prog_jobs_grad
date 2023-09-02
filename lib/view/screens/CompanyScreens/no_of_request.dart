@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/AcceptPersonScreen.dart';
 import 'package:provider/provider.dart';
 import '../../../model/JobsModel.dart';
@@ -13,8 +12,9 @@ class NumberOfRequestsScreen extends StatefulWidget {
   static const String id = "no_of_request_screen";
 
   Jobs jobs;
+  String com_name;
 
-  NumberOfRequestsScreen({required this.jobs});
+  NumberOfRequestsScreen({required this.jobs, required this.com_name});
 
   @override
   State<NumberOfRequestsScreen> createState() => _NumberOfRequestsScreenState();
@@ -46,15 +46,13 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
             ),
             color: Color(0xff4C5175),
           ),
-          title:    TextStyleWidget(
+          title: TextStyleWidget(
             'Requests',
             Color(0xffcbb523),
             SizeConfig.scaleTextFont(17),
             FontWeight.bold,
           ),
-
         ),
-
         body: Consumer<NumberOfRequestsProvider>(
             builder: (context, NoOfRequestsProvider, _) {
           return NoOfRequestsProvider.isLoading
@@ -68,28 +66,26 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           ListView.builder(
                               itemCount:
                                   NoOfRequestsProvider.submittedRequests.length,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, int index) {
-
                                 // لازالة الثواني من الوقت
                                 late String formattedTime;
-                                String timeString =  NoOfRequestsProvider.submittedRequests
-                                    [index].current_time ??
+                                String timeString = NoOfRequestsProvider
+                                        .submittedRequests[index]
+                                        .current_time ??
                                     "";
                                 try {
                                   formattedTime = DateFormat('hh:mm a').format(
-                                      DateFormat('hh:mm:ss a').parse(timeString));
+                                      DateFormat('hh:mm:ss a')
+                                          .parse(timeString));
                                 } catch (e) {
                                   print("Invalid data format: $timeString");
                                   formattedTime = "Invalid time format";
                                 }
-
-
 
                                 return Column(children: [
                                   SizedBox(
@@ -97,7 +93,7 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                   ),
                                   InkWell(
                                       onTap: () {
-                                        Navigator.of(context).push(
+                                        Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) {
                                           return AcceptPerson(
@@ -117,6 +113,11 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                             jobId: NoOfRequestsProvider
                                                 .submittedRequests[index]
                                                 .JobId!,
+                                            comName: widget.com_name,
+                                            comId: NoOfRequestsProvider
+                                                .submittedRequests[index]
+                                                .ComId!,
+                                            jobs: widget.jobs,
                                           );
                                         }));
                                       },
@@ -132,9 +133,9 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                                   SizeConfig.scaleHeight(80),
                                               width: SizeConfig.scaleWidth(360),
                                               decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  ),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
                                               margin: EdgeInsets.only(
                                                 left: SizeConfig.scaleWidth(15),
                                                 right:
@@ -184,16 +185,20 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                                                               ),
                                                               Spacer(),
                                                               Padding(
-                                                                padding:  EdgeInsets.only(right: 5.0),
-                                                                child: TextStyleWidget(
-                                                                  formattedTime
-                                                                  ,
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        right:
+                                                                            5.0),
+                                                                child:
+                                                                    TextStyleWidget(
+                                                                  formattedTime,
                                                                   Color(
                                                                       0xff4C5175),
                                                                   SizeConfig
                                                                       .scaleTextFont(
                                                                           10),
-                                                                  FontWeight.w500,
+                                                                  FontWeight
+                                                                      .w500,
                                                                 ),
                                                               )
                                                             ],
@@ -252,6 +257,4 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                     );
         }));
   }
-
-
 }

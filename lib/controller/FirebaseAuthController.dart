@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 
 import '../model/CompanyModel.dart';
+import '../view/screens/shared_screens/user_type.dart';
 import 'FirebaseFireStoreHelper.dart';
 
 class FirebaseAuthController {
@@ -12,13 +14,17 @@ class FirebaseAuthController {
 
   static FirebaseAuthController fireAuthHelper = FirebaseAuthController._();
   FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<UserCredential?> createAccount(Users users) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
               email: users.email!, password: users.password!);
+
       String id = userCredential.user!.uid;
+      users.deviceToken = await _firebaseMessaging.getToken();
+
       FirebaseFireStoreHelper.fireStoreHelper.SaveUserData(users, id);
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -139,6 +145,9 @@ class FirebaseAuthController {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+      if (UserTypeScreen.type == 'programmer') {
+        fireAuthHelper.updateDeviceToken(userCredential.user!.uid);
+      }
       LoginScreen.isSignInComplete = true;
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -239,5 +248,15 @@ class FirebaseAuthController {
 
     return isCorrect;
   }
-//-----------------------------------------------------------------------------------
+
+  Future updateDeviceToken(String userId) async {
+    String? deviceToken = await _firebaseMessaging.getToken();
+
+    if (deviceToken != null) {
+      await FirebaseFireStoreHelper.instance.firestore
+          .collection('Programmers')
+          .doc(userId)
+          .update({'deviceToken': deviceToken});
+    }
+  }
 }

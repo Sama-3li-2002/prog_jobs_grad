@@ -5,6 +5,7 @@ import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/model/Message.dart';
 
 import '../model/CompanyModel.dart';
+import '../model/Notification.dart';
 import '../model/Request.dart';
 import '../model/UsersModel.dart';
 import 'FirebaseAuthController.dart';
@@ -20,6 +21,7 @@ class FirebaseFireStoreHelper {
   final String SubmittedjobCollection = "Submitted Job";
   final String FavoriteJobsCollection = "Favorite Jobs";
   final String archiveCollection = "Archive Job";
+  final String NotificationCollection = "Notifications";
 
   static FirebaseFireStoreHelper get instance {
     return fireStoreHelper;
@@ -37,6 +39,7 @@ class FirebaseFireStoreHelper {
       "about": users.about,
       "imageUrl": users.imageUrl,
       "showProfPic": users.showProfPic,
+      "deviceToken": users.deviceToken,
     });
   }
 
@@ -94,11 +97,11 @@ class FirebaseFireStoreHelper {
 
     try {
       QuerySnapshot allCompanies =
-      await FirebaseFirestore.instance.collection(companyCollection).get();
+          await FirebaseFirestore.instance.collection(companyCollection).get();
 
       for (QueryDocumentSnapshot companyDoc in allCompanies.docs) {
         QuerySnapshot companyJobs =
-        await companyDoc.reference.collection(jobsCollection).get();
+            await companyDoc.reference.collection(jobsCollection).get();
         allJobsFromAllCompanies.addAll(companyJobs.docs);
       }
 
@@ -113,7 +116,7 @@ class FirebaseFireStoreHelper {
   Future<List<Company>> getComInfoById(String id) async {
     List<Company> comInfoList = [];
     final DocumentSnapshot<Map<String, dynamic>> comInfoSnapshot =
-    await firestore.collection(companyCollection).doc(id).get();
+        await firestore.collection(companyCollection).doc(id).get();
     if (comInfoSnapshot.exists) {
       comInfoList.add(Company.fromMap(comInfoSnapshot.data()!));
     }
@@ -133,7 +136,7 @@ class FirebaseFireStoreHelper {
     try {
       final userUid = FirebaseAuthController.fireAuthHelper.userId();
       final companyDocRef =
-      firestore.collection(companyCollection).doc(userUid);
+          firestore.collection(companyCollection).doc(userUid);
       final jobDocRef = companyDocRef.collection(jobsCollection).doc(idJob);
 
       final jobDataMap = jobs.toMap();
@@ -145,8 +148,11 @@ class FirebaseFireStoreHelper {
     }
   }
 
-  Future SaveProgInfoForSubmittedJob(Request request, String ProgId,
-      String fileUrl,) async {
+  Future SaveProgInfoForSubmittedJob(
+    Request request,
+    String ProgId,
+    String fileUrl,
+  ) async {
     firestore
         .collection(companyCollection)
         .doc(request.ComId)
@@ -220,10 +226,10 @@ class FirebaseFireStoreHelper {
     try {
       final userUid = FirebaseAuthController.fireAuthHelper.userId();
       final companyDocRef =
-      firestore.collection(companyCollection).doc(userUid);
+          firestore.collection(companyCollection).doc(userUid);
 
       documentReference =
-      await companyDocRef.collection(archiveCollection).add(jobs.toMap());
+          await companyDocRef.collection(archiveCollection).add(jobs.toMap());
       print("Job archive created successfully.");
     } catch (error) {
       print("Error Job archive : $error");
@@ -257,13 +263,13 @@ class FirebaseFireStoreHelper {
     List<Request> submittedRequests = [];
 
     QuerySnapshot<Map<String, dynamic>> submittedRequestsSnapshot =
-    await firestore
-        .collection(companyCollection)
-        .doc(FirebaseAuthController.fireAuthHelper.userId())
-        .collection(jobsCollection)
-        .doc(jobId)
-        .collection(SubmittedjobCollection)
-        .get();
+        await firestore
+            .collection(companyCollection)
+            .doc(FirebaseAuthController.fireAuthHelper.userId())
+            .collection(jobsCollection)
+            .doc(jobId)
+            .collection(SubmittedjobCollection)
+            .get();
 
     submittedRequestsSnapshot.docs.forEach((doc) {
       submittedRequests.add(Request.fromJson(doc.data()));
@@ -271,26 +277,14 @@ class FirebaseFireStoreHelper {
     return submittedRequests;
   }
 
-  Future<String> getUserImage(String userId) async {
-    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
-    await firestore.collection(userCollection).doc(userId).get();
-
-    if (userSnapshot.exists) {
-      String imageUrl = userSnapshot.data()!['imageUrl'];
-      return imageUrl;
-    } else {
-      return '';
-    }
-  }
-
   Future<Jobs> getRequestJobInfo(String jobId, String comId) async {
     DocumentSnapshot<Map<String, dynamic>> jobRequestInfoSnapshot =
-    await firestore
-        .collection(companyCollection)
-        .doc(comId)
-        .collection(jobsCollection)
-        .doc(jobId)
-        .get();
+        await firestore
+            .collection(companyCollection)
+            .doc(comId)
+            .collection(jobsCollection)
+            .doc(jobId)
+            .get();
 
     if (jobRequestInfoSnapshot.exists) {
       Jobs job = Jobs.fromMap(jobRequestInfoSnapshot.data()!);
@@ -310,7 +304,7 @@ class FirebaseFireStoreHelper {
         .get();
 
     for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
-    in submittedJobsSnapshot.docs) {
+        in submittedJobsSnapshot.docs) {
       if (docSnapshot.data() != null) {
         Map<String, dynamic> data = docSnapshot.data();
         if (data['ProgId'] == ProgId) {
@@ -337,7 +331,7 @@ class FirebaseFireStoreHelper {
         .get();
 
     for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
-    in submittedJobsSnapshot.docs) {
+        in submittedJobsSnapshot.docs) {
       await docSnapshot.reference.delete();
     }
 
@@ -347,7 +341,7 @@ class FirebaseFireStoreHelper {
         .collection(FavoriteJobsCollection)
         .get();
     for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
-    in favoriteJobsSnapshot.docs) {
+        in favoriteJobsSnapshot.docs) {
       await docSnapshot.reference.delete();
     }
     await firestore.collection(userCollection).doc(userId).delete();
@@ -361,7 +355,7 @@ class FirebaseFireStoreHelper {
         .where('comId', isEqualTo: comId)
         .get();
     for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
-    in favoriteJobsSnapshot.docs) {
+        in favoriteJobsSnapshot.docs) {
       await docSnapshot.reference.delete();
     }
 
@@ -371,7 +365,7 @@ class FirebaseFireStoreHelper {
         .collection(archiveCollection)
         .get();
     for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
-    in archiveJobsSnapshot.docs) {
+        in archiveJobsSnapshot.docs) {
       await docSnapshot.reference.delete();
     }
 
@@ -382,12 +376,12 @@ class FirebaseFireStoreHelper {
         .get();
 
     for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
-    in comJobsSnapshot.docs) {
+        in comJobsSnapshot.docs) {
       QuerySnapshot<Map<String, dynamic>> subJobsSnapshot =
-      await docSnapshot.reference.collection(SubmittedjobCollection).get();
+          await docSnapshot.reference.collection(SubmittedjobCollection).get();
 
       for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot2
-      in subJobsSnapshot.docs) {
+          in subJobsSnapshot.docs) {
         await docSnapshot2.reference.delete();
       }
 
@@ -399,23 +393,20 @@ class FirebaseFireStoreHelper {
     print("Company data deleted successfully");
   }
 
-
   // For converstation---------------------------------------------------------------------------------------
-
 
 // لارسال الرسائل من المبرمج
   Future<void> sendMessageToCompany(String companyId, Message message) async {
-    CollectionReference collection = FirebaseFirestore.instance.collection(
-        companyCollection);
+    CollectionReference collection =
+        FirebaseFirestore.instance.collection(companyCollection);
 
-
-    DocumentSnapshot<
-        Map<String, dynamic>> programmerDoc = await FirebaseFirestore.instance
-        .collection(companyCollection)
-        .doc(companyId)
-        .collection('programmersMessages')
-        .doc(message.progId)
-        .get();
+    DocumentSnapshot<Map<String, dynamic>> programmerDoc =
+        await FirebaseFirestore.instance
+            .collection(companyCollection)
+            .doc(companyId)
+            .collection('programmersMessages')
+            .doc(message.progId)
+            .get();
 
     if (!programmerDoc.exists) {
       await FirebaseFirestore.instance
@@ -450,12 +441,10 @@ class FirebaseFireStoreHelper {
     });
   }
 
-
-  Stream<List<DocumentSnapshot<
-      Map<String, dynamic>>>> getCompanyProgrammersMessagesStream(
-      String companyId) {
-    CollectionReference companyCollection = FirebaseFirestore.instance
-        .collection("Company");
+  Stream<List<DocumentSnapshot<Map<String, dynamic>>>>
+      getCompanyProgrammersMessagesStream(String companyId) {
+    CollectionReference companyCollection =
+        FirebaseFirestore.instance.collection("Company");
 
     return companyCollection
         .doc(companyId)
@@ -464,6 +453,58 @@ class FirebaseFireStoreHelper {
         .map((programmersSnapshot) => programmersSnapshot.docs);
   }
 
+  Future addNotification(
+      String ProgId, String comId, String notification_content) async {
+    await firestore
+        .collection(userCollection)
+        .doc(ProgId)
+        .collection(NotificationCollection)
+        .doc()
+        .set({
+      'notification_content': notification_content,
+      'comId': comId,
+      'ProgId': ProgId,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+  }
 
+  Future<List<NotificationClass>> getNotifications() async {
+    List<NotificationClass> notificationList = [];
+
+    try {
+      QuerySnapshot<Map<String, dynamic>> notificationSnapshot = await firestore
+          .collection(userCollection)
+          .doc(FirebaseAuthController.fireAuthHelper.userId())
+          .collection(NotificationCollection)
+          .orderBy('timestamp', descending: true)
+          .get();
+
+      if (notificationSnapshot.docs.isNotEmpty) {
+        for (QueryDocumentSnapshot<Map<String, dynamic>> doc
+            in notificationSnapshot.docs) {
+          NotificationClass notificationClass =
+              NotificationClass.fromJson(doc.data());
+          notificationList.add(notificationClass);
+        }
+      }
+    } catch (e) {
+      print("Error fetching notifications: $e");
+    }
+
+    return notificationList;
+  }
+
+  Future<String> getProgName() async {
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot = await firestore
+        .collection(userCollection)
+        .doc(FirebaseAuthController.fireAuthHelper.userId())
+        .get();
+
+    if (userSnapshot.exists) {
+      String ProgName = userSnapshot.data()!['username'];
+      return ProgName;
+    } else {
+      return '';
+    }
+  }
 }
-

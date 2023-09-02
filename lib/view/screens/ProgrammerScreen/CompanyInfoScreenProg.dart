@@ -7,7 +7,6 @@ import 'package:prog_jobs_grad/model/UsersModel.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/splash_screen.dart';
 
-
 import '../../../model/CompanyModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
@@ -22,8 +21,6 @@ class CompanyInfoScreenProg extends StatefulWidget {
 }
 
 class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -65,17 +62,26 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                           child: InkWell(
                             onTap: () async {
                               // to get current user name
-                              Users? user= await FirebaseFireStoreHelper.fireStoreHelper.getUserData(FirebaseAuthController.fireAuthHelper.userId());
+                              Users? user = await FirebaseFireStoreHelper
+                                  .fireStoreHelper
+                                  .getUserData(FirebaseAuthController
+                                      .fireAuthHelper
+                                      .userId());
 
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(builder: (context) {
-                                    return ConversationScreen(progUsername: user!.username,
-                                      companyUsername: widget.itemsComInfo[0].companyName! ,
-                                      companyId:  widget.itemsComInfo[0].id!,
-                                      programmerId: FirebaseAuthController.fireAuthHelper.userId(),
-                                      comImage: widget.itemsComInfo[0].image! ,
-                                      progImage:user!.imageUrl ,);
-                                  }));
+                                return ConversationScreen(
+                                  progUsername: user!.username,
+                                  companyUsername:
+                                      widget.itemsComInfo[0].companyName!,
+                                  companyId: widget.itemsComInfo[0].id!,
+                                  programmerId: FirebaseAuthController
+                                      .fireAuthHelper
+                                      .userId(),
+                                  comImage: widget.itemsComInfo[0].image!,
+                                  progImage: user!.imageUrl,
+                                );
+                              }));
                             },
                             child: Icon(
                               Icons.chat,
@@ -271,9 +277,9 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                   margin: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20),
-                        topLeft: Radius.circular(20),
-                      )),
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  )),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -380,8 +386,8 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                                       backgroundImage: NetworkImage(
                                         widget.itemsComInfo.isNotEmpty
                                             ? widget.itemsComInfo[0]
-                                            .managerImage ??
-                                            ""
+                                                    .managerImage ??
+                                                ""
                                             : "No  Manger Image",
                                       ),
                                     ),
@@ -393,13 +399,13 @@ class _CompanyInfoScreenProgState extends State<CompanyInfoScreenProg> {
                                           top: SizeConfig.scaleHeight(8)),
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           TextStyleWidget(
                                               widget.itemsComInfo.isNotEmpty
                                                   ? widget.itemsComInfo[0]
-                                                  .managerName ??
-                                                  ""
+                                                          .managerName ??
+                                                      ""
                                                   : "No Manger Name ",
                                               Colors.black,
                                               SizeConfig.scaleTextFont(18),

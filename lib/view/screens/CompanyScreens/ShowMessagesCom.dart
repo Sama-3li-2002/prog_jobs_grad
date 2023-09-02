@@ -10,6 +10,7 @@ import '../../customWidget/textStyleWidget.dart';
 
 class ShowMessagesCom extends StatefulWidget {
   static const String id = "show_messages_Com";
+
   const ShowMessagesCom({Key? key}) : super(key: key);
 
   @override
@@ -17,7 +18,6 @@ class ShowMessagesCom extends StatefulWidget {
 }
 
 class _ShowMessagesComState extends State<ShowMessagesCom> {
-
   @override
   void initState() {
     super.initState();
@@ -49,9 +49,9 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
           title: TextStyleWidget("Chats", Colors.white,
               SizeConfig.scaleTextFont(20), FontWeight.w500),
         ),
-        body:
-        StreamBuilder<List<DocumentSnapshot<Map<String, dynamic>>>>(
-          stream: FirebaseFireStoreHelper.fireStoreHelper.getCompanyProgrammersMessagesStream(
+        body: StreamBuilder<List<DocumentSnapshot<Map<String, dynamic>>>>(
+          stream: FirebaseFireStoreHelper.fireStoreHelper
+              .getCompanyProgrammersMessagesStream(
             FirebaseAuthController.fireAuthHelper.userId(),
           ),
           builder: (context, snapshot) {
@@ -62,14 +62,15 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
               return Text('No programmers available.');
             }
 
-            List<DocumentSnapshot<Map<String, dynamic>>> programmers = snapshot.data!;
+            List<DocumentSnapshot<Map<String, dynamic>>> programmers =
+                snapshot.data!;
 
             return FutureBuilder<List<Message>>(
               future: getLastMessages(programmers),
               builder: (context, messageSnapshot) {
-                if (messageSnapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                      child: CircularProgressIndicator());
+                if (messageSnapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
                 }
                 if (!messageSnapshot.hasData) {
                   return Text('Error fetching messages.');
@@ -81,43 +82,45 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
                   itemCount: programmers.length,
                   itemBuilder: (context, index) {
                     DocumentSnapshot<Map<String, dynamic>> programmer =
-                    programmers[index];
+                        programmers[index];
                     String senderName = programmer.get("senderName");
-                    print("the sender name is:"+ senderName);
-                    String lastMessage =
-                    lastMessages.isNotEmpty ? lastMessages[index].content : "No messages yet";
-                    print(lastMessages[index].content);print(lastMessages[index].current_time);
+                    print("the sender name is:" + senderName);
+                    String lastMessage = lastMessages.isNotEmpty
+                        ? lastMessages[index].content
+                        : "No messages yet";
+                    print(lastMessages[index].content);
+                    print(lastMessages[index].current_time);
 
                     // لازالة الثواني من الوقت
                     late String formattedTime;
-                    String timeString =  lastMessages[index].current_time ?? "";
+                    String timeString = lastMessages[index].current_time ?? "";
                     try {
-                      formattedTime = DateFormat('hh:mm a').format(DateFormat('hh:mm:ss a').parse(timeString));
+                      formattedTime = DateFormat('hh:mm a')
+                          .format(DateFormat('hh:mm:ss a').parse(timeString));
                     } catch (e) {
                       print("Invalid data format: $timeString");
                       formattedTime = "Invalid time format";
                     }
 
                     return InkWell(
-                      onTap: (){
-
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) {
-                              return ConversationScreen(companyId: FirebaseAuthController.fireAuthHelper.userId()
-                                ,programmerId:lastMessages[index].progId! ,
-                                progUsername:lastMessages[index].senderMessage! ,
-                                companyUsername:"" ,
-                                progImage:lastMessages[index].progImage!,);
-                            }));
-
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return ConversationScreen(
+                            companyId:
+                                FirebaseAuthController.fireAuthHelper.userId(),
+                            programmerId: lastMessages[index].progId!,
+                            progUsername: lastMessages[index].senderMessage!,
+                            companyUsername: "",
+                            progImage: lastMessages[index].progImage!,
+                          );
+                        }));
                       },
                       child: Padding(
-                        padding: EdgeInsetsDirectional.only(
-                            bottom: 2
-                        ),
-
+                        padding: EdgeInsetsDirectional.only(bottom: 2),
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
@@ -125,7 +128,8 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 1,
                                 blurRadius: 2,
-                                offset: Offset(0, 1), // changes position of shadow
+                                offset:
+                                    Offset(0, 1), // changes position of shadow
                               ),
                             ],
                           ),
@@ -148,16 +152,14 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
                                   ),
                                 ),
                               ),
-
                               SizedBox(width: 10),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                          top: 10
-                                      ),
+                                      padding:
+                                          EdgeInsetsDirectional.only(top: 10),
                                       child: Text(
                                         lastMessages[index].senderMessage ?? "",
                                         style: TextStyle(
@@ -180,20 +182,21 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
                                 ),
                               ),
                               Padding(
-                                padding:EdgeInsetsDirectional.only(
-                                    top: 10
-                                ),
+                                padding: EdgeInsetsDirectional.only(top: 10),
                                 child: Column(
                                   children: [
-                                    Text(formattedTime ?? "",
+                                    Text(
+                                      formattedTime ?? "",
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 10,
                                       ),
                                     ),
-                                    SizedBox(height: SizeConfig.scaleHeight(5),),
+                                    SizedBox(
+                                      height: SizeConfig.scaleHeight(5),
+                                    ),
                                     Text(
-                                      lastMessages[index].current_date?? "",
+                                      lastMessages[index].current_date ?? "",
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 10,
@@ -212,16 +215,16 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
               },
             );
           },
-        )
-    );
+        ));
   }
+
   Future<List<Message>> getLastMessages(
       List<DocumentSnapshot<Map<String, dynamic>>> programmers) async {
     List<Message> lastMessages = [];
 
     for (var programmer in programmers) {
       String programmerId = programmer.id;
-      print("the prog id:"+ programmerId);
+      print("the prog id:" + programmerId);
       String lastMessage = "No messages yet";
 
       CollectionReference messagesCollection = FirebaseFirestore.instance
@@ -237,9 +240,9 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
           .get();
 
       for (var element in messagesSnapshot.docs) {
-        lastMessages.add(Message.fromMap(element.data() as Map<String, dynamic>));
+        lastMessages
+            .add(Message.fromMap(element.data() as Map<String, dynamic>));
       }
-
     }
 
     return lastMessages;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
-import 'package:prog_jobs_grad/view/customWidget/TextFieldWidget.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/ComInfoProvider.dart';

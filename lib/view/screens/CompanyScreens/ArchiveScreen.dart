@@ -74,12 +74,11 @@ class _ArchiveState extends State<Archive> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: archiveProvider.archiveList.length,
                       itemBuilder: (BuildContext context, int index) {
-
-
                         // لازالة الثواني من الوقت
                         late String formattedTime;
                         String timeString =
-                            archiveProvider.archiveList[index].current_time ?? "";
+                            archiveProvider.archiveList[index].current_time ??
+                                "";
                         try {
                           formattedTime = DateFormat('hh:mm a').format(
                               DateFormat('hh:mm:ss a').parse(timeString));
@@ -87,8 +86,6 @@ class _ArchiveState extends State<Archive> {
                           print("Invalid data format: $timeString");
                           formattedTime = "Invalid time format";
                         }
-
-
 
                         return InkWell(
                           onTap: () {
@@ -115,7 +112,7 @@ class _ArchiveState extends State<Archive> {
                                   child: Row(
                                     children: [
                                       Container(
-                                        height: SizeConfig.scaleHeight(110),
+                                        height: SizeConfig.scaleHeight(120),
                                         clipBehavior: Clip.antiAlias,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.only(
@@ -212,12 +209,11 @@ class _ArchiveState extends State<Archive> {
                                                                           3),
                                                                 ),
                                                                 TextStyleWidget(
-
-  archiveProvider
-                                                                      .archiveList
-                                                                      .isNotEmpty
+                                                                  archiveProvider
+                                                                          .archiveList
+                                                                          .isNotEmpty
                                                                       ? formattedTime ??
-                                                                      ""
+                                                                          ""
                                                                       : "No Current Time",
                                                                   Colors.black,
                                                                   SizeConfig
@@ -235,12 +231,12 @@ class _ArchiveState extends State<Archive> {
                                                                 ),
                                                                 TextStyleWidget(
                                                                   archiveProvider
-                                                                      .archiveList
-                                                                      .isNotEmpty
+                                                                          .archiveList
+                                                                          .isNotEmpty
                                                                       ? archiveProvider
-                                                                      .archiveList[index]
-                                                                      .current_date ??
-                                                                      ""
+                                                                              .archiveList[index]
+                                                                              .current_date ??
+                                                                          ""
                                                                       : "No Current Date",
                                                                   Colors.black,
                                                                   SizeConfig
@@ -278,10 +274,13 @@ class _ArchiveState extends State<Archive> {
                                                                 builder:
                                                                     (context) {
                                                           return NumberOfRequestsScreen(
-                                                            jobs: archiveProvider
-                                                                    .archiveList[
-                                                                index],
-                                                          );
+                                                              jobs: archiveProvider
+                                                                      .archiveList[
+                                                                  index],
+                                                              com_name: archiveProvider
+                                                                  .archiveList[
+                                                                      index]
+                                                                  .company_name!);
                                                         }));
                                                       },
                                                       style: ElevatedButton

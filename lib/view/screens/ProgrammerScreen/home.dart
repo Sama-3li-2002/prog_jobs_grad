@@ -7,6 +7,7 @@ import '../../../controller/FirebaseAuthController.dart';
 import '../../../controller/FirebaseFireStoreHelper.dart';
 import '../../../model/CompanyModel.dart';
 import '../../../model/JobsModel.dart';
+import '../../../notification_service.dart';
 import '../../../providers/CompaniesJobsProvider.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/DrawerWidget.dart';
@@ -27,12 +28,18 @@ class _HomeScreenState extends State<HomeScreen> {
   int? currentIndex;
   String user_id = FirebaseAuthController.fireAuthHelper.userId();
   FirebaseFireStoreHelper firestore_helper = FirebaseFireStoreHelper.instance;
+  NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
     super.initState();
     Provider.of<CompaniesJobsProvider>(context, listen: false)
         .getAllJobsObjects();
+    notificationServices.requestNotificationPermission();
+    notificationServices.forgroundMessage();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
+    notificationServices.isTokenRefresh();
   }
 
   @override
@@ -65,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return ProfileInfo(FirebaseAuthController.fireAuthHelper.userId());
+                  return ProfileInfo(
+                      FirebaseAuthController.fireAuthHelper.userId());
                 }));
               },
               child: Card(
@@ -86,12 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xfffafafa),
       body: Consumer<CompaniesJobsProvider>(
           builder: (context, companiesJobsProvider, _) {
-
-            companiesJobsProvider.JobsList.sort(
-                    (a, b) => b.current_time!.compareTo(a.current_time!));
-            List<Jobs> newJobs = companiesJobsProvider.JobsList.length >= 2
-                ? companiesJobsProvider.JobsList.sublist(0, 2)
-                : companiesJobsProvider.JobsList;
+        companiesJobsProvider.JobsList.sort(
+            (a, b) => b.current_time!.compareTo(a.current_time!));
+        List<Jobs> newJobs = companiesJobsProvider.JobsList.length >= 2
+            ? companiesJobsProvider.JobsList.sublist(0, 2)
+            : companiesJobsProvider.JobsList;
 
         print("the job list $companiesJobsProvider.JobsList");
         return companiesJobsProvider.isLoading
@@ -198,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Container(
                                                 clipBehavior: Clip.antiAlias,
                                                 height:
-                                                    SizeConfig.scaleHeight(110),
+                                                    SizeConfig.scaleHeight(120),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.only(
@@ -260,10 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     0xffcbb523),
                                                               ),
                                                               TextStyleWidget(
-                                                                  newJobs
-                                                                          .isNotEmpty
-                                                                      ? newJobs[
-                                                                                  index]
+                                                                  newJobs.isNotEmpty
+                                                                      ? newJobs[index]
                                                                               .company_name ??
                                                                           ""
                                                                       : "No Company Name",
@@ -299,10 +304,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               3),
                                                                     ),
                                                                     TextStyleWidget(
-                                                                      newJobs
-                                                                          .isNotEmpty
+                                                                      newJobs.isNotEmpty
                                                                           ? formattedTime ??
-                                                                          ""
+                                                                              ""
                                                                           : "No Current Time",
                                                                       Colors
                                                                           .black,
@@ -321,14 +325,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               15),
                                                                   child:
                                                                       TextStyleWidget(
-
-                                                                        newJobs
-                                                                            .isNotEmpty
-                                                                            ? newJobs[index].current_date ??
+                                                                    newJobs.isNotEmpty
+                                                                        ? newJobs[index].current_date ??
                                                                             ""
-                                                                            : "No Current Date",
-
-
+                                                                        : "No Current Date",
                                                                     Colors
                                                                         .black,
                                                                     SizeConfig
@@ -590,7 +590,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Container(
                                                 height:
-                                                    SizeConfig.scaleHeight(110),
+                                                    SizeConfig.scaleHeight(120),
                                                 clipBehavior: Clip.antiAlias,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
@@ -701,10 +701,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     ),
                                                                     TextStyleWidget(
                                                                       companiesJobsProvider
-                                                                          .JobsList
-                                                                          .isNotEmpty
+                                                                              .JobsList
+                                                                              .isNotEmpty
                                                                           ? formattedTime ??
-                                                                          ""
+                                                                              ""
                                                                           : "No Current Time",
                                                                       Colors
                                                                           .black,
@@ -723,13 +723,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               15),
                                                                   child:
                                                                       TextStyleWidget(
-                                                                        companiesJobsProvider
+                                                                    companiesJobsProvider
                                                                             .JobsList
                                                                             .isNotEmpty
-                                                                            ? companiesJobsProvider.JobsList[index].current_date ??
+                                                                        ? companiesJobsProvider.JobsList[index].current_date ??
                                                                             ""
-                                                                            : "No Current Date",
-
+                                                                        : "No Current Date",
                                                                     Colors
                                                                         .black,
                                                                     SizeConfig

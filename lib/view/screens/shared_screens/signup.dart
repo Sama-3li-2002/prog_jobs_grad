@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/AddNewJobScreen.dart';
 import '../../../model/CompanyModel.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/TextFieldWidget.dart';
@@ -33,8 +32,6 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? _aboutProg;
   TextEditingController? _confirmPasswordProg;
 
-
-
   // Company Info
   TextEditingController? _emailCom;
   TextEditingController? _passwordCom;
@@ -47,7 +44,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   // visible pass
   bool _obscureText = true;
-
 
   // circular
   bool _isLoading = false;
@@ -63,9 +59,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _ageProg = TextEditingController();
     _specializationProg = TextEditingController();
     _aboutProg = TextEditingController();
-    _confirmPasswordProg= TextEditingController();
-
-
+    _confirmPasswordProg = TextEditingController();
 
     // Company Info
     _emailCom = TextEditingController();
@@ -76,7 +70,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _aboutCom = TextEditingController();
     _managerCom = TextEditingController();
     _confirmPasswordCom = TextEditingController();
-
   }
 
   @override
@@ -100,7 +93,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _addressCom?.dispose();
     _aboutCom?.dispose();
     _confirmPasswordCom?.dispose();
-
   }
 
   @override
@@ -126,7 +118,8 @@ class _SignupScreenState extends State<SignupScreen> {
         children: [
           SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
+              padding:
+                  EdgeInsets.symmetric(horizontal: SizeConfig.scaleWidth(29)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -193,8 +186,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
-                                  borderSide:
-                                      BorderSide(color: Colors.white, width: 1)),
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: 1)),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -221,7 +214,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         TextStyleWidget('confirm password', Color(0xff4C5175),
                             SizeConfig.scaleTextFont(12), FontWeight.w500),
-
                         SizedBox(
                           width: SizeConfig.scaleWidth(321),
                           height: SizeConfig.scaleHeight(48),
@@ -233,8 +225,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               filled: true,
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
-                                  borderSide:
-                                  BorderSide(color: Colors.white, width: 1)),
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: 1)),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -297,7 +289,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         TextStyleWidget('about', Color(0xff4C5175),
                             SizeConfig.scaleTextFont(12), FontWeight.w500),
-
                         SizedBox(
                           width: SizeConfig.scaleWidth(321),
                           height: SizeConfig.scaleHeight(90),
@@ -316,15 +307,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
                                   borderSide:
-                                  BorderSide(color: Colors.white, width: 1),
+                                      BorderSide(color: Colors.white, width: 1),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 )),
                           ),
                         ),
-
-
                         SizedBox(
                           height: SizeConfig.scaleHeight(20),
                         ),
@@ -396,8 +385,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
-                                  borderSide:
-                                      BorderSide(color: Colors.white, width: 1)),
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: 1)),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -424,7 +413,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         TextStyleWidget('confirm password', Color(0xff4C5175),
                             SizeConfig.scaleTextFont(12), FontWeight.w500),
-
                         SizedBox(
                           width: SizeConfig.scaleWidth(321),
                           height: SizeConfig.scaleHeight(48),
@@ -436,8 +424,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               filled: true,
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
-                                  borderSide:
-                                  BorderSide(color: Colors.white, width: 1)),
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: 1)),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -495,13 +483,11 @@ class _SignupScreenState extends State<SignupScreen> {
                               controller: _managerCom,
                               inputType: TextInputType.text,
                             )),
-
                         SizedBox(
                           height: SizeConfig.scaleHeight(20),
                         ),
                         TextStyleWidget('about', Color(0xff4C5175),
                             SizeConfig.scaleTextFont(12), FontWeight.w500),
-
                         SizedBox(
                           width: SizeConfig.scaleWidth(321),
                           height: SizeConfig.scaleHeight(90),
@@ -520,16 +506,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
                                   borderSide:
-                                  BorderSide(color: Colors.white, width: 1),
+                                      BorderSide(color: Colors.white, width: 1),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 )),
                           ),
                         ),
-
-
-
                         SizedBox(
                           height: SizeConfig.scaleHeight(20),
                         ),
@@ -584,8 +567,7 @@ class _SignupScreenState extends State<SignupScreen> {
         _ageProg!.text.isNotEmpty &&
         _specializationProg!.text.isNotEmpty &&
         _aboutProg!.text.isNotEmpty &&
-        _confirmPasswordProg!.text.isNotEmpty
-    ) {
+        _confirmPasswordProg!.text.isNotEmpty) {
       // قيود على كلمة السر
       if (password.length >= 6 &&
           password.contains(
@@ -599,22 +581,22 @@ class _SignupScreenState extends State<SignupScreen> {
             UserCredential? userCredential = await FirebaseAuthController
                 .fireAuthHelper
                 .createAccount(Users.signup(
-                _usernameProg!.text,
-                _emailProg!.text,
-                _passwordProg!.text,
-                _phoneProg!.text,
-                int.tryParse(_ageProg!.text),
-                _specializationProg!.text,
-                _aboutProg!.text,
-                true));
+                    _usernameProg!.text,
+                    _emailProg!.text,
+                    _passwordProg!.text,
+                    _phoneProg!.text,
+                    int.tryParse(_ageProg!.text),
+                    _specializationProg!.text,
+                    _aboutProg!.text,
+                    true));
 
             if (userCredential != null) {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) {
-                    return LoginScreen(
-                      userType: widget.userType,
-                    );
-                  }));
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: (context) {
+                return LoginScreen(
+                  userType: widget.userType,
+                );
+              }));
             }
           } else {
             setState(() {
@@ -629,8 +611,7 @@ class _SignupScreenState extends State<SignupScreen> {
               fontSize: 16.0,
             );
           }
-        }
-        else {
+        } else {
           setState(() {
             _isLoading = false;
           });
@@ -656,8 +637,7 @@ class _SignupScreenState extends State<SignupScreen> {
           fontSize: 16.0,
         );
       }
-    }
-      else {
+    } else {
       setState(() {
         _isLoading = false;
       });
@@ -688,13 +668,11 @@ class _SignupScreenState extends State<SignupScreen> {
         _managerCom!.text.isNotEmpty &&
         _aboutCom!.text.isNotEmpty &&
         _confirmPasswordCom!.text.isNotEmpty) {
-
       // قيود على كلمة السر
       if (password.length >= 6 &&
           password.contains(
               RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
-
-        if(_passwordCom!.text == _confirmPasswordCom!.text) {
+        if (_passwordCom!.text == _confirmPasswordCom!.text) {
           // قيود على رقم الهاتف
           if (phoneNumber.length == 10 &&
               phoneNumber.startsWith('05') &&
@@ -714,12 +692,12 @@ class _SignupScreenState extends State<SignupScreen> {
               'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
             ));
             if (userCredential != null) {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) {
-                    return ComLogoScreen(
-                      comName: _companyNameCom!.text,
-                    );
-                  }));
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: (context) {
+                return ComLogoScreen(
+                  comName: _companyNameCom!.text,
+                );
+              }));
             }
           } else {
             setState(() {
@@ -734,7 +712,7 @@ class _SignupScreenState extends State<SignupScreen> {
               fontSize: 16.0,
             );
           }
-        } else{
+        } else {
           setState(() {
             _isLoading = false;
           });
@@ -747,8 +725,7 @@ class _SignupScreenState extends State<SignupScreen> {
             fontSize: 16.0,
           );
         }
-        }
-      else {
+      } else {
         setState(() {
           _isLoading = false;
         });
