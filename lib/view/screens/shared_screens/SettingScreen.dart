@@ -131,16 +131,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ],
                       ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.scaleWidth(20),
-                          vertical: SizeConfig.scaleHeight(10)),
-                      child: buildPrivacyOptionRow(
-                          "Receive notifications",
-                          recNot,
-                          (value) =>
-                              _handleSwitchChange(value, '$userId-recNot')),
-                    ),
+
                   ],
                 ),
               ),

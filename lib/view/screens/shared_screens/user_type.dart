@@ -36,7 +36,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(77)),
+                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(85)),
                     ),
                     TextStyleWidget(
                       'LOG IN AS ...',
@@ -97,7 +97,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                             children: [
                               Image.asset(
                                 'assets/images/programmer.jpg',
-                                height: SizeConfig.scaleHeight(151),
+                                height: SizeConfig.scaleHeight(230),
                                 width: SizeConfig.scaleWidth(319),
                                 fit: BoxFit.fill,
                                 color: Colors.black.withOpacity(0.5),
@@ -160,7 +160,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                             children: [
                               Image.asset(
                                 'assets/images/company.jpg',
-                                height: SizeConfig.scaleHeight(151),
+                                height: SizeConfig.scaleHeight(230),
                                 width: SizeConfig.scaleWidth(319),
                                 fit: BoxFit.fill,
                                 color: Colors.black.withOpacity(0.5),
@@ -177,45 +177,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return LoginScreen(
-                            userType: '',
-                          );
-                        }));
-                      },
-                      child: Center(
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                              vertical: SizeConfig.scaleHeight(10)),
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/admin.jpg',
-                                height: SizeConfig.scaleHeight(151),
-                                width: SizeConfig.scaleWidth(319),
-                                fit: BoxFit.fill,
-                                color: Colors.black.withOpacity(0.5),
-                                colorBlendMode: BlendMode.darken,
-                              ),
-                              TextStyleWidget(
-                                'Admin',
-                                Colors.white,
-                                SizeConfig.scaleTextFont(20),
-                                FontWeight.bold,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+
                   ],
                 ),
               ),

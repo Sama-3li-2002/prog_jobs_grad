@@ -366,25 +366,96 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                       color: Color(
                                                           0xffcbb523)),
                                                   onPressed: () async {
-                                                    setState(() {
-                                                      isPressedList[index] =
-                                                      !isPressedList[
-                                                      index];
-                                                    });
-                                                    await archiveJobs(
-                                                        companyJobsProvider
-                                                            .JobsList
-                                                            .elementAt(
-                                                            index));
-                                                    delete(companyJobsProvider
-                                                        .JobsList
-                                                        .elementAt(index)
-                                                        .job_id!);
-                                                    setState(() {
-                                                      companyJobsProvider
-                                                          .JobsList
-                                                          .removeAt(index);
-                                                    });
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext context) {
+                                                        return Dialog(
+                                                          shape: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.circular(16.0),
+                                                          ),
+                                                          elevation: 0,
+                                                          backgroundColor: Colors.transparent,
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                              color: Colors.white,
+                                                              borderRadius: BorderRadius.circular(16.0),
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisSize: MainAxisSize.min,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: EdgeInsets.all(16.0),
+                                                                  child: Text(
+                                                                    "Archive Job",
+                                                                    style: TextStyle(
+                                                                      fontSize: 20,
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Divider(),
+                                                                Padding(
+                                                                  padding: EdgeInsets.all(16.0),
+                                                                  child: Text(
+                                                                    "Are you sure you archive this job?",
+                                                                    style: TextStyle(fontSize: 16),
+                                                                  ),
+                                                                ),
+                                                                ButtonBar(
+                                                                  alignment: MainAxisAlignment.end,
+                                                                  children: [
+                                                                    TextButton(
+                                                                      onPressed: () async {
+                                                                        setState(() {
+                                                                          isPressedList[index] =
+                                                                          !isPressedList[
+                                                                          index];
+                                                                        });
+                                                                        await archiveJobs(
+                                                                            companyJobsProvider
+                                                                                .JobsList
+                                                                                .elementAt(
+                                                                                index));
+                                                                        delete(companyJobsProvider
+                                                                            .JobsList
+                                                                            .elementAt(index)
+                                                                            .job_id!);
+                                                                        setState(() {
+                                                                          companyJobsProvider
+                                                                              .JobsList
+                                                                              .removeAt(index);
+                                                                        });
+                                                                        Navigator.pop(context);
+
+                                                                      },
+                                                                      child: Text(
+                                                                        "Yes",
+                                                                        style: TextStyle(
+                                                                          color: Colors.red,
+                                                                          fontSize: 16,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed: () {
+                                                                        Navigator.of(context).pop();
+                                                                      },
+                                                                      child: Text(
+                                                                        "No",
+                                                                        style: TextStyle(
+                                                                          color: Colors.blue,
+                                                                          fontSize: 16,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
                                                   },
                                                 )
                                               ],
@@ -680,28 +751,95 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                           color: Color(
                                                               0xffcbb523)),
                                                       onPressed: () async {
-                                                        setState(() {
-                                                          isPressedList[
-                                                          index] =
-                                                          !isPressedList[
-                                                          index];
-                                                        });
-                                                        await archiveJobs(
-                                                            companyJobsProvider
-                                                                .JobsList
-                                                                .elementAt(
-                                                                index));
-                                                        delete(companyJobsProvider
-                                                            .JobsList
-                                                            .elementAt(
-                                                            index)
-                                                            .job_id!);
-                                                        setState(() {
-                                                          companyJobsProvider
-                                                              .JobsList
-                                                              .removeAt(
-                                                              index);
-                                                        });
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext context) {
+                                                            return Dialog(
+                                                              shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(16.0),
+                                                              ),
+                                                              elevation: 0,
+                                                              backgroundColor: Colors.transparent,
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                  color: Colors.white,
+                                                                  borderRadius: BorderRadius.circular(16.0),
+                                                                ),
+                                                                child: Column(
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsets.all(16.0),
+                                                                      child: Text(
+                                                                        "Archive Job",
+                                                                        style: TextStyle(
+                                                                          fontSize: 20,
+                                                                          fontWeight: FontWeight.bold,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Divider(),
+                                                                    Padding(
+                                                                      padding: EdgeInsets.all(16.0),
+                                                                      child: Text(
+                                                                        "Are you sure you archive this job?",
+                                                                        style: TextStyle(fontSize: 16),
+                                                                      ),
+                                                                    ),
+                                                                    ButtonBar(
+                                                                      alignment: MainAxisAlignment.end,
+                                                                      children: [
+                                                                        TextButton(
+                                                                          onPressed: () async {
+                                                                            setState(() {
+                                                                              isPressedList[index] =
+                                                                              !isPressedList[
+                                                                              index];
+                                                                            });
+                                                                            await archiveJobs(
+                                                                                companyJobsProvider
+                                                                                    .JobsList
+                                                                                    .elementAt(
+                                                                                    index));
+                                                                            delete(companyJobsProvider
+                                                                                .JobsList
+                                                                                .elementAt(index)
+                                                                                .job_id!);
+                                                                            setState(() {
+                                                                              companyJobsProvider
+                                                                                  .JobsList
+                                                                                  .removeAt(index);
+                                                                            });
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                          child: Text(
+                                                                            "Yes",
+                                                                            style: TextStyle(
+                                                                              color: Colors.red,
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        TextButton(
+                                                                          onPressed: () {
+                                                                            Navigator.of(context).pop();
+                                                                          },
+                                                                          child: Text(
+                                                                            "No",
+                                                                            style: TextStyle(
+                                                                              color: Colors.blue,
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
                                                       },
                                                     )
                                                   ],
