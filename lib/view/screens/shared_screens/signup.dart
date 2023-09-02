@@ -31,6 +31,9 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? _ageProg;
   TextEditingController? _specializationProg;
   TextEditingController? _aboutProg;
+  TextEditingController? _confirmPasswordProg;
+
+
 
   // Company Info
   TextEditingController? _emailCom;
@@ -40,6 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? _addressCom;
   TextEditingController? _aboutCom;
   TextEditingController? _managerCom;
+  TextEditingController? _confirmPasswordCom;
 
   // visible pass
   bool _obscureText = true;
@@ -59,6 +63,9 @@ class _SignupScreenState extends State<SignupScreen> {
     _ageProg = TextEditingController();
     _specializationProg = TextEditingController();
     _aboutProg = TextEditingController();
+    _confirmPasswordProg= TextEditingController();
+
+
 
     // Company Info
     _emailCom = TextEditingController();
@@ -68,6 +75,8 @@ class _SignupScreenState extends State<SignupScreen> {
     _addressCom = TextEditingController();
     _aboutCom = TextEditingController();
     _managerCom = TextEditingController();
+    _confirmPasswordCom = TextEditingController();
+
   }
 
   @override
@@ -81,6 +90,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _ageProg?.dispose();
     _specializationProg?.dispose();
     _aboutProg?.dispose();
+    _confirmPasswordProg?.dispose();
 
     // Company Info
     _emailCom?.dispose();
@@ -89,6 +99,8 @@ class _SignupScreenState extends State<SignupScreen> {
     _phoneCom?.dispose();
     _addressCom?.dispose();
     _aboutCom?.dispose();
+    _confirmPasswordCom?.dispose();
+
   }
 
   @override
@@ -183,6 +195,46 @@ class _SignupScreenState extends State<SignupScreen> {
                                   borderRadius: BorderRadius.circular(5),
                                   borderSide:
                                       BorderSide(color: Colors.white, width: 1)),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureText
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: _obscureText
+                                      ? Color(0xffcbb523)
+                                      : Color(0xffcbb523),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
+                        TextStyleWidget('confirm password', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(321),
+                          height: SizeConfig.scaleHeight(48),
+                          child: TextField(
+                            controller: _confirmPasswordProg,
+                            obscureText: _obscureText,
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide:
+                                  BorderSide(color: Colors.white, width: 1)),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -370,6 +422,46 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizedBox(
                           height: SizeConfig.scaleHeight(20),
                         ),
+                        TextStyleWidget('confirm password', Color(0xff4C5175),
+                            SizeConfig.scaleTextFont(12), FontWeight.w500),
+
+                        SizedBox(
+                          width: SizeConfig.scaleWidth(321),
+                          height: SizeConfig.scaleHeight(48),
+                          child: TextField(
+                            controller: _confirmPasswordCom,
+                            obscureText: _obscureText,
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide:
+                                  BorderSide(color: Colors.white, width: 1)),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureText
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: _obscureText
+                                      ? Color(0xffcbb523)
+                                      : Color(0xffcbb523),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.scaleHeight(20),
+                        ),
                         TextStyleWidget('phone', Color(0xff4C5175),
                             SizeConfig.scaleTextFont(12), FontWeight.w500),
                         SizedBox(
@@ -491,41 +583,59 @@ class _SignupScreenState extends State<SignupScreen> {
         _phoneProg!.text.isNotEmpty &&
         _ageProg!.text.isNotEmpty &&
         _specializationProg!.text.isNotEmpty &&
-        _aboutProg!.text.isNotEmpty) {
+        _aboutProg!.text.isNotEmpty &&
+        _confirmPasswordProg!.text.isNotEmpty
+    ) {
       // قيود على كلمة السر
       if (password.length >= 6 &&
           password.contains(
               RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
-        // قيود على رقم الهاتف
-        if (phoneNumber.length == 10 &&
-            phoneNumber.startsWith('05') &&
-            int.tryParse(phoneNumber) != null &&
-            !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-          UserCredential? userCredential = await FirebaseAuthController
-              .fireAuthHelper
-              .createAccount(Users.signup(
-                  _usernameProg!.text,
-                  _emailProg!.text,
-                  _passwordProg!.text,
-                  _phoneProg!.text,
-                  int.tryParse(_ageProg!.text),
-                  _specializationProg!.text,
-                  _aboutProg!.text,
-                  true));
+        if (_passwordProg!.text == _confirmPasswordProg!.text) {
+          // قيود على رقم الهاتف
+          if (phoneNumber.length == 10 &&
+              phoneNumber.startsWith('05') &&
+              int.tryParse(phoneNumber) != null &&
+              !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+            UserCredential? userCredential = await FirebaseAuthController
+                .fireAuthHelper
+                .createAccount(Users.signup(
+                _usernameProg!.text,
+                _emailProg!.text,
+                _passwordProg!.text,
+                _phoneProg!.text,
+                int.tryParse(_ageProg!.text),
+                _specializationProg!.text,
+                _aboutProg!.text,
+                true));
 
-          if (userCredential != null) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-              return LoginScreen(
-                userType: widget.userType,
-              );
-            }));
+            if (userCredential != null) {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) {
+                    return LoginScreen(
+                      userType: widget.userType,
+                    );
+                  }));
+            }
+          } else {
+            setState(() {
+              _isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "Please enter a valid phone number",
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
           }
-        } else {
+        }
+        else {
           setState(() {
             _isLoading = false;
           });
           Fluttertoast.showToast(
-            msg: "Please enter a valid phone number",
+            msg: "the confirm Password is worng",
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
@@ -546,7 +656,8 @@ class _SignupScreenState extends State<SignupScreen> {
           fontSize: 16.0,
         );
       }
-    } else {
+    }
+      else {
       setState(() {
         _isLoading = false;
       });
@@ -575,42 +686,60 @@ class _SignupScreenState extends State<SignupScreen> {
         _phoneCom!.text.isNotEmpty &&
         _addressCom!.text.isNotEmpty &&
         _managerCom!.text.isNotEmpty &&
-        _aboutCom!.text.isNotEmpty) {
+        _aboutCom!.text.isNotEmpty &&
+        _confirmPasswordCom!.text.isNotEmpty) {
+
       // قيود على كلمة السر
       if (password.length >= 6 &&
           password.contains(
               RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$'))) {
-        // قيود على رقم الهاتف
-        if (phoneNumber.length == 10 &&
-            phoneNumber.startsWith('05') &&
-            int.tryParse(phoneNumber) != null &&
-            !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-          UserCredential? userCredential = await FirebaseAuthController
-              .fireAuthHelper
-              .createComAccount(Company.signUP(
-            _companyNameCom!.text,
-            _emailCom!.text,
-            _passwordCom!.text,
-            _phoneCom!.text,
-            _addressCom!.text,
-            _managerCom!.text,
-            _aboutCom!.text,
-            'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=c072186c-21be-41be-8ade-46812dad6f81',
-            'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
-          ));
-          if (userCredential != null) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-              return ComLogoScreen(
-                comName: _companyNameCom!.text,
-              );
-            }));
+
+        if(_passwordCom!.text == _confirmPasswordCom!.text) {
+          // قيود على رقم الهاتف
+          if (phoneNumber.length == 10 &&
+              phoneNumber.startsWith('05') &&
+              int.tryParse(phoneNumber) != null &&
+              !phoneNumber.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+            UserCredential? userCredential = await FirebaseAuthController
+                .fireAuthHelper
+                .createComAccount(Company.signUP(
+              _companyNameCom!.text,
+              _emailCom!.text,
+              _passwordCom!.text,
+              _phoneCom!.text,
+              _addressCom!.text,
+              _managerCom!.text,
+              _aboutCom!.text,
+              'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_images%2FwithoutImageCompany.png?alt=media&token=c072186c-21be-41be-8ade-46812dad6f81',
+              'https://firebasestorage.googleapis.com/v0/b/prog-jobs-grad.appspot.com/o/com_manager_images%2FwithoutImagePerson.jpg?alt=media&token=e8b42862-f9ff-49e8-aaf2-75b4bf13f104',
+            ));
+            if (userCredential != null) {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) {
+                    return ComLogoScreen(
+                      comName: _companyNameCom!.text,
+                    );
+                  }));
+            }
+          } else {
+            setState(() {
+              _isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "Please enter a valid phone number",
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
           }
-        } else {
+        } else{
           setState(() {
             _isLoading = false;
           });
           Fluttertoast.showToast(
-            msg: "Please enter a valid phone number",
+            msg: "the confirm Password is worng",
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
@@ -618,7 +747,8 @@ class _SignupScreenState extends State<SignupScreen> {
             fontSize: 16.0,
           );
         }
-      } else {
+        }
+      else {
         setState(() {
           _isLoading = false;
         });

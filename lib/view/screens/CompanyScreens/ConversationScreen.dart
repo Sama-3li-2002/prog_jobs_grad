@@ -68,13 +68,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
+      appBar:
+      AppBar(
         backgroundColor: Color(0xff4C5175),
         elevation: 0,
         leading: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 3.0),
+              padding: EdgeInsets.only(left: 3),
               child: InkWell(
                 onTap: () {
                   Navigator.pop(context);
@@ -125,6 +126,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
             SizeConfig.scaleTextFont(15),
             FontWeight.w500),
       ),
+
       body: Stack(
         children: [
           Container(
@@ -379,3 +381,78 @@ class _ConversationScreenState extends State<ConversationScreen> {
     );
   }
 }
+
+
+
+
+
+//
+// AppBar(
+// backgroundColor: Color(0xff4C5175),
+// automaticallyImplyLeading: false,
+// elevation: 0,
+// // تعيين العناصر داخل FlexibleSpaceBar
+// flexibleSpace: FlexibleSpaceBar(
+// title: TextStyleWidget(
+// UserTypeScreen.type == 'programmer'
+// ? widget.companyUsername!
+// : widget.progUsername!,
+// Colors.white,
+// SizeConfig.scaleTextFont(15),
+// FontWeight.w500),
+//
+// ),
+// // تعيين العناصر داخل bottom
+// bottom: PreferredSize(
+// preferredSize: Size.fromHeight(2),
+// child: Container(
+// alignment: Alignment.center,
+// child: Row(
+// children: [
+// Padding(
+// padding: EdgeInsets.only(left: 10),
+// child: InkWell(
+// onTap: () {
+// Navigator.pop(context);
+// },
+// child: Icon(
+// Icons.arrow_back_ios,
+// size: 15,
+// color: Color(0xffF5F5F5),
+// ),
+// ),
+// ),
+// Card(
+// clipBehavior: Clip.antiAlias,
+// shape: CircleBorder(),
+// elevation: 4,
+// color: Color(0xffcbb523),
+// child: SizedBox(
+// width: 30,
+// height: 30,
+// child: ClipOval(
+// child: InkWell(
+// onTap: () {
+// if (UserTypeScreen.type == 'company') {
+// Navigator.of(context).push(
+// MaterialPageRoute(builder: (context) {
+// return ProfileInfo(widget.programmerId);
+// }),
+// );
+// }
+// },
+// child: Image.network(
+// UserTypeScreen.type == 'programmer'
+// ? widget.comImage!
+// : widget.progImage!,
+// fit: BoxFit.cover,
+// ),
+// ),
+// ),
+// ),
+// ),
+// ],
+// ),
+// ),
+// ),
+// )
