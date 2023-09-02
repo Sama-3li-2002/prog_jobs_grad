@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
+import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/CompanyModel.dart';
@@ -42,6 +43,10 @@ class _FavoriteState extends State<Favorite> {
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: (context) {
+                return HomeScreen();
+              }));
             },
             icon: Icon(
               Icons.arrow_back_ios,
