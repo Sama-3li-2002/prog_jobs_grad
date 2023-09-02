@@ -85,134 +85,134 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
                     print("the sender name is:"+ senderName);
                     String lastMessage =
                     lastMessages.isNotEmpty ? lastMessages[index].content : "No messages yet";
-                     print(lastMessages[index].content);print(lastMessages[index].current_time);
+                    print(lastMessages[index].content);print(lastMessages[index].current_time);
 
-                // لازالة الثواني من الوقت
-                  late String formattedTime;
-                  String timeString =  lastMessages[index].current_time ?? "";
-                  try {
-                    formattedTime = DateFormat('hh:mm a').format(DateFormat('hh:mm:ss a').parse(timeString));
-                  } catch (e) {
-                    print("Invalid data format: $timeString");
-                    formattedTime = "Invalid time format";
-                  }
+                    // لازالة الثواني من الوقت
+                    late String formattedTime;
+                    String timeString =  lastMessages[index].current_time ?? "";
+                    try {
+                      formattedTime = DateFormat('hh:mm a').format(DateFormat('hh:mm:ss a').parse(timeString));
+                    } catch (e) {
+                      print("Invalid data format: $timeString");
+                      formattedTime = "Invalid time format";
+                    }
 
-                  return InkWell(
-                    onTap: (){
+                    return InkWell(
+                      onTap: (){
 
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) {
-                            return ConversationScreen(companyId: FirebaseAuthController.fireAuthHelper.userId()
-                              ,programmerId:lastMessages[index].progId! ,
-                               progUsername:lastMessages[index].senderMessage! ,
-                              companyUsername:"" ,
-                              progImage:lastMessages[index].progImage!,);
-                          }));
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return ConversationScreen(companyId: FirebaseAuthController.fireAuthHelper.userId()
+                                ,programmerId:lastMessages[index].progId! ,
+                                progUsername:lastMessages[index].senderMessage! ,
+                                companyUsername:"" ,
+                                progImage:lastMessages[index].progImage!,);
+                            }));
 
-                    },
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.only(
-                        bottom: 2
-                      ),
-
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 2,
-                              offset: Offset(0, 1), // changes position of shadow
-                            ),
-                          ],
+                      },
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.only(
+                            bottom: 2
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Card(
-                              clipBehavior: Clip.antiAlias,
-                              shape: CircleBorder(),
-                              color: Color(0xffcbb523),
-                              child: SizedBox(
-                                width: 45,
-                                height: 45,
-                                child: ClipOval(
-                                  child: Image.network(
-                                    lastMessages[index].progImage!,
-                                    fit: BoxFit.cover,
+
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 2,
+                                offset: Offset(0, 1), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Card(
+                                clipBehavior: Clip.antiAlias,
+                                shape: CircleBorder(),
+                                color: Color(0xffcbb523),
+                                child: SizedBox(
+                                  width: 45,
+                                  height: 45,
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      lastMessages[index].progImage!,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
 
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.only(
-                                      top: 10
-                                    ),
-                                    child: Text(
-                                      lastMessages[index].senderMessage ?? "",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.only(
+                                          top: 10
+                                      ),
+                                      child: Text(
+                                        lastMessages[index].senderMessage ?? "",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: 3),
-                                  Text(
-                                    lastMessages[index].content ?? "",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 12,
+                                    SizedBox(height: 3),
+                                    Text(
+                                      lastMessages[index].content ?? "",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding:EdgeInsetsDirectional.only(
-                                top: 10
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(formattedTime ?? "",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 10,
+                              Padding(
+                                padding:EdgeInsetsDirectional.only(
+                                    top: 10
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(formattedTime ?? "",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 10,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: SizeConfig.scaleHeight(5),),
-                                  Text(
-                                    lastMessages[index].current_date?? "",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 10,
+                                    SizedBox(height: SizeConfig.scaleHeight(5),),
+                                    Text(
+                                      lastMessages[index].current_date?? "",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 10,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
                   },
                 );
               },
             );
           },
         )
-        );
+    );
   }
   Future<List<Message>> getLastMessages(
       List<DocumentSnapshot<Map<String, dynamic>>> programmers) async {
@@ -235,9 +235,9 @@ class _ShowMessagesComState extends State<ShowMessagesCom> {
           .limit(1)
           .get();
 
-        for (var element in messagesSnapshot.docs) {
-          lastMessages.add(Message.fromMap(element.data() as Map<String, dynamic>));
-        }
+      for (var element in messagesSnapshot.docs) {
+        lastMessages.add(Message.fromMap(element.data() as Map<String, dynamic>));
+      }
 
     }
 
