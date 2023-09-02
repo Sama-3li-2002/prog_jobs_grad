@@ -4,6 +4,7 @@ import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'login.dart';
@@ -36,12 +37,12 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(77)),
+                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(60)),
                     ),
                     TextStyleWidget(
                       'LOG IN AS ...',
                       Color(0xffcbb523),
-                      SizeConfig.scaleTextFont(22),
+                      SizeConfig.scaleTextFont(18),
                       FontWeight.bold,
                     ),
                     TextStyleWidget(
@@ -177,45 +178,86 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return LoginScreen(
-                            userType: '',
-                          );
-                        }));
-                      },
-                      child: Center(
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                              vertical: SizeConfig.scaleHeight(10)),
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/admin.jpg',
-                                height: SizeConfig.scaleHeight(151),
-                                width: SizeConfig.scaleWidth(319),
-                                fit: BoxFit.fill,
-                                color: Colors.black.withOpacity(0.5),
-                                colorBlendMode: BlendMode.darken,
-                              ),
-                              TextStyleWidget(
-                                'Admin',
-                                Colors.white,
-                                SizeConfig.scaleTextFont(20),
-                                FontWeight.bold,
-                              ),
-                            ],
+                    SizedBox(height: SizeConfig.scaleHeight(10),),
+                    TextStyleWidget(
+                      'SIGN UP AS ...',
+                      Color(0xffcbb523),
+                      SizeConfig.scaleTextFont(18),
+                      FontWeight.bold,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return SignupScreen(userType: 'programmer');
+                            }));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/prog_signup.jpg',
+                                  height: SizeConfig.scaleHeight(200),
+                                  width: SizeConfig.scaleWidth(160),
+                                  fit: BoxFit.fill,
+                                  color: Colors.black.withOpacity(0.5),
+                                  colorBlendMode: BlendMode.darken,
+                                ),
+                                TextStyleWidget(
+                                  'Programmer',
+                                  Colors.white,
+                                  SizeConfig.scaleTextFont(20),
+                                  FontWeight.bold,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                        SizedBox(width: SizeConfig.scaleWidth(8),),
+                        InkWell(
+                          onTap: (){
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return SignupScreen(userType: 'company');
+                            }));
+                          },
+                          child: Container (
+                            margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/com_signup.jpg',
+                                  height: SizeConfig.scaleHeight(200),
+                                  width: SizeConfig.scaleWidth(160),
+                                  fit: BoxFit.fill,
+                                  color: Colors.black.withOpacity(0.5),
+                                  colorBlendMode: BlendMode.darken,
+                                ),
+                                TextStyleWidget(
+                                  'Company',
+                                  Colors.white,
+                                  SizeConfig.scaleTextFont(20),
+                                  FontWeight.bold,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
