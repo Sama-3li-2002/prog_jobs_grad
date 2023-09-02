@@ -68,300 +68,303 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar:
-      AppBar(
-        backgroundColor: Color(0xff4C5175),
-        elevation: 0,
-        leading: Row(
+
+      body: SafeArea(
+        child: Stack(
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: 3),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  size: 15,
-                  color: Color(0xffF5F5F5),
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/chatBackground.jpg"),
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-            Card(
-              clipBehavior: Clip.antiAlias,
-              shape: CircleBorder(),
-              elevation: 4,
-              color: Color(0xffcbb523),
-              child: SizedBox(
-                width: 30,
-                height: 30,
-                child: ClipOval(
-                  child: InkWell(
-                    onTap: () {
-                      if (UserTypeScreen.type == 'company') {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) {
-                            return ProfileInfo(widget.programmerId);
-                          }),
-                        );
-                      }
-                    },
-                    child: Image.network(
-                      UserTypeScreen.type == 'programmer'
-                          ? widget.comImage!
-                          : widget.progImage!,
-                      fit: BoxFit.cover,
+              child: Column(
+                children: [
+                  Container(
+                    height: SizeConfig.scaleHeight(73),
+                    color:  Color(0xff4C5175),
+                    child:  Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              size: 20,
+                              color: Color(0xffF5F5F5),
+                            ),
+                          ),
+                        ),
+                        Card(
+                          clipBehavior: Clip.antiAlias,
+                          shape: CircleBorder(),
+                          elevation: 4,
+                          color: Color(0xffcbb523),
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: ClipOval(
+                              child: InkWell(
+                                onTap: () {
+                                  if (UserTypeScreen.type == 'company') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                        return ProfileInfo(widget.programmerId);
+                                      }),
+                                    );
+                                  }
+                                },
+                                child: Image.network(
+                                  UserTypeScreen.type == 'programmer'
+                                      ? widget.comImage!
+                                      : widget.progImage!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10,),
+                        TextStyleWidget(
+                            UserTypeScreen.type == 'programmer'
+                                ? widget.companyUsername!
+                                : widget.progUsername!,
+                            Colors.white,
+                            SizeConfig.scaleTextFont(15),
+                            FontWeight.w500),
+
+                      ],
                     ),
                   ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        title: TextStyleWidget(
-            UserTypeScreen.type == 'programmer'
-                ? widget.companyUsername!
-                : widget.progUsername!,
-            Colors.white,
-            SizeConfig.scaleTextFont(15),
-            FontWeight.w500),
-      ),
-
-      body: Stack(
-        children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/chatBackground.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    reverse: true,
-                    children: [
-                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream: FirebaseFirestore.instance
-                            .collection("Company")
-                            .doc(widget.companyId)
-                            .collection('programmersMessages')
-                            .doc(widget.programmerId)
-                            .collection('messages')
-                            .orderBy("current_time", descending: true)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          if (!snapshot.hasData || snapshot.data == null) {
-                            return Center(
-                              child: Text("No messages available."),
-                            );
-                          }
-                          final messagesQuery = snapshot.data!;
-                          final messagesDocs = messagesQuery.docs;
-
-                          final messages = messagesDocs
-                              .map((doc) => Message.fromMap(doc.data()))
-                              .toList();
-                          return ListView.builder(
-                            reverse: true,
-                            shrinkWrap: true,
-                            itemCount: messages.length,
-                            itemBuilder: (context, index) {
-                              final message = messages[index];
-                              final content = message.content;
-                              final time = message.current_time;
-                              final type = message.type;
-
-                              late String formattedTime;
-                              String timeString = time ?? "";
-                              try {
-                                formattedTime = DateFormat('hh:mm a').format(
-                                    DateFormat('hh:mm:ss a').parse(timeString));
-                              } catch (e) {
-                                print("Invalid data format: $timeString");
-                                formattedTime = "Invalid time format";
-                              }
-
-                              final isMe = UserTypeScreen.type == type;
-                              return Padding(
-                                padding: EdgeInsetsDirectional.only(
-                                  top: SizeConfig.scaleHeight(10),
-                                  end: isMe
-                                      ? SizeConfig.scaleWidth(10)
-                                      : SizeConfig.scaleWidth(220),
-                                  start: isMe
-                                      ? SizeConfig.scaleWidth(220)
-                                      : SizeConfig.scaleWidth(10),
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: isMe
-                                        ? Color.fromRGBO(76, 81, 117, 0.8)
-                                        : Colors.grey.shade200,
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(10),
-                                      topLeft: Radius.circular(10),
-                                      bottomLeft: isMe
-                                          ? Radius.circular(10)
-                                          : Radius.circular(0),
-                                      bottomRight: isMe
-                                          ? Radius.circular(0)
-                                          : Radius.circular(10),
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: SizeConfig.scaleHeight(10),
-                                      horizontal: SizeConfig.scaleWidth(10),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: isMe
-                                          ? CrossAxisAlignment.start
-                                          : CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(content,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500)),
-                                        SizedBox(
-                                          height: 0.5,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Spacer(),
-                                            Text(
-                                              formattedTime!,
-                                              style: TextStyle(
-                                                  color:Colors.grey,
-                                                  fontSize: 9,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                  Expanded(
+                    child: ListView(
+                      reverse: true,
+                      children: [
+                        StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          stream: FirebaseFirestore.instance
+                              .collection("Company")
+                              .doc(widget.companyId)
+                              .collection('programmersMessages')
+                              .doc(widget.programmerId)
+                              .collection('messages')
+                              .orderBy("current_time", descending: true)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
                               );
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                            }
+                            if (!snapshot.hasData || snapshot.data == null) {
+                              return Center(
+                                child: Text("No messages available."),
+                              );
+                            }
+                            final messagesQuery = snapshot.data!;
+                            final messagesDocs = messagesQuery.docs;
+
+                            final messages = messagesDocs
+                                .map((doc) => Message.fromMap(doc.data()))
+                                .toList();
+                            return ListView.builder(
+                              reverse: true,
+                              shrinkWrap: true,
+                              itemCount: messages.length,
+                              itemBuilder: (context, index) {
+                                final message = messages[index];
+                                final content = message.content;
+                                final time = message.current_time;
+                                final type = message.type;
+
+                                late String formattedTime;
+                                String timeString = time ?? "";
+                                try {
+                                  formattedTime = DateFormat('hh:mm a').format(
+                                      DateFormat('hh:mm:ss a').parse(timeString));
+                                } catch (e) {
+                                  print("Invalid data format: $timeString");
+                                  formattedTime = "Invalid time format";
+                                }
+
+                                final isMe = UserTypeScreen.type == type;
+                                return Padding(
+                                  padding: EdgeInsetsDirectional.only(
+                                    top: SizeConfig.scaleHeight(10),
+                                    end: isMe
+                                        ? SizeConfig.scaleWidth(10)
+                                        : SizeConfig.scaleWidth(220),
+                                    start: isMe
+                                        ? SizeConfig.scaleWidth(220)
+                                        : SizeConfig.scaleWidth(10),
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: isMe
+                                          ? Color.fromRGBO(76, 81, 117, 0.8)
+                                          : Colors.grey.shade200,
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                        bottomLeft: isMe
+                                            ? Radius.circular(10)
+                                            : Radius.circular(0),
+                                        bottomRight: isMe
+                                            ? Radius.circular(0)
+                                            : Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: SizeConfig.scaleHeight(10),
+                                        horizontal: SizeConfig.scaleWidth(10),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: isMe
+                                            ? CrossAxisAlignment.start
+                                            : CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(content,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500)),
+                                          SizedBox(
+                                            height: 0.5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Spacer(),
+                                              Text(
+                                                formattedTime!,
+                                                style: TextStyle(
+                                                    color:Colors.grey,
+                                                    fontSize: 9,
+                                                    fontWeight: FontWeight.w500),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Row(
+              children: [
+          SizedBox(
+          width: SizeConfig.scaleWidth(335),
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20)),
+            elevation: 5,
+            child: Row(
+              children: [
+
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 2,
+                    left: 7,
+                    bottom: 2
+                  ),
+                  child: SizedBox(
+                    height: SizeConfig.scaleHeight(50),
+                    width: SizeConfig.scaleWidth(270),
+                    child: TextField(
+
+                        expands: true,
+                        minLines: null,
+                        maxLines: null,
+                        controller: MessagesController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: InputBorder.none,
+                          hintText: 'Messages...',
+                          hintStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: SizeConfig.scaleTextFont(13),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                                color: Colors.white, width: 1),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          messageContent = value;
+                          setState(() {
+                            color = value.isEmpty
+                                ? Colors.grey
+                                : Colors.white;
+                          });
+                        }),
                   ),
                 ),
-      Positioned(
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: Row(
-            children: [
-        SizedBox(
-        width: SizeConfig.scaleWidth(335),
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20)),
-          elevation: 5,
-          child: Row(
-            children: [
-
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 2,
-                  left: 7,
-                  bottom: 2
-                ),
-                child: SizedBox(
-                  height: SizeConfig.scaleHeight(50),
-                  width: SizeConfig.scaleWidth(270),
-                  child: TextField(
-
-                      expands: true,
-                      minLines: null,
-                      maxLines: null,
-                      controller: MessagesController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: InputBorder.none,
-                        hintText: 'Messages...',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: SizeConfig.scaleTextFont(13),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(
-                              color: Colors.white, width: 1),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        messageContent = value;
-                        setState(() {
-                          color = value.isEmpty
-                              ? Colors.grey
-                              : Colors.white;
-                        });
-                      }),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      Padding(
-        padding: EdgeInsets.only(right: 3),
-        child: SizedBox(
-          width: SizeConfig.scaleWidth(50),
-          height: SizeConfig.scaleHeight(100),
-          child: Card(
-            shape: CircleBorder(),
-            elevation: 4,
-            color: Color(0xff4C5175),
-            child: Center(
-              child: IconButton(
-                onPressed: () async {
-                  if (messageContent!.isNotEmpty) {
-                    FocusScope.of(context).unfocus();
-                    await storeMessages(
-                        widget.companyId!);
-                    MessagesController?.clear();
-                    setState(() {
-                      messageContent = '';
-                      color = Colors.grey;
-                    });
-                  }
-                },
-                icon: Icon(
-                  Icons.send,
-                  color: color,
-                  size: SizeConfig.scaleWidth(20),
+        Padding(
+          padding: EdgeInsets.only(right: 3),
+          child: SizedBox(
+            width: SizeConfig.scaleWidth(50),
+            height: SizeConfig.scaleHeight(100),
+            child: Card(
+              shape: CircleBorder(),
+              elevation: 4,
+              color: Color(0xff4C5175),
+              child: Center(
+                child: IconButton(
+                  onPressed: () async {
+                    if (messageContent!.isNotEmpty) {
+                      FocusScope.of(context).unfocus();
+                      await storeMessages(
+                          widget.companyId!);
+                      MessagesController?.clear();
+                      setState(() {
+                        messageContent = '';
+                        color = Colors.grey;
+                      });
+                    }
+                  },
+                  icon: Icon(
+                    Icons.send,
+                    color: color,
+                    size: SizeConfig.scaleWidth(20),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),),
-       ],
-        ),),
-        ],
+          ),),
+         ],
+          ),),
+          ],
+              ),
             ),
-          ),
     ],
+        ),
       ),
     );
   }
@@ -383,34 +386,16 @@ class _ConversationScreenState extends State<ConversationScreen> {
 }
 
 
-
-
-
 //
+//
+// appBar:
 // AppBar(
 // backgroundColor: Color(0xff4C5175),
-// automaticallyImplyLeading: false,
 // elevation: 0,
-// // تعيين العناصر داخل FlexibleSpaceBar
-// flexibleSpace: FlexibleSpaceBar(
-// title: TextStyleWidget(
-// UserTypeScreen.type == 'programmer'
-// ? widget.companyUsername!
-// : widget.progUsername!,
-// Colors.white,
-// SizeConfig.scaleTextFont(15),
-// FontWeight.w500),
-//
-// ),
-// // تعيين العناصر داخل bottom
-// bottom: PreferredSize(
-// preferredSize: Size.fromHeight(2),
-// child: Container(
-// alignment: Alignment.center,
-// child: Row(
+// leading: Row(
 // children: [
 // Padding(
-// padding: EdgeInsets.only(left: 10),
+// padding: EdgeInsets.only(left: 3),
 // child: InkWell(
 // onTap: () {
 // Navigator.pop(context);
@@ -453,6 +438,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
 // ),
 // ],
 // ),
+// title: TextStyleWidget(
+// UserTypeScreen.type == 'programmer'
+// ? widget.companyUsername!
+// : widget.progUsername!,
+// Colors.white,
+// SizeConfig.scaleTextFont(15),
+// FontWeight.w500),
 // ),
-// ),
-// )
