@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prog_jobs_grad/providers/ArchiveProvider.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
 import 'package:provider/provider.dart';
@@ -73,6 +74,22 @@ class _ArchiveState extends State<Archive> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: archiveProvider.archiveList.length,
                       itemBuilder: (BuildContext context, int index) {
+
+
+                        // لازالة الثواني من الوقت
+                        late String formattedTime;
+                        String timeString =
+                            archiveProvider.archiveList[index].current_time ?? "";
+                        try {
+                          formattedTime = DateFormat('hh:mm a').format(
+                              DateFormat('hh:mm:ss a').parse(timeString));
+                        } catch (e) {
+                          print("Invalid data format: $timeString");
+                          formattedTime = "Invalid time format";
+                        }
+
+
+
                         return InkWell(
                           onTap: () {
                             Navigator.of(context)
@@ -98,6 +115,7 @@ class _ArchiveState extends State<Archive> {
                                   child: Row(
                                     children: [
                                       Container(
+                                        height: SizeConfig.scaleHeight(110),
                                         clipBehavior: Clip.antiAlias,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.only(
@@ -194,14 +212,13 @@ class _ArchiveState extends State<Archive> {
                                                                           3),
                                                                 ),
                                                                 TextStyleWidget(
-                                                                  archiveProvider
-                                                                          .archiveList
-                                                                          .isNotEmpty
-                                                                      ? archiveProvider
-                                                                              .archiveList[index]
-                                                                              .current_date ??
-                                                                          ""
-                                                                      : "No Current Date",
+
+  archiveProvider
+                                                                      .archiveList
+                                                                      .isNotEmpty
+                                                                      ? formattedTime ??
+                                                                      ""
+                                                                      : "No Current Time",
                                                                   Colors.black,
                                                                   SizeConfig
                                                                       .scaleTextFont(
@@ -218,13 +235,13 @@ class _ArchiveState extends State<Archive> {
                                                                 ),
                                                                 TextStyleWidget(
                                                                   archiveProvider
-                                                                          .archiveList
-                                                                          .isNotEmpty
+                                                                      .archiveList
+                                                                      .isNotEmpty
                                                                       ? archiveProvider
-                                                                              .archiveList[index]
-                                                                              .current_time ??
-                                                                          ""
-                                                                      : "No Current Time",
+                                                                      .archiveList[index]
+                                                                      .current_date ??
+                                                                      ""
+                                                                      : "No Current Date",
                                                                   Colors.black,
                                                                   SizeConfig
                                                                       .scaleTextFont(

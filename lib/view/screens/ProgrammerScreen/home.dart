@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xfffafafa),
       body: Consumer<CompaniesJobsProvider>(
           builder: (context, companiesJobsProvider, _) {
+
             companiesJobsProvider.JobsList.sort(
                     (a, b) => b.current_time!.compareTo(a.current_time!));
             List<Jobs> newJobs = companiesJobsProvider.JobsList.length >= 2

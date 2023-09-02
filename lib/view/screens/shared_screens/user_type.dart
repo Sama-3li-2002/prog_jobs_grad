@@ -36,7 +36,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(85)),
+                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(140)),
                     ),
                     TextStyleWidget(
                       'LOG IN AS ...',
@@ -83,6 +83,9 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                               .push(MaterialPageRoute(builder: (context) {
                             return LoginScreen(userType: 'programmer');
                           }));
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       },
                       child: Center(
@@ -97,7 +100,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                             children: [
                               Image.asset(
                                 'assets/images/programmer.jpg',
-                                height: SizeConfig.scaleHeight(230),
+                                height: SizeConfig.scaleHeight(160),
                                 width: SizeConfig.scaleWidth(319),
                                 fit: BoxFit.fill,
                                 color: Colors.black.withOpacity(0.5),
@@ -141,11 +144,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                               _isLoading = false;
                             });
                           }
-                        } else {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return LoginScreen(userType: 'company');
-                          }));
+
                         }
                       },
                       child: Center(
@@ -160,7 +159,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                             children: [
                               Image.asset(
                                 'assets/images/company.jpg',
-                                height: SizeConfig.scaleHeight(230),
+                                height: SizeConfig.scaleHeight(160),
                                 width: SizeConfig.scaleWidth(319),
                                 fit: BoxFit.fill,
                                 color: Colors.black.withOpacity(0.5),

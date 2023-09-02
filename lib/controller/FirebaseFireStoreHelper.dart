@@ -15,7 +15,7 @@ class FirebaseFireStoreHelper {
   static FirebaseFireStoreHelper fireStoreHelper = FirebaseFireStoreHelper._();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final String userCollection = "Programmers";
-  static final  String companyCollection = "Company";
+  static final String companyCollection = "Company";
   final String jobsCollection = "jobs";
   final String SubmittedjobCollection = "Submitted Job";
   final String FavoriteJobsCollection = "Favorite Jobs";
@@ -145,7 +145,8 @@ class FirebaseFireStoreHelper {
     }
   }
 
-  Future SaveProgInfoForSubmittedJob(Request request, String ProgId, String fileUrl,) async {
+  Future SaveProgInfoForSubmittedJob(Request request, String ProgId,
+      String fileUrl,) async {
     firestore
         .collection(companyCollection)
         .doc(request.ComId)
@@ -229,6 +230,7 @@ class FirebaseFireStoreHelper {
     }
     return documentReference!;
   }
+
   // لحذف حساب المبرمج او الشركة
   void deleteDocument(String jobsId) {
     FirebaseFirestore.instance
@@ -398,23 +400,24 @@ class FirebaseFireStoreHelper {
   }
 
 
-
   // For converstation---------------------------------------------------------------------------------------
 
 
 // لارسال الرسائل من المبرمج
-  Future<void> sendMessageToCompany(String companyId, Message message ) async {
-    CollectionReference collection = FirebaseFirestore.instance.collection(companyCollection);
+  Future<void> sendMessageToCompany(String companyId, Message message) async {
+    CollectionReference collection = FirebaseFirestore.instance.collection(
+        companyCollection);
 
 
-    DocumentSnapshot<Map<String, dynamic>> programmerDoc = await FirebaseFirestore.instance
+    DocumentSnapshot<
+        Map<String, dynamic>> programmerDoc = await FirebaseFirestore.instance
         .collection(companyCollection)
         .doc(companyId)
         .collection('programmersMessages')
         .doc(message.progId)
         .get();
 
-    if (!programmerDoc.exists ) {
+    if (!programmerDoc.exists) {
       await FirebaseFirestore.instance
           .collection(companyCollection)
           .doc(companyId)
@@ -422,10 +425,10 @@ class FirebaseFireStoreHelper {
           .doc(message.progId)
           .set({
         "senderName": message.senderMessage,
-        "current_date":message.current_date,
-        "current_time":message.current_time,
-        "progImage":message.progImage,
-        "progId":message.progId,
+        "current_date": message.current_date,
+        "current_time": message.current_time,
+        "progImage": message.progImage,
+        "progId": message.progId,
       });
     }
 
@@ -437,19 +440,22 @@ class FirebaseFireStoreHelper {
         .add({
       "senderName": message.senderMessage,
       "messageContent": message.content,
-      "current_time":message.current_time,
-      "current_date":message.current_date,
-      "progId":message.progId,
-      "comImage":message.comImage,
-      "comName":message.comName,
-      "progImage":message.progImage,
-      "type":message.type
+      "current_time": message.current_time,
+      "current_date": message.current_date,
+      "progId": message.progId,
+      "comImage": message.comImage,
+      "comName": message.comName,
+      "progImage": message.progImage,
+      "type": message.type
     });
   }
 
 
-  Stream<List<DocumentSnapshot<Map<String, dynamic>>>> getCompanyProgrammersMessagesStream(String companyId) {
-    CollectionReference companyCollection = FirebaseFirestore.instance.collection("Company");
+  Stream<List<DocumentSnapshot<
+      Map<String, dynamic>>>> getCompanyProgrammersMessagesStream(
+      String companyId) {
+    CollectionReference companyCollection = FirebaseFirestore.instance
+        .collection("Company");
 
     return companyCollection
         .doc(companyId)
@@ -457,48 +463,6 @@ class FirebaseFireStoreHelper {
         .snapshots()
         .map((programmersSnapshot) => programmersSnapshot.docs);
   }
-
-// استرجاع كل رسائل المبرمج من كل الشركات الي بعتلها مسج
-  Stream<List<DocumentSnapshot<Map<String, dynamic>>>> getAllMessagesFromAllCompaniesStream(String progId) async* {
-    final controller = StreamController<List<DocumentSnapshot<Map<String, dynamic>>>>();
-
-    try {
-      QuerySnapshot allCompanies = await FirebaseFirestore.instance.collection(companyCollection).get();
-
-      List<DocumentSnapshot<Map<String, dynamic>>> allMessagesFromAllCompanies = [];
-
-      for (QueryDocumentSnapshot<Object?> companyDoc in allCompanies.docs) {
-        // البحث داخل مجموعة "programmersMessages" للعثور على الوثائق التي تحتوي على `progId`
-        QuerySnapshot programmerMessages = await companyDoc.reference.collection("programmersMessages").get();
-
-        for (QueryDocumentSnapshot<Object?> programmerMessageDoc in programmerMessages.docs) {
-          if (programmerMessageDoc.id == progId) {
-            // البحث داخل مجموعة "messages" في هذه الوثيقة
-            QuerySnapshot messages = await programmerMessageDoc.reference.collection("messages").get();
-            allMessagesFromAllCompanies.addAll(messages.docs.cast<DocumentSnapshot<Map<String, dynamic>>>());
-          }
-        }
-      }
-
-      // إرسال البيانات عبر الـ Stream
-      controller.sink.add(allMessagesFromAllCompanies);
-    } catch (e) {
-      print("Firestore Error: $e");
-      controller.sink.addError(e);
-    }
-
-    // إغلاق الـ StreamController عند الانتهاء
-    controller.close();
-  }
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -26,7 +26,6 @@ import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationDetials
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/NotificationsScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoEditScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ProfileInfoScreen.dart';
-import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/ShowMessagesProg.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/SettingScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/SubmitJopScreen.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/all_jobs.dart';
@@ -114,7 +113,6 @@ class MyApp extends StatelessWidget {
         ComHomeScreen.id: (context) => ComHomeScreen(),
         AddNewJobScreen.id: (context) => AddNewJobScreen(),
         ShowMessagesCom.id: (context) => ShowMessagesCom(),
-        ShowMessagesProg.id: (context) => ShowMessagesProg(),
         EditJobScreen.id: (context) => EditJobScreen(jobInfo: []),
         NotificationDetailsScreen.id: (context) => NotificationDetailsScreen(),
         ConversationScreen.id: (context) => ConversationScreen(progUsername: "",progImage: ""),

@@ -34,7 +34,7 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
     return Scaffold(
         backgroundColor: Color(0xffF5F5F5),
         appBar: AppBar(
-          backgroundColor: Color(0xfffafafa),
+          backgroundColor: Color(0xffFFFFFFFF),
           elevation: 0,
           leading: IconButton(
             onPressed: () {
@@ -45,6 +45,12 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
               size: SizeConfig.scaleWidth(20),
             ),
             color: Color(0xff4C5175),
+          ),
+          title:    TextStyleWidget(
+            'Requests',
+            Color(0xffcbb523),
+            SizeConfig.scaleTextFont(17),
+            FontWeight.bold,
           ),
 
         ),
@@ -62,16 +68,7 @@ class _NumberOfRequestsScreenState extends State<NumberOfRequestsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: SizeConfig.scaleWidth(10)),
-                            child: TextStyleWidget(
-                              'Requests:',
-                              Color(0xffcbb523),
-                              SizeConfig.scaleTextFont(15),
-                              FontWeight.w500,
-                            ),
-                          ),
+
                           ListView.builder(
                               itemCount:
                                   NoOfRequestsProvider.submittedRequests.length,
