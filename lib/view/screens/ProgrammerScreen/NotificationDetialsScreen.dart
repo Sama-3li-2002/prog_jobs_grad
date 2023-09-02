@@ -61,7 +61,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.scaleHeight(65),
+                  vertical: SizeConfig.scaleHeight(60),
                   horizontal: SizeConfig.scaleWidth(10)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,13 +75,19 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                         top: SizeConfig.scaleHeight(35)),
                     child: Row(
                       children: [
-                        Image.network(
-                          widget.comInfo.image!,
-                          width: SizeConfig.scaleWidth(100),
-                          height: SizeConfig.scaleHeight(100),
+                        Card(
+                          elevation:7,
+                          child: Image.network(
+                            widget.comInfo.image!,
+                            width: SizeConfig.scaleWidth(90),
+                            height: SizeConfig.scaleHeight(80),
+                            fit: BoxFit.cover,
+                          ),
                         ),
+                        SizedBox(width: 10,),
                         Column(
                           children: [
+
                             TextStyleWidget(
                                 widget.comInfo.companyName!,
                                 Color(0xffCBB523),

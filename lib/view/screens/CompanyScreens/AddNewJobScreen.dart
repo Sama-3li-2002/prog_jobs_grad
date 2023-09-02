@@ -59,7 +59,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   void initState() {
     super.initState();
 
-    getComName();
+
 
     _job_nameTextController = TextEditingController();
     _companynameTextController =
@@ -452,9 +452,5 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
     });
   }
 
-  void getComName() async {
-    List<Company> comInfo = await FirebaseFireStoreHelper.fireStoreHelper
-        .getComInfoById(FirebaseAuthController.fireAuthHelper.userId());
-    AddNewJobScreen.companyName = comInfo.elementAt(0).companyName!;
-  }
+
 }

@@ -126,7 +126,8 @@ Widget BuildMenuItems(BuildContext context) {
               }));
             },
           ),
-        ListTile(
+        if (UserTypeScreen.type == 'company')
+          ListTile(
           title: Row(
             children: [
               Icon(Icons.message, color: Color(0xffCBB523)),
@@ -135,15 +136,11 @@ Widget BuildMenuItems(BuildContext context) {
             ],
           ),
           onTap: () {
-            if (UserTypeScreen.type == 'programmer') {
-              // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              //   return ShowMessagesProg();
-              // }));
-            } else if (UserTypeScreen.type == 'company') {
+
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return ShowMessagesCom();
               }));
-            }
+
           },
         ),
         ListTile(

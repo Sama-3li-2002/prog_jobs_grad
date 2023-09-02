@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
+import 'package:prog_jobs_grad/model/CompanyModel.dart';
 import 'package:prog_jobs_grad/model/JobsModel.dart';
 import 'package:prog_jobs_grad/view/customWidget/DrawerWidget.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/JobsCompanyDetailsScreen.dart';
@@ -31,6 +33,7 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
   @override
   void initState() {
     super.initState();
+    getComName();
     Provider.of<CompanyJobsProvider>(context, listen: false)
         .getAllJobsObjects();
   }
@@ -1003,4 +1006,10 @@ class _AdImagesState extends State<AdImages> {
       ],
     );
   }
+
+}
+void getComName() async {
+  List<Company> comInfo = await FirebaseFireStoreHelper.fireStoreHelper
+      .getComInfoById(FirebaseAuthController.fireAuthHelper.userId());
+  AddNewJobScreen.companyName = comInfo.elementAt(0).companyName!;
 }

@@ -46,14 +46,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
             color: Color(0xff4C5175),
           ),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                size: SizeConfig.scaleWidth(30),
-              ),
-              color: Color(0xff4C5175),
-            ),
             InkWell(
               onTap: () {
                 Navigator.of(context)
