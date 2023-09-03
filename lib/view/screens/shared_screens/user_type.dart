@@ -36,8 +36,20 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(top: SizeConfig.scaleHeight(60)),
+                    Stack(
+                      children: [
+                        Image.asset(
+                          'assets/images/ProgPng2.png',
+                        ),
+                        Positioned(
+                            top: SizeConfig.scaleHeight(200),
+                            left: SizeConfig.scaleWidth(120),
+                            child: TextStyleWidget(
+                                'Prog Jobs',
+                                Color(0xff4C5175),
+                                SizeConfig.scaleTextFont(30),
+                                FontWeight.bold))
+                      ],
                     ),
                     TextStyleWidget(
                       'LOG IN AS ...',
@@ -58,7 +70,8 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                         setState(() {
                           _isLoading = true;
                         });
-                        if (FirebaseAuthController.fireAuthHelper.isLoggedIn()) {
+                        if (FirebaseAuthController.fireAuthHelper
+                            .isLoggedIn()) {
                           if (await checkIfUserInUserCollection(
                               FirebaseAuthController.fireAuthHelper.userId())) {
                             Navigator.of(context)
@@ -68,12 +81,10 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                             setState(() {
                               _isLoading = false;
                             });
-
                           } else {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {
                               return LoginScreen(userType: 'programmer');
-
                             }));
                             setState(() {
                               _isLoading = false;
@@ -88,7 +99,8 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                       },
                       child: Center(
                         child: Container(
-                          margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
+                          margin:
+                              EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
@@ -123,7 +135,8 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                         setState(() {
                           _isLoading = true;
                         });
-                        if (FirebaseAuthController.fireAuthHelper.isLoggedIn()) {
+                        if (FirebaseAuthController.fireAuthHelper
+                            .isLoggedIn()) {
                           if (await checkIfUserInCompanyCollection(
                               FirebaseAuthController.fireAuthHelper.userId())) {
                             Navigator.of(context)
@@ -151,7 +164,8 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                       },
                       child: Center(
                         child: Container(
-                          margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
+                          margin:
+                              EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
@@ -178,86 +192,6 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: SizeConfig.scaleHeight(10),),
-                    TextStyleWidget(
-                      'SIGN UP AS ...',
-                      Color(0xffcbb523),
-                      SizeConfig.scaleTextFont(18),
-                      FontWeight.bold,
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: (){
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return SignupScreen(userType: 'programmer');
-                            }));
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/prog_signup.jpg',
-                                  height: SizeConfig.scaleHeight(200),
-                                  width: SizeConfig.scaleWidth(160),
-                                  fit: BoxFit.fill,
-                                  color: Colors.black.withOpacity(0.5),
-                                  colorBlendMode: BlendMode.darken,
-                                ),
-                                TextStyleWidget(
-                                  'Programmer',
-                                  Colors.white,
-                                  SizeConfig.scaleTextFont(20),
-                                  FontWeight.bold,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: SizeConfig.scaleWidth(8),),
-                        InkWell(
-                          onTap: (){
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return SignupScreen(userType: 'company');
-                            }));
-                          },
-                          child: Container (
-                            margin: EdgeInsets.only(top: SizeConfig.scaleHeight(10)),
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/com_signup.jpg',
-                                  height: SizeConfig.scaleHeight(200),
-                                  width: SizeConfig.scaleWidth(160),
-                                  fit: BoxFit.fill,
-                                  color: Colors.black.withOpacity(0.5),
-                                  colorBlendMode: BlendMode.darken,
-                                ),
-                                TextStyleWidget(
-                                  'Company',
-                                  Colors.white,
-                                  SizeConfig.scaleTextFont(20),
-                                  FontWeight.bold,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),
@@ -275,10 +209,10 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
   Future<bool> checkIfUserInCompanyCollection(String userId) async {
     try {
       DocumentSnapshot<Map<String, dynamic>> docSnapshot =
-      await FirebaseFirestore.instance
-          .collection(FirebaseFireStoreHelper.companyCollection)
-          .doc(userId)
-          .get();
+          await FirebaseFirestore.instance
+              .collection(FirebaseFireStoreHelper.companyCollection)
+              .doc(userId)
+              .get();
       return docSnapshot.exists;
     } catch (e) {
       return false;
@@ -288,10 +222,10 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
   Future<bool> checkIfUserInUserCollection(String userId) async {
     try {
       DocumentSnapshot<Map<String, dynamic>> docSnapshot =
-      await FirebaseFirestore.instance
-          .collection(FirebaseFireStoreHelper.instance.userCollection)
-          .doc(userId)
-          .get();
+          await FirebaseFirestore.instance
+              .collection(FirebaseFireStoreHelper.instance.userCollection)
+              .doc(userId)
+              .get();
       return docSnapshot.exists;
     } catch (e) {
       return false;
