@@ -577,15 +577,12 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                           Radius.circular(5),
                                                     )),
                                                     child: Image.network(
-                                                      companiesJobsProvider
-                                                              .JobsList
-                                                              .isNotEmpty
-                                                          ? companiesJobsProvider
-                                                                  .JobsList[
-                                                                      index]
-                                                                  .job_image ??
-                                                              ""
-                                                          : "No Image",
+                                                      _filteredJobs
+                                                          .isNotEmpty
+                                                          ? _filteredJobs[index]
+                                                          .job_image ??
+                                                          ""
+                                                          : "No Job Image",
                                                       fit: BoxFit.cover,
                                                       width:
                                                           SizeConfig.scaleWidth(

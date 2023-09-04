@@ -31,7 +31,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
             SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(
-                  SizeConfig.scaleWidth(29),
+                  SizeConfig.scaleWidth(25),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,12 +42,12 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                           'assets/images/ProgPng2.png',
                         ),
                         Positioned(
-                            top: SizeConfig.scaleHeight(200),
-                            left: SizeConfig.scaleWidth(120),
+                            top: SizeConfig.scaleHeight(170),
+                            left: SizeConfig.scaleWidth(130),
                             child: TextStyleWidget(
                                 'Prog Jobs',
                                 Color(0xff4C5175),
-                                SizeConfig.scaleTextFont(30),
+                                SizeConfig.scaleTextFont(20),
                                 FontWeight.bold))
                       ],
                     ),
@@ -95,6 +95,9 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                               .push(MaterialPageRoute(builder: (context) {
                             return LoginScreen(userType: 'programmer');
                           }));
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       },
                       child: Center(
@@ -160,6 +163,9 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                               .push(MaterialPageRoute(builder: (context) {
                             return LoginScreen(userType: 'company');
                           }));
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       },
                       child: Center(

@@ -343,13 +343,13 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                       MessagesController?.clear();
                                       setState(() {
                                         messageContent = '';
-                                        color = Colors.grey;
+                                        color = Colors.white;
                                       });
                                     }
                                   },
                                   icon: Icon(
                                     Icons.send,
-                                    color: color,
+                                    color: Colors.white,
                                     size: SizeConfig.scaleWidth(20),
                                   ),
                                 ),

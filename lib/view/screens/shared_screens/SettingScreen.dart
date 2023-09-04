@@ -508,7 +508,7 @@ class _PasswordChangeSheetState extends State<PasswordChangeSheet> {
                         if (await _changePassword())
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) {
-                            return LoginScreen(userType: "programmer");
+                            return LoginScreen(userType:UserTypeScreen.type!);
                           }));
                       },
                       child: TextStyleWidget("Save ", Colors.white,

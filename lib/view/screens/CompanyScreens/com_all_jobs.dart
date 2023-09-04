@@ -505,8 +505,13 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                         Radius.circular(5),
                                                   )),
                                                   child: Image.network(
-                                                    allJobsList[index]
-                                                        .job_image!,
+                                                      _filteredJobs
+                                                          .isNotEmpty
+                                                          ? _filteredJobs[index]
+                                                          .job_image ??
+                                                          ""
+                                                          : "No Job image",
+
                                                     fit: BoxFit.cover,
                                                     width:
                                                         SizeConfig.scaleWidth(

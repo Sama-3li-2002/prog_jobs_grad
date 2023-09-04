@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
+import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 import '../../../controller/FirebaseAuthController.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/RichTextWidget.dart';
@@ -84,7 +86,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     SizeConfig.scaleTextFont(22), FontWeight.bold),
                 onPressed: () {
                   _sendPasswordResetEmail(_inputController!.text);
-                },
+
+                  },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff3b3f5b),
                   shape: RoundedRectangleBorder(
@@ -112,6 +115,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
+
+                  Navigator.of(context)
+                      .pushReplacement(MaterialPageRoute(builder: (context) {
+                    return LoginScreen(userType: UserTypeScreen.type!);
+                  }));
                 },
                 child: Text('OK'),
               ),
@@ -130,6 +138,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    Navigator.of(context)
+                        .pushReplacement(MaterialPageRoute(builder: (context) {
+                      return LoginScreen(userType: UserTypeScreen.type!);
+                    }));
                   },
                   child: Text('OK'),
                 ),
