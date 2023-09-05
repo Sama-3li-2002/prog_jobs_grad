@@ -21,7 +21,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  bool showProfPic = true;
+  bool showProfPic = false;
   String userId = FirebaseAuthController.fireAuthHelper.userId();
   FirebaseFireStoreHelper fireStoreHelper =
       FirebaseFireStoreHelper.fireStoreHelper;

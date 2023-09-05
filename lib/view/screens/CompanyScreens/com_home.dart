@@ -25,8 +25,8 @@ class ComHomeScreen extends StatefulWidget {
 }
 
 class _ComHomeScreenState extends State<ComHomeScreen> {
-  // //For archive Icon
-  // List<bool> isPressedList = [];
+  //For archive Icon
+  List<bool> isPressedList = [];
 
   List<Jobs> jobs = [];
 
@@ -147,9 +147,9 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                               formattedTime = "Invalid time format";
                             }
 
-                            // if (isPressedList.length <= index) {
-                            //   isPressedList.add(false);
-                            // }
+                            if (isPressedList.length <= index) {
+                              isPressedList.add(false);
+                            }
                             return Container(
                               margin: EdgeInsets.all(
                                 SizeConfig.scaleWidth(15),
@@ -371,12 +371,18 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                       IconButton(
                                                         alignment: Alignment
                                                             .centerRight,
-                                                        icon:Icon(
-                                                                Icons.bookmark_border,
+                                                        icon: isPressedList[
+                                                                index]
+                                                            ? Icon(
+                                                                Icons.bookmark,
                                                                 color: Color(
                                                                     0xffcbb523),
-                                                              ),
-
+                                                              )
+                                                            : Icon(
+                                                                Icons
+                                                                    .bookmark_border,
+                                                                color: Color(
+                                                                    0xffcbb523)),
                                                         onPressed: () async {
                                                           showDialog(
                                                             context: context,
@@ -443,9 +449,9 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                                           TextButton(
                                                                             onPressed:
                                                                                 () async {
-                                                                              // setState(() {
-                                                                              //   isPressedList[index] = !isPressedList[index];
-                                                                              // });
+                                                                              setState(() {
+                                                                                isPressedList[index] = !isPressedList[index];
+                                                                              });
                                                                               await archiveJobs(companyJobsProvider.JobsList.elementAt(index));
                                                                               delete(companyJobsProvider.JobsList.elementAt(index).job_id!);
                                                                               setState(() {
@@ -549,9 +555,9 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                               formattedTime = "Invalid time format";
                             }
 
-                            // if (isPressedList.length <= index) {
-                            //   isPressedList.add(false);
-                            // }
+                            if (isPressedList.length <= index) {
+                              isPressedList.add(false);
+                            }
                             return Container(
                                 margin: EdgeInsets.all(
                                   SizeConfig.scaleWidth(15),
@@ -790,13 +796,19 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                           IconButton(
                                                             alignment: Alignment
                                                                 .centerRight,
-                                                            icon:  Icon(
+                                                            icon: isPressedList[
+                                                                    index]
+                                                                ? Icon(
+                                                                    Icons
+                                                                        .bookmark,
+                                                                    color: Color(
+                                                                        0xffcbb523),
+                                                                  )
+                                                                : Icon(
                                                                     Icons
                                                                         .bookmark_border,
                                                                     color: Color(
-                                                                        0xffcbb523),
-                                                                  ),
-
+                                                                        0xffcbb523)),
                                                             onPressed:
                                                                 () async {
                                                               showDialog(
@@ -859,9 +871,9 @@ class _ComHomeScreenState extends State<ComHomeScreen> {
                                                                             children: [
                                                                               TextButton(
                                                                                 onPressed: () async {
-                                                                                  // setState(() {
-                                                                                  //   isPressedList[index] = !isPressedList[index];
-                                                                                  // });
+                                                                                  setState(() {
+                                                                                    isPressedList[index] = !isPressedList[index];
+                                                                                  });
                                                                                   await archiveJobs(companyJobsProvider.JobsList.elementAt(index));
                                                                                   delete(companyJobsProvider.JobsList.elementAt(index).job_id!);
                                                                                   setState(() {
@@ -994,8 +1006,8 @@ class _AdImagesState extends State<AdImages> {
       ],
     );
   }
-
 }
+
 void getComName() async {
   List<Company> comInfo = await FirebaseFireStoreHelper.fireStoreHelper
       .getComInfoById(FirebaseAuthController.fireAuthHelper.userId());

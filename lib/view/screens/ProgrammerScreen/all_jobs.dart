@@ -226,12 +226,8 @@ class _AllJobScreenState extends State<AllJobScreen> {
                                                           Radius.circular(5),
                                                     )),
                                                     child: Image.network(
-                                                      companiesJobsProvider
-                                                              .JobsList
-                                                              .isNotEmpty
-                                                          ? companiesJobsProvider
-                                                                  .JobsList[
-                                                                      index]
+                                                      _filteredJobs.isNotEmpty
+                                                          ? _filteredJobs[index]
                                                                   .job_image ??
                                                               ""
                                                           : "No Image",

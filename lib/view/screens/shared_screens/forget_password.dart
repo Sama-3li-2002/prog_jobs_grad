@@ -3,7 +3,6 @@ import 'package:prog_jobs_grad/view/screens/shared_screens/login.dart';
 import 'package:prog_jobs_grad/view/screens/shared_screens/user_type.dart';
 import '../../../controller/FirebaseAuthController.dart';
 import '../../../utils/size_config.dart';
-import '../../customWidget/RichTextWidget.dart';
 import '../../customWidget/TextFieldWidget.dart';
 import '../../customWidget/textStyleWidget.dart';
 

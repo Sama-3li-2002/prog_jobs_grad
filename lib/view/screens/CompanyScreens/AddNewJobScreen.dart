@@ -59,8 +59,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   void initState() {
     super.initState();
 
-
-
     _job_nameTextController = TextEditingController();
     _companynameTextController =
         TextEditingController(text: AddNewJobScreen.companyName);
@@ -451,6 +449,4 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
       }
     });
   }
-
-
 }

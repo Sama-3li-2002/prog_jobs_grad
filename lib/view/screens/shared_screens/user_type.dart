@@ -4,7 +4,6 @@ import 'package:prog_jobs_grad/controller/FirebaseAuthController.dart';
 import 'package:prog_jobs_grad/controller/FirebaseFireStoreHelper.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/com_home.dart';
 import 'package:prog_jobs_grad/view/screens/ProgrammerScreen/home.dart';
-import 'package:prog_jobs_grad/view/screens/shared_screens/signup.dart';
 import '../../../utils/size_config.dart';
 import '../../customWidget/textStyleWidget.dart';
 import 'login.dart';

@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:prog_jobs_grad/model/UsersModel.dart';
 import 'package:prog_jobs_grad/utils/size_config.dart';
-import 'package:prog_jobs_grad/view/screens/CompanyScreens/ConversationScreen.dart';
 import 'package:prog_jobs_grad/view/screens/CompanyScreens/pdf_viewer_page.dart';
 import 'package:http/http.dart' as http;
 import '../../../controller/FirebaseFireStoreHelper.dart';
@@ -87,7 +86,6 @@ class _AcceptPersonState extends State<AcceptPerson> {
           ),
           color: Color(0xff4C5175),
         ),
-
         elevation: 0,
       ),
       body: users == null

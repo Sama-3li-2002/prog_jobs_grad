@@ -128,21 +128,19 @@ Widget BuildMenuItems(BuildContext context) {
           ),
         if (UserTypeScreen.type == 'company')
           ListTile(
-          title: Row(
-            children: [
-              Icon(Icons.message, color: Color(0xffCBB523)),
-              SizedBox(width: 10),
-              Text("Messages"),
-            ],
-          ),
-          onTap: () {
-
+            title: Row(
+              children: [
+                Icon(Icons.message, color: Color(0xffCBB523)),
+                SizedBox(width: 10),
+                Text("Messages"),
+              ],
+            ),
+            onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return ShowMessagesCom();
               }));
-
-          },
-        ),
+            },
+          ),
         ListTile(
           title: Row(
             children: [

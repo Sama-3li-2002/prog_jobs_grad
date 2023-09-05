@@ -212,7 +212,7 @@ class _ComAllJobScreenState extends State<ComAllJobScreen> {
                                                         Radius.circular(5),
                                                   )),
                                                   child: Image.network(
-                                                    allJobsList[index]
+                                                    _filteredJobs[index]
                                                         .job_image!,
                                                     fit: BoxFit.cover,
                                                     width:
