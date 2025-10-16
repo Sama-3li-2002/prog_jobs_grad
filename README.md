@@ -1,16 +1,12 @@
-# prog_jobs_grad
+# prog_jobs_grad (Fork)
 
-A new Flutter project.
+This repository is a fork of the original project created by [Banan-Ibrahim20](https://github.com/Banan-Ibrahim20/prog_jobs_grad).  
+It was developed as part of our **graduation team project**, and I contributed mainly to the **Flutter mobile development**, focusing on implementing and improving key application features.
 
-## Getting Started
+## My Contributions
+- Developed and refined several Flutter screens and UI components.  
+- Integrated business logic using Provider and handled API connections.  
+- Participated in testing and debugging to improve app stability.  
+- Contributed to overall design and performance optimization.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Original Repository: [github.com/Banan-Ibrahim20/prog_jobs_grad](https://github.com/Banan-Ibrahim20/prog_jobs_grad)
